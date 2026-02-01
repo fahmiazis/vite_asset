@@ -4,9 +4,7 @@ import type { ImgHTMLAttributes } from 'react'
 export interface ImagesProps
   extends Omit<ImgHTMLAttributes<HTMLImageElement>, 'src'> {
   src: string
-  alt: string
-
-  /** Next.js-like props */
+  alt?: string
   width?: number
   height?: number
   fill?: boolean
@@ -18,7 +16,7 @@ export interface ImagesProps
 
 export default function Images({
   src,
-  alt,
+  alt = 'images',
   width,
   height,
   fill = false,

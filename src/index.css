@@ -1,8 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@400;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+
 :root {
+  --font-sans: 'Bai Jamjuree', sans-serif;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: black;
+  color: white; 
+}
+
+.text-gray1 {
+  color: #6D6D6D;
+}
+
+.custom-scrollbar {
+    scrollbar-width: thin; 
+    scrollbar-color: #4a90e2 #f0f0f0; 
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px; 
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #4a90e2; 
+    border-radius: 10px; /* Rounded corners */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background-color: #f0f0f0; /* Color of the scrollbar track */
+    border-radius: 10px; /* Rounded corners */
+}
+
+.hide-scrollbar {
+    overflow-y: scroll;
+    scrollbar-width: none; /* For Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Edge */
+}
+
+/* -----------------special css crypto list------------------------------- */
+@keyframes ticker {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-ticker {
+  display: inline-flex;
+  animation: ticker 30s linear infinite;
+}
+/* -----------------special css crypto list------------------------------- */
+
+/* -----------------------------------------tanstack table styling----------------------------------------- */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(120%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(120%);
+  }
+}
+
+.animate-slide-in {
+  animation: slideInRight 0.4s ease-out forwards;
+}
+
+.animate-slide-out {
+  animation: slideOutRight 0.3s ease-in forwards;
+}
+
+/* -----------------------------------------tanstack table styling----------------------------------------- */
+
+/* :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -69,4 +163,4 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
+} */

@@ -1,19 +1,34 @@
-import React from 'react'
-import SidebarContent from '@/components/organisms/dashboard/sidebarContent'
-import CopyrightCard from '@/components/molecules/cards/copyrightCard'
+import { Suspense } from "react";
+import sidebarStore from "../../../stores/useSidebarLayout";
+import SideBar2 from "../../organisms/layout/sidebar";
+import Navbar from "../../organisms/layout/navbar";
+import { Outlet } from "react-router-dom";
 
-interface SideBar2Props {
-  type: 'crypto' | 'learn'
-}
-
-export default function SideBar2({
-type
-}: SideBar2Props) {
+export default function MainLayout() {
+    const { isActive } = sidebarStore()
     return (
-        <aside className="hidden md:block bg-gray-900 max-h-screen pt-12 px-6">
-            <h2 className="text-blue-500 text-5xl font-bold whitespace-nowrap font-sans uppercase">{type}</h2>
-            <SidebarContent  className='h-[65vh] overflow-y-scroll hide-scrollbar' type={type}/>
-            <CopyrightCard/>
-        </aside>
-    )
+        <div className="flex h-screen w-full overflow-hidden">
+            {/* Sidebar */}
+            <aside
+                className={`
+      h-full bg-gray-900 text-white
+      transition-all duration-300 ease-in-out
+      overflow-hidden
+    `}
+            >
+                <SideBar2 />
+            </aside>
+
+            {/* Main Content */}
+            <main className="flex flex-col flex-1 min-w-0 bg-black p-2">
+                <Navbar title="Crypto" />
+
+                <section className="flex-1 overflow-y-auto hide-scrollbar p-2 md:p-4">
+                    <Suspense fallback={<p className="text-white">Loading...</p>}>
+                        <Outlet />
+                    </Suspense>
+                </section>
+            </main>
+        </div>
+    );
 }
