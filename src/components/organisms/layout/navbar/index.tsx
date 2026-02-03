@@ -1,9 +1,10 @@
 'use client'
 import { useState } from 'react'
-import { ArrowRight01Icon, SidebarLeft01Icon } from 'hugeicons-react'
+import { ArrowRight01Icon, MoonIcon, SidebarLeft01Icon, Sun01Icon, SunriseIcon } from 'hugeicons-react'
 import MobileSidebar from '../sidebar/mobile'
 import Images from '../../../atoms/images'
 import sidebarStore from '../../../../stores/useSidebarLayout'
+import { useDarkMode } from '../../../../hooks/useDarkMode'
 
 interface NavbarProps {
     title?: string
@@ -12,6 +13,7 @@ interface NavbarProps {
 export default function Navbar({
     title = 'Yaaqin'
 }: NavbarProps) {
+    const { isDark, toggleDarkMode } = useDarkMode();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
     const { isActive, setIsActive } = sidebarStore()
@@ -25,7 +27,7 @@ export default function Navbar({
     }
 
     return (
-        <section className='flex justify-between items-center bg-gray-900 rounded-none md:rounded-xl p-2 md:p-4'>
+        <section className='flex justify-between items-center bg-blue-50 dark:bg-gray-900 rounded-none md:rounded-xl p-2 md:p-4'>
             <div className='flex gap-1 md:gap-3 items-center'>
                 <ArrowRight01Icon
                     className='block md:hidden cursor-pointer'
@@ -48,12 +50,18 @@ export default function Navbar({
                     </h6>
                 </div>
             </div>
-            <div className='flex gap-3 items-center'>
+            {/* <div className='flex gap-3 items-center'>
                 <button className='capitalize flex gap-2 md:gap-4 items-center border-2 px-4 py-1 md:py-2 rounded-full border-gray-300 font-bold cursor-pointer text-black bg-white'>
                     <Images src='https://i.pinimg.com/1200x/59/7f/11/597f11b631d7d94492f1adb95110cc44.jpg' className='w-6 md:w-8 rounded-full' />
                     <p className='text-sm md:text-lg'>Masuk</p>
                 </button>
-            </div>
+            </div> */}
+            <button
+                onClick={toggleDarkMode}
+                className="p-2 text-2xl rounded-xl border border-zinc-300 dark:border-zinc-700"
+            >
+                {isDark ? <MoonIcon/> : <Sun01Icon/>}
+            </button>
             <MobileSidebar isOpen={isSidebarOpen} setIsOpen={() => setIsSidebarOpen(false)} />
         </section>
     )
