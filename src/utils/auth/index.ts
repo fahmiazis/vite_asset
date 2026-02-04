@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie'
 
 export const getAccessTokenClient = () =>
-  Cookies.get('accessToken') ?? null
+  Cookies.get('access_token') ?? null
 
 export const setCookie = (key: string, value: string) => {
   Cookies.set(key, value, {

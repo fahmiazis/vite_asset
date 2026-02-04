@@ -19,6 +19,10 @@ const API_BASE_URL =
 const UPLOAD_BASE_URL = import.meta.env.VITE_API_UPLOAD_IMAGE
 const UPLOAD_API_KEY = import.meta.env.VITE_KEY_IMAGE_ACCESS
 
+
+const buildAuthorizationHeader = (token: string): string => {
+  return `Bearer ${token}`
+}
 /**
  * ===============================
  * Refresh token state
@@ -103,7 +107,7 @@ axiosPrivate.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     const token = getAccessTokenClient()
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`
+      config.headers.Authorization = buildAuthorizationHeader(token)
     }
     return config
   }
@@ -117,46 +121,46 @@ axiosPrivate.interceptors.response.use(
         _retry?: boolean
       }
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      if (isRefreshing) {
-        return new Promise((resolve, reject) => {
-          failedQueue.push({ resolve, reject })
-        }).then((token) => {
-          if (token) {
-            originalRequest.headers.Authorization = `Bearer ${token}`
-          }
-          return axiosPrivate(originalRequest)
-        })
-      }
+    // if (error.response?.status === 401 && !originalRequest._retry) {
+    //   if (isRefreshing) {
+    //     return new Promise((resolve, reject) => {
+    //       failedQueue.push({ resolve, reject })
+    //     }).then((token) => {
+    //       if (token) {
+    //         originalRequest.headers.Authorization = `Bearer ${token}`
+    //       }
+    //       return axiosPrivate(originalRequest)
+    //     })
+    //   }
 
-      originalRequest._retry = true
-      isRefreshing = true
+    //   originalRequest._retry = true
+    //   isRefreshing = true
 
-      try {
-        const newToken = await refreshAccessToken()
+    //   try {
+    //     const newToken = await refreshAccessToken()
 
-        if (newToken) {
-          processQueue(null, newToken)
-          originalRequest.headers.Authorization = `Bearer ${newToken}`
-          return axiosPrivate(originalRequest)
-        }
+    //     if (newToken) {
+    //       processQueue(null, newToken)
+    //       originalRequest.headers.Authorization = `Bearer ${newToken}`
+    //       return axiosPrivate(originalRequest)
+    //     }
 
-        throw error
-      } catch (err) {
-        processQueue(error, null)
+    //     throw error
+    //   } catch (err) {
+    //     processQueue(error, null)
 
-        deleteCookie('accessToken')
-        deleteCookie('refreshToken')
-        localStorage.removeItem('csrfToken')
+    //     deleteCookie('accessToken')
+    //     deleteCookie('refreshToken')
+    //     localStorage.removeItem('csrfToken')
 
-        toast.error('Sesi kamu sudah habis, silakan login ulang')
-        setTimeout(() => (window.location.href = '/login'), 1500)
+    //     toast.error('Sesi kamu sudah habis, silakan login ulang')
+    //     setTimeout(() => (window.location.href = '/login'), 1500)
 
-        return Promise.reject(err)
-      } finally {
-        isRefreshing = false
-      }
-    }
+    //     return Promise.reject(err)
+    //   } finally {
+    //     isRefreshing = false
+    //   }
+    // }
 
     return Promise.reject(error)
   }

@@ -1,12 +1,24 @@
-import './App.css'
-import { router } from './routers'
-import { RouterProvider } from 'react-router-dom'
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./routers";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 function App() {
-
   return (
-    <RouterProvider router={router} />
-  )
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
+  );
 }
 
-export default App
+export default App;

@@ -10,14 +10,14 @@ export default function MainLayout() {
   const { isActive } = sidebarStore();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const accessToken = Cookies.get("access_token");
-    const refreshToken = Cookies.get("refresh_token");
+//   useEffect(() => {
+//     const accessToken = Cookies.get("access_token");
+//     const refreshToken = Cookies.get("refresh_token");
 
-    if (!accessToken || !refreshToken) {
-      navigate("/login", { replace: true });
-    }
-  }, [navigate]);
+//     if (!accessToken || !refreshToken) {
+//       navigate("/login", { replace: true });
+//     }
+//   }, [navigate]);
 
   return (
     <div className="flex h-screen w-full overflow-hidden">
