@@ -1,12 +1,9 @@
-import React from 'react'
 import { useUserList } from '../../../hooks/query/user/list'
+import { UserTable } from '../../organisms/user/UserTable'
 
 export default function UserPage() {
-    const {data} = useUserList()
-    console.log('data user ==>', data)
+  const { data, isLoading } = useUserList()
   return (
-    <div>
-      user page
-    </div>
+      <UserTable data={data?.data || []} isLoading={isLoading} />
   )
 }

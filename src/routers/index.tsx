@@ -3,6 +3,7 @@ import MainLayout from '../components/pages/layout/mainLayout'
 import MainPage from '../components/pages'
 import LoginPage from '../components/pages/login'
 import UserPage from '../components/pages/user'
+import DetailUser from '../components/pages/user/detail'
 
 export const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ export const router = createBrowserRouter([
       {
         path: 'user',
         element: <UserPage/>,
+      },
+      {
+        path: 'user/:id',
+        element: <DetailUser/>,
       },
       {
         path: 'assetd',

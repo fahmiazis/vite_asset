@@ -12,6 +12,7 @@
   "dependencies": {
     "@tanstack/react-query": "^5.90.20",
     "@tanstack/react-query-devtools": "^5.91.3",
+    "@tanstack/react-table": "^8.21.3",
     "axios": "^1.13.4",
     "formik": "^2.4.9",
     "hugeicons-react": "^0.4.0",

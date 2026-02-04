@@ -1,4 +1,4 @@
-import { EnergyEllipseIcon, EyeIcon } from 'hugeicons-react';
+import { EyeIcon, ViewOffSlashIcon } from 'hugeicons-react';
 import { useState } from 'react';
 import { axiosPublic } from '../../../libs/instance';
 import toast from 'react-hot-toast';
@@ -80,18 +80,18 @@ const LoginPage = () => {
             <div className="w-full lg:w-1/2 flex items-center justify-center p-6 lg:p-12 bg-white">
                 <div className="w-full max-w-md">
                     {/* Logo for mobile */}
-                    <div className="lg:hidden mb-8 flex justify-center">
+                    {/* <div className="lg:hidden mb-8 flex justify-center">
                         <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-purple-500 rounded-2xl flex items-center justify-center">
                             <span className="text-white text-3xl font-bold">*</span>
                         </div>
-                    </div>
+                    </div> */}
 
                     {/* Header */}
                     <div className="mb-8">
                         <div className="flex items-center gap-2 mb-4">
-                            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center lg:hidden">
+                            {/* <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center lg:hidden">
                                 <span className="text-white text-xl font-bold">*</span>
-                            </div>
+                            </div> */}
                             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">Login</h2>
                         </div>
                         <p className="text-gray-500 text-sm lg:text-base">
@@ -140,7 +140,7 @@ const LoginPage = () => {
                                     {showPassword ? (
                                         <EyeIcon className="w-5 h-5" />
                                     ) : (
-                                        <EnergyEllipseIcon className="w-5 h-5" />
+                                        <ViewOffSlashIcon className="w-5 h-5" />
                                     )}
                                 </button>
                             </div>
