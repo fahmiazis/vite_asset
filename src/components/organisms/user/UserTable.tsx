@@ -64,20 +64,20 @@ export function UserTable({ data, isLoading }: UserTableProps) {
           placeholder="Cari pengguna..."
           value={globalFilter ?? ''}
           onChange={(e) => setGlobalFilter(e.target.value)}
-          className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-sm"
+          className="px-4 py-2 border border-gray-900 dark:border-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-sm"
         />
       </div>
 
       {/* Table */}
       <div className="rounded-md border overflow-hidden">
         <table className="w-full">
-          <thead className="bg-gray-50">
+          <thead className="bg-gray-50 dark:bg-gray-900">
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <th
                     key={header.id}
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
                   >
                     {header.isPlaceholder
                       ? null
@@ -90,12 +90,12 @@ export function UserTable({ data, isLoading }: UserTableProps) {
               </tr>
             ))}
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200">
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <tr
                   key={row.id}
-                  className="hover:bg-gray-50 transition-colors"
+                  className="transition-colors"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <td key={cell.id} className="px-6 py-4 whitespace-nowrap">
@@ -111,7 +111,7 @@ export function UserTable({ data, isLoading }: UserTableProps) {
               <tr>
                 <td
                   colSpan={userColumns.length}
-                  className="px-6 py-4 text-center text-gray-500"
+                  className="px-6 py-4 text-center"
                 >
                   Tidak ada data
                 </td>
@@ -123,7 +123,7 @@ export function UserTable({ data, isLoading }: UserTableProps) {
 
       {/* Pagination */}
       <div className="flex items-center justify-between">
-        <div className="text-sm text-gray-700">
+        <div className="text-sm">
           Menampilkan{' '}
           <span className="font-medium">
             {table.getState().pagination.pageIndex *
@@ -161,7 +161,7 @@ export function UserTable({ data, isLoading }: UserTableProps) {
             {'<'}
           </button>
           
-          <span className="text-sm text-gray-700">
+          <span className="text-sm">
             Halaman{' '}
             <strong>
               {table.getState().pagination.pageIndex + 1} dari{' '}
