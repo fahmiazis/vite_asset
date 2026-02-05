@@ -28,7 +28,7 @@ const DisposalList = ({
   className = '',
 }: DisposalListProps) => {
   return (
-    <div className={`bg-white rounded-3xl p-6 shadow-sm border border-gray-100 w-full ${className}`}>
+    <div className={`bg-white rounded-3xl p-6 shadow-sm border border-gray-100 ${className}`}>
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold text-gray-900">{title}</h3>

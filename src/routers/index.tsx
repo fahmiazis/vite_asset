@@ -1,14 +1,15 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom'
 import MainLayout from '../components/pages/layout/mainLayout'
-import MainPage from '../components/pages'
 import LoginPage from '../components/pages/login'
 import UserPage from '../components/pages/user'
 import DetailUser from '../components/pages/user/detail'
+import LandingPage from '../components/pages'
+import MainPage from '../components/pages/dashboard'
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <p>landing page here</p>,
+    element: <LandingPage/>,
   },
   {
     path: '/login',
