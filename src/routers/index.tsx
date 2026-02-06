@@ -7,6 +7,7 @@ import LandingPage from '../components/pages'
 import MainPage from '../components/pages/dashboard'
 import CreateUsers from '../components/pages/user/create'
 import RolePage from '../components/pages/role'
+import CreateRole from '../components/pages/role/create'
 
 export const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ export const router = createBrowserRouter([
       {
         path: 'role',
         element: <RolePage/>,
+      },
+      {
+        path: 'role/create',
+        element: <CreateRole/>,
       },
       {
         path: 'user',
