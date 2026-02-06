@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom'
+import { createBrowserRouter } from 'react-router-dom'
 import MainLayout from '../components/pages/layout/mainLayout'
 import LoginPage from '../components/pages/login'
 import UserPage from '../components/pages/user'
@@ -8,6 +8,8 @@ import MainPage from '../components/pages/dashboard'
 import CreateUsers from '../components/pages/user/create'
 import RolePage from '../components/pages/role'
 import CreateRole from '../components/pages/role/create'
+import NotFound from '../components/pages/notFound'
+import Forbidden from '../components/pages/forbidden'
 
 export const router = createBrowserRouter([
   {
@@ -53,8 +55,12 @@ export const router = createBrowserRouter([
     ],
   },
   
-  // {
-  //   path: "*",
-  //   element: <Navigate to="/login" replace />,
-  // },
+  {
+    path: "*",
+    element: <NotFound/>,
+  },
+  {
+    path: "/forbidden",
+    element: <Forbidden/>,
+  },
 ])
