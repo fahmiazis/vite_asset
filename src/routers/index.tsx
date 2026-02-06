@@ -6,6 +6,7 @@ import DetailUser from '../components/pages/user/detail'
 import LandingPage from '../components/pages'
 import MainPage from '../components/pages/dashboard'
 import CreateUsers from '../components/pages/user/create'
+import RolePage from '../components/pages/role'
 
 export const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <MainPage/>,
+      },
+      {
+        path: 'role',
+        element: <RolePage/>,
       },
       {
         path: 'user',
@@ -43,8 +48,8 @@ export const router = createBrowserRouter([
     ],
   },
   
-  {
-    path: "*",
-    element: <Navigate to="/login" replace />,
-  },
+  // {
+  //   path: "*",
+  //   element: <Navigate to="/login" replace />,
+  // },
 ])

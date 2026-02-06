@@ -8,16 +8,17 @@ import Navbar from "../../organisms/layout/navbar";
 
 export default function MainLayout() {
   const { isActive } = sidebarStore();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  useEffect(() => {
-    const accessToken = Cookies.get("access_token");
-    const refreshToken = Cookies.get("refresh_token");
+  // useEffect(() => {
+  //   console.log('cek duls yee')
+  //   const accessToken = Cookies.get("access_token");
+  //   const refreshToken = Cookies.get("refresh_token");
 
-    if (!accessToken || !refreshToken) {
-      navigate("/login", { replace: true });
-    }
-  }, [navigate]);
+  //   if (!accessToken || !refreshToken) {
+  //     navigate("/login", { replace: true });
+  //   }
+  // }, [navigate]);
 
   return (
     <div className="flex h-screen w-full overflow-hidden">

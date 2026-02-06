@@ -1,4 +1,4 @@
-import { Link as RouterLink } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import type { MouseEvent, ReactNode } from 'react'
 
 export interface LinksProps {
@@ -23,34 +23,53 @@ export default function Links({
   children,
   onClick,
 }: LinksProps) {
+  const navigate = useNavigate()
+
   // external link detection
   const isExternal =
     href.startsWith('http') ||
     href.startsWith('mailto:') ||
     href.startsWith('tel:')
 
-  if (isExternal) {
-    return (
-      <a
-        href={href}
-        target={target ?? '_blank'}
-        rel={rel ?? 'noopener noreferrer'}
-        className={className}
-        onClick={onClick}
-      >
-        {children}
-      </a>
-    )
+  const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    // Call custom onClick if provided
+    if (onClick) {
+      onClick(e)
+    }
+
+    // For external links, let the default behavior happen
+    if (isExternal) {
+      return
+    }
+
+    // Prevent default navigation for internal links
+    e.preventDefault()
+
+    // Navigate using react-router's navigate
+    navigate(href, { replace })
   }
 
+  // if (isExternal) {
+  //   return (
+  //     <a
+  //       href={href}
+  //       target={target ?? '_blank'}
+  //       rel={rel ?? 'noopener noreferrer'}
+  //       className={className}
+  //       onClick={handleClick}
+  //     >
+  //       {children}
+  //     </a>
+  //   )
+  // }
+
   return (
-    <RouterLink
-      to={href}
-      replace={replace}
+    <a
+      href={href}
       className={className}
-      onClick={onClick}
+      onClick={handleClick}
     >
       {children}
-    </RouterLink>
+    </a>
   )
 }
