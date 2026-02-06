@@ -11,6 +11,7 @@ import {
 import { useState } from 'react'
 import type { userListState } from '../../../models/users/list'
 import { userColumns } from './columns'
+import Links from '../../atoms/links'
 
 interface UserTableProps {
   data: userListState[]
@@ -57,6 +58,7 @@ export function UserTable({ data, isLoading }: UserTableProps) {
 
   return (
     <div className="space-y-4">
+      <section className='flex items-center justify-between w-full'>
       {/* Search Bar */}
       <div className="flex items-center gap-4">
         <input
@@ -67,6 +69,8 @@ export function UserTable({ data, isLoading }: UserTableProps) {
           className="px-4 py-2 border border-gray-900 dark:border-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-sm"
         />
       </div>
+        <Links  href={'/dashboard/user/create'} children={'Create'} className='px-4'/>
+      </section>
 
       {/* Table */}
       <div className="rounded-md border overflow-hidden">

@@ -5,6 +5,7 @@ import UserPage from '../components/pages/user'
 import DetailUser from '../components/pages/user/detail'
 import LandingPage from '../components/pages'
 import MainPage from '../components/pages/dashboard'
+import CreateUsers from '../components/pages/user/create'
 
 export const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ export const router = createBrowserRouter([
       {
         path: 'user',
         element: <UserPage/>,
+      },
+      {
+        path: 'user/create',
+        element: <CreateUsers/>,
       },
       {
         path: 'user/:id',
