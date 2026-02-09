@@ -20,7 +20,7 @@ export default function SidebarContent({
 }: SidebarContenProps) {
   const { pathname } = useLocation()
   return (
-      <nav className={`${className} flex flex-col text-blue-500 mt-12 space-y-4`}>
+      <div className={`${className} flex flex-col justify-between mt-12 space-y-4 text-black dark:text-white`}>
         {assetsSideBar.map((item, idx) => {
           const isActive =
             item.url === "/crypto"
@@ -31,8 +31,8 @@ export default function SidebarContent({
               key={idx}
               href={item.url}
               className={`flex items-center gap-3 p-2 rounded-lg transition duration-300 ${isActive
-                ? "bg-gray-700 text-white"
-                : "text-blue-400 hover:bg-gray-700 hover:text-white"
+                ? "bg-gray-700"
+                : "hover:bg-gray-700 hover:text-white"
                 }`}
             >
               {item.icon && <item.icon className="w-5 h-5" />}
@@ -40,6 +40,6 @@ export default function SidebarContent({
             </Links>
           );
         })}
-      </nav>
+      </div>
   )
 }
