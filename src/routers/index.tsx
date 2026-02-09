@@ -10,6 +10,8 @@ import RolePage from '../components/pages/role'
 import CreateRole from '../components/pages/role/create'
 import NotFound from '../components/pages/notFound'
 import Forbidden from '../components/pages/forbidden'
+import BranchPage from '../components/pages/branch'
+import CreateBranchPage from '../components/pages/branch/create'
 
 export const router = createBrowserRouter([
   {
@@ -27,6 +29,14 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <MainPage/>,
+      },
+      {
+        path: 'branch',
+        element: <BranchPage/>,
+      },
+      {
+        path: 'branch/create',
+        element:  <CreateBranchPage/>,
       },
       {
         path: 'role',
