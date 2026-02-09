@@ -12,6 +12,7 @@ import NotFound from '../components/pages/notFound'
 import Forbidden from '../components/pages/forbidden'
 import BranchPage from '../components/pages/branch'
 import CreateBranchPage from '../components/pages/branch/create'
+import DetailBranchPage from '../components/pages/branch/detail'
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ export const router = createBrowserRouter([
       {
         path: 'branch',
         element: <BranchPage/>,
+      },
+      {
+        path: 'branch/:id',
+        element: <DetailBranchPage/>,
       },
       {
         path: 'branch/create',
