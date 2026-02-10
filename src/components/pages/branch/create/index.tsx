@@ -3,9 +3,12 @@ import { Inputs } from '../../../molecules/input/inputs'
 import Buttons from '../../../atoms/buttons'
 import { useCreateBranch } from '../../../../hooks/mutation/branch/useCreateBranch'
 import { useNavigate } from 'react-router-dom'
+import { InputToggle } from '../../../molecules/input/inputTogle'
 
 export default function CreateBranchPage() {
   const navigate = useNavigate()
+  const [isActive, setIsActive] = useState(false);
+
   const [branchName, setBranchName] = useState('')
   const [branchType, setBranchType] = useState('')
   const createBranch = useCreateBranch();
@@ -33,6 +36,14 @@ export default function CreateBranchPage() {
         <Inputs label={'Branch Name'} value={branchName} onChange={setBranchName} containerClassName='w-1/2' />
         <Inputs label={'Branch Type'} value={branchType} onChange={setBranchType} containerClassName='w-1/2' />
       </section>
+      {/* <section className='flex justify-between gap-5 items-center'>
+        <InputToggle
+          label="Status"
+          checked={isActive}
+          onChange={setIsActive}
+          className='w-1/2'
+        />
+      </section> */}
       <Buttons label='Create' className='mt-4' onClick={handleCreate} />
     </div>
   )
