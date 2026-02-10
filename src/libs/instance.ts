@@ -58,6 +58,8 @@ const getRefreshToken = (): string | null =>
 const refreshAccessToken = async (): Promise<string | null> => {
   try {
     const refreshToken = getRefreshToken()
+    console.log('refreshAccessToken ==>', refreshToken)
+
     const csrfToken = getCSRFToken()
 
     if (!refreshToken || !csrfToken) {
@@ -74,6 +76,8 @@ const refreshAccessToken = async (): Promise<string | null> => {
         },
       }
     )
+
+    console.log('res refresh token ==>', res)
 
     const { accessToken, refreshToken: newRefresh } = res.data ?? {}
 
