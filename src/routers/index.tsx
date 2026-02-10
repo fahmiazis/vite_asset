@@ -13,6 +13,9 @@ import Forbidden from '../components/pages/forbidden'
 import BranchPage from '../components/pages/branch'
 import CreateBranchPage from '../components/pages/branch/create'
 import DetailBranchPage from '../components/pages/branch/detail'
+import MasterMenu from '../components/pages/menu'
+import CreateMenu from '../components/pages/menu/create'
+import DetailMenu from '../components/pages/menu/detail'
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +33,18 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <MainPage/>,
+      },
+      {
+        path: 'menu',
+        element: <MasterMenu/>,
+      },
+      {
+        path: 'menu/:id',
+        element: <DetailMenu/>,
+      },
+      {
+        path: 'menu/create',
+        element: <CreateMenu/>,
       },
       {
         path: 'branch',
