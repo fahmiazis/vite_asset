@@ -23,7 +23,7 @@ export const roleService = {
     roleId: string,
     payload: AssignMenusRequest
   ): Promise<AssignMenusResponse> => {
-    const response = await apiClient.post<AssignMenusResponse>(
+    const response = await axiosPrivate.post<AssignMenusResponse>(
       `/roles/${roleId}/menus`,
       payload
     );
