@@ -80,7 +80,7 @@ export const Inputs = forwardRef<HTMLInputElement, InputProps>(
               error ? `${label}-error` : helperText ? `${label}-helper` : undefined
             }
             className={`
-              w-full px-4 py-2 border rounded-lg placeholder-gray-100
+              w-full px-4 py-2 border rounded-lg placeholder-black
               transition-colors duration-200
               ${
                 hasError
