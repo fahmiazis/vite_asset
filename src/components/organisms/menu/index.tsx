@@ -71,12 +71,20 @@ export function MenuTable({ data, isLoading }: MenuTableProps) {
             className="px-4 py-2 border border-gray-900 dark:border-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-sm"
           />
         </div>
+        <div className='flex gap-4 items-center'>
+        <button
+          onClick={() => navigate('/dashboard/menu/assign')}
+          className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        >
+          Assign
+        </button>
         <button
           onClick={() => navigate('/dashboard/menu/create')}
           className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
           Create
         </button>
+        </div>
       </section>
 
       {/* Table */}

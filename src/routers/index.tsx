@@ -16,6 +16,7 @@ import DetailBranchPage from '../components/pages/branch/detail'
 import MasterMenu from '../components/pages/menu'
 import CreateMenu from '../components/pages/menu/create'
 import DetailMenu from '../components/pages/menu/detail'
+import AssignMenuPage from '../components/pages/menu/assign'
 
 export const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ export const router = createBrowserRouter([
       {
         path: 'menu/create',
         element: <CreateMenu/>,
+      },
+      {
+        path: 'menu/assign',
+        element: <AssignMenuPage/>,
       },
       {
         path: 'branch',
