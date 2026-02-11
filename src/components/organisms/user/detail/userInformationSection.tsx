@@ -30,8 +30,16 @@ const BaseUserInformation: React.FC<userBaseProps> = ({ data, className }: userB
                     <a href={`mailto:${data?.email}`} className="text-sm text-slate-500 hover:text-indigo-600 transition-colors duration-200">
                         {data?.email}
                     </a>
-                    <div className='mt-8'>
-                    <Buttons label='Update' onClick={handleUpdate}/>
+                    <div className='mt-8 flex flex-col gap-4'>
+                        {data?.roles.map((role, key) => (
+                            <div
+                                key={key}
+                                className="flex items-center gap-2 px-4 py-1.5 bg-blue-100 text-blue-700 rounded-full text-sm font-medium w-fit capitalize"
+                            >
+                                {role.name}
+                            </div>
+                        ))}
+                        <Buttons label='Update' className='rounded-2xl' onClick={handleUpdate} />
                     </div>
                 </div>
 
