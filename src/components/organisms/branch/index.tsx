@@ -52,7 +52,7 @@ export function BranchTable({ data, isLoading }: BranchTableProps) {
       <div className="flex items-center justify-center h-64">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Memuat data...</p>
+          <p className="mt-4 text-gray-600">Loading data...</p>
         </div>
       </div>
     )
@@ -65,7 +65,7 @@ export function BranchTable({ data, isLoading }: BranchTableProps) {
         <div className="flex items-center gap-4">
           <input
             type="text"
-            placeholder="Cari cabang..."
+            placeholder="Search Branch..."
             value={globalFilter ?? ''}
             onChange={(e) => setGlobalFilter(e.target.value)}
             className="px-4 py-2 border border-gray-900 dark:border-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-sm"
@@ -135,13 +135,13 @@ export function BranchTable({ data, isLoading }: BranchTableProps) {
       {/* Pagination */}
       <div className="flex items-center justify-between">
         <div className="text-sm">
-          Menampilkan{' '}
+          Show{' '}
           <span className="font-medium">
             {table.getState().pagination.pageIndex *
               table.getState().pagination.pageSize +
               1}
           </span>{' '}
-          sampai{' '}
+          Until{' '}
           <span className="font-medium">
             {Math.min(
               (table.getState().pagination.pageIndex + 1) *
@@ -149,7 +149,7 @@ export function BranchTable({ data, isLoading }: BranchTableProps) {
               table.getFilteredRowModel().rows.length
             )}
           </span>{' '}
-          dari{' '}
+          From{' '}
           <span className="font-medium">
             {table.getFilteredRowModel().rows.length}
           </span>{' '}
@@ -173,9 +173,9 @@ export function BranchTable({ data, isLoading }: BranchTableProps) {
           </button>
           
           <span className="text-sm">
-            Halaman{' '}
+            Page{' '}
             <strong>
-              {table.getState().pagination.pageIndex + 1} dari{' '}
+              {table.getState().pagination.pageIndex + 1} From{' '}
               {table.getPageCount()}
             </strong>
           </span>
