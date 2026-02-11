@@ -18,6 +18,8 @@ import CreateMenu from '../components/pages/menu/create'
 import DetailMenu from '../components/pages/menu/detail'
 import AssignMenuPage from '../components/pages/menu/assign'
 import UpdateUser from '../components/pages/user/update'
+import CreateApproval from '../components/pages/approval/create'
+import ApprovalPage from '../components/pages/approval'
 
 export const router = createBrowserRouter([
   {
@@ -89,8 +91,12 @@ export const router = createBrowserRouter([
         element: <UpdateUser/>,
       },
       {
-        path: 'asset',
-        element: <p>Assets</p>,
+        path: 'approval',
+        element: <ApprovalPage/>,
+      },
+      {
+        path: 'approval/create',
+        element: <CreateApproval/>,
       },
     ],
   },

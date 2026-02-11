@@ -9,7 +9,6 @@ export default function DetailUser() {
   const { id } = useParams()
   const { data } = useUserDetail(id || '')
 
-  console.log('data ==>', data?.data)
   return (
     <div className='flex justify-between gap-4'>
       <BaseUserInformation data={data?.data} className='w-2/4'/>
