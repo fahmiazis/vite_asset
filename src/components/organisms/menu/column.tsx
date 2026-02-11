@@ -54,7 +54,7 @@ export const menuColumns: ColumnDef<allMenuState>[] = [
     },
     {
         accessorKey: 'name',
-        header: 'Nama Menu',
+        header: 'Menu Name',
         cell: ({ row }) => {
             return <div className="font-medium">{row.getValue('name')}</div>
         },
@@ -83,7 +83,7 @@ export const menuColumns: ColumnDef<allMenuState>[] = [
                             : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
                             }`}
                     >
-                        {status === 'active' ? 'Aktif' : 'Tidak Aktif'}
+                        {status === 'active' ? 'Active' : 'NonActive'}
                     </span>
                 </div>
             )
@@ -91,7 +91,7 @@ export const menuColumns: ColumnDef<allMenuState>[] = [
     },
     {
         id: 'actions',
-        header: 'Aksi',
+        header: 'Action',
         cell: ({ row }) => {
             const menu = row.original
 

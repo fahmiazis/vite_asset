@@ -77,7 +77,7 @@ export const userColumns: ColumnDef<userListState>[] = [
   },
   {
     accessorKey: 'fullname',
-    header: 'Nama Lengkap',
+    header: 'FullName',
     cell: ({ row }) => {
       return <div className="font-medium">{row.getValue('fullname')}</div>
     },
@@ -132,7 +132,7 @@ export const userColumns: ColumnDef<userListState>[] = [
   },
    {
     id: 'actions',
-    header: 'Aksi',
+    header: 'Action',
     cell: ({ row }) => {
       const user = row.original
       

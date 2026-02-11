@@ -32,14 +32,14 @@ export const roleColumns: ColumnDef<roleListState>[] = [
   },
   {
     accessorKey: 'name',
-    header: 'Nama Role',
+    header: 'Role Name',
     cell: ({ row }) => {
       return <div className="font-medium">{row.getValue('name')}</div>
     },
   },
   {
     accessorKey: 'description',
-    header: 'Deskripsi',
+    header: 'Description',
     cell: ({ row }) => {
       const description = row.getValue('description') as string
       return (
@@ -51,7 +51,7 @@ export const roleColumns: ColumnDef<roleListState>[] = [
   },
   {
     accessorKey: 'created_at',
-    header: 'Tanggal Dibuat',
+    header: 'Create at',
     cell: ({ row }) => {
       const date = new Date(row.getValue('created_at'))
       return (
@@ -67,7 +67,7 @@ export const roleColumns: ColumnDef<roleListState>[] = [
   },
   {
     accessorKey: 'updated_at',
-    header: 'Terakhir Diupdate',
+    header: 'Last Update',
     cell: ({ row }) => {
       const date = new Date(row.getValue('updated_at'))
       return (
@@ -83,7 +83,7 @@ export const roleColumns: ColumnDef<roleListState>[] = [
   },
   {
     id: 'actions',
-    header: 'Aksi',
+    header: 'Action',
     cell: ({ row }) => {
       const role = row.original
       

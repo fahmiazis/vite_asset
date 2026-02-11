@@ -33,14 +33,14 @@ export const branchColumns: ColumnDef<branchListState>[] = [
   },
   {
     accessorKey: 'branch_code',
-    header: 'Kode Cabang',
+    header: 'Branch Code',
     cell: ({ row }) => {
       return <div className="font-medium">{row.getValue('branch_code')}</div>
     },
   },
   {
     accessorKey: 'branch_name',
-    header: 'Nama Cabang',
+    header: 'Branch Name',
     cell: ({ row }) => {
       return <div className="font-medium">{row.getValue('branch_name')}</div>
     },
@@ -59,7 +59,7 @@ export const branchColumns: ColumnDef<branchListState>[] = [
                 : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
             }`}
           >
-            {status === 'active' ? 'Aktif' : 'Tidak Aktif'}
+            {status === 'active' ? 'Active' : 'NonActive'}
           </span>
         </div>
       )
@@ -67,7 +67,7 @@ export const branchColumns: ColumnDef<branchListState>[] = [
   },
   {
     id: 'actions',
-    header: 'Aksi',
+    header: 'Action',
     cell: ({ row }) => {
       const branch = row.original
       
