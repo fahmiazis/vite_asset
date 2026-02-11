@@ -84,7 +84,7 @@ export const router = createBrowserRouter([
         element: <DetailUser/>,
       },
       {
-        path: 'assetd',
+        path: 'asset',
         element: <p>Assets</p>,
       },
     ],

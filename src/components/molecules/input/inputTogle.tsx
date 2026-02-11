@@ -1,160 +1,68 @@
-import { forwardRef, useState, type InputHTMLAttributes } from 'react';
+import { forwardRef, type InputHTMLAttributes } from 'react'
 
-interface ToggleProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'type'> {
-  label?: string;
-  checked: boolean;
-  onChange?: (checked: boolean) => void;
-  activeLabel?: string;
-  inactiveLabel?: string;
-  containerClassName?: string;
-  labelClassName?: string;
-  disabled?: boolean;
-  showTooltip?: boolean;
-  error?: string;
-  helperText?: string;
+interface CyberToggleProps
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'onChange'> {
+  checked: boolean
+  onChange?: (checked: boolean) => void
+  id?: string
 }
 
-export const InputToggle = forwardRef<HTMLInputElement, ToggleProps>(
-  (
-    {
-      label,
-      checked,
-      onChange,
-      activeLabel = 'Active',
-      inactiveLabel = 'Inactive',
-      containerClassName = '',
-      labelClassName = '',
-      disabled = false,
-      showTooltip = true,
-      error,
-      helperText,
-      ...restProps
-    },
-    ref
-  ) => {
-    const [isHovered, setIsHovered] = useState(false);
+export const InputToggle = forwardRef<
+  HTMLInputElement,
+  CyberToggleProps
+>(({ checked, onChange, id = 'cyber-toggle', disabled, ...rest }, ref) => {
+  return (
+    <div className="cyber-toggle-wrapper">
+      {/* INPUT — WAJIB SEBELUM LABEL */}
+      <input
+        ref={ref}
+        id={id}
+        type="checkbox"
+        className="cyber-toggle-checkbox"
+        checked={checked}
+        disabled={disabled}
+        onChange={(e) => onChange?.(e.target.checked)}
+        {...rest}
+      />
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (!disabled) {
-        onChange?.(e.target.checked);
-      }
-    };
+      {/* TOGGLE */}
+      <label className="cyber-toggle" htmlFor={id}>
+        <div className="cyber-toggle-track">
+          <div className="cyber-toggle-track-glow"></div>
 
-    return (
-      <div className={`space-y-2 ${containerClassName}`}>
-        {/* Label */}
-        {label && (
-          <label
-            className={
-              labelClassName || 'block text-xl font-medium text-white mb-1 md:mb-2'
-            }
-          >
-            {label}
-          </label>
-        )}
-
-        <div className="relative inline-flex items-center">
-          {/* Toggle */}
-          <label
-            className={`
-              relative block h-[3em] w-[6em] cursor-pointer rounded-full
-              bg-[hsl(0,0%,7%)]
-              shadow-[0px_2px_4px_0px_rgba(18,18,18,0.25),0px_4px_8px_0px_rgba(18,18,18,0.35)]
-              ${disabled ? 'cursor-not-allowed opacity-50' : ''}
-            `}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
-            {/* Inner border */}
-            <span className="absolute inset-[0.1em] rounded-full border border-[hsl(0,0%,25%)]" />
-
-            {/* Off indicator */}
-            <div className="absolute left-[0.5em] top-1/2 flex h-[2em] w-[2em] -translate-y-1/2 items-center justify-center rounded-full bg-white shadow-[inset_0px_2px_2px_0px_hsl(0,0%,85%)]">
-              <div className="h-[1.5em] w-[1.5em] rounded-full bg-[hsl(0,0%,7%)] shadow-[0px_2px_2px_0px_hsl(0,0%,85%)]" />
-            </div>
-
-            {/* On indicator line */}
-            <div className="absolute right-[0.5em] top-1/2 h-[0.25em] w-[1.5em] -translate-y-1/2 rounded-full bg-[hsl(0,0%,50%)] shadow-[inset_0px_2px_1px_0px_hsl(0,0%,40%)]" />
-
-            {/* Hidden checkbox */}
-            <input
-              ref={ref}
-              type="checkbox"
-              className="peer absolute h-0 w-0 opacity-0"
-              checked={checked}
-              onChange={handleChange}
-              disabled={disabled}
-              {...restProps}
-            />
-
-            {/* Moving knob */}
-            <span
-              className={`
-                absolute top-1/2 left-[0.25em]
-                flex h-[2.5em] w-[2.5em]
-                -translate-y-1/2
-                items-center justify-center
-                rounded-full
-                bg-[rgb(26,26,26)]
-                shadow-[inset_4px_4px_4px_0px_rgba(64,64,64,0.25),inset_-4px_-4px_4px_0px_rgba(16,16,16,0.5)]
-                transition-transform duration-300 ease-in-out
-                peer-checked:translate-x-[3em]
-                ${disabled ? 'transition-none' : ''}
-              `}
-            >
-              <span className="relative h-full w-full rounded-full">
-                <span className="absolute inset-[0.1em] rounded-full border border-[hsl(0,0%,50%)]" />
-              </span>
-            </span>
-
-            {/* Tooltip */}
-            {showTooltip && isHovered && (
-              <div
-                className={`
-                  absolute -top-10 left-1/2 -translate-x-1/2
-                  rounded-md px-3 py-1.5 text-sm font-medium
-                  text-white whitespace-nowrap
-                  ${checked ? 'bg-green-600' : 'bg-gray-600'}
-                `}
-              >
-                {checked ? activeLabel : inactiveLabel}
-                <div
-                  className={`
-                    absolute top-full left-1/2 -translate-x-1/2
-                    h-0 w-0 border-l-4 border-r-4 border-t-4
-                    border-l-transparent border-r-transparent
-                    ${checked ? 'border-t-green-600' : 'border-t-gray-600'}
-                  `}
-                />
-              </div>
-            )}
-          </label>
-
-          {/* Status text */}
-          <span
-            className={`ml-3 text-sm font-medium ${
-              checked ? 'text-green-500' : 'text-gray-400'
-            }`}
-          >
-            {checked ? activeLabel : inactiveLabel}
-          </span>
+          <div className="cyber-toggle-track-dots">
+            <span className="cyber-toggle-track-dot"></span>
+            <span className="cyber-toggle-track-dot"></span>
+            <span className="cyber-toggle-track-dot"></span>
+          </div>
         </div>
 
-        {/* Error */}
-        {error && (
-          <p className="text-sm text-red-600" role="alert">
-            {error}
-          </p>
-        )}
+        <div className="cyber-toggle-thumb">
+          <div className="cyber-toggle-thumb-shadow"></div>
+          <div className="cyber-toggle-thumb-highlight"></div>
 
-        {/* Helper */}
-        {helperText && !error && (
-          <p className="text-sm text-gray-500">{helperText}</p>
-        )}
+          <div className="cyber-toggle-thumb-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M16.5 12c0-2.48-2.02-4.5-4.5-4.5s-4.5 2.02-4.5 4.5 2.02 4.5 4.5 4.5 4.5-2.02 4.5-4.5zm-4.5 7.5c-4.14 0-7.5-3.36-7.5-7.5s3.36-7.5 7.5-7.5 7.5 3.36 7.5 7.5-3.36 7.5-7.5 7.5zm0-16.5c-4.97 0-9 4.03-9 9h-3l3.89 3.89.07.14 4.04-4.03h-3c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42c1.63 1.63 3.87 2.64 6.36 2.64 4.97 0 9-4.03 9-9s-4.03-9-9-9z" />
+            </svg>
+          </div>
+        </div>
+
+        <div className="cyber-toggle-particles">
+          <span className="cyber-toggle-particle"></span>
+          <span className="cyber-toggle-particle"></span>
+          <span className="cyber-toggle-particle"></span>
+          <span className="cyber-toggle-particle"></span>
+        </div>
+      </label>
+
+      {/* LABELS — WAJIB SETELAH INPUT */}
+      <div className="cyber-toggle-labels">
+        <span className="cyber-toggle-label-off">OFF</span>
+        <span className="cyber-toggle-label-on">ON</span>
       </div>
-    );
-  }
-);
+    </div>
+  )
+})
 
-InputToggle.displayName = 'InputToggle';
+InputToggle.displayName = 'InputToggle'

@@ -72,72 +72,74 @@ export function MenuTable({ data, isLoading }: MenuTableProps) {
           />
         </div>
         <div className='flex gap-4 items-center'>
-        <button
-          onClick={() => navigate('/dashboard/menu/assign')}
-          className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-        >
-          Assign
-        </button>
-        <button
-          onClick={() => navigate('/dashboard/menu/create')}
-          className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-        >
-          Create
-        </button>
+          <button
+            onClick={() => navigate('/dashboard/menu/assign')}
+            className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          >
+            Assign
+          </button>
+          <button
+            onClick={() => navigate('/dashboard/menu/create')}
+            className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          >
+            Create
+          </button>
         </div>
       </section>
 
       {/* Table */}
-      <div className="rounded-md border overflow-hidden">
-        <table className="w-full">
-          <thead className="bg-gray-50 dark:bg-gray-900">
-            {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <th
-                    key={header.id}
-                    className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
-                  >
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
+      <div className="rounded-md border">
+        <div className="relative overflow-x-auto">
+          <table className="min-w-[900px] w-full">
+            <thead className="bg-gray-50 dark:bg-gray-900">
+              {table.getHeaderGroups().map((headerGroup) => (
+                <tr key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
+                    <th
+                      key={header.id}
+                      className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
+                    >
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
                           header.column.columnDef.header,
                           header.getContext()
                         )}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200">
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <tr
-                  key={row.id}
-                  className="transition-colors hover:bg-gray-50 dark:hover:bg-gray-800"
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id} className="px-6 py-4 whitespace-nowrap">
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </td>
+                    </th>
                   ))}
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td
-                  colSpan={menuColumns.length}
-                  className="px-6 py-4 text-center"
-                >
-                  Tidak ada data
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+              ))}
+            </thead>
+            <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200">
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <tr
+                    key={row.id}
+                    className="transition-colors hover:bg-gray-50 dark:hover:bg-gray-800"
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <td key={cell.id} className="px-6 py-4 whitespace-nowrap">
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </td>
+                    ))}
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan={menuColumns.length}
+                    className="px-6 py-4 text-center"
+                  >
+                    Tidak ada data
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {/* Pagination */}
@@ -153,7 +155,7 @@ export function MenuTable({ data, isLoading }: MenuTableProps) {
           <span className="font-medium">
             {Math.min(
               (table.getState().pagination.pageIndex + 1) *
-                table.getState().pagination.pageSize,
+              table.getState().pagination.pageSize,
               table.getFilteredRowModel().rows.length
             )}
           </span>{' '}
@@ -179,7 +181,7 @@ export function MenuTable({ data, isLoading }: MenuTableProps) {
           >
             {'<'}
           </button>
-          
+
           <span className="text-sm">
             Halaman{' '}
             <strong>

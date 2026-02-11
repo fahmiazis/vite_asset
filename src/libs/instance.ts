@@ -8,11 +8,6 @@ import toast from 'react-hot-toast'
 import qs from 'qs'
 import { deleteCookie, getAccessTokenClient, getCookie, setCookie } from '../utils/auth'
 
-/**
- * ===============================
- * ENV
- * ===============================
- */
 const API_BASE_URL =
   import.meta.env.VITE_API_URL ?? 'http://localhost:3000'
 
@@ -23,11 +18,6 @@ const UPLOAD_API_KEY = import.meta.env.VITE_KEY_IMAGE_ACCESS
 const buildAuthorizationHeader = (token: string): string => {
   return `Bearer ${token}`
 }
-/**
- * ===============================
- * Refresh token state
- * ===============================
- */
 let isRefreshing = false
 let failedQueue: Array<{
   resolve: (value?: unknown) => void
@@ -44,14 +34,6 @@ const processQueue = (
   failedQueue = []
 }
 
-/**
- * ===============================
- * Helpers
- * ===============================
- */
-const getCSRFToken = (): string | null =>
-  localStorage.getItem('csrfToken')
-
 const getRefreshToken = (): string | null =>
   getCookie('refresh_token') ?? null
 
@@ -60,30 +42,24 @@ const refreshAccessToken = async (): Promise<string | null> => {
     const refreshToken = getRefreshToken()
     console.log('refreshAccessToken ==>', refreshToken)
 
-    const csrfToken = getCSRFToken()
 
-    if (!refreshToken || !csrfToken) {
-      throw new Error('Missing refresh / csrf token')
+    if (!refreshToken) {
+      throw new Error('Missing refresh token')
     }
 
     const res = await axios.post(
       `${API_BASE_URL}/auth/refresh`,
-      {},
-      {
-        headers: {
-          'x-refresh-token': refreshToken,
-          'x-csrf-token': csrfToken,
-        },
-      }
+      {"refresh_token": refreshToken}
     )
 
     console.log('res refresh token ==>', res)
 
-    const { accessToken, refreshToken: newRefresh } = res.data ?? {}
+    const accessToken = res.data.data.access_token
+    const newRefresh = res.data.data.refresh_token
 
     if (accessToken) {
-      setCookie('accessToken', accessToken)
-      if (newRefresh) setCookie('refreshToken', newRefresh)
+      setCookie('access_token', accessToken)
+      if (newRefresh) setCookie('refresh_token', newRefresh)
       return accessToken
     }
 
@@ -94,11 +70,6 @@ const refreshAccessToken = async (): Promise<string | null> => {
   }
 }
 
-/**
- * ===============================
- * AXIOS PRIVATE
- * ===============================
- */
 export const axiosPrivate: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
   timeout: 30_000,
@@ -126,6 +97,7 @@ axiosPrivate.interceptors.response.use(
       }
 
     if (error.response?.status === 401 && !originalRequest._retry) {
+      console.log('kena token expired')
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject })
@@ -141,7 +113,10 @@ axiosPrivate.interceptors.response.use(
       isRefreshing = true
 
       try {
+        console.log('refresh token dijalankan')
         const newToken = await refreshAccessToken()
+
+        console.log('newToken ==>', newToken)
 
         if (newToken) {
           processQueue(null, newToken)
@@ -153,8 +128,8 @@ axiosPrivate.interceptors.response.use(
       } catch (err) {
         processQueue(error, null)
 
-        deleteCookie('accessToken')
-        deleteCookie('refreshToken')
+        deleteCookie('access_token')
+        deleteCookie('refresh_token')
         localStorage.removeItem('csrfToken')
 
         toast.error('Sesi kamu sudah habis, silakan login ulang')
@@ -170,11 +145,6 @@ axiosPrivate.interceptors.response.use(
   }
 )
 
-/**
- * ===============================
- * AXIOS PUBLIC
- * ===============================
- */
 export const axiosPublic: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
   timeout: 30_000,
@@ -196,11 +166,6 @@ axiosPublic.interceptors.response.use(
   }
 )
 
-/**
- * ===============================
- * AXIOS UPLOAD
- * ===============================
- */
 export const axiosUpload: AxiosInstance = axios.create({
   baseURL: UPLOAD_BASE_URL,
   timeout: 60_000,
@@ -209,11 +174,6 @@ export const axiosUpload: AxiosInstance = axios.create({
   },
 })
 
-/**
- * ===============================
- * QUERY BUILDER
- * ===============================
- */
 export const buildQuery = <T extends Record<string, unknown>>(
   params?: T
 ) => (params ? `?${qs.stringify(params)}` : '')
