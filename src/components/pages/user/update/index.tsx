@@ -50,7 +50,6 @@ export default function UpdateUser() {
             payload.email = formData.email.trim()
         }
 
-        // Validasi: minimal 1 field yang diisi
         if (Object.keys(payload).length === 0) {
             toast.error('Please change at least one field')
             return
