@@ -29,6 +29,9 @@ export const menuColumns: ColumnDef<allMenuState>[] = [
             return <div className="text-center">{row.index + 1}</div>
         },
         size: 60,
+        meta: {
+            sticky: 'left',
+        },
     },
     {
         accessorKey: 'id',
@@ -76,8 +79,8 @@ export const menuColumns: ColumnDef<allMenuState>[] = [
                 <div className="flex items-center">
                     <span
                         className={`px-2 py-1 text-xs font-medium rounded-full ${status === 'active'
-                                ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-                                : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+                            ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                            : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
                             }`}
                     >
                         {status === 'active' ? 'Aktif' : 'Tidak Aktif'}
@@ -95,5 +98,8 @@ export const menuColumns: ColumnDef<allMenuState>[] = [
             return <ActionButtons menuId={menu.id} />
         },
         size: 100,
+        meta: {
+            sticky: 'right',
+        },
     },
 ]

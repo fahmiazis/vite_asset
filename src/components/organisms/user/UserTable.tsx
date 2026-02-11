@@ -11,7 +11,10 @@ import {
 import { useState } from 'react'
 import type { userListState } from '../../../models/users/list'
 import { userColumns } from './columns'
-import Links from '../../atoms/links'
+import { useNavigate } from 'react-router-dom'
+import DeleteModals from '../modals/deleteModals'
+import { useDeleteModalStore } from '../../../stores/useDeleteModal'
+import { useDeleteUser } from '../../../hooks/mutation/user/useDeleteUser'
 
 interface UserTableProps {
   data: userListState[]
@@ -19,9 +22,18 @@ interface UserTableProps {
 }
 
 export function UserTable({ data, isLoading }: UserTableProps) {
+  const { isActive, id, reset  } = useDeleteModalStore();
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState('')
+
+   const deleteUserMutation = useDeleteUser({
+    onSuccess: () => {
+      reset() 
+    },
+  })
+
+  const navigate = useNavigate()
 
   const table = useReactTable({
     data,
@@ -56,20 +68,34 @@ export function UserTable({ data, isLoading }: UserTableProps) {
     )
   }
 
+  const handleDelete = () => {
+    if (id) {
+      deleteUserMutation.mutate(id)
+    }
+  }
+
   return (
     <div className="space-y-4">
+      {isActive && (
+        <DeleteModals handleSubmit={handleDelete}/>
+      )}
       <section className='flex items-center justify-between w-full'>
-      {/* Search Bar */}
-      <div className="flex items-center gap-4">
-        <input
-          type="text"
-          placeholder="Cari pengguna..."
-          value={globalFilter ?? ''}
-          onChange={(e) => setGlobalFilter(e.target.value)}
-          className="px-4 py-2 border border-gray-900 dark:border-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-sm"
-        />
-      </div>
-        <Links  href={'/dashboard/user/create'} children={'Create'} className='px-4'/>
+        {/* Search Bar */}
+        <div className="flex items-center gap-4">
+          <input
+            type="text"
+            placeholder="Cari pengguna..."
+            value={globalFilter ?? ''}
+            onChange={(e) => setGlobalFilter(e.target.value)}
+            className="px-4 py-2 border border-gray-900 dark:border-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-sm"
+          />
+        </div>
+        <button
+          onClick={() => navigate('/dashboard/user/create')}
+          className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        >
+          Create
+        </button>
       </section>
 
       {/* Table */}
@@ -86,9 +112,9 @@ export function UserTable({ data, isLoading }: UserTableProps) {
                     {header.isPlaceholder
                       ? null
                       : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                   </th>
                 ))}
               </tr>
@@ -138,7 +164,7 @@ export function UserTable({ data, isLoading }: UserTableProps) {
           <span className="font-medium">
             {Math.min(
               (table.getState().pagination.pageIndex + 1) *
-                table.getState().pagination.pageSize,
+              table.getState().pagination.pageSize,
               table.getFilteredRowModel().rows.length
             )}
           </span>{' '}
@@ -164,7 +190,7 @@ export function UserTable({ data, isLoading }: UserTableProps) {
           >
             {'<'}
           </button>
-          
+
           <span className="text-sm">
             Halaman{' '}
             <strong>
