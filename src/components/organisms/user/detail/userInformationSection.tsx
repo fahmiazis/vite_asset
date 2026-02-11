@@ -1,6 +1,8 @@
 import React from 'react';
 import type { DetailuserState } from '../../../../models/users/detail';
 import Images from '../../../atoms/images';
+import Buttons from '../../../atoms/buttons';
+import { useNavigate } from 'react-router-dom';
 
 interface userBaseProps {
     data?: DetailuserState
@@ -8,6 +10,10 @@ interface userBaseProps {
 }
 
 const BaseUserInformation: React.FC<userBaseProps> = ({ data, className }: userBaseProps) => {
+    const navigate = useNavigate()
+    const handleUpdate = () => {
+        navigate(`/dashboard/user/${data?.id}/update`)
+    }
     return (
         <div className={`${className} bg-white rounded-3xl shadow-2xl shadow-indigo-200/50 overflow-hidden border border-slate-100 hover:shadow-indigo-300/60 transition-all duration-500 hover:scale-[1.02]`}>
             <div className="relative z-50 bg-gradient-to-br from-indigo-500 via-blue-500 to-purple-600 h-32 overflow-hidden"></div>
@@ -24,6 +30,9 @@ const BaseUserInformation: React.FC<userBaseProps> = ({ data, className }: userB
                     <a href={`mailto:${data?.email}`} className="text-sm text-slate-500 hover:text-indigo-600 transition-colors duration-200">
                         {data?.email}
                     </a>
+                    <div className='mt-8'>
+                    <Buttons label='Update' onClick={handleUpdate}/>
+                    </div>
                 </div>
 
                 <div className='w-1/2'>

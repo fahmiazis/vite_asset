@@ -17,6 +17,7 @@ import MasterMenu from '../components/pages/menu'
 import CreateMenu from '../components/pages/menu/create'
 import DetailMenu from '../components/pages/menu/detail'
 import AssignMenuPage from '../components/pages/menu/assign'
+import UpdateUser from '../components/pages/user/update'
 
 export const router = createBrowserRouter([
   {
@@ -82,6 +83,10 @@ export const router = createBrowserRouter([
       {
         path: 'user/:id',
         element: <DetailUser/>,
+      },
+      {
+        path: 'user/:id/update',
+        element: <UpdateUser/>,
       },
       {
         path: 'asset',
