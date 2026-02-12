@@ -21,6 +21,7 @@ import UpdateUser from '../components/pages/user/update'
 import CreateApproval from '../components/pages/approval/create'
 import ApprovalPage from '../components/pages/approval'
 import ApprovalFlowDetail from '../components/pages/approval/detail'
+import CreateStepApproval from '../components/pages/approval/detail/createStep'
 
 export const router = createBrowserRouter([
   {
@@ -98,6 +99,10 @@ export const router = createBrowserRouter([
       {
         path: 'approval/:id',
         element: <ApprovalFlowDetail/>,
+      },
+      {
+        path: 'approval/:id/create-step',
+        element: <CreateStepApproval/>,
       },
       {
         path: 'approval/create',

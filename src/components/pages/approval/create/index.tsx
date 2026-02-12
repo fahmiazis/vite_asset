@@ -106,7 +106,6 @@ export default function CreateApprovalFlow() {
       <Head label="Create Approval Flow" />
 
       <form onSubmit={handleSubmit}>
-        {/* Row 1: Flow Code & Flow Name */}
         <section className="flex gap-4 mt-4">
           <div className="w-1/2 flex flex-col gap-4">
             <Inputs

@@ -14,7 +14,7 @@ export default function ApprovalFlowDetail() {
             <Head label={`Detail Approval Flow ${data?.data.flow_name}`} className='mb-4' />
             <p>informais lain</p>
             {data && (
-                <FlowStepTable data={data?.data.flow_steps}/>
+                <FlowStepTable data={data?.data.flow_steps} flowId={id}/>
             )}
         </>
     )
