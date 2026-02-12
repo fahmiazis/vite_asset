@@ -5,6 +5,8 @@ import MobileSidebar from '../sidebar/mobile'
 import Images from '../../../atoms/images'
 import sidebarStore from '../../../../stores/useSidebarLayout'
 import { useDarkMode } from '../../../../hooks/useDarkMode'
+import ProfileCardnavbar from '../../../molecules/card/profileCardNavbar'
+import { useMyProfile } from '../../../../hooks/query/auth/myProfile'
 
 interface NavbarProps {
     title?: string
@@ -17,6 +19,7 @@ export default function Navbar({
     const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
     const { isActive, setIsActive } = sidebarStore()
+    const { data: myProfile } = useMyProfile()
 
     const toggleSidebar = () => {
         setIsSidebarOpen(prevState => !prevState)
@@ -50,18 +53,17 @@ export default function Navbar({
                     </h6>
                 </div>
             </div>
-            {/* <div className='flex gap-3 items-center'>
-                <button className='capitalize flex gap-2 md:gap-4 items-center border-2 px-4 py-1 md:py-2 rounded-full border-gray-300 font-bold cursor-pointer text-black bg-white'>
-                    <Images src='https://i.pinimg.com/1200x/59/7f/11/597f11b631d7d94492f1adb95110cc44.jpg' className='w-6 md:w-8 rounded-full' />
-                    <p className='text-sm md:text-lg'>Masuk</p>
+            <div className='flex gap-4 items-center'>
+                <button
+                    onClick={toggleDarkMode}
+                    className="p-2 text-2xl rounded-xl border border-zinc-300 dark:border-zinc-700"
+                >
+                    {isDark ? <MoonIcon /> : <Sun01Icon />}
                 </button>
-            </div> */}
-            <button
-                onClick={toggleDarkMode}
-                className="p-2 text-2xl rounded-xl border border-zinc-300 dark:border-zinc-700"
-            >
-                {isDark ? <MoonIcon/> : <Sun01Icon/>}
-            </button>
+                {myProfile && (
+                    <ProfileCardnavbar name={myProfile?.data.fullname} email={myProfile?.data.email} avatarUrl={"https://i.pinimg.com/1200x/c3/0b/53/c30b53f04c0a4b499ebbf9e19f54ab10.jpg"} />
+                )}
+            </div>
             <MobileSidebar isOpen={isSidebarOpen} setIsOpen={() => setIsSidebarOpen(false)} />
         </section>
     )
