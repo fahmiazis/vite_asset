@@ -1,6 +1,7 @@
 import { useApprovalFlowDetail } from '../../../../hooks/query/approval/detail'
 import { useParams } from 'react-router-dom'
 import Head from '../../../molecules/head'
+import { FlowStepTable } from '../../../organisms/approval/detail'
 
 export default function ApprovalFlowDetail() {
     const { id } = useParams()
@@ -11,7 +12,10 @@ export default function ApprovalFlowDetail() {
     return (
         <>
             <Head label={`Detail Approval Flow ${data?.data.flow_name}`} className='mb-4' />
-            detail approval flow here
+            <p>informais lain</p>
+            {data && (
+                <FlowStepTable data={data?.data.flow_steps}/>
+            )}
         </>
     )
 }

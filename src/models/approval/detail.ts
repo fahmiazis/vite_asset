@@ -25,4 +25,28 @@ export interface detailApprovalFlowState {
   is_active: boolean
   created_at: string
   updated_at: string
+  flow_steps: FlowStep[]
+}
+
+export interface FlowStep {
+  id: string
+  flow_id: string
+  step_order: number
+  step_name: string
+  step_role: string
+  role_id: string
+  role_name: string
+  branch_id: any
+  structure: string
+  is_required: boolean
+  can_skip: boolean
+  is_visible: boolean
+  type: string
+  category: string
+  approval_way: string
+  auto_approve: boolean
+  timeout_hours: any
+  conditions: any
+  created_at: string
+  updated_at: string
 }
