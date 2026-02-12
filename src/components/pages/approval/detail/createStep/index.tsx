@@ -65,17 +65,18 @@ export default function CreateStepApproval() {
                 <section className="flex gap-4 mt-4">
                     <div className="w-1/2 flex flex-col gap-4">
                         <Inputs
-                    label="step_order"
-                    value={`${formData.step_order}`}
-                    onChange={(value) => setFormData((prev) => ({ ...prev, step_order: Number(value) }))}
-                    placeholder="e.g., procurement"
-                    required
-                  />
+                            label="Step Order"
+                            numberOnly
+                            value={`${formData.step_order}`}
+                            onChange={(value) => setFormData((prev) => ({ ...prev, step_order: Number(value) }))}
+                            placeholder="e.g., 27"
+                            required
+                        />
                         <Inputs
-                            label="step_name"
+                            label="Step Name"
                             value={formData.step_name}
                             onChange={(value) => setFormData((prev) => ({ ...prev, step_name: value }))}
-                            placeholder="e.g., procurement request"
+                            placeholder="e.g., Approval"
                             required
                         />
                     </div>
@@ -85,7 +86,6 @@ export default function CreateStepApproval() {
                             label="Step Role"
                             value={formData.step_role}
                             onChange={(value) => setFormData((prev) => ({ ...prev, step_role: value }))}
-                            placeholder="e.g., sequential"
                             required
                             options={stepRole} />
                         {roleList && (
@@ -93,7 +93,6 @@ export default function CreateStepApproval() {
                                 label="Role ID"
                                 value={formData.role_id}
                                 onChange={(value) => setFormData((prev) => ({ ...prev, role_id: value }))}
-                                placeholder="e.g., sequential"
                                 required
                                 options={roleListToSelectOptions(roleList?.data)} />
                         )}
@@ -103,9 +102,10 @@ export default function CreateStepApproval() {
 
                 <Inputs
                     label="Strukture"
+                    containerClassName="mt-4"
                     value={formData.structure}
                     onChange={(value) => setFormData((prev) => ({ ...prev, structure: value }))}
-                    placeholder="e.g., procurement request"
+                    placeholder="e.g., structure"
                     required
                 />
 

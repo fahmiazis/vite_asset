@@ -17,9 +17,10 @@ interface FlowStepTableProps {
   data: FlowStep[]
   isLoading?: boolean
   flowId?: string
+  switchBtn?: () => void
 }
 
-export function FlowStepTable({ data, isLoading, flowId }: FlowStepTableProps) {
+export function FlowStepTable({ data, isLoading, flowId, switchBtn }: FlowStepTableProps) {
   const navigate = useNavigate()
 
   const [sorting, setSorting] = useState<SortingState>([])
@@ -72,12 +73,22 @@ export function FlowStepTable({ data, isLoading, flowId }: FlowStepTableProps) {
             className="px-4 py-2 border border-gray-900 dark:border-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-sm"
           />
         </div>
-        <button
-          onClick={() => navigate(`/dashboard/approval/${flowId}/create-step`)}
-          className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-        >
-          Create Step
-        </button>
+        <section className='flex gap-4 items-center'>
+          {switchBtn && (
+            <button
+              onClick={switchBtn}
+              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            >
+              Switch
+            </button>
+          )}
+          <button
+            onClick={() => navigate(`/dashboard/approval/${flowId}/create-step`)}
+            className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          >
+            Create Step
+          </button>
+        </section>
       </section>
 
       {/* Table */}
@@ -94,9 +105,9 @@ export function FlowStepTable({ data, isLoading, flowId }: FlowStepTableProps) {
                     {header.isPlaceholder
                       ? null
                       : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                   </th>
                 ))}
               </tr>
@@ -146,7 +157,7 @@ export function FlowStepTable({ data, isLoading, flowId }: FlowStepTableProps) {
           <span className="font-medium">
             {Math.min(
               (table.getState().pagination.pageIndex + 1) *
-                table.getState().pagination.pageSize,
+              table.getState().pagination.pageSize,
               table.getFilteredRowModel().rows.length
             )}
           </span>{' '}
@@ -172,7 +183,7 @@ export function FlowStepTable({ data, isLoading, flowId }: FlowStepTableProps) {
           >
             {'<'}
           </button>
-          
+
           <span className="text-sm">
             Page{' '}
             <strong>
