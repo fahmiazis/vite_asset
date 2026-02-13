@@ -31,8 +31,8 @@ export default function SidebarContent({
               : "hover:bg-gray-700 hover:text-white"
               }`}
           >
-            <DashboardSquare02Icon className="w-5 h-5" />
-            <span>{item.name}</span>
+            <DashboardSquare02Icon className="w-4 h-4" />
+            <span className='text-xs'>{item.name}</span>
           </Links>
         );
       })}

@@ -143,13 +143,13 @@ export const contactsData = [
 export default function MainPage() {
   return (
     <div className="w-full">
-      <section className="flex justify-between gap-4 items-center my-4">
+      <section className="flex justify-between gap-4 items-center">
         <BalanceCard title={"Saving"} balance={45000} className="w-1/4" />
         <BalanceCard title={"Saving"} balance={90000} className="w-1/4" />
         <BalanceCard title={"Saving"} balance={4000} className="w-1/4" />
         <BalanceCard title={"Saving"} balance={1000000} className="w-1/4" />
       </section>
-      <section className="flex justify-between gap-4">
+      <section className="flex justify-between gap-4 mt-2">
         <TableChart className="w-2/3" />
         <CyrcleChart
           className="w-1/3"

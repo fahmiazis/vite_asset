@@ -52,7 +52,7 @@ export const Textareas = forwardRef<HTMLTextAreaElement, TextareaProps>(
         <label 
           className={
             labelClassName || 
-            'block text-xl font-medium mb-1 md:mb-2'
+            'block text-lg font-medium mb-1 md:mb-2'
           }
         >
           {label}
@@ -105,7 +105,7 @@ export const Textareas = forwardRef<HTMLTextAreaElement, TextareaProps>(
         {error && (
           <p 
             id={`${label}-error`}
-            className="mt-1 text-sm text-red-600"
+            className="mt-1 text-xs text-red-600"
             role="alert"
           >
             {error}
@@ -116,7 +116,7 @@ export const Textareas = forwardRef<HTMLTextAreaElement, TextareaProps>(
         {helperText && !error && (
           <p 
             id={`${label}-helper`}
-            className="mt-1 text-sm text-gray-500"
+            className="mt-1 text-xs text-gray-500"
           >
             {helperText}
           </p>

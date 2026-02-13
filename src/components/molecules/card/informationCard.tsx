@@ -37,15 +37,15 @@ const BalanceCard = ({
       className={`bg-white rounded-3xl p-6 shadow-sm border border-gray-100 ${className}`}
     >
       {/* Header */}
-      <div className="flex items-start justify-between mb-6">
-        <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
+      <div className="flex items-start justify-between mb-4">
+        <h3 className="text-md font-semibold text-gray-900">{title}</h3>
         
         {showArrow && (
           <button
             onClick={onArrowClick}
-            className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors"
+            className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors"
           >
-            {icon || <ArrowUpRight01Icon className="w-5 h-5 text-gray-700" />}
+            {icon || <ArrowUpRight01Icon className="w-3 h-3 text-gray-700" />}
           </button>
         )}
       </div>
@@ -53,10 +53,10 @@ const BalanceCard = ({
       {/* Balance */}
       <div className="mb-4">
         <div className="flex items-baseline">
-          <span className="text-5xl font-bold text-gray-900">
+          <span className="text-2xl font-bold text-gray-900">
             ${whole}
           </span>
-          <span className="text-5xl font-bold text-gray-300">
+          <span className="text-2xl font-bold text-gray-300">
             .{decimal}
           </span>
         </div>
@@ -72,14 +72,14 @@ const BalanceCard = ({
                 : 'bg-red-50 text-red-600'
             }`}
           >
-            <span className="text-lg">
+            <span className="text-sm">
               {trend.isPositive !== false ? '↑' : '↓'}
             </span>
-            <span className="text-sm font-semibold">
+            <span className="text-xs font-semibold">
               {Math.abs(trend.value)}%
             </span>
           </div>
-          <span className="text-sm text-gray-400">
+          <span className="text-xs text-gray-400">
             {trend.label || 'vs last month'}
           </span>
         </div>

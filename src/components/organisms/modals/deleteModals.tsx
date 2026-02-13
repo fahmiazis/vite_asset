@@ -37,7 +37,7 @@ export default function DeleteModals({
             <Images src={ilustration} />
           </section>
         )}
-        <h5 className="font-semibold text-xl">{title ? title : `Are you sure to Delete ${label}`}</h5>
+        <h5 className="font-semibold text-lg">{title ? title : `Are you sure to Delete ${label}`}</h5>
         <p className="font-light max-w-2/3 mx-auto">{desc}</p>
         <section className="w-full flex gap-4 mt-4">
           <Buttons

@@ -99,7 +99,7 @@ export default function Forbidden() {
             <svg className="w-6 h-6 text-yellow-400 animate-pulse" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
             </svg>
-            <span className="text-xl md:text-2xl font-bold text-red-400 uppercase tracking-wider">
+            <span className="text-lg md:text-2xl font-bold text-red-400 uppercase tracking-wider">
               Access Denied
             </span>
           </div>
@@ -110,12 +110,12 @@ export default function Forbidden() {
           <h2 className="text-2xl md:text-3xl font-bold text-white">
             Forbidden
           </h2>
-          <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-sm md:text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed">
             You don't have permission to access this resource.
             <br />
             This area is restricted to authorized personnel only.
           </p>
-          <div className="inline-block mt-4 px-4 py-2 bg-black/50 border border-red-900/50 rounded text-sm text-red-400 font-mono">
+          <div className="inline-block mt-4 px-4 py-2 bg-black/50 border border-red-900/50 rounded text-xs text-red-400 font-mono">
             ERROR CODE: 403_FORBIDDEN
           </div>
         </div>

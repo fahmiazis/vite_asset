@@ -13,7 +13,7 @@ function ActionButtons({ menuId }: { menuId: string }) {
         <div className="flex items-center gap-2">
             <button
                 onClick={handleDetail}
-                className="px-3 py-1.5 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                className="px-3 py-1.5 text-xs font-medium text-white bg-blue-600 rounded hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >
                 Detail
             </button>
@@ -64,7 +64,7 @@ export const menuColumns: ColumnDef<allMenuState>[] = [
         header: 'Path',
         cell: ({ row }) => {
             return (
-                <div className="font-mono text-sm text-gray-600 dark:text-gray-400">
+                <div className="font-mono text-xs text-gray-600 dark:text-gray-400">
                     {row.getValue('path')}
                 </div>
             )

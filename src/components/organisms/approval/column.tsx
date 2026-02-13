@@ -108,7 +108,7 @@ export const approvalColumns: ColumnDef<approvalListState>[] = [
     cell: ({ row }) => {
       const date = row.getValue('created_at') as string
       return (
-        <div className="text-sm">
+        <div className="text-xs">
           {new Date(date).toLocaleDateString('id-ID', {
             day: '2-digit',
             month: 'short',

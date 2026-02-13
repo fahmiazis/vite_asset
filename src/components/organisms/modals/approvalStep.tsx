@@ -63,7 +63,7 @@ function SortableStepItem({ step }: { step: FlowStep }) {
           {step.role_name} • {step.type}
         </p>
       </div>
-      <span className="text-sm font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 px-2 py-1 rounded">
+      <span className="text-xs font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 px-2 py-1 rounded">
         Step {step.step_order}
       </span>
     </div>
@@ -141,7 +141,7 @@ export default function ReorderStepModal({
           <h2 className="text-2xl font-bold text-blue-900 dark:text-blue-100">
             Approval Step
           </h2>
-          <p className="text-sm text-blue-700 dark:text-blue-300 mt-1">
+          <p className="text-xs text-blue-700 dark:text-blue-300 mt-1">
             Drag to reorder the approval steps
           </p>
         </div>

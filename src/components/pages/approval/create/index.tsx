@@ -195,10 +195,10 @@ export default function CreateApprovalFlow() {
 
         {/* Info Static Values */}
         <section className="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-          <p className="text-sm text-gray-600 dark:text-gray-400">
+          <p className="text-xs text-gray-600 dark:text-gray-400">
             <strong>Note:</strong> The following values will be set automatically:
           </p>
-          <ul className="list-disc list-inside text-sm text-gray-600 dark:text-gray-400 mt-2">
+          <ul className="list-disc list-inside text-xs text-gray-600 dark:text-gray-400 mt-2">
             <li>
               Is Customizable: <strong>true</strong>
             </li>

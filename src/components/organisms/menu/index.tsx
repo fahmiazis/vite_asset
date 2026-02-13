@@ -74,13 +74,13 @@ export function MenuTable({ data, isLoading }: MenuTableProps) {
         <div className='flex gap-4 items-center'>
           <button
             onClick={() => navigate('/dashboard/menu/assign')}
-            className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="px-4 py-2 text-xs font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
             Assign
           </button>
           <button
             onClick={() => navigate('/dashboard/menu/create')}
-            className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="px-4 py-2 text-xs font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
             Create
           </button>
@@ -144,7 +144,7 @@ export function MenuTable({ data, isLoading }: MenuTableProps) {
 
       {/* Pagination */}
       <div className="flex items-center justify-between">
-        <div className="text-sm">
+        <div className="text-xs">
           Show{' '}
           <span className="font-medium">
             {table.getState().pagination.pageIndex *
@@ -182,7 +182,7 @@ export function MenuTable({ data, isLoading }: MenuTableProps) {
             {'<'}
           </button>
 
-          <span className="text-sm">
+          <span className="text-xs">
             Page{' '}
             <strong>
               {table.getState().pagination.pageIndex + 1} From{' '}

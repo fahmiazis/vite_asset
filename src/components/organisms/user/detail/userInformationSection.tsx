@@ -27,14 +27,14 @@ const BaseUserInformation: React.FC<userBaseProps> = ({ data, className }: userB
                         className="-mt-40 absolute w-44 h-44 rounded-full z-50 border-4 border-white shadow-xl object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     <h2 className="pt-10 text-3xl font-bold text-slate-800 mb-1 tracking-tight">{data?.fullname}</h2>
-                    <a href={`mailto:${data?.email}`} className="text-sm text-slate-500 hover:text-indigo-600 transition-colors duration-200">
+                    <a href={`mailto:${data?.email}`} className="text-xs text-slate-500 hover:text-indigo-600 transition-colors duration-200">
                         {data?.email}
                     </a>
                     <div className='mt-8 flex flex-col gap-4'>
                         {data?.roles.map((role, key) => (
                             <div
                                 key={key}
-                                className="flex items-center gap-2 px-4 py-1.5 bg-blue-100 text-blue-700 rounded-full text-sm font-medium w-fit capitalize"
+                                className="flex items-center gap-2 px-4 py-1.5 bg-blue-100 text-blue-700 rounded-full text-xs font-medium w-fit capitalize"
                             >
                                 {role.name}
                             </div>
@@ -74,7 +74,7 @@ const InfoItem: React.FC<InfoItemProps> = ({ label, value, highlight }) => {
             <div className="text-xs text-slate-400 font-medium uppercase tracking-wider mb-1.5 group-hover:text-indigo-500 transition-colors duration-200">
                 {label}
             </div>
-            <div className={`text-sm font-semibold ${highlight
+            <div className={`text-xs font-semibold ${highlight
                 ? 'text-indigo-600 bg-indigo-50 px-3 py-1.5 rounded-lg inline-block'
                 : 'text-slate-700'
                 } group-hover:translate-x-0.5 transition-transform duration-200`}>

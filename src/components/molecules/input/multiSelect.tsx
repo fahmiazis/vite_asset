@@ -79,7 +79,7 @@ export const MultiSelect = forwardRef<HTMLSelectElement, MultiSelectProps>(
         <label 
           className={
             labelClassName || 
-            'block text-xl font-medium mb-1 md:mb-2'
+            'block text-lg font-medium mb-1 md:mb-2'
           }
         >
           {label}
@@ -133,7 +133,7 @@ export const MultiSelect = forwardRef<HTMLSelectElement, MultiSelectProps>(
           {isOpen && !disabled && (
             <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-auto">
               {isMaxReached && (
-                <div className="px-4 py-2 text-sm text-orange-600 bg-orange-50 border-b border-orange-200">
+                <div className="px-4 py-2 text-xs text-orange-600 bg-orange-50 border-b border-orange-200">
                   Maximum {maxSelections} selections reached
                 </div>
               )}
@@ -148,7 +148,7 @@ export const MultiSelect = forwardRef<HTMLSelectElement, MultiSelectProps>(
                     onClick={() => handleSelect(String(option.value))}
                     disabled={isDisabledOption}
                     className={`
-                      w-full px-4 py-2 text-left text-sm
+                      w-full px-4 py-2 text-left text-xs
                       transition-colors duration-150
                       flex items-center gap-2
                       ${
@@ -214,7 +214,7 @@ export const MultiSelect = forwardRef<HTMLSelectElement, MultiSelectProps>(
         {/* Selected Items */}
         {value.length > 0 && (
           <div className="mt-3">
-            <p className="text-sm font-medium mb-2">
+            <p className="text-xs font-medium mb-2">
               Selected {label.toLowerCase()}
             </p>
             <div className="flex flex-wrap gap-2">
@@ -223,7 +223,7 @@ export const MultiSelect = forwardRef<HTMLSelectElement, MultiSelectProps>(
                 return (
                   <div
                     key={selectedValue}
-                    className="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-100 text-blue-700 rounded-full text-sm font-medium"
+                    className="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-100 text-blue-700 rounded-full text-xs font-medium"
                   >
                     <span>{option?.label || selectedValue}</span>
                     <button
@@ -257,7 +257,7 @@ export const MultiSelect = forwardRef<HTMLSelectElement, MultiSelectProps>(
         {error && (
           <p 
             id={`${label}-error`}
-            className="mt-1 text-sm text-red-600"
+            className="mt-1 text-xs text-red-600"
             role="alert"
           >
             {error}
@@ -268,7 +268,7 @@ export const MultiSelect = forwardRef<HTMLSelectElement, MultiSelectProps>(
         {helperText && !error && (
           <p 
             id={`${label}-helper`}
-            className="mt-1 text-sm text-gray-500"
+            className="mt-1 text-xs text-gray-500"
           >
             {helperText}
           </p>

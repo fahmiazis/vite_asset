@@ -13,7 +13,7 @@ function ActionButtons({ roleId }: { roleId: string }) {
     <div className="flex items-center gap-2">
       <button
         onClick={handleDetail}
-        className="px-3 py-1.5 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        className="px-3 py-1.5 text-xs font-medium text-white bg-blue-600 rounded hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
       >
         Detail
       </button>
@@ -55,7 +55,7 @@ export const roleColumns: ColumnDef<roleListState>[] = [
     cell: ({ row }) => {
       const date = new Date(row.getValue('created_at'))
       return (
-        <div className="text-sm">
+        <div className="text-xs">
           {date.toLocaleDateString('id-ID', {
             day: '2-digit',
             month: 'long',
@@ -71,7 +71,7 @@ export const roleColumns: ColumnDef<roleListState>[] = [
     cell: ({ row }) => {
       const date = new Date(row.getValue('updated_at'))
       return (
-        <div className="text-sm text-gray-600 dark:text-gray-400">
+        <div className="text-xs text-gray-600 dark:text-gray-400">
           {date.toLocaleDateString('id-ID', {
             day: '2-digit',
             month: 'long',

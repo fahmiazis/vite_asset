@@ -69,8 +69,8 @@ const LoginPage = () => {
             <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-blue-400 via-purple-400 to-blue-500 p-12 items-center justify-center relative overflow-hidden">
 
                 <div className="text-white max-w-md z-10">
-                    <p className="text-lg mb-4 opacity-90">You can easily</p>
-                    <h1 className="text-5xl font-bold leading-tight">
+                    <p className="text-sm mb-4 opacity-90">You can easily</p>
+                    <h1 className="text-2xl font-bold leading-tight">
                         Get access your personal hub for clarity and productivity
                     </h1>
                 </div>
@@ -90,11 +90,11 @@ const LoginPage = () => {
                     <div className="mb-8">
                         <div className="flex items-center gap-2 mb-4">
                             {/* <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center lg:hidden">
-                                <span className="text-white text-xl font-bold">*</span>
+                                <span className="text-white text-lg font-bold">*</span>
                             </div> */}
                             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">Login</h2>
                         </div>
-                        <p className="text-gray-500 text-sm lg:text-base">
+                        <p className="text-gray-500 text-xs lg:text-base">
                             Access your tasks, notes, and projects anytime, anywhere - and keep everything flowing in one place.
                         </p>
                     </div>
@@ -103,7 +103,7 @@ const LoginPage = () => {
                     <div className="space-y-5">
                         {/* Email Input */}
                         <div>
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                            <label htmlFor="email" className="block text-xs font-medium text-gray-700 mb-2">
                                 Your email
                             </label>
                             <input
@@ -119,7 +119,7 @@ const LoginPage = () => {
 
                         {/* Password Input */}
                         <div>
-                            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                            <label htmlFor="password" className="block text-xs font-medium text-gray-700 mb-2">
                                 Password
                             </label>
                             <div className="relative">
@@ -159,7 +159,7 @@ const LoginPage = () => {
                             <div className="absolute inset-0 flex items-center">
                                 <div className="w-full border-t border-gray-300"></div>
                             </div>
-                            <div className="relative flex justify-center text-sm">
+                            <div className="relative flex justify-center text-xs">
                                 <span className="px-4 bg-white text-gray-500">or continue with</span>
                             </div>
                         </div>
@@ -195,7 +195,7 @@ const LoginPage = () => {
                     </div>
 
                     {/* Sign Up Link */}
-                    <p className="mt-6 text-center text-sm text-gray-600">
+                    <p className="mt-6 text-center text-xs text-gray-600">
                         Don't have an account?{' '}
                         <a href="#" className="text-blue-600 hover:text-blue-700 font-semibold hover:underline">
                             Sign up

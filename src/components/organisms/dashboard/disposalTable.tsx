@@ -31,7 +31,7 @@ const DisposalList = ({
     <div className={`bg-white rounded-3xl p-6 shadow-sm border border-gray-100 ${className}`}>
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
+        <h3 className="text-sm font-semibold text-gray-900">{title}</h3>
         
         {showArrow && (
           <button
@@ -71,7 +71,7 @@ const DisposalList = ({
               />
               {/* Fallback avatar dengan initial */}
               <div
-                className="w-12 h-12 rounded-full hidden items-center justify-center text-white font-semibold text-lg"
+                className="w-12 h-12 rounded-full hidden items-center justify-center text-white font-semibold text-sm"
                 style={{ backgroundColor: item.avatarBgColor || '#6366f1' }}
               >
                 {item.name.charAt(0).toUpperCase()}
@@ -80,7 +80,7 @@ const DisposalList = ({
 
             {/* Content */}
             <div className="flex-1 min-w-0">
-              <h4 className="text-sm font-semibold text-gray-900 mb-0.5">
+              <h4 className="text-xs font-semibold text-gray-900 mb-0.5">
                 {item.name}
               </h4>
               <p className="text-xs text-gray-500 truncate">

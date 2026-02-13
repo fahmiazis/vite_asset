@@ -25,7 +25,7 @@ const ProfileCardnavbar: React.FC<ProfileCardnavbarProps> = ({
         />
 
         <div className="leading-tight">
-          <p className="text-sm font-semibold text-gray-900 dark:text-white">{name}</p>
+          <p className="text-xs font-semibold text-gray-900 dark:text-white">{name}</p>
           <p className="text-xs text-gray-500 dark:text-white">{email}</p>
         </div>
       </div>

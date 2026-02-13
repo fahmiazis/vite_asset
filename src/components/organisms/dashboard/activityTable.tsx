@@ -28,11 +28,11 @@ const RecentTransactions = ({
     <div className={`bg-white rounded-3xl p-6 shadow-sm border border-gray-100 ${className}`}>
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-xl font-semibold text-gray-900">Recent transactions</h3>
+        <h3 className="text-lg font-semibold text-gray-900">Recent transactions</h3>
         
         <div className="flex items-center gap-3">
           {/* Dropdown filter */}
-          <select className="px-4 py-2 border border-gray-200 rounded-xl text-sm text-gray-700 bg-white hover:bg-gray-50 transition-colors">
+          <select className="px-4 py-2 border border-gray-200 rounded-xl text-xs text-gray-700 bg-white hover:bg-gray-50 transition-colors">
             <option>All accounts</option>
             <option>Checking</option>
             <option>Savings</option>
@@ -43,7 +43,7 @@ const RecentTransactions = ({
           {showSeeAll && (
             <button
               onClick={onSeeAllClick}
-              className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:text-gray-900 transition-colors"
+              className="flex items-center gap-2 px-4 py-2 text-xs text-gray-700 hover:text-gray-900 transition-colors"
             >
               See all
               <ArrowRight01Icon className="w-4 h-4" />
@@ -81,12 +81,12 @@ const RecentTransactions = ({
                 className="border-b border-gray-50 hover:bg-gray-50 transition-colors"
               >
                 {/* Date */}
-                <td className="py-4 px-4 text-sm text-gray-900">
+                <td className="py-4 px-4 text-xs text-gray-900">
                   {transaction.date}
                 </td>
 
                 {/* Amount */}
-                <td className="py-4 px-4 text-sm font-semibold text-gray-900">
+                <td className="py-4 px-4 text-xs font-semibold text-gray-900">
                   - ${Math.abs(transaction.amount)}
                 </td>
 
@@ -95,27 +95,27 @@ const RecentTransactions = ({
                   <div className="flex items-center gap-3">
                     {transaction.icon ? (
                       <div
-                        className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-xs font-bold flex-shrink-0"
+                        className="w-6 h-6 rounded-lg flex items-center justify-center text-white text-xs font-bold flex-shrink-0"
                         style={{ backgroundColor: transaction.iconBgColor || '#6366f1' }}
                       >
                         {transaction.icon}
                       </div>
                     ) : (
-                      <div className="w-8 h-8 rounded-lg bg-gray-200 flex items-center justify-center flex-shrink-0">
+                      <div className="w-6 h-6 rounded-lg bg-gray-200 flex items-center justify-center flex-shrink-0">
                         <span className="text-xs text-gray-500">?</span>
                       </div>
                     )}
-                    <span className="text-sm text-gray-900">{transaction.paymentName}</span>
+                    <span className="text-xs text-gray-900">{transaction.paymentName}</span>
                   </div>
                 </td>
 
                 {/* Method */}
-                <td className="py-4 px-4 text-sm text-gray-900">
+                <td className="py-4 px-4 text-xs text-gray-900">
                   {transaction.method}
                 </td>
 
                 {/* Category */}
-                <td className="py-4 px-4 text-sm text-gray-600">
+                <td className="py-4 px-4 text-xs text-gray-600">
                   {transaction.category}
                 </td>
               </tr>

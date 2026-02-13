@@ -1,4 +1,4 @@
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 interface TableChartProps {
     className?: string
@@ -20,29 +20,29 @@ const TableChart = ({
     return (
         <div className={`${className} bg-white rounded-3xl p-8 shadow-sm`}>
             <div className="flex items-center justify-between mb-8">
-                <h2 className="text-3xl font-bold text-gray-900">Money flow</h2>
+                <h2 className="text-2xl font-bold text-gray-900">Money flow</h2>
 
                 <div className="flex items-center gap-6">
                     {/* Legend */}
                     <div className="flex items-center gap-4">
                         <div className="flex items-center gap-2">
                             <div className="w-3 h-3 rounded-full bg-[#6366f1]"></div>
-                            <span className="text-sm text-gray-600">Income</span>
+                            <span className="text-xs text-gray-600">Income</span>
                         </div>
                         <div className="flex items-center gap-2">
                             <div className="w-3 h-3 rounded-full bg-[#a5b4fc]"></div>
-                            <span className="text-sm text-gray-600">Expense</span>
+                            <span className="text-xs text-gray-600">Expense</span>
                         </div>
                     </div>
 
                     {/* Filters */}
-                    <select className="px-4 py-2 border border-gray-200 rounded-xl text-sm text-gray-700 bg-white">
+                    <select className="px-4 py-2 border border-gray-200 rounded-xl text-xs text-gray-700 bg-white">
                         <option>All accounts</option>
                         <option>Checking</option>
                         <option>Savings</option>
                     </select>
 
-                    <select className="px-4 py-2 border border-gray-200 rounded-xl text-sm text-gray-700 bg-white">
+                    <select className="px-4 py-2 border border-gray-200 rounded-xl text-xs text-gray-700 bg-white">
                         <option>This year</option>
                         <option>This month</option>
                         <option>Last 6 months</option>
@@ -61,13 +61,13 @@ const TableChart = ({
                         dataKey="month"
                         axisLine={false}
                         tickLine={false}
-                        tick={{ fill: '#9ca3af', fontSize: 14 }}
+                        tick={{ fill: '#9ca3af', fontSize: 12 }}
                         dy={10}
                     />
                     <YAxis
                         axisLine={false}
                         tickLine={false}
-                        tick={{ fill: '#9ca3af', fontSize: 14 }}
+                        tick={{ fill: '#9ca3af', fontSize: 12 }}
                         tickFormatter={(value) => `$${Number(value).toLocaleString()}`}
                         ticks={[0, 5000, 10000, 15000]}
                     />

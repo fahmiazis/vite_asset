@@ -59,7 +59,7 @@ export default function NotFound() {
           <h2 className="text-3xl md:text-4xl font-bold text-white">
             Page not found
           </h2>
-          <p className="text-lg md:text-xl text-gray-300 max-w-md mx-auto">
+          <p className="text-sm md:text-lg text-gray-300 max-w-md mx-auto">
             The page you are looking for doesn't exist or another error occurred.
           </p>
           <p className="text-base text-gray-400">

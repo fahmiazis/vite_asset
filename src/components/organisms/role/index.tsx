@@ -130,7 +130,7 @@ const navigate = useNavigate()
 
       {/* Pagination */}
       <div className="flex items-center justify-between">
-        <div className="text-sm">
+        <div className="text-xs">
           Show{' '}
           <span className="font-medium">
             {table.getState().pagination.pageIndex *
@@ -168,7 +168,7 @@ const navigate = useNavigate()
             {'<'}
           </button>
           
-          <span className="text-sm">
+          <span className="text-xs">
             Page{' '}
             <strong>
               {table.getState().pagination.pageIndex + 1} From{' '}

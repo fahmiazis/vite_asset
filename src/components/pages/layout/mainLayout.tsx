@@ -26,7 +26,7 @@ export default function MainLayout() {
       <aside
         className={`h-full bg-blue-50 dark:bg-gray-900 text-white z-10
           transition-all duration-300 ease-in-out
-          ${isActive ? "translate-x-0 w-80" : "-translate-x-full w-0"}
+          ${isActive ? "translate-x-0 w-56" : "-translate-x-full w-0"}
           overflow-hidden`}
       >
         <SideBar2 />
@@ -40,7 +40,7 @@ export default function MainLayout() {
       >
         <Navbar title="Assets" />
 
-        <section className="flex-1 overflow-y-auto hide-scrollbar p-2 md:p-4">
+        <section className="flex-1 overflow-y-auto hide-scrollbar py-2">
           <Suspense fallback={<p className="text-white">Loading...</p>}>
             <Outlet />
           </Suspense>

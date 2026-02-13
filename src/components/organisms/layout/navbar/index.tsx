@@ -30,7 +30,7 @@ export default function Navbar({
     }
 
     return (
-        <section className='flex justify-between items-center bg-blue-50 dark:bg-gray-900 rounded-none md:rounded-xl p-2 md:p-4'>
+        <section className='flex justify-between items-center bg-blue-50 dark:bg-gray-900 rounded-none md:rounded-xl p-1 md:px-4'>
             <div className='flex gap-1 md:gap-3 items-center'>
                 <ArrowRight01Icon
                     className='block md:hidden cursor-pointer'
@@ -38,7 +38,7 @@ export default function Navbar({
                 />
                 <div className="relative group">
                     <SidebarLeft01Icon
-                        className="hidden md:block cursor-pointer duration-300"
+                        className="hidden w-6 md:block cursor-pointer duration-300"
                         onClick={handleSidebarDesk}
                     />
 
@@ -48,7 +48,7 @@ export default function Navbar({
                     </span>
                 </div>
                 <div className='flex flex-col'>
-                    <h6 className='text-sm md:text-2xl font-extrabold truncate'>
+                    <h6 className='text-xs md:text-lg font-extrabold truncate'>
                         {title}
                     </h6>
                 </div>
@@ -56,7 +56,7 @@ export default function Navbar({
             <div className='flex gap-4 items-center'>
                 <button
                     onClick={toggleDarkMode}
-                    className="p-2 text-2xl rounded-xl border border-zinc-300 dark:border-zinc-700"
+                    className="p-2 text-lg rounded-xl border border-zinc-300 dark:border-zinc-700"
                 >
                     {isDark ? <MoonIcon /> : <Sun01Icon />}
                 </button>
