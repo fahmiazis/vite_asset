@@ -185,7 +185,7 @@ export default function CreateApprovalFlow() {
             label="Description"
             value={formData.description}
             onChange={(value) => setFormData((prev) => ({ ...prev, description: value }))}
-            placeholder="Enter description..."
+            placeholder="Enter descriptions..."
             rows={6}
             maxLength={500}
             helperText="Maximum 500 characters"
