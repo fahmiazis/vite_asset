@@ -22,101 +22,106 @@ import CreateApproval from '../components/pages/approval/create'
 import ApprovalPage from '../components/pages/approval'
 import ApprovalFlowDetail from '../components/pages/approval/detail'
 import CreateStepApproval from '../components/pages/approval/detail/createStep'
+import ProtectedRoute from '../components/organisms/guard/protectedRoute'
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <LandingPage/>,
+    element: <LandingPage />,
   },
   {
     path: '/login',
-    element: <LoginPage/>,
+    element: <LoginPage />,
   },
   {
     path: '/dashboard',
-    element: <MainLayout />,
+    element: <ProtectedRoute />, 
     children: [
       {
-        index: true,
-        element: <MainPage/>,
-      },
-      {
-        path: 'menu',
-        element: <MasterMenu/>,
-      },
-      {
-        path: 'menu/:id',
-        element: <DetailMenu/>,
-      },
-      {
-        path: 'menu/create',
-        element: <CreateMenu/>,
-      },
-      {
-        path: 'menu/assign',
-        element: <AssignMenuPage/>,
-      },
-      {
-        path: 'branch',
-        element: <BranchPage/>,
-      },
-      {
-        path: 'branch/:id',
-        element: <DetailBranchPage/>,
-      },
-      {
-        path: 'branch/create',
-        element:  <CreateBranchPage/>,
-      },
-      {
-        path: 'role',
-        element: <RolePage/>,
-      },
-      {
-        path: 'role/create',
-        element: <CreateRole/>,
-      },
-      {
-        path: 'user',
-        element: <UserPage/>,
-      },
-      {
-        path: 'user/create',
-        element: <CreateUsers/>,
-      },
-      {
-        path: 'user/:id',
-        element: <DetailUser/>,
-      },
-      {
-        path: 'user/:id/update',
-        element: <UpdateUser/>,
-      },
-      {
-        path: 'approval',
-        element: <ApprovalPage/>,
-      },
-      {
-        path: 'approval/:id',
-        element: <ApprovalFlowDetail/>,
-      },
-      {
-        path: 'approval/:id/create-step',
-        element: <CreateStepApproval/>,
-      },
-      {
-        path: 'approval/create',
-        element: <CreateApproval/>,
+        element: <MainLayout />, 
+        children: [
+          {
+            index: true,
+            element: <MainPage />,
+          },
+          {
+            path: 'menu',
+            element: <MasterMenu />,
+          },
+          {
+            path: 'menu/:id',
+            element: <DetailMenu />,
+          },
+          {
+            path: 'menu/create',
+            element: <CreateMenu />,
+          },
+          {
+            path: 'menu/assign',
+            element: <AssignMenuPage />,
+          },
+          {
+            path: 'branch',
+            element: <BranchPage />,
+          },
+          {
+            path: 'branch/:id',
+            element: <DetailBranchPage />,
+          },
+          {
+            path: 'branch/create',
+            element: <CreateBranchPage />,
+          },
+          {
+            path: 'role',
+            element: <RolePage />,
+          },
+          {
+            path: 'role/create',
+            element: <CreateRole />,
+          },
+          {
+            path: 'user',
+            element: <UserPage />,
+          },
+          {
+            path: 'user/create',
+            element: <CreateUsers />,
+          },
+          {
+            path: 'user/:id',
+            element: <DetailUser />,
+          },
+          {
+            path: 'user/:id/update',
+            element: <UpdateUser />,
+          },
+          {
+            path: 'approval',
+            element: <ApprovalPage />,
+          },
+          {
+            path: 'approval/create',
+            element: <CreateApproval />,
+          },
+          {
+            path: 'approval/:id',
+            element: <ApprovalFlowDetail />,
+          },
+          {
+            path: 'approval/:id/create-step',
+            element: <CreateStepApproval />,
+          },
+        ],
       },
     ],
   },
-  
   {
     path: "*",
-    element: <NotFound/>,
+    element: <NotFound />,
   },
   {
     path: "/forbidden",
-    element: <Forbidden/>,
+    element: <Forbidden />,
   },
 ])
