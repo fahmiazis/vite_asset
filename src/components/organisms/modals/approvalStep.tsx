@@ -18,6 +18,8 @@ import { CSS } from '@dnd-kit/utilities'
 import { useState, useEffect } from 'react'
 import type { FlowStep } from '../../../models/approval/detail'
 import { Menu01Icon } from 'hugeicons-react'
+import { useSwitchStepApproval } from '../../../hooks/mutation/approval/useSwitchStepApproval'
+import { useParams } from 'react-router-dom'
 
 interface ReorderStepModalProps {
   isOpen: boolean
@@ -76,6 +78,8 @@ export default function ReorderStepModal({
   flowSteps,
   onSave,
 }: ReorderStepModalProps) {
+  const { id } = useParams()
+
   const [steps, setSteps] = useState<FlowStep[]>(flowSteps)
 
   useEffect(() => {
@@ -106,6 +110,33 @@ export default function ReorderStepModal({
       })
     }
   }
+
+  const { mutate, isPending, isSuccess, isError } =
+    useSwitchStepApproval(id || '');
+
+  const handleSubmit = () => {
+    if (!id) return;
+
+    const reorderedIds = steps.map((step) => step.id);
+
+    mutate(
+      {
+        stepId: id,
+        payload: {
+          list_ids: reorderedIds,
+        },
+      },
+      {
+        onSuccess: () => {
+          onClose?.();
+        },
+        onError: (error) => {
+          console.error(error);
+        },
+      }
+    );
+  };
+
 
   const handleSave = () => {
     const reorderedIds = steps.map((step) => step.id)
@@ -166,12 +197,13 @@ export default function ReorderStepModal({
 
         {/* Save Button */}
         <button
-          onClick={handleSave}
+          onClick={handleSubmit}
           className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-200 shadow-md hover:shadow-lg border-2 border-blue-700 dark:border-blue-500"
         >
-          Save
+          {isPending ? 'Loading....' : 'Save'}
         </button>
       </div>
     </div>
   )
 }
+
