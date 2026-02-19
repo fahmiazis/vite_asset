@@ -4,8 +4,12 @@ import { axiosPublic } from '../../../libs/instance';
 import toast from 'react-hot-toast';
 import Cookies from "js-cookie";
 import { useNavigate } from 'react-router-dom';
+import { useLanguageStore } from '../../../stores/languageStore';
+import { useTranslation } from 'react-i18next';
 
 const LoginPage = () => {
+    const { t } = useTranslation()
+    const { language, setLanguage } = useLanguageStore()
 
     const navigate = useNavigate();
 
@@ -92,11 +96,14 @@ const LoginPage = () => {
                             {/* <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center lg:hidden">
                                 <span className="text-white text-lg font-bold">*</span>
                             </div> */}
-                            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">Login</h2>
+                            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">{t('Login')}</h2>
                         </div>
                         <p className="text-gray-500 text-xs lg:text-base">
-                            Access your tasks, notes, and projects anytime, anywhere - and keep everything flowing in one place.
+                            {t("LoginDesk")}
                         </p>
+                        <button onClick={() => setLanguage(language === 'id' ? 'en' : 'id')}>
+                            Ganti ke {language === 'id' ? 'English' : 'Indonesia'}
+                        </button>
                     </div>
 
                     {/* Form */}
