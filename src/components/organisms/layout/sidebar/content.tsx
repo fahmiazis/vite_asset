@@ -1,9 +1,7 @@
-'use client'
-import React, { useState } from 'react'
-import { ArrowDown01Icon, ArrowRight01Icon, BitcoinEllipseIcon, DashboardSquare02Icon, Image02Icon, Wallet01Icon } from 'hugeicons-react'
 import { useLocation } from 'react-router-dom'
 import Links from '../../../atoms/links'
 import { useSidebarList } from '../../../../hooks/query/sidebar/list'
+import { Icon } from '@iconify/react'
 
 export interface SidebarContenProps {
   className?: string
@@ -31,7 +29,7 @@ export default function SidebarContent({
               : "hover:bg-gray-700 hover:text-white"
               }`}
           >
-            <DashboardSquare02Icon className="w-4 h-4" />
+             <Icon icon={item.icon_name ? item.icon_name : 'wordpress:not-found'} width={20} height={20} />
             <span className='text-xs'>{item.name}</span>
           </Links>
         );
