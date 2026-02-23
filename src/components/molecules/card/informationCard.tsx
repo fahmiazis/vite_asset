@@ -37,7 +37,7 @@ const BalanceCard = ({
       className={`bg-white rounded-3xl p-6 shadow-sm border border-gray-100 ${className}`}
     >
       {/* Header */}
-      <div className="flex items-start justify-between mb-4">
+      <div className="flex items-start justify-between mb-1">
         <h3 className="text-md font-semibold text-gray-900">{title}</h3>
         
         {showArrow && (
@@ -51,10 +51,10 @@ const BalanceCard = ({
       </div>
 
       {/* Balance */}
-      <div className="mb-4">
+      <div className="mb-1">
         <div className="flex items-baseline">
           <span className="text-2xl font-bold text-gray-900">
-            ${whole}
+            Rp {whole}
           </span>
           <span className="text-2xl font-bold text-gray-300">
             .{decimal}

@@ -3,6 +3,7 @@ import RecentTransactions from "../../organisms/dashboard/activityTable";
 import CyrcleChart from "../../organisms/dashboard/cyrcleChart";
 import DisposalList from "../../organisms/dashboard/disposalTable";
 import TableChart from "../../organisms/dashboard/tableChart";
+import { useTranslation } from "react-i18next";
 
 const transactions = [
   {
@@ -141,13 +142,48 @@ export const contactsData = [
 ];
 
 export default function MainPage() {
+  const { t } = useTranslation()
+
+  const trend = {
+    value: 3.2,
+    isPositive: true,
+    label: t("label.dashboard.vsLastMonth")
+  }
+
+  const trend2 = {
+    value: 2.6,
+    isPositive: false,
+    label: t("label.dashboard.vsLastMonth")
+  }
+
   return (
     <div className="w-full">
-      <section className="flex justify-between gap-4 items-center">
-        <BalanceCard title={"Saving"} balance={45000} className="w-1/4" />
-        <BalanceCard title={"Saving"} balance={90000} className="w-1/4" />
-        <BalanceCard title={"Saving"} balance={4000} className="w-1/4" />
-        <BalanceCard title={"Saving"} balance={1000000} className="w-1/4" />
+      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <BalanceCard
+          title={t("label.dashboard.totalBookValue")}
+          balance={450}
+          trend={trend2}
+          className="h-full"
+        />
+
+        <BalanceCard
+          title={t("label.dashboard.totalAssets")}
+          balance={900}
+          className="h-full"
+        />
+
+        <BalanceCard
+          title={t("label.dashboard.assetsNearEndOfLife")}
+          balance={700}
+          trend={trend}
+          className="h-full"
+        />
+
+        <BalanceCard
+          title={t("label.dashboard.assetUtilizationRate")}
+          balance={1000}
+          className="h-full"
+        />
       </section>
       <section className="flex justify-between gap-4 mt-2">
         <TableChart className="w-2/3" />

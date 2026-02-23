@@ -4,12 +4,10 @@ import { axiosPublic } from '../../../libs/instance';
 import toast from 'react-hot-toast';
 import Cookies from "js-cookie";
 import { useNavigate } from 'react-router-dom';
-import { useLanguageStore } from '../../../stores/languageStore';
 import { useTranslation } from 'react-i18next';
 
 const LoginPage = () => {
     const { t } = useTranslation()
-    const { language, setLanguage } = useLanguageStore()
 
     const navigate = useNavigate();
 
@@ -69,7 +67,6 @@ const LoginPage = () => {
 
     return (
         <div className="min-h-screen flex">
-            {/* Left Section - Hidden on mobile */}
             <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-blue-400 via-purple-400 to-blue-500 p-12 items-center justify-center relative overflow-hidden">
 
                 <div className="text-white max-w-md z-10">
@@ -80,30 +77,15 @@ const LoginPage = () => {
                 </div>
             </div>
 
-            {/* Right Section - Login Form */}
             <div className="w-full lg:w-1/2 flex items-center justify-center p-6 lg:p-12 bg-white">
                 <div className="w-full max-w-md">
-                    {/* Logo for mobile */}
-                    {/* <div className="lg:hidden mb-8 flex justify-center">
-                        <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-purple-500 rounded-2xl flex items-center justify-center">
-                            <span className="text-white text-3xl font-bold">*</span>
-                        </div>
-                    </div> */}
-
-                    {/* Header */}
                     <div className="mb-8">
                         <div className="flex items-center gap-2 mb-4">
-                            {/* <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center lg:hidden">
-                                <span className="text-white text-lg font-bold">*</span>
-                            </div> */}
                             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">{t('Login')}</h2>
                         </div>
                         <p className="text-gray-500 text-xs lg:text-base">
                             {t("LoginDesk")}
                         </p>
-                        <button onClick={() => setLanguage(language === 'id' ? 'en' : 'id')}>
-                            Ganti ke {language === 'id' ? 'English' : 'Indonesia'}
-                        </button>
                     </div>
 
                     {/* Form */}

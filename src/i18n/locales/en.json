@@ -1,4 +1,13 @@
 {
   "Login": "Login",
-  "LoginDesk": "Access your tasks, notes, and projects anytime, anywhere - and keep everything flowing in one place."
+  "LoginDesk": "Access your tasks, notes, and projects anytime, anywhere - and keep everything flowing in one place.",
+  "label": {
+    "dashboard": {
+      "totalBookValue": "Total Asset Value (Book Value)",
+      "totalAssets": "Total Assets",
+      "assetsNearEndOfLife": "Assets Near End of Life",
+      "assetUtilizationRate": "Asset Utilization Rate",
+      "vsLastMonth": "Compared to last month"
+    }
+  }
 }
