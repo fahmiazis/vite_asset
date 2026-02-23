@@ -23,6 +23,7 @@ import ApprovalPage from '../components/pages/approval'
 import ApprovalFlowDetail from '../components/pages/approval/detail'
 import CreateStepApproval from '../components/pages/approval/detail/createStep'
 import ProtectedRoute from '../components/organisms/guard/protectedRoute'
+import UpdateMenuPage from '../components/pages/menu/update'
 
 export const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ export const router = createBrowserRouter([
           {
             path: 'menu/:id',
             element: <DetailMenu />,
+          },
+          {
+            path: 'menu/:id/update',
+            element: <UpdateMenuPage />,
           },
           {
             path: 'menu/create',

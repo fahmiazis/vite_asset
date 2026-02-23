@@ -1,5 +1,6 @@
 import type { SelectOption } from "../../components/molecules/input/selects";
 import type { allMenuState } from "../../models/menu/list";
+import type { UpdateMenuPayload } from "../../models/menu/update";
 
 export function menuListToSelectOptions(menus: allMenuState[]): SelectOption[] {
   return menus.map((menu) => ({
@@ -47,7 +48,7 @@ export function menuListToHierarchicalSelectOptions(
   menus: allMenuState[]
 ): SelectOption[] {
   const options: SelectOption[] = [];
-  
+
   // Get parent menus first (sorted by order_index)
   const parentMenus = menus
     .filter((menu) => !menu.parent_id)
@@ -70,7 +71,7 @@ export function menuListToHierarchicalSelectOptions(
       options.push({
         id: child.id,
         value: child.id,
-        label: `  ↳ ${child.name}`, 
+        label: `  ↳ ${child.name}`,
       });
     });
   });
@@ -113,3 +114,8 @@ export function hasChildMenus(
 ): boolean {
   return menus.some((menu) => menu.parent_id === menuId);
 }
+
+export const hasAtLeastOneField = (payload: UpdateMenuPayload) =>
+  Object.values(payload).some(
+    value => value !== undefined && value !== null && value !== ''
+  )

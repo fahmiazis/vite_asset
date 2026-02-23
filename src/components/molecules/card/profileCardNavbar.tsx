@@ -19,7 +19,7 @@ const ProfileCardnavbar: React.FC<ProfileCardnavbarProps> = ({
   onActionClick,
 }) => {
 
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
