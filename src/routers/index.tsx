@@ -25,6 +25,7 @@ import CreateStepApproval from '../components/pages/approval/detail/createStep'
 import ProtectedRoute from '../components/organisms/guard/protectedRoute'
 import UpdateMenuPage from '../components/pages/menu/update'
 import AssetsCategoryPage from '../components/pages/assetsCategory'
+import CreateAssetsCategory from '../components/pages/assetsCategory/create'
 
 export const router = createBrowserRouter([
   {
@@ -69,6 +70,10 @@ export const router = createBrowserRouter([
           {
             path: 'asset-category',
             element: <AssetsCategoryPage />,
+          },
+          {
+            path: 'asset-category/create',
+            element: <CreateAssetsCategory />,
           },
           {
             path: 'branch',
