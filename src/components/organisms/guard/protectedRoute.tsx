@@ -15,9 +15,9 @@ export default function ProtectedRoute() {
   const menus = data?.data ?? []
   const allowed = isPathAllowed(pathname, menus)
 
-  if (!allowed) {
-    return <Navigate to="/forbidden" replace />
-  }
+  // if (!allowed) {
+  //   return <Navigate to="/forbidden" replace />
+  // }
 
   return <Outlet />
 }
