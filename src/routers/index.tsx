@@ -24,6 +24,7 @@ import ApprovalFlowDetail from '../components/pages/approval/detail'
 import CreateStepApproval from '../components/pages/approval/detail/createStep'
 import ProtectedRoute from '../components/organisms/guard/protectedRoute'
 import UpdateMenuPage from '../components/pages/menu/update'
+import AssetsCategoryPage from '../components/pages/assetsCategory'
 
 export const router = createBrowserRouter([
   {
@@ -64,6 +65,10 @@ export const router = createBrowserRouter([
           {
             path: 'menu/assign',
             element: <AssignMenuPage />,
+          },
+          {
+            path: 'asset-category',
+            element: <AssetsCategoryPage />,
           },
           {
             path: 'branch',
