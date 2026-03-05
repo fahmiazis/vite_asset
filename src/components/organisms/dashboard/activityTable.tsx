@@ -1,14 +1,14 @@
 import { ArrowRight01Icon } from "hugeicons-react";
 
 interface Transaction {
-  id: string;
-  date: string;
-  amount: number;
-  paymentName: string;
-  icon?: string;
-  iconBgColor?: string;
-  method: string;
-  category: string;
+  id: string,
+  date: string,
+  transactionNumber: string,
+  transaction: string,
+  icon: string,
+  iconBgColor: string,
+  user: string,
+  status: string,
 }
 
 interface RecentTransactionsProps {
@@ -28,15 +28,23 @@ const RecentTransactions = ({
     <div className={`bg-white rounded-3xl p-6 shadow-sm border border-gray-100 ${className}`}>
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-lg font-semibold text-gray-900">Recent transactions</h3>
+        <h3 className="text-lg font-semibold text-gray-900">Recent transactions (5 Pendings)</h3>
         
         <div className="flex items-center gap-3">
           {/* Dropdown filter */}
           <select className="px-4 py-2 border border-gray-200 rounded-xl text-xs text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-            <option>All accounts</option>
-            <option>Checking</option>
-            <option>Savings</option>
-            <option>Credit Card</option>
+            <option>All Status</option>
+            <option>Pending</option>
+            <option>Finished</option>
+            <option>Rejected</option>
+          </select>
+
+          <select className="px-4 py-2 border border-gray-200 rounded-xl text-xs text-gray-700 bg-white hover:bg-gray-50 transition-colors">
+            <option>All Transaction</option>
+            <option>Procurement</option>
+            <option>Disposal</option>
+            <option>Mutation</option>
+            <option>Stock Opname</option>
           </select>
 
           {/* See all button */}
@@ -61,16 +69,16 @@ const RecentTransactions = ({
                 Date
               </th>
               <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Amount
+                Transaction Number
               </th>
               <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Payment Name
+                Transaction
               </th>
               <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Method
+                User
               </th>
               <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Category
+                Status
               </th>
             </tr>
           </thead>
@@ -87,7 +95,7 @@ const RecentTransactions = ({
 
                 {/* Amount */}
                 <td className="py-4 px-4 text-xs font-semibold text-gray-900">
-                  - ${Math.abs(transaction.amount)}
+                  {transaction.transactionNumber}
                 </td>
 
                 {/* Payment Name with Icon */}
@@ -105,18 +113,18 @@ const RecentTransactions = ({
                         <span className="text-xs text-gray-500">?</span>
                       </div>
                     )}
-                    <span className="text-xs text-gray-900">{transaction.paymentName}</span>
+                    <span className="text-xs text-gray-900">{transaction.transaction}</span>
                   </div>
                 </td>
 
                 {/* Method */}
                 <td className="py-4 px-4 text-xs text-gray-900">
-                  {transaction.method}
+                  {transaction.user}
                 </td>
 
                 {/* Category */}
                 <td className="py-4 px-4 text-xs text-gray-600">
-                  {transaction.category}
+                  {transaction.status}
                 </td>
               </tr>
             ))}

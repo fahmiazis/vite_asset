@@ -41,7 +41,7 @@ const BudgetChart = ({
     <div className={`bg-white rounded-3xl p-6 shadow-sm border border-gray-100 ${className}`}>
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
-        <h3 className="text-2xl font-bold text-gray-900">Budget</h3>
+        <h3 className="text-2xl font-bold text-gray-900">Total Transaction</h3>
         
         {showArrow && (
           <button
@@ -92,8 +92,9 @@ const BudgetChart = ({
           <div className="absolute inset-0 flex flex-col items-center justify-center">
             <div className="text-xs text-gray-400 mb-1">Total for month</div>
             <div className="flex items-baseline">
-              <span className="text-lg font-bold text-gray-900">${whole}</span>
-              <span className="text-lg font-bold text-gray-300">.{decimal}</span>
+              {/* <span className="text-lg font-bold text-gray-900">${whole}</span>
+              <span className="text-lg font-bold text-gray-300">.{decimal}</span> */}
+              <span className="text-lg font-bold text-gray-900">{whole}</span>
             </div>
           </div>
 

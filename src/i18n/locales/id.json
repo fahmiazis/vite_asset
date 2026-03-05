@@ -3,10 +3,10 @@
     "LoginDesk": "Akses tugas, catatan, dan proyek Anda kapan saja, di mana saja - dan jaga agar semuanya tetap terorganisir di satu tempat.",
     "label": {
     "dashboard": {
-      "totalBookValue": "Total Nilai Aset (Nilai Buku)",
       "totalAssets": "Total Aset",
-      "assetsNearEndOfLife": "Aset Mendekati Akhir Masa Pakai",
-      "assetUtilizationRate": "Tingkat Pemanfaatan Aset",
+      "totalAcquisVal": "Total Nilai Akuisisi",
+      "totalBookVal": "Total Nilai Buku",
+      "totalDepreVal": "Tingkat Nilai Depresiasi",
       "vsLastMonth": "Dibanding bulan Lalu"
     }
   }

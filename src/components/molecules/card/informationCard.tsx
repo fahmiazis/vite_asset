@@ -12,6 +12,7 @@ interface BalanceCardProps {
   showArrow?: boolean;
   onArrowClick?: () => void;
   className?: string;
+  showCurrency: boolean;
 }
 
 const BalanceCard = ({
@@ -22,6 +23,7 @@ const BalanceCard = ({
   showArrow = true,
   onArrowClick,
   className = '',
+  showCurrency = true
 }: BalanceCardProps) => {
   // Format balance dengan separator
   const formatBalance = (value: number) => {
@@ -54,10 +56,10 @@ const BalanceCard = ({
       <div className="mb-1">
         <div className="flex items-baseline">
           <span className="text-2xl font-bold text-gray-900">
-            Rp {whole}
+            {showCurrency && 'Rp'} {whole}
           </span>
           <span className="text-2xl font-bold text-gray-300">
-            .{decimal}
+            {showCurrency && `.${decimal}`}
           </span>
         </div>
       </div>

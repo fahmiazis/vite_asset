@@ -5,13 +5,13 @@ interface TableChartProps {
 }
 
 const data = [
-    { month: 'Jan', income: 9500, expense: 8200 },
-    { month: 'Feb', income: 10200, expense: 12500 },
-    { month: 'Mar', income: 10000, expense: 9800 },
-    { month: 'Apr', income: 13000, expense: 11500 },
-    { month: 'May', income: 12500, expense: 11200 },
-    { month: 'Jun', income: 7500, expense: 6200 },
-    { month: 'Jul', income: 9000, expense: 7500 },
+    { month: 'Jan', finished: 95, in_progress: 82, rejected: 40, revisi: 25 },
+    { month: 'Feb', finished: 102, in_progress: 125, rejected: 45, revisi: 25 },
+    { month: 'Mar', finished: 87, in_progress: 98, rejected: 55, revisi: 25 },
+    { month: 'Apr', finished: 130, in_progress: 115, rejected: 30, revisi: 25 },
+    { month: 'May', finished: 125, in_progress: 112, rejected: 25, revisi: 25 },
+    { month: 'Jun', finished: 75, in_progress: 62, rejected: 37, revisi: 25 },
+    { month: 'Jul', finished: 90, in_progress: 75, rejected: 59, revisi: 25 },
 ];
 
 const TableChart = ({
@@ -20,26 +20,36 @@ const TableChart = ({
     return (
         <div className={`${className} bg-white rounded-3xl p-8 shadow-sm`}>
             <div className="flex items-center justify-between mb-8">
-                <h2 className="text-2xl font-bold text-gray-900">Money flow</h2>
+                <h2 className="text-2xl font-bold text-gray-900">Transaction flow</h2>
 
                 <div className="flex items-center gap-6">
                     {/* Legend */}
                     <div className="flex items-center gap-4">
                         <div className="flex items-center gap-2">
-                            <div className="w-3 h-3 rounded-full bg-[#6366f1]"></div>
-                            <span className="text-xs text-gray-600">Income</span>
+                            <div className="w-3 h-3 rounded-full bg-[#10b981]"></div>
+                            <span className="text-xs text-gray-600">Finished</span>
                         </div>
                         <div className="flex items-center gap-2">
-                            <div className="w-3 h-3 rounded-full bg-[#a5b4fc]"></div>
-                            <span className="text-xs text-gray-600">Expense</span>
+                            <div className="w-3 h-3 rounded-full bg-[#3b82f6]"></div>
+                            <span className="text-xs text-gray-600">In Progress</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <div className="w-3 h-3 rounded-full bg-[#ef4444]"></div>
+                            <span className="text-xs text-gray-600">Rejected</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <div className="w-3 h-3 rounded-full bg-[#f59e0b]"></div>
+                            <span className="text-xs text-gray-600">Revisi</span>
                         </div>
                     </div>
 
                     {/* Filters */}
                     <select className="px-4 py-2 border border-gray-200 rounded-xl text-xs text-gray-700 bg-white">
-                        <option>All accounts</option>
-                        <option>Checking</option>
-                        <option>Savings</option>
+                        <option>All Transaction</option>
+                        <option>Procurement</option>
+                        <option>Disposal</option>
+                        <option>Mutation</option>
+                        <option>Stock Opname</option>
                     </select>
 
                     <select className="px-4 py-2 border border-gray-200 rounded-xl text-xs text-gray-700 bg-white">
@@ -68,8 +78,8 @@ const TableChart = ({
                         axisLine={false}
                         tickLine={false}
                         tick={{ fill: '#9ca3af', fontSize: 12 }}
-                        tickFormatter={(value) => `$${Number(value).toLocaleString()}`}
-                        ticks={[0, 5000, 10000, 15000]}
+                        tickFormatter={(value) => `${Number(value).toLocaleString()}`}
+                        ticks={[0, 25, 50, 75, 100, 125, 150]}
                     />
                     <Tooltip
                         contentStyle={{
@@ -78,18 +88,30 @@ const TableChart = ({
                             borderRadius: '12px',
                             padding: '12px'
                         }}
-                        formatter={(value) => `$${Number(value).toLocaleString()}`}
+                        formatter={(value) => `${Number(value).toLocaleString()}`}
                         cursor={{ fill: 'rgba(0, 0, 0, 0.05)' }}
                     />
                     <Bar
-                        dataKey="income"
-                        fill="#6366f1"
+                        dataKey="finished"
+                        fill="#10b981"
                         radius={[8, 8, 0, 0]}
                         maxBarSize={40}
                     />
                     <Bar
-                        dataKey="expense"
-                        fill="#a5b4fc"
+                        dataKey="in_progress"
+                        fill="#3b82f6"
+                        radius={[8, 8, 0, 0]}
+                        maxBarSize={40}
+                    />
+                    <Bar
+                        dataKey="rejected"
+                        fill="#ef4444"
+                        radius={[8, 8, 0, 0]}
+                        maxBarSize={40}
+                    />
+                    <Bar
+                        dataKey="revisi"
+                        fill="#f59e0b"
                         radius={[8, 8, 0, 0]}
                         maxBarSize={40}
                     />

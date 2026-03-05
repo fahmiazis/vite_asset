@@ -8,63 +8,63 @@ import { useTranslation } from "react-i18next";
 const transactions = [
   {
     id: '1',
-    date: '25 Jul 12:30',
-    amount: 10,
-    paymentName: 'YouTube',
-    icon: '▶',
-    iconBgColor: '#ff0000',
-    method: 'VISA **3254',
-    category: 'Subscription',
+    date: '04 March 2026',
+    transactionNumber: '0001/C001/III/2026-IO',
+    transaction: 'Procurement',
+    icon: '🛒',
+    iconBgColor: '#3b82f6',
+    user: 'Budi',
+    status: 'Finished',
   },
   {
     id: '2',
-    date: '26 Jul 15:00',
-    amount: 150,
-    paymentName: 'Reserved',
-    icon: '━━━',
-    iconBgColor: '#6b7280',
-    method: 'Mastercard **2154',
-    category: 'Shopping',
+    date: '01 March 2026',
+    transactionNumber: '0001/C001/III/2026-MTI',
+    transaction: 'Mutation',
+    icon: '🔄',
+    iconBgColor: '#8b5cf6',
+    user: 'Budi',
+    status: 'Pending',
   },
   {
     id: '3',
-    date: '27 Jul 9:00',
-    amount: 80,
-    paymentName: 'Yaposhka',
-    icon: '🍜',
-    iconBgColor: '#ec4899',
-    method: 'Mastercard **2154',
-    category: 'Cafe & Restaurants',
+    date: '31 Feb 2026',
+    transactionNumber: "0001/C001/III/2026-DPSL",
+    transaction: 'Disposal',
+    icon: '🗑️',
+    iconBgColor: '#ef4444',
+    user: 'Adik Budi',
+    status: 'In progress',
   },
   {
     id: '4',
-    date: '28 Jul 14:20',
-    amount: 45,
-    paymentName: 'Spotify',
-    icon: '♫',
-    iconBgColor: '#22c55e',
-    method: 'VISA **3254',
-    category: 'Entertainment',
+    date: '25 Feb 2026',
+    transactionNumber: "0001/C001/II/2026-OPNM",
+    transaction: 'Stock Opname',
+    icon: '📦',
+    iconBgColor: '#10b981',
+    user: 'Ibu Budi',
+    status: 'In progress',
   },
   {
     id: '5',
-    date: '29 Jul 10:15',
-    amount: 220,
-    paymentName: 'Amazon',
-    icon: 'a',
-    iconBgColor: '#ff9900',
-    method: 'Mastercard **2154',
-    category: 'Shopping',
+    date: '20 Feb 2026',
+    transactionNumber: '0002/C001/II/2026-OPNM',
+    transaction: 'Stock Opname',
+    icon: '📦',
+    iconBgColor: '#10b981',
+    user: 'Budi',
+    status: 'Revisi',
   },
   {
     id: '6',
-    date: '30 Jul 18:45',
-    amount: 65,
-    paymentName: 'Starbucks',
-    icon: '☕',
-    iconBgColor: '#00704a',
-    method: 'VISA **3254',
-    category: 'Cafe & Restaurants',
+    date: '18 Feb 2026',
+    transactionNumber: '0002/C001/III/2026-IO',
+    transaction: 'Procurement',
+    icon: '🛒',
+    iconBgColor: '#3b82f6',
+    user: 'Ayah Budi',
+    status: 'Finished',
   },
 ];
 
@@ -160,29 +160,33 @@ export default function MainPage() {
     <div className="w-full">
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <BalanceCard
-          title={t("label.dashboard.totalBookValue")}
+          title={t("label.dashboard.totalAssets")}
           balance={450}
-          trend={trend2}
+          // trend={trend2}
           className="h-full"
+          showCurrency={false}
         />
 
         <BalanceCard
-          title={t("label.dashboard.totalAssets")}
+          title={t("label.dashboard.totalAcquisVal")}
           balance={900}
           className="h-full"
+          showCurrency={true}
         />
 
         <BalanceCard
-          title={t("label.dashboard.assetsNearEndOfLife")}
+          title={t("label.dashboard.totalBookVal")}
           balance={700}
-          trend={trend}
+          // trend={trend}
           className="h-full"
+          showCurrency={true}
         />
 
         <BalanceCard
-          title={t("label.dashboard.assetUtilizationRate")}
+          title={t("label.dashboard.totalDepreVal")}
           balance={1000}
           className="h-full"
+          showCurrency={true}
         />
       </section>
       <section className="flex justify-between gap-4 mt-2">
@@ -190,10 +194,10 @@ export default function MainPage() {
         <CyrcleChart
           className="w-1/3"
           categories={[
-            { name: 'Number of Assets', value: 2000, color: '#6366f1' },
-            { name: 'Value of Assets', value: 500, color: '#a5b4fc' },
-            { name: 'Net Assets Value', value: 300, color: '#ddd6fe' },
-            { name: 'Purchases in Fascal Year', value: 1000, color: '#10b981' },
+            { name: 'Procurement', value: 2000, color: '#6366f1' },
+            { name: 'Disposal', value: 500, color: '#a5b4fc' },
+            { name: 'Mutation', value: 300, color: '#ddd6fe' },
+            { name: 'Stock Opname', value: 1000, color: '#10b981' },
           ]}
           total={3800}
           highlightedCategory={{

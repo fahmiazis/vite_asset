@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter, Navigate } from 'react-router-dom'
 import MainLayout from '../components/pages/layout/mainLayout'
 import LoginPage from '../components/pages/login'
 import UserPage from '../components/pages/user'
@@ -22,19 +22,29 @@ import CreateApproval from '../components/pages/approval/create'
 import ApprovalPage from '../components/pages/approval'
 import ApprovalFlowDetail from '../components/pages/approval/detail'
 import CreateStepApproval from '../components/pages/approval/detail/createStep'
-import ProtectedRoute from '../components/organisms/guard/protectedRoute'
 import UpdateMenuPage from '../components/pages/menu/update'
 import AssetsCategoryPage from '../components/pages/assetsCategory'
 import CreateAssetsCategory from '../components/pages/assetsCategory/create'
 
+// guard route
+import ProtectedRoute from '../components/organisms/guard/protectedRoute'
+import PublicRoute from '../components/organisms/guard/publicRoute'
+
 export const router = createBrowserRouter([
+  // {
+  //   path: '/',
+  //   element: <LandingPage />,
+  // },
   {
     path: '/',
-    element: <LandingPage />,
+    element: <Navigate to="/login" replace />,
   },
   {
     path: '/login',
-    element: <LoginPage />,
+    element: <PublicRoute />,
+    children: [
+      { index: true, element: <LoginPage /> }
+    ]
   },
   {
     path: '/dashboard',

@@ -19,7 +19,7 @@ interface DisposalListProps {
 }
 
 const DisposalList = ({
-  title = 'Disposal',
+  title = 'My asset',
   items,
   maxHeight = '400px',
   showArrow = true,
