@@ -4,10 +4,8 @@ import { axiosPublic } from '../../../libs/instance';
 import toast from 'react-hot-toast';
 import Cookies from "js-cookie";
 import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 
 const LoginPage = () => {
-    const { t } = useTranslation()
     const navigate = useNavigate();
 
     const [showPassword, setShowPassword] = useState(false);
@@ -49,10 +47,10 @@ const LoginPage = () => {
                 sameSite: "strict",
             });
 
-            toast.success("Login berhasil");
+            toast.success("Sign in successful");
             navigate("/dashboard", { replace: true });
         } catch (error) {
-            toast.error('Login gagal');
+            toast.error("Invalid username or password");
             console.error(error);
         }
     };
@@ -68,7 +66,6 @@ const LoginPage = () => {
 
                 <div className="text-white max-w-md z-10">
                     <div className="flex items-center gap-2 mb-8">
-                        {/* Icon */}
                         <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
                             <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
@@ -113,7 +110,7 @@ const LoginPage = () => {
 
                     <div className="mb-8">
                         <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
-                            {t('Login')}
+                            Sign In
                         </h2>
                         <p className="text-gray-500 text-sm">
                             Sign in to your account to manage and monitor your assets.
