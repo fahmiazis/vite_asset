@@ -20,8 +20,8 @@ export default function CreateMenu() {
   };
   return (
     <div>
-      <h6> u can create menu here</h6>
-      <section className='flex justify-between items-center gap-4'>
+      <h6 className='text-3xl font-bold'>Create Menu</h6>
+      <section className='flex justify-between items-center gap-4 mt-4'>
         <Inputs label={'Name'} value={name} onChange={setName} containerClassName='w-1/2'/>
         <Inputs label={'Path'} value={path} onChange={setPath} containerClassName='w-1/2'/>
         <Inputs label={'Route Path'} value={routepath} onChange={setRoutePath} containerClassName='w-1/2'/>

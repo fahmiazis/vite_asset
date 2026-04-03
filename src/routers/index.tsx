@@ -29,6 +29,8 @@ import CreateAssetsCategory from '../components/pages/assetsCategory/create'
 // guard route
 import ProtectedRoute from '../components/organisms/guard/protectedRoute'
 import PublicRoute from '../components/organisms/guard/publicRoute'
+import DepretiationPage from '../components/pages/depretiation'
+import TransactionPage from '../components/pages/transaction'
 
 export const router = createBrowserRouter([
   // {
@@ -76,6 +78,14 @@ export const router = createBrowserRouter([
           {
             path: 'menu/assign',
             element: <AssignMenuPage />,
+          },
+          {
+            path: 'transaction',
+            element: <TransactionPage />,
+          },
+          {
+            path: 'depretiation',
+            element: <DepretiationPage />,
           },
           {
             path: 'asset-category',

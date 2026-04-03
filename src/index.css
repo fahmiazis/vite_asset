@@ -76,6 +76,26 @@ body {
 }
 /* -----------------special css crypto list------------------------------- */
 
+/* -----------------------------------------input styling----------------------------------------- */
+input {
+  color: #111111;
+  background-color: #ffffff;
+}
+
+.dark input {
+  color: #111111;
+  background-color: #ffffff;
+}
+
+input::placeholder {
+  color: #9ca3af;
+}
+
+.dark input::placeholder {
+  color: #6b7280;
+}
+/* -----------------------------------------input styling----------------------------------------- */
+
 /* -----------------------------------------tanstack table styling----------------------------------------- */
 @keyframes slideInRight {
   from {
