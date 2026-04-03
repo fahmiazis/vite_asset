@@ -31,6 +31,7 @@ import ProtectedRoute from '../components/organisms/guard/protectedRoute'
 import PublicRoute from '../components/organisms/guard/publicRoute'
 import DepretiationPage from '../components/pages/depretiation'
 import TransactionPage from '../components/pages/transaction'
+import AssetPage from '../components/pages/asset'
 
 export const router = createBrowserRouter([
   // {
@@ -78,6 +79,10 @@ export const router = createBrowserRouter([
           {
             path: 'menu/assign',
             element: <AssignMenuPage />,
+          },
+          {
+            path: 'asset',
+            element: <AssetPage />,
           },
           {
             path: 'transaction',
