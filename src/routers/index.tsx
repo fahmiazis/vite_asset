@@ -32,6 +32,7 @@ import PublicRoute from '../components/organisms/guard/publicRoute'
 import DepretiationPage from '../components/pages/depretiation'
 import TransactionPage from '../components/pages/transaction'
 import AssetPage from '../components/pages/asset'
+import DetailAssetsPage from '../components/pages/asset/detail'
 
 export const router = createBrowserRouter([
   // {
@@ -83,6 +84,10 @@ export const router = createBrowserRouter([
           {
             path: 'asset',
             element: <AssetPage />,
+          },
+          {
+            path: 'asset/:id',
+            element: <DetailAssetsPage />,
           },
           {
             path: 'transaction',

@@ -28,12 +28,12 @@ function AssetStatusBadge({ value }: { value: string }) {
 }
 
 // --- Action Buttons ---
-function ActionButtons({ id }: { id: number }) {
+function ActionButtons({ id }: { id: string }) {
   const navigate = useNavigate()
   return (
     <div className="flex items-center gap-1.5">
       <button
-        onClick={() => navigate(`/dashboard/assets/${id}`)}
+        onClick={() => navigate(`/dashboard/asset/${id}`)}
         className="px-3 py-1 text-xs font-medium border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors whitespace-nowrap"
       >
         Detail
@@ -115,6 +115,6 @@ export const assetsColumns: ColumnDef<listAssetsState>[] = [
   {
     id: "aksi",
     header: "AKSI",
-    cell: ({ row }) => <ActionButtons id={row.original.id} />,
+    cell: ({ row }) => <ActionButtons id={row.original.asset_number.toString()} />,
   },
 ]

@@ -53,7 +53,7 @@ export function AssetsTable({ data, total, isLoading }: AssetsTableProps) {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 bg-white dark:bg-gray-950 p-6 rounded-2xl">
 
       {/* Search + Actions */}
       <section className="flex items-center justify-between w-full">
@@ -78,7 +78,7 @@ export function AssetsTable({ data, total, isLoading }: AssetsTableProps) {
       </section>
 
       {/* Table */}
-      <div className="rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
+      <div className="rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden bg-white dark:bg-gray-900">
         <div className="overflow-x-auto">
           <table className="min-w-[860px] w-full">
             <thead className="bg-gray-50 dark:bg-gray-900/60">
@@ -149,9 +149,9 @@ export function AssetsTable({ data, total, isLoading }: AssetsTableProps) {
 
         <div className="flex items-center gap-1">
           {[
-            { label: '«', action: () => table.setPageIndex(0),                        disabled: !table.getCanPreviousPage() },
-            { label: '‹', action: () => table.previousPage(),                         disabled: !table.getCanPreviousPage() },
-            { label: '›', action: () => table.nextPage(),                             disabled: !table.getCanNextPage() },
+            { label: '«', action: () => table.setPageIndex(0), disabled: !table.getCanPreviousPage() },
+            { label: '‹', action: () => table.previousPage(), disabled: !table.getCanPreviousPage() },
+            { label: '›', action: () => table.nextPage(), disabled: !table.getCanNextPage() },
             { label: '»', action: () => table.setPageIndex(table.getPageCount() - 1), disabled: !table.getCanNextPage() },
           ].map((btn, i) => (
             <button

@@ -5,7 +5,6 @@ export default function DetailBranchPage() {
     const { id } = useParams()
 
     const { data } = useBranchDetail(id || '')
-    console.log('detail branch here ==>', data)
     return (
         <div>
             detail branch page here
