@@ -11,18 +11,10 @@ import {
 import { useState } from "react"
 import { transaksiColumns } from "./column"
 import { ArrowDown01Icon, SearchingIcon, SlidersHorizontalIcon } from "hugeicons-react"
-import type { TransaksiAset } from "./dataDummy"
-
-const STATUS_TABS = [
-  { label: "Semua", value: "semua", count: 48 },
-  { label: "Menunggu", value: "Menunggu", count: 13 },
-  { label: "Disetujui", value: "Disetujui", count: 29 },
-  { label: "Ditolak", value: "Ditolak", count: 6 },
-  { label: "Draft", value: "Draft", count: 2 },
-]
+import type { transactionListState } from "../../../models/transaction/list"
 
 interface TransaksiTableProps {
-  data: TransaksiAset[]
+  data: transactionListState[]
   isLoading?: boolean
 }
 
@@ -32,9 +24,17 @@ export function TransaksiTable({ data, isLoading }: TransaksiTableProps) {
   const [globalFilter, setGlobalFilter] = useState("")
   const [activeTab, setActiveTab] = useState("semua")
 
+  const STATUS_TABS = [
+    { label: "Semua", value: "semua", count: data.length },
+    { label: "Menunggu", value: "Menunggu", count: data.filter(d => d.transaction.status === "Menunggu").length },
+    { label: "Disetujui", value: "Disetujui", count: data.filter(d => d.transaction.status === "Disetujui").length },
+    { label: "Ditolak", value: "Ditolak", count: data.filter(d => d.transaction.status === "Ditolak").length },
+    { label: "Draft", value: "Draft", count: data.filter(d => d.transaction.status === "Draft").length },
+  ]
+
   const filteredData = activeTab === "semua"
     ? data
-    : data.filter((d) => d.status === activeTab)
+    : data.filter((d) => d.transaction.status === activeTab)
 
   const table = useReactTable({
     data: filteredData,
@@ -67,18 +67,16 @@ export function TransaksiTable({ data, isLoading }: TransaksiTableProps) {
             <button
               key={tab.value}
               onClick={() => setActiveTab(tab.value)}
-              className={`flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium transition-colors rounded-t-md ${
-                activeTab === tab.value
+              className={`flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium transition-colors rounded-t-md ${activeTab === tab.value
                   ? "bg-gray-900 dark:bg-white text-white dark:text-gray-900"
                   : "text-gray1 hover:text-[var(--text-color)]"
-              }`}
+                }`}
             >
               {tab.label}
-              <span className={`text-xs px-1.5 py-0.5 rounded-full ${
-                activeTab === tab.value
+              <span className={`text-xs px-1.5 py-0.5 rounded-full ${activeTab === tab.value
                   ? "bg-white/20 dark:bg-black/20 text-white dark:text-gray-900"
                   : "bg-gray-100 dark:bg-gray-800 text-gray1"
-              }`}>
+                }`}>
                 {tab.count}
               </span>
             </button>

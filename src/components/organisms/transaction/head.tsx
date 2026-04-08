@@ -1,4 +1,5 @@
 import { Download01Icon, PlusSignIcon, TextAlignJustifyRightIcon } from "hugeicons-react";
+import Links from "../../atoms/links";
 
 interface TransaksiHeaderProps {
   title?: string;
@@ -6,7 +7,6 @@ interface TransaksiHeaderProps {
   totalTransaksi?: number;
   onEkspor?: () => void;
   onLaporan?: () => void;
-  onPengajuanBaru?: () => void;
 }
 
 export default function TransaksiHeader({
@@ -15,7 +15,6 @@ export default function TransaksiHeader({
   totalTransaksi = 48,
   onEkspor,
   onLaporan,
-  onPengajuanBaru,
 }: TransaksiHeaderProps) {
   return (
     <div className="flex flex-col gap-3 py-4 px-4 md:px-6 md:flex-row md:items-center md:justify-between">
@@ -47,14 +46,14 @@ export default function TransaksiHeader({
         </button>
 
         {/* Pengajuan Baru — always full */}
-        <button
-          onClick={onPengajuanBaru}
+        <Links
+        href="/dashboard/transaction/create"
           className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium bg-black text-white dark:bg-white dark:text-black rounded-md hover:opacity-80 transition-opacity whitespace-nowrap"
         >
           <PlusSignIcon size={14} />
           <span className="hidden sm:inline">Pengajuan Baru</span>
           <span className="sm:hidden">Baru</span>
-        </button>
+        </Links>
       </div>
     </div>
   );

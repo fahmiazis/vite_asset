@@ -1,9 +1,9 @@
 import type { ColumnDef } from "@tanstack/react-table"
 import { useNavigate } from "react-router-dom"
-import type { TransaksiAset } from "./dataDummy";
+import type { transactionListState } from "../../../models/transaction/list"
 
 // --- Avatar Pemohon ---
-function Avatar({ nama, divisi }: { nama: string; divisi: string }) {
+function Avatar({ nama }: { nama: string }) {
   const initials = nama.split(" ").map((n) => n[0]).slice(0, 2).join("").toUpperCase()
   const colors = ["bg-blue-400", "bg-green-400", "bg-orange-400", "bg-purple-400", "bg-rose-400"]
   const color = colors[initials.charCodeAt(0) % colors.length]
@@ -12,47 +12,30 @@ function Avatar({ nama, divisi }: { nama: string; divisi: string }) {
       <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0 ${color}`}>
         {initials}
       </div>
-      <div>
-        <p className="text-sm font-medium leading-tight">{nama}</p>
-        <p className="text-xs text-gray1">{divisi}</p>
-      </div>
+      <p className="text-sm font-medium leading-tight">{nama}</p>
     </div>
-  )
-}
-
-// --- Badge Prioritas ---
-function PrioritasBadge({ value }: { value: string }) {
-  const map: Record<string, string> = {
-    Tinggi: "bg-red-100 text-red-600",
-    Sedang: "bg-yellow-100 text-yellow-700",
-    Rendah: "bg-green-100 text-green-700",
-  }
-  return (
-    <span className={`px-2.5 py-0.5 rounded-md text-xs font-semibold ${map[value] ?? "bg-gray-100 text-gray-600"}`}>
-      {value}
-    </span>
   )
 }
 
 // --- Badge Status ---
 function StatusBadge({ value }: { value: string }) {
-  const map: Record<string, { dot: string; bg: string; text: string }> = {
-    Disetujui: { dot: "bg-green-500", bg: "bg-green-50 text-green-700", text: "Disetujui" },
-    Menunggu:  { dot: "bg-yellow-400", bg: "bg-yellow-50 text-yellow-700", text: "Menunggu" },
-    Ditolak:   { dot: "bg-red-500", bg: "bg-red-50 text-red-600", text: "Ditolak" },
-    Draft:     { dot: "bg-gray-400", bg: "bg-gray-100 text-gray-600", text: "Draft" },
+  const map: Record<string, { dot: string; bg: string }> = {
+    Disetujui: { dot: "bg-green-500", bg: "bg-green-50 text-green-700" },
+    Menunggu:  { dot: "bg-yellow-400", bg: "bg-yellow-50 text-yellow-700" },
+    Ditolak:   { dot: "bg-red-500",   bg: "bg-red-50 text-red-600" },
+    Draft:     { dot: "bg-gray-400",  bg: "bg-gray-100 text-gray-600" },
   }
   const s = map[value] ?? map["Draft"]
   return (
     <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold ${s.bg}`}>
       <span className={`w-1.5 h-1.5 rounded-full ${s.dot}`} />
-      {s.text}
+      {value}
     </span>
   )
 }
 
 // --- Action Buttons ---
-function ActionButtons({ id, status }: { id: string; status: string }) {
+function ActionButtons({ id, status }: { id: number; status: string }) {
   const navigate = useNavigate()
   return (
     <div className="flex items-center gap-1.5">
@@ -75,74 +58,96 @@ function ActionButtons({ id, status }: { id: string; status: string }) {
 }
 
 // --- Columns ---
-export const transaksiColumns: ColumnDef<TransaksiAset>[] = [
+export const transaksiColumns: ColumnDef<transactionListState>[] = [
   {
-    accessorKey: "no_po",
-    header: "NO. PO",
+    accessorKey: "transaction.transaction_number",
+    id: "transaction_number",
+    header: "NO. TRANSAKSI",
     cell: ({ row }) => (
       <div className="text-xs text-gray1 font-mono leading-tight">
-        {row.getValue("no_po")}
+        {row.original.transaction.transaction_number}
       </div>
     ),
   },
   {
-    accessorKey: "nama_aset",
-    header: "NAMA ASET",
+    id: "nama_item",
+    header: "NAMA ITEM",
+    cell: ({ row }) => {
+      const items = row.original.items
+      return (
+        <div>
+          <p className="text-sm font-semibold leading-tight">{items[0]?.item_name ?? "-"}</p>
+          <p className="text-xs text-gray1 mt-0.5">
+            {items[0]?.category_name ?? "-"}
+            {items.length > 1 && (
+              <span className="ml-1 text-blue-500">+{items.length - 1} item lainnya</span>
+            )}
+          </p>
+        </div>
+      )
+    },
+  },
+  {
+    id: "created_by",
+    header: "DIBUAT OLEH",
     cell: ({ row }) => (
-      <div>
-        <p className="text-sm font-semibold leading-tight">{row.getValue("nama_aset")}</p>
-        <p className="text-xs text-gray1 mt-0.5">{row.original.kategori}</p>
-      </div>
+      <Avatar nama={row.original.transaction.created_by} />
     ),
   },
   {
-    accessorKey: "pemohon",
-    header: "PEMOHON",
-    cell: ({ row }) => (
-      <Avatar nama={row.original.pemohon} divisi={row.original.divisi} />
-    ),
+    id: "transaction_date",
+    header: "TGL TRANSAKSI",
+    cell: ({ row }) => {
+      const date = new Date(row.original.transaction.transaction_date)
+      return (
+        <span className="text-sm">
+          {date.toLocaleDateString("id-ID", { day: "2-digit", month: "short", year: "numeric" })}
+        </span>
+      )
+    },
   },
   {
-    accessorKey: "tgl_pengajuan",
-    header: "TGL PENGAJUAN",
-    cell: ({ row }) => (
-      <span className="text-sm">{row.getValue("tgl_pengajuan")}</span>
-    ),
-  },
-  {
-    accessorKey: "qty",
+    id: "qty",
     header: "QTY",
-    cell: ({ row }) => (
-      <div className="text-center">
-        <p className="text-sm font-medium">{row.original.qty}</p>
-        <p className="text-xs text-gray1">{row.original.satuan}</p>
-      </div>
-    ),
+    cell: ({ row }) => {
+      const totalQty = row.original.items.reduce((sum, item) => sum + item.quantity, 0)
+      return (
+        <div className="text-center">
+          <p className="text-sm font-medium">{totalQty}</p>
+          <p className="text-xs text-gray1">unit</p>
+        </div>
+      )
+    },
   },
   {
-    accessorKey: "nilai_total",
+    id: "total_price",
     header: "NILAI TOTAL",
-    cell: ({ row }) => (
-      <span className="text-sm font-semibold tabular-nums">
-        {row.getValue("nilai_total")}
-      </span>
-    ),
+    cell: ({ row }) => {
+      const total = row.original.items.reduce((sum, item) => sum + item.total_price, 0)
+      return (
+        <span className="text-sm font-semibold tabular-nums">
+          {new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+            maximumFractionDigits: 0,
+          }).format(total)}
+        </span>
+      )
+    },
   },
   {
-    accessorKey: "prioritas",
-    header: "PRIORITAS",
-    cell: ({ row }) => <PrioritasBadge value={row.getValue("prioritas")} />,
-  },
-  {
-    accessorKey: "status",
+    id: "status",
     header: "STATUS",
-    cell: ({ row }) => <StatusBadge value={row.getValue("status")} />,
+    cell: ({ row }) => <StatusBadge value={row.original.transaction.status} />,
   },
   {
     id: "aksi",
     header: "AKSI",
     cell: ({ row }) => (
-      <ActionButtons id={row.original.id} status={row.original.status} />
+      <ActionButtons
+        id={row.original.transaction.id}
+        status={row.original.transaction.status}
+      />
     ),
   },
 ]

@@ -33,6 +33,7 @@ import DepretiationPage from '../components/pages/depretiation'
 import TransactionPage from '../components/pages/transaction'
 import AssetPage from '../components/pages/asset'
 import DetailAssetsPage from '../components/pages/asset/detail'
+import CreateTransactionPage from '../components/pages/transaction/create'
 
 export const router = createBrowserRouter([
   // {
@@ -92,6 +93,10 @@ export const router = createBrowserRouter([
           {
             path: 'transaction',
             element: <TransactionPage />,
+          },
+          {
+            path: 'transaction/create',
+            element: <CreateTransactionPage />,
           },
           {
             path: 'depretiation',
