@@ -2,9 +2,12 @@ import { useForm, useFieldArray, useWatch, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"
 import { Selects } from "../../../molecules/input/selects"
-import { CABANG_OPTIONS, KATEGORI_OPTIONS } from "../../../organisms/transaction/create/dataDummy"
 import { procurementSchema, type ProcurementFormValues } from "../../../organisms/transaction/create/validation"
 import { useCreateProcurement } from "../../../../hooks/mutation/transaction/create"
+import { useAssetsCategoryList } from "../../../../hooks/query/assetsCategory/list"
+import { useBranchList } from "../../../../hooks/query/branch/list"
+import { activeCategoryListToSelectOptions } from "../../../../utils/assetCategory"
+import { activeBranchListToSelectOptions } from "../../../../utils/branch"
 
 // ─── Rupiah masking helpers ───────────────────────────────────────────────────
 function toRupiah(num: number): string {
@@ -114,6 +117,7 @@ function DetailFields({
     errors: any
     onRemove: () => void
 }) {
+    const { data: branchList } = useBranchList()
     return (
         <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-3 bg-white dark:bg-gray-900">
             <div className="flex items-center justify-between mb-3">
@@ -134,22 +138,25 @@ function DetailFields({
                     error={errors?.items?.[itemIndex]?.details?.[detailIndex]?.requester_name?.message}
                     {...register(`items.${itemIndex}.details.${detailIndex}.requester_name`)}
                 />
-                <Controller
-                    control={control}
-                    name={`items.${itemIndex}.details.${detailIndex}.branch_code`}
-                    render={({ field, fieldState }) => (
-                        <Selects
-                            label="Kode cabang"
-                            value={field.value ?? ""}
-                            onChange={field.onChange}
-                            options={CABANG_OPTIONS}
-                            placeholder="Pilih cabang"
-                            error={fieldState.error?.message}
-                            labelClassName="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-                            selectClassName="text-sm py-2"
-                        />
-                    )}
-                />
+                {branchList && (
+                    <Controller
+                        control={control}
+                        name={`items.${itemIndex}.branch_code`}
+                        render={({ field, fieldState }) => (
+                            <Selects
+                                label="Kode cabang"
+                                value={field.value ?? ""}
+                                onChange={field.onChange}
+                                options={activeBranchListToSelectOptions(branchList?.data)}
+                                placeholder="Pilih cabang"
+                                error={fieldState.error?.message}
+                                labelClassName="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                                selectClassName="text-sm py-2"
+                                required
+                            />
+                        )}
+                    />
+                )}
                 <TextInput
                     label="Kuantitas"
                     type="number"
@@ -193,6 +200,9 @@ function ItemCard({
         name: `items.${itemIndex}.details`,
     })
 
+    const { data: listCategory } = useAssetsCategoryList()
+    const { data: branchList } = useBranchList()
+
     const [showDetails, setShowDetails] = useState(false)
 
     // Realtime qty validation
@@ -234,23 +244,25 @@ function ItemCard({
                             {...register(`items.${itemIndex}.item_name`)}
                         />
                     </div>
-                    <Controller
-                        control={control}
-                        name={`items.${itemIndex}.category_id`}
-                        render={({ field, fieldState }) => (
-                            <Selects
-                                label="Kategori"
-                                value={field.value ?? ""}
-                                onChange={(v) => field.onChange(Number(v))}
-                                options={KATEGORI_OPTIONS}
-                                placeholder="Pilih kategori"
-                                error={fieldState.error?.message}
-                                labelClassName="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-                                selectClassName="text-sm py-2"
-                                required
-                            />
-                        )}
-                    />
+                    {listCategory && (
+                        <Controller
+                            control={control}
+                            name={`items.${itemIndex}.category_id`}
+                            render={({ field, fieldState }) => (
+                                <Selects
+                                    label="Kategori"
+                                    value={field.value ?? ""}
+                                    onChange={(v) => field.onChange(Number(v))}
+                                    options={activeCategoryListToSelectOptions(listCategory.data)}
+                                    placeholder="Pilih kategori"
+                                    error={fieldState.error?.message}
+                                    labelClassName="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                                    selectClassName="text-sm py-2"
+                                    required
+                                />
+                            )}
+                        />
+                    )}
                 </div>
 
                 {/* Row 2: qty + harga + cabang */}
@@ -276,23 +288,25 @@ function ItemCard({
                             />
                         )}
                     />
-                    <Controller
-                        control={control}
-                        name={`items.${itemIndex}.branch_code`}
-                        render={({ field, fieldState }) => (
-                            <Selects
-                                label="Kode cabang"
-                                value={field.value ?? ""}
-                                onChange={field.onChange}
-                                options={CABANG_OPTIONS}
-                                placeholder="Pilih cabang"
-                                error={fieldState.error?.message}
-                                labelClassName="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-                                selectClassName="text-sm py-2"
-                                required
-                            />
-                        )}
-                    />
+                    {branchList && (
+                        <Controller
+                            control={control}
+                            name={`items.${itemIndex}.branch_code`}
+                            render={({ field, fieldState }) => (
+                                <Selects
+                                    label="Kode cabang"
+                                    value={field.value ?? ""}
+                                    onChange={field.onChange}
+                                    options={activeBranchListToSelectOptions(branchList?.data)}
+                                    placeholder="Pilih cabang"
+                                    error={fieldState.error?.message}
+                                    labelClassName="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                                    selectClassName="text-sm py-2"
+                                    required
+                                />
+                            )}
+                        />
+                    )}
                 </div>
 
                 {/* Notes */}
@@ -425,6 +439,8 @@ export default function CreateTransactionPage() {
         redirectOnSuccess: true,
         redirectPath: '/dashboard/procurement',
     });
+
+
 
     // Ganti bagian onSubmit
     const onSubmit = (data: ProcurementFormValues) => {

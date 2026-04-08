@@ -4,7 +4,6 @@ import { BranchTable } from '../../organisms/branch'
 
 export default function BranchPage() {
     const { data, isLoading } = useBranchList()
-    console.log('data branch ==>', data)
     return (
         <div>
             <Head label='Branch' />
