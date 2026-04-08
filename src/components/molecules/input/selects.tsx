@@ -50,10 +50,10 @@ export const Selects = forwardRef<HTMLSelectElement, SelectProps>(
     return (
       <div className={containerClassName}>
         {/* Label */}
-        <label 
+        <label
           className={
-            labelClassName || 
-            'block text-lg font-medium mb-1 md:mb-2'
+            labelClassName ||
+            'block text-lg font-medium mb-1 md:mb-2 text-gray-700 dark:text-gray-300'
           }
         >
           {label}
@@ -72,15 +72,17 @@ export const Selects = forwardRef<HTMLSelectElement, SelectProps>(
               error ? `${label}-error` : helperText ? `${label}-helper` : undefined
             }
             className={`
-              w-full px-4 py-2 text-gray-700 border rounded-lg
-              appearance-none bg-white cursor-pointer
+              w-full px-4 py-2 border rounded-lg
+              appearance-none cursor-pointer
               transition-colors duration-200
+              text-gray-800 dark:text-gray-100
+              bg-white dark:bg-gray-900
               ${
                 hasError
-                  ? 'border-red-500 focus:ring-2 focus:ring-red-500 focus:border-red-500'
+                  ? 'border-red-400 focus:ring-2 focus:ring-red-400 focus:border-red-400 focus:outline-none'
                   : disabled
-                  ? 'bg-gray-100 border-gray-300 cursor-not-allowed focus:ring-0 focus:outline-none'
-                  : 'border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none'
+                  ? 'bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-600 cursor-not-allowed text-gray-400 dark:text-gray-500 focus:ring-0 focus:outline-none'
+                  : 'border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none'
               }
               ${selectClassName || ''}
             `}
@@ -88,14 +90,18 @@ export const Selects = forwardRef<HTMLSelectElement, SelectProps>(
           >
             {/* Placeholder Option */}
             {showPlaceholder && (
-              <option value="" disabled>
+              <option value="" disabled className="text-gray-400 dark:text-gray-500">
                 {placeholder}
               </option>
             )}
 
             {/* Options */}
             {options.map((option) => (
-              <option key={option.id} value={option.value}>
+              <option
+                key={option.id}
+                value={option.value}
+                className="text-gray-800 dark:text-gray-100 bg-white dark:bg-gray-900"
+              >
                 {option.label}
               </option>
             ))}
@@ -104,7 +110,7 @@ export const Selects = forwardRef<HTMLSelectElement, SelectProps>(
           {/* Arrow Icon */}
           <div className="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
             <svg
-              className={`w-5 h-5 ${disabled ? 'text-gray-400' : 'text-gray-700'}`}
+              className={`w-5 h-5 ${disabled ? 'text-gray-400 dark:text-gray-600' : 'text-gray-500 dark:text-gray-400'}`}
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -121,9 +127,9 @@ export const Selects = forwardRef<HTMLSelectElement, SelectProps>(
 
         {/* Error Message */}
         {error && (
-          <p 
+          <p
             id={`${label}-error`}
-            className="mt-1 text-xs text-red-600"
+            className="mt-1 text-xs text-red-500 dark:text-red-400"
             role="alert"
           >
             {error}
@@ -132,9 +138,9 @@ export const Selects = forwardRef<HTMLSelectElement, SelectProps>(
 
         {/* Helper Text */}
         {helperText && !error && (
-          <p 
+          <p
             id={`${label}-helper`}
-            className="mt-1 text-xs text-gray-500"
+            className="mt-1 text-xs text-gray-500 dark:text-gray-400"
           >
             {helperText}
           </p>
