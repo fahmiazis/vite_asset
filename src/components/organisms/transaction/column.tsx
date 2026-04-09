@@ -2,6 +2,7 @@ import type { ColumnDef } from "@tanstack/react-table"
 import { useNavigate } from "react-router-dom"
 import type { transactionListState } from "../../../models/transaction/list"
 import { useState } from "react"
+import { useDeleteProcurement } from "../../../hooks/mutation/transaction/delete"
 
 // --- Avatar Pemohon ---
 function Avatar({ nama }: { nama: string }) {
@@ -37,48 +38,46 @@ function StatusBadge({ value }: { value: string }) {
 
 // --- Delete Confirm Modal ---
 function DeleteModal({
-  id,
-  onConfirm,
-  onCancel,
+  id, onConfirm, onCancel, isLoading,
 }: {
   id: string
   onConfirm: () => void
   onCancel: () => void
+  isLoading?: boolean
 }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
       <div className="bg-white dark:bg-gray-900 rounded-xl shadow-xl p-6 w-full max-w-sm mx-4">
-        {/* Icon */}
         <div className="flex items-center justify-center w-12 h-12 rounded-full bg-red-100 mx-auto mb-4">
           <svg className="w-6 h-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
               d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
           </svg>
         </div>
-
-        {/* Text */}
         <h3 className="text-center text-base font-semibold text-gray-900 dark:text-white mb-1">
-          Hapus Transaksi?
+          Delete Transaction?
         </h3>
         <p className="text-center text-sm text-gray-500 dark:text-gray-400">
-          Yakin ingin menghapus transaksi{" "}
-          <span className="font-mono font-semibold text-gray-700 dark:text-gray-200">{id}</span>?
-          Tindakan ini tidak bisa dibatalkan.
+          Are you sure you want to delete{" "}
+          <span className="block font-mono font-semibold text-gray-700 dark:text-gray-200 break-all mt-1">
+            {id}
+          </span>
+          <span className="block mt-1">This action cannot be undone.</span>
         </p>
-
-        {/* Actions */}
         <div className="flex gap-3 mt-6">
           <button
             onClick={onCancel}
-            className="flex-1 px-4 py-2 text-sm font-medium border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+            disabled={isLoading}
+            className="flex-1 px-4 py-2 text-sm font-medium border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-50"
           >
-            Batal
+            Cancel
           </button>
           <button
             onClick={onConfirm}
-            className="flex-1 px-4 py-2 text-sm font-medium bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+            disabled={isLoading}
+            className="flex-1 px-4 py-2 text-sm font-medium bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50"
           >
-            Ya, Hapus
+            {isLoading ? "Deleting..." : "Yes, Delete"}
           </button>
         </div>
       </div>
@@ -91,24 +90,19 @@ function ActionButtons({ id, status }: { id: string; status: string }) {
   const navigate = useNavigate()
   const [showDeleteModal, setShowDeleteModal] = useState(false)
 
-  const handleDelete = () => {
-    // TODO: panggil API delete di sini
-    console.log("Deleting transaction:", id)
-    setShowDeleteModal(false)
-  }
+  const { mutate: deleteTransaction, isPending: isDeleting } = useDeleteProcurement({
+    onSuccess: () => setShowDeleteModal(false),
+  })
 
   return (
     <>
       <div className="flex items-center gap-1.5">
-        {/* Detail */}
         <button
           onClick={() => navigate(`/dashboard/transaction/${id}`)}
           className="px-3 py-1 text-xs font-medium border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
         >
           Detail
         </button>
-
-        {/* Review (hanya jika Menunggu) */}
         {status === "Menunggu" && (
           <button
             onClick={() => navigate(`/dashboard/transaksi/${id}/review`)}
@@ -117,29 +111,25 @@ function ActionButtons({ id, status }: { id: string; status: string }) {
             Review
           </button>
         )}
-
-        {/* Edit */}
         <button
           onClick={() => navigate(`/dashboard/transaction/update/${id}`)}
           className="px-3 py-1 text-xs font-medium border border-blue-400 text-blue-600 rounded-md hover:bg-blue-50 transition-colors"
         >
           Edit
         </button>
-
-        {/* Hapus */}
         <button
           onClick={() => setShowDeleteModal(true)}
           className="px-3 py-1 text-xs font-medium border border-red-400 text-red-600 rounded-md hover:bg-red-50 transition-colors"
         >
-          Hapus
+          Delete
         </button>
       </div>
 
-      {/* Modal konfirmasi delete */}
       {showDeleteModal && (
         <DeleteModal
           id={id}
-          onConfirm={handleDelete}
+          isLoading={isDeleting}
+          onConfirm={() => deleteTransaction(id)}
           onCancel={() => setShowDeleteModal(false)}
         />
       )}

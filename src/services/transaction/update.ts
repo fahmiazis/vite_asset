@@ -33,7 +33,7 @@ export const updateProcurement = async (
 ): Promise<UpdateProcurementResponse> => {
     const encodedId = id.split("/").map(encodeURIComponent).join("/")
     const response = await axiosPrivate.put<UpdateProcurementResponse>(
-        `/transactions/procurements/${encodedId}`,
+        `/transactions/procurement/detail-stage?transaction_number${encodedId}`,
         payload
     )
     return response.data
