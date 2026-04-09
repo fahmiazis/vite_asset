@@ -31,6 +31,8 @@ export function useCreateMenu({
 
       // Show success notification
       toast.success(data.message || 'Menu created successfully');
+      navigate('/dashboard/menu');
+
 
       // Redirect if needed
       if (redirectOnSuccess) {

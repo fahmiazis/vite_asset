@@ -35,12 +35,12 @@ function StatusBadge({ value }: { value: string }) {
 }
 
 // --- Action Buttons ---
-function ActionButtons({ id, status }: { id: number; status: string }) {
+function ActionButtons({ id, status }: { id: string; status: string }) {
   const navigate = useNavigate()
   return (
     <div className="flex items-center gap-1.5">
       <button
-        onClick={() => navigate(`/dashboard/transaksi/${id}`)}
+        onClick={() => navigate(`/dashboard/transaction/${id}`)}
         className="px-3 py-1 text-xs font-medium border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
       >
         Detail
@@ -145,7 +145,7 @@ export const transaksiColumns: ColumnDef<transactionListState>[] = [
     header: "AKSI",
     cell: ({ row }) => (
       <ActionButtons
-        id={row.original.transaction.id}
+        id={row.original.transaction.transaction_number}
         status={row.original.transaction.status}
       />
     ),

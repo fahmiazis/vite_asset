@@ -34,6 +34,7 @@ import TransactionPage from '../components/pages/transaction'
 import AssetPage from '../components/pages/asset'
 import DetailAssetsPage from '../components/pages/asset/detail'
 import CreateTransactionPage from '../components/pages/transaction/create'
+import DetailTransaction from '../components/pages/transaction/detail'
 
 export const router = createBrowserRouter([
   // {
@@ -93,6 +94,10 @@ export const router = createBrowserRouter([
           {
             path: 'transaction',
             element: <TransactionPage />,
+          },
+          {
+            path: 'transaction/*',
+            element: <DetailTransaction />,
           },
           {
             path: 'transaction/create',
