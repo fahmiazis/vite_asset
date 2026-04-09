@@ -13,6 +13,7 @@ import {
 import { useState } from "react"
 import { depreciationColumns } from "./column"
 import type { depreListState } from "../../../../models/depreciation/list"
+import Links from "../../../atoms/links"
 
 interface DepreciationTableProps {
     data: depreListState[]   // ← ganti dari MonthlyDepreciationState
@@ -127,6 +128,12 @@ export function DepreciationTable({ data, isLoading }: DepreciationTableProps) {
                     >
                         Lock
                     </button>
+                    <Links
+                        href="/dashboard/depreciation/create"
+                        className="px-4 py-2 text-xs font-medium text-white bg-black rounded-lg"
+                    >
+                        Create
+                    </Links>
                 </div>
             </section>
 
