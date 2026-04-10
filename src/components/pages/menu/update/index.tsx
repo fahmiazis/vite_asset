@@ -18,6 +18,7 @@ export default function UpdateMenu() {
     const [routePath, setRoutePath] = useState('')
     const [iconName, setIconName] = useState('')
     const [status, setStatus] = useState('active')
+    const [showIconTip, setShowIconTip] = useState(false)
 
     useEffect(() => {
         if (detail) {
@@ -65,7 +66,36 @@ export default function UpdateMenu() {
 
             <section className='flex justify-between items-center gap-4 mt-4'>
                 <Inputs label='Parent ID' value={parentId} onChange={setParentId} containerClassName='w-1/2' />
-                <Inputs label='Icon Name' value={iconName} onChange={setIconName} containerClassName='w-1/2' />
+                <div className='w-1/2 relative'>
+                    <Inputs
+                        label='Icon Name'
+                        value={iconName}
+                        onChange={setIconName}
+                        containerClassName='w-full'
+                    />
+                    <button
+                        type="button"
+                        onClick={() => setShowIconTip(prev => !prev)}
+                        className="absolute right-0 top-0 text-xs text-indigo-500 hover:text-indigo-600 dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors"
+                    >
+                        ? Icon help
+                    </button>
+
+                    {showIconTip && (
+                        <div className="absolute mt-1.5 px-3 py-2 text-xs bg-indigo-50 dark:bg-indigo-900/30 border border-indigo-200 dark:border-indigo-700 rounded-lg text-gray-600 dark:text-gray-300">
+                            Browse icon names at{" "}
+                            <a
+                                href="https://icon-sets.iconify.design"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="font-medium text-indigo-600 dark:text-indigo-400 underline underline-offset-2 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors"
+                            >
+                                Iconify — Home of open source icons
+                            </a>
+                            , copy the icon name and paste it here.
+                        </div>
+                    )}
+                </div>
 
                 {/* Status Toggle */}
                 <div className='w-1/2'>
