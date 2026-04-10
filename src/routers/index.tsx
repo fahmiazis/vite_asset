@@ -37,6 +37,7 @@ import CreateTransactionPage from '../components/pages/transaction/create'
 import DetailTransaction from '../components/pages/transaction/detail'
 import EditTransactionPage from '../components/pages/transaction/update'
 import CreateDepre from '../components/pages/depretiation/create'
+import DetailDeprePage from '../components/pages/depretiation/detail'
 
 export const router = createBrowserRouter([
   // {
@@ -56,10 +57,10 @@ export const router = createBrowserRouter([
   },
   {
     path: '/dashboard',
-    element: <ProtectedRoute />, 
+    element: <ProtectedRoute />,
     children: [
       {
-        element: <MainLayout />, 
+        element: <MainLayout />,
         children: [
           {
             index: true,
@@ -116,6 +117,10 @@ export const router = createBrowserRouter([
           {
             path: 'depreciation/create',
             element: <CreateDepre />,
+          },
+          {
+            path: 'depreciation/:id',
+            element: <DetailDeprePage />,
           },
           {
             path: 'asset-category',

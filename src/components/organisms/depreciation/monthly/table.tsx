@@ -1,5 +1,3 @@
-// components/organisms/depreciation/monthly/table.tsx
-
 import {
     flexRender,
     getCoreRowModel,
@@ -138,26 +136,34 @@ export function DepreciationTable({ data, isLoading }: DepreciationTableProps) {
             </section>
 
             {/* Table */}
-            <div className="rounded-md border">
+            <div className="rounded-xl border border-gray-200 shadow-sm bg-white dark:bg-gray-900">
                 <div className="relative overflow-x-auto">
                     <table className="min-w-[1200px] w-full">
-                        <thead className="bg-gray-50 dark:bg-gray-900">
+                        <thead className="bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
                             {table.getHeaderGroups().map((headerGroup) => (
                                 <tr key={headerGroup.id}>
                                     {headerGroup.headers.map((header) => (
-                                        <th key={header.id} className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                                            {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                                        <th
+                                            key={header.id}
+                                            className="px-6 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+                                        >
+                                            {header.isPlaceholder
+                                                ? null
+                                                : flexRender(header.column.columnDef.header, header.getContext())}
                                         </th>
                                     ))}
                                 </tr>
                             ))}
                         </thead>
-                        <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
+                        <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-100 dark:divide-gray-700">
                             {table.getRowModel().rows?.length ? (
                                 table.getRowModel().rows.map((row) => (
-                                    <tr key={row.id} className="transition-colors hover:bg-gray-50 dark:hover:bg-gray-800">
+                                    <tr
+                                        key={row.id}
+                                        className="transition-colors hover:bg-gray-50 dark:hover:bg-gray-800"
+                                    >
                                         {row.getVisibleCells().map((cell) => (
-                                            <td key={cell.id} className="px-6 py-4 whitespace-nowrap">
+                                            <td key={cell.id} className="px-6 py-4 whitespace-nowrap text-sm">
                                                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                             </td>
                                         ))}
@@ -165,7 +171,10 @@ export function DepreciationTable({ data, isLoading }: DepreciationTableProps) {
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan={depreciationColumns.length} className="px-6 py-4 text-center text-sm text-gray-500">
+                                    <td
+                                        colSpan={depreciationColumns.length}
+                                        className="px-6 py-12 text-center text-sm text-gray-400"
+                                    >
                                         No data available
                                     </td>
                                 </tr>

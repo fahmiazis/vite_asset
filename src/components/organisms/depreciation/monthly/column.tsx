@@ -1,5 +1,6 @@
 import type { ColumnDef } from "@tanstack/react-table"
 import type { depreListState } from "../../../../models/depreciation/list"
+import Links from "../../../atoms/links"
 
 function formatDate(dateStr: string) {
     if (!dateStr) return "-"
@@ -12,7 +13,11 @@ export const depreciationColumns: ColumnDef<depreListState>[] = [
     {
         id: "no",
         header: "No",
-        cell: ({ row }) => <div className="text-center">{row.index + 1}</div>,
+        cell: ({ row }) => (
+            <div className="text-center text-gray-600 dark:text-gray-400">
+                {row.index + 1}
+            </div>
+        ),
         size: 60,
     },
     {
@@ -106,4 +111,17 @@ export const depreciationColumns: ColumnDef<depreListState>[] = [
             )
         },
     },
+    // ✅ Kolom Action
+    {
+    id: "action",
+    header: "Action",
+    cell: ({ row }) => (
+        <Links
+            href={`/dashboard/depreciation/${row.original.id}`}
+            className="px-3 py-1.5 text-xs font-medium text-white bg-black rounded-lg hover:bg-gray-800 transition-colors inline-block"
+        >
+            Detail
+        </Links>
+    ),
+},
 ]
