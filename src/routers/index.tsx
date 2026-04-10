@@ -39,6 +39,8 @@ import EditTransactionPage from '../components/pages/transaction/update'
 import CreateDepre from '../components/pages/depretiation/create'
 import DetailDeprePage from '../components/pages/depretiation/detail'
 import UpdateDepreciationPage from '../components/pages/depretiation/update'
+import HomebasePage from '../components/pages/homebase'
+import CreateHomeBasePage from '../components/pages/homebase/create'
 
 export const router = createBrowserRouter([
   // {
@@ -94,6 +96,14 @@ export const router = createBrowserRouter([
           {
             path: 'asset/:id',
             element: <DetailAssetsPage />,
+          },
+          {
+            path: 'homebase',
+            element: <HomebasePage />,
+          },
+          {
+            path: 'homebase/create',
+            element: <CreateHomeBasePage />,
           },
           {
             path: 'transaction',
