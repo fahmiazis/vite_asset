@@ -38,6 +38,7 @@ import DetailTransaction from '../components/pages/transaction/detail'
 import EditTransactionPage from '../components/pages/transaction/update'
 import CreateDepre from '../components/pages/depretiation/create'
 import DetailDeprePage from '../components/pages/depretiation/detail'
+import UpdateDepreciationPage from '../components/pages/depretiation/update'
 
 export const router = createBrowserRouter([
   // {
@@ -121,6 +122,10 @@ export const router = createBrowserRouter([
           {
             path: 'depreciation/:id',
             element: <DetailDeprePage />,
+          },
+          {
+            path: 'depreciation/update/:id',
+            element: <UpdateDepreciationPage />,
           },
           {
             path: 'asset-category',
