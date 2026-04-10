@@ -10,7 +10,7 @@ export interface UpdateMenuPayload {
 }
 
 export const updateMenu = async (id: string, payload: UpdateMenuPayload) => {
-    const res = await axiosPrivate.put(`/v1/menus/${id}`, payload)
+    const res = await axiosPrivate.put(`/menus/${id}`, payload)
 
     if (!res) {
         throw new Error('fail to update menu')
