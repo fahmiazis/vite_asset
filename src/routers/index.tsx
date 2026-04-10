@@ -76,7 +76,7 @@ export const router = createBrowserRouter([
             element: <DetailMenu />,
           },
           {
-            path: 'menu/:id/update',
+            path: '/menu/update/:id',
             element: <UpdateMenuPage />,
           },
           {

@@ -20,22 +20,22 @@ const colorMap = {
 };
 
 const iconBgMap = {
-  green: "bg-green-100 text-green-600",
-  yellow: "bg-yellow-100 text-yellow-600",
-  red: "bg-red-100 text-red-500",
-  gray: "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-200",
+  green: "bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400",
+  yellow: "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400",
+  red: "bg-red-100 dark:bg-red-900/30 text-red-500 dark:text-red-400",
+  gray: "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300",
 };
 
 const badgeMap = {
-  green: "bg-green-100 text-green-700",
-  yellow: "bg-yellow-100 text-yellow-700 border border-yellow-400",
-  red: "bg-red-100 text-red-600",
-  "outline-green": "bg-green-100 text-green-700",
+  green: "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400",
+  yellow: "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 border border-yellow-400 dark:border-yellow-600",
+  red: "bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400",
+  "outline-green": "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400",
 };
 
 function StatCard({ color, icon, value, label, badge, badgeSuffix }: StatCardProps) {
   return (
-    <div className="relative flex flex-col gap-2.5 bg-white dark:bg-[#1a1a1a] rounded-2xl p-4 md:p-5 shadow-sm overflow-hidden flex-1 min-w-0">
+    <div className="relative flex flex-col gap-2.5 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-700 rounded-2xl p-4 md:p-5 shadow-sm overflow-hidden flex-1 min-w-0">
       {/* Top color bar */}
       <div className={`absolute top-0 left-0 right-0 h-1 ${colorMap[color]}`} />
 
@@ -46,8 +46,12 @@ function StatCard({ color, icon, value, label, badge, badgeSuffix }: StatCardPro
 
       {/* Value & Label */}
       <div>
-        <p className="text-xl md:text-2xl font-bold tracking-tight">{value}</p>
-        <p className="text-xs md:text-sm text-gray1 mt-0.5 leading-tight">{label}</p>
+        <p className="text-xl md:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+          {value}
+        </p>
+        <p className="text-xs md:text-sm text-gray-500 dark:text-gray-400 mt-0.5 leading-tight">
+          {label}
+        </p>
       </div>
 
       {/* Badge */}
@@ -56,7 +60,9 @@ function StatCard({ color, icon, value, label, badge, badgeSuffix }: StatCardPro
           {badge.text}
         </span>
         {badgeSuffix && (
-          <span className="text-xs text-gray1 leading-tight">{badgeSuffix}</span>
+          <span className="text-xs text-gray-500 dark:text-gray-400 leading-tight">
+            {badgeSuffix}
+          </span>
         )}
       </div>
     </div>
@@ -69,33 +75,33 @@ export default function StatCards() {
       <StatCard
         color="gray"
         icon={<Dollar01Icon size={15} />}
-        value="Rp 4,82M"
-        label="Total Nilai Pengadaan"
+        value="Rp 4.82M"
+        label="Total Procurement Value"
         badge={{ text: "+12%", variant: "green" }}
-        badgeSuffix="vs kuartal sebelumnya"
+        badgeSuffix="vs previous quarter"
       />
       <StatCard
         color="green"
         icon={<CheckListIcon size={15} />}
         value="29"
-        label="Transaksi Disetujui"
+        label="Approved Transactions"
         badge={{ text: "60%", variant: "outline-green" }}
-        badgeSuffix="dari total pengajuan"
+        badgeSuffix="of total submissions"
       />
       <StatCard
         color="yellow"
         icon={<Clock01Icon size={15} />}
         value="13"
-        label="Menunggu Review"
-        badge={{ text: "Perlu tindak lanjut", variant: "yellow" }}
+        label="Awaiting Review"
+        badge={{ text: "Needs follow-up", variant: "yellow" }}
       />
       <StatCard
         color="red"
         icon={<XVariableCircleIcon size={15} />}
         value="6"
-        label="Ditolak / Revisi"
+        label="Rejected / Revision"
         badge={{ text: "13%", variant: "red" }}
-        badgeSuffix="dari total pengajuan"
+        badgeSuffix="of total submissions"
       />
     </div>
   );
