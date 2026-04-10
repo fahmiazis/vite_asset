@@ -1,7 +1,8 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import type { detailtransactionProps } from "../../../../models/transaction/detail"
 import { useSubmitProcurement } from "../../../../hooks/mutation/transaction/verifAsset"
 import toast from "react-hot-toast"
+import { uploadAttachment } from "../../../../services/transaction/uploadAttachment"
 
 function formatRupiah(num: number) {
   return new Intl.NumberFormat("id-ID", {
@@ -28,63 +29,162 @@ function StatusBadge({ status }: { status: string }) {
   )
 }
 
+const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10 MB
+
+// ─── File Upload Field ────────────────────────────────────────────────────────
+
+function FileUploadField({
+  label,
+  file,
+  onChange,
+  onRemove,
+}: {
+  label: string
+  file: File | null
+  onChange: (file: File) => void
+  onRemove: () => void
+}) {
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selected = e.target.files?.[0]
+    if (!selected) return
+    if (selected.size > MAX_FILE_SIZE) {
+      toast.error(`${label}: File size must not exceed 10 MB`)
+      return
+    }
+    onChange(selected)
+  }
+
+  return (
+    <div>
+      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        {label}
+        <span className="ml-1 text-xs text-gray-400 font-normal">(max 10 MB)</span>
+      </label>
+      {file ? (
+        <div className="flex items-center justify-between px-3 py-2 border border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-800">
+          <div className="flex items-center gap-2 min-w-0">
+            <svg className="w-4 h-4 text-indigo-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+            </svg>
+            <span className="text-xs text-gray-700 dark:text-gray-300 truncate">{file.name}</span>
+            <span className="text-xs text-gray-400 flex-shrink-0">
+              ({(file.size / 1024 / 1024).toFixed(2)} MB)
+            </span>
+          </div>
+          <button
+            type="button"
+            onClick={onRemove}
+            className="ml-2 text-gray-400 hover:text-red-500 transition-colors flex-shrink-0"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      ) : (
+        <button
+          type="button"
+          onClick={() => inputRef.current?.click()}
+          className="w-full flex items-center justify-center gap-2 px-3 py-2.5 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg text-sm text-gray-500 dark:text-gray-400 hover:border-indigo-400 dark:hover:border-indigo-500 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors"
+        >
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+          </svg>
+          Click to upload file
+        </button>
+      )}
+      <input
+        ref={inputRef}
+        type="file"
+        accept=".pdf,.jpg,.jpeg,.png"
+        className="hidden"
+        onChange={handleChange}
+      />
+    </div>
+  )
+}
+
+// ─── Submit Modal ─────────────────────────────────────────────────────────────
+
 function SubmitModal({
+  transactionNumber,
   onConfirm,
   onCancel,
   isLoading,
 }: {
-  onConfirm: (notes: string) => void
+  transactionNumber: string
+  onConfirm: (notes: string, file1: File | null, file2: File | null) => void
   onCancel: () => void
   isLoading: boolean
 }) {
   const [notes, setNotes] = useState("")
+  const [file1, setFile1] = useState<File | null>(null)
+  const [file2, setFile2] = useState<File | null>(null)
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-      <div className="bg-white dark:bg-gray-900 rounded-xl shadow-xl p-6 w-full max-w-sm mx-4">
+      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl shadow-xl p-6 w-full max-w-md mx-4">
         {/* Icon */}
-        <div className="flex items-center justify-center w-12 h-12 rounded-full bg-indigo-100 dark:bg-indigo-900 mx-auto mb-4">
-          <svg className="w-6 h-6 text-indigo-600 dark:text-indigo-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        <div className="flex items-center justify-center w-12 h-12 rounded-full bg-indigo-100 dark:bg-indigo-900/40 mx-auto mb-4">
+          <svg className="w-6 h-6 text-indigo-600 dark:text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </div>
 
-        {/* Text */}
         <h3 className="text-center text-base font-semibold text-gray-900 dark:text-white mb-1">
           Submit Transaction?
         </h3>
-        <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-4">
+        <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-5">
           This transaction will be submitted for verification.
         </p>
 
-        {/* Notes input */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-            Notes <span className="text-gray-400 font-normal">(optional)</span>
-          </label>
-          <textarea
-            rows={3}
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
-            placeholder="e.g. Please verify immediately..."
-            className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 resize-none"
+        <div className="space-y-4">
+          {/* Notes */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Notes <span className="text-gray-400 font-normal">(optional)</span>
+            </label>
+            <textarea
+              rows={3}
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              placeholder="e.g. Please verify immediately..."
+              className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-600 resize-none"
+            />
+          </div>
+
+          {/* File 1 */}
+          <FileUploadField
+            label="Attachment 1"
+            file={file1}
+            onChange={setFile1}
+            onRemove={() => setFile1(null)}
+          />
+
+          {/* File 2 */}
+          <FileUploadField
+            label="Attachment 2"
+            file={file2}
+            onChange={setFile2}
+            onRemove={() => setFile2(null)}
           />
         </div>
 
         {/* Actions */}
-        <div className="flex gap-3 mt-4">
+        <div className="flex gap-3 mt-5">
           <button
             onClick={onCancel}
             disabled={isLoading}
-            className="flex-1 px-4 py-2 text-sm font-medium border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-50"
+            className="flex-1 px-4 py-2 text-sm font-medium border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-50"
           >
             Cancel
           </button>
           <button
-            onClick={() => onConfirm(notes)}
+            onClick={() => onConfirm(notes, file1, file2)}
             disabled={isLoading}
-            className="flex-1 px-4 py-2 text-sm font-medium bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors disabled:opacity-50"
+            className="flex-1 px-4 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors disabled:opacity-50"
           >
             {isLoading ? "Submitting..." : "Submit"}
           </button>
@@ -106,19 +206,54 @@ export default function DetailTransactionLayout({ data }: { data: detailtransact
     onSuccess: () => setShowSubmitModal(false)
   })
 
-  const handleSubmit = (notes: string) => {
-    submitTransaction({
-      id: transaction.transaction_number,
-      payload: { ...(notes.trim() && { notes: notes.trim() }) },
-    })
-  }
+  const [isUploading, setIsUploading] = useState(false)
+
+const handleSubmit = async (notes: string, file1: File | null, file2: File | null) => {
+    try {
+        setIsUploading(true)
+
+        // Upload file1 jika ada
+        if (file1) {
+            await uploadAttachment({
+                transaction_number: transaction.transaction_number,
+                transaction_type: "procurement",
+                stage: "DRAFT",
+                attachment_config_id: 5,
+                file: file1,
+            })
+        }
+
+        // Upload file2 jika ada
+        if (file2) {
+            await uploadAttachment({
+                transaction_number: transaction.transaction_number,
+                transaction_type: "procurement",
+                stage: "DRAFT",
+                attachment_config_id: 5,
+                file: file2,
+            })
+        }
+
+        // Submit transaction
+        submitTransaction({
+            id: transaction.transaction_number,
+            payload: { ...(notes.trim() && { notes: notes.trim() }) },
+        })
+    } catch (err: any) {
+        const message = err?.response?.data?.message ?? "Failed to upload attachment"
+        toast.error(message)
+    } finally {
+        setIsUploading(false)
+    }
+}
 
   return (
     <section className="space-y-4 mt-4">
       {/* modal Verif */}
       {showSubmitModal && (
         <SubmitModal
-          isLoading={isSubmitting}
+          transactionNumber={transaction.transaction_number}
+          isLoading={isSubmitting || isUploading}
           onConfirm={handleSubmit}
           onCancel={() => setShowSubmitModal(false)}
         />
