@@ -41,6 +41,7 @@ import DetailDeprePage from '../components/pages/depretiation/detail'
 import UpdateDepreciationPage from '../components/pages/depretiation/update'
 import HomebasePage from '../components/pages/homebase'
 import CreateHomeBasePage from '../components/pages/homebase/create'
+import AttachmentSettingPage from '../components/pages/settingAttachment'
 
 export const router = createBrowserRouter([
   // {
@@ -104,6 +105,10 @@ export const router = createBrowserRouter([
           {
             path: 'homebase/create',
             element: <CreateHomeBasePage />,
+          },
+          {
+            path: 'setting-attachment',
+            element: <AttachmentSettingPage />,
           },
           {
             path: 'transaction',
