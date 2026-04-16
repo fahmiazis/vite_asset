@@ -2,7 +2,7 @@ import { useRef, useState } from "react"
 import type { detailtransactionProps } from "../../../../models/transaction/detail"
 import { useSubmitProcurement } from "../../../../hooks/mutation/transaction/verifAsset"
 import toast from "react-hot-toast"
-import { uploadAttachment } from "../../../../services/transaction/uploadAttachment"
+import { useUploadAttachment } from "../../../../hooks/mutation/transaction/attachFile"
 
 function formatRupiah(num: number) {
   return new Intl.NumberFormat("id-ID", {
@@ -29,7 +29,7 @@ function StatusBadge({ status }: { status: string }) {
   )
 }
 
-const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10 MB
+const MAX_FILE_SIZE = 10 * 1024 * 1024
 
 // ─── File Upload Field ────────────────────────────────────────────────────────
 
@@ -110,23 +110,51 @@ function FileUploadField({
 
 function SubmitModal({
   transactionNumber,
+  transactionType,
+  stage,
+  attachmentConfigId = "3",
   onConfirm,
   onCancel,
-  isLoading,
 }: {
   transactionNumber: string
-  onConfirm: (notes: string, file1: File | null, file2: File | null) => void
+  transactionType: string
+  stage: string
+  attachmentConfigId?: string  // ✅ Dijadikan prop agar tidak hardcoded
+  onConfirm: (notes: string) => void
   onCancel: () => void
-  isLoading: boolean
 }) {
   const [notes, setNotes] = useState("")
-  const [file1, setFile1] = useState<File | null>(null)
-  const [file2, setFile2] = useState<File | null>(null)
+  const [file, setFile] = useState<File | null>(null)
+
+  const { mutate: uploadAttachment, isPending: isUploading } = useUploadAttachment()
+
+  const handleSubmit = () => {
+    if (file) {
+      uploadAttachment(
+        {
+          params: {
+            transaction_number: transactionNumber,
+            transaction_type: transactionType,
+            stage,
+          },
+          payload: {
+            attachment_config_id: attachmentConfigId,
+            file,
+          },
+        },
+        {
+          onSuccess: () => onConfirm(notes),  // ✅ notes diteruskan setelah upload berhasil
+          onError: () => toast.error("Failed to upload attachment"),
+        }
+      )
+    } else {
+      onConfirm(notes)  // ✅ Langsung konfirmasi jika tidak ada file
+    }
+  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl shadow-xl p-6 w-full max-w-md mx-4">
-        {/* Icon */}
+      <div className="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-xl shadow-xl p-6 w-full max-w-md mx-4">
         <div className="flex items-center justify-center w-12 h-12 rounded-full bg-indigo-100 dark:bg-indigo-900/40 mx-auto mb-4">
           <svg className="w-6 h-6 text-indigo-600 dark:text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -141,7 +169,6 @@ function SubmitModal({
         </p>
 
         <div className="space-y-4">
-          {/* Notes */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Notes <span className="text-gray-400 font-normal">(optional)</span>
@@ -151,42 +178,32 @@ function SubmitModal({
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="e.g. Please verify immediately..."
-              className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-600 resize-none"
+              className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white dark:bg-gray-950 text-gray-800 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-600 resize-none"
             />
           </div>
 
-          {/* File 1 */}
           <FileUploadField
-            label="Attachment 1"
-            file={file1}
-            onChange={setFile1}
-            onRemove={() => setFile1(null)}
-          />
-
-          {/* File 2 */}
-          <FileUploadField
-            label="Attachment 2"
-            file={file2}
-            onChange={setFile2}
-            onRemove={() => setFile2(null)}
+            label="Attachment"
+            file={file}
+            onChange={setFile}
+            onRemove={() => setFile(null)}
           />
         </div>
 
-        {/* Actions */}
         <div className="flex gap-3 mt-5">
           <button
             onClick={onCancel}
-            disabled={isLoading}
+            disabled={isUploading}
             className="flex-1 px-4 py-2 text-sm font-medium border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-50"
           >
             Cancel
           </button>
           <button
-            onClick={() => onConfirm(notes, file1, file2)}
-            disabled={isLoading}
+            onClick={handleSubmit}
+            disabled={isUploading}
             className="flex-1 px-4 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors disabled:opacity-50"
           >
-            {isLoading ? "Submitting..." : "Submit"}
+            {isUploading ? "Uploading..." : "Submit"}
           </button>
         </div>
       </div>
@@ -194,72 +211,43 @@ function SubmitModal({
   )
 }
 
+// ─── Main Layout ──────────────────────────────────────────────────────────────
+
 export default function DetailTransactionLayout({ data }: { data: detailtransactionProps }) {
   const { transaction, items } = data.data
   const [showSubmitModal, setShowSubmitModal] = useState(false)
-
 
   const totalUnit = items.reduce((sum, item) => sum + item.quantity, 0)
   const totalNilai = items.reduce((sum, item) => sum + item.total_price, 0)
 
   const { mutate: submitTransaction, isPending: isSubmitting } = useSubmitProcurement({
-    onSuccess: () => setShowSubmitModal(false)
+    onSuccess: () => setShowSubmitModal(false),
   })
 
-  const [isUploading, setIsUploading] = useState(false)
-
-const handleSubmit = async (notes: string, file1: File | null, file2: File | null) => {
-    try {
-        setIsUploading(true)
-
-        // Upload file1 jika ada
-        if (file1) {
-            await uploadAttachment({
-                transaction_number: transaction.transaction_number,
-                transaction_type: "procurement",
-                stage: "DRAFT",
-                attachment_config_id: 5,
-                file: file1,
-            })
-        }
-
-        // Upload file2 jika ada
-        if (file2) {
-            await uploadAttachment({
-                transaction_number: transaction.transaction_number,
-                transaction_type: "procurement",
-                stage: "DRAFT",
-                attachment_config_id: 5,
-                file: file2,
-            })
-        }
-
-        // Submit transaction
-        submitTransaction({
-            id: transaction.transaction_number,
-            payload: { ...(notes.trim() && { notes: notes.trim() }) },
-        })
-    } catch (err: any) {
-        const message = err?.response?.data?.message ?? "Failed to upload attachment"
-        toast.error(message)
-    } finally {
-        setIsUploading(false)
-    }
-}
+  // ✅ onConfirm sekarang benar-benar memanggil submitTransaction
+  const handleConfirmSubmit = (notes: string) => {
+    submitTransaction({
+      id: transaction.transaction_number,
+      payload: {
+        notes,
+      },
+    })
+  }
 
   return (
     <section className="space-y-4 mt-4">
-      {/* modal Verif */}
       {showSubmitModal && (
         <SubmitModal
           transactionNumber={transaction.transaction_number}
-          isLoading={isSubmitting || isUploading}
-          onConfirm={handleSubmit}
+          transactionType={transaction.transaction_type}
+          stage={transaction.status}
+          onConfirm={handleConfirmSubmit}  // ✅ Pakai handler yang benar
           onCancel={() => setShowSubmitModal(false)}
         />
       )}
+
       {/* Header */}
-      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-5">
+      <div className="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-xl p-5">
         <div className="flex items-start justify-between mb-4">
           <div>
             <p className="text-xs text-gray-400 mb-1">Nomor transaksi</p>
@@ -269,12 +257,13 @@ const handleSubmit = async (notes: string, file1: File | null, file2: File | nul
             {transaction.status.toLowerCase() === "draft" && (
               <button
                 onClick={() => setShowSubmitModal(true)}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors"
+                disabled={isSubmitting}  // ✅ Disable saat sedang submit
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors disabled:opacity-50"
               >
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                Submit for Verification
+                {isSubmitting ? "Submitting..." : "Submit for Verification"}
               </button>
             )}
             <StatusBadge status={transaction.status} />
@@ -303,8 +292,8 @@ const handleSubmit = async (notes: string, file1: File | null, file2: File | nul
         )}
       </div>
 
-      {/* Items */}
-      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-5">
+      {/* Items — tidak ada perubahan di sini */}
+      <div className="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-xl p-5">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200">Daftar item</h3>
           <span className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-500 px-2 py-0.5 rounded-full">{items.length} item</span>
@@ -313,7 +302,6 @@ const handleSubmit = async (notes: string, file1: File | null, file2: File | nul
         <div className="space-y-3">
           {items.map((item, index) => (
             <div key={item.id} className="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
-              {/* Item header */}
               <div className="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-800/60 border-b border-gray-200 dark:border-gray-700">
                 <div className="flex items-center gap-2">
                   <span className="w-6 h-6 rounded-full bg-indigo-600 text-white text-xs font-medium flex items-center justify-center">
@@ -327,7 +315,6 @@ const handleSubmit = async (notes: string, file1: File | null, file2: File | nul
                 <span className="text-sm font-semibold text-gray-800 dark:text-gray-200">{formatRupiah(item.total_price)}</span>
               </div>
 
-              {/* Item body */}
               <div className="p-4 space-y-3">
                 <div className="grid grid-cols-3 gap-3">
                   <div><p className="text-xs text-gray-400 mb-1">Kuantitas</p><p className="text-sm font-medium text-gray-800 dark:text-gray-200">{item.quantity} unit</p></div>
@@ -339,7 +326,6 @@ const handleSubmit = async (notes: string, file1: File | null, file2: File | nul
                   <div><p className="text-xs text-gray-400 mb-1">Catatan</p><p className="text-sm text-gray-700 dark:text-gray-300">{item.notes}</p></div>
                 )}
 
-                {/* Detail penerima */}
                 {item.details && item.details.length > 0 && (
                   <div className="pt-3 border-t border-gray-100 dark:border-gray-700">
                     <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">Detail penerima</p>
@@ -378,7 +364,6 @@ const handleSubmit = async (notes: string, file1: File | null, file2: File | nul
           </div>
         </div>
       </div>
-
     </section>
   )
 }
