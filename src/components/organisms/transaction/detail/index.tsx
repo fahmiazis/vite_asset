@@ -1,8 +1,9 @@
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import type { detailtransactionProps } from "../../../../models/transaction/detail"
 import { useSubmitProcurement } from "../../../../hooks/mutation/transaction/verifAsset"
 import toast from "react-hot-toast"
 import { useUploadAttachment } from "../../../../hooks/mutation/transaction/attachFile"
+import { useAttachmentSettingList } from "../../../../hooks/query/attachmentSetting/list"
 
 function formatRupiah(num: number) {
   return new Intl.NumberFormat("id-ID", {
@@ -108,59 +109,112 @@ function FileUploadField({
 
 // ─── Submit Modal ─────────────────────────────────────────────────────────────
 
+type AttachmentItem = {
+  id: number
+  name: string
+  is_required?: boolean
+}
+
+type AttachmentState = AttachmentItem & {
+  file: File | null
+}
+
 function SubmitModal({
   transactionNumber,
   transactionType,
   stage,
-  attachmentConfigId = "3",
+  mappedAttachments = [],
   onConfirm,
   onCancel,
 }: {
   transactionNumber: string
   transactionType: string
   stage: string
-  attachmentConfigId?: string  // ✅ Dijadikan prop agar tidak hardcoded
+  mappedAttachments: AttachmentItem[]
   onConfirm: (notes: string) => void
   onCancel: () => void
 }) {
   const [notes, setNotes] = useState("")
-  const [file, setFile] = useState<File | null>(null)
+  const [attachments, setAttachments] = useState<AttachmentState[]>([])
 
-  const { mutate: uploadAttachment, isPending: isUploading } = useUploadAttachment()
+  const { mutateAsync: uploadAttachment, isPending: isUploading } =
+    useUploadAttachment()
 
-  const handleSubmit = () => {
-    if (file) {
-      uploadAttachment(
-        {
-          params: {
-            transaction_number: transactionNumber,
-            transaction_type: transactionType,
-            stage,
-          },
-          payload: {
-            attachment_config_id: attachmentConfigId,
-            file,
-          },
-        },
-        {
-          onSuccess: () => onConfirm(notes),  // ✅ notes diteruskan setelah upload berhasil
-          onError: () => toast.error("Failed to upload attachment"),
-        }
+  // ✅ init attachment state
+  useEffect(() => {
+    if (mappedAttachments.length > 0) {
+      setAttachments(
+        mappedAttachments.map((item) => ({
+          ...item,
+          file: null,
+        }))
       )
-    } else {
-      onConfirm(notes)  // ✅ Langsung konfirmasi jika tidak ada file
+    }
+  }, [mappedAttachments])
+
+  // ✅ handle file change
+  const handleFileChange = (id: number, file: File | null) => {
+    setAttachments((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, file } : item
+      )
+    )
+  }
+
+  // ✅ validation required
+  const hasMissingRequired = attachments.some(
+    (item) => item.is_required && !item.file
+  )
+
+  // ✅ submit handler
+  const handleSubmit = async () => {
+    try {
+      const filesToUpload = attachments.filter((item) => item.file)
+
+      await Promise.all(
+        filesToUpload.map((item) =>
+          uploadAttachment({
+            params: {
+              transaction_number: transactionNumber,
+              transaction_type: transactionType,
+              stage,
+            },
+            payload: {
+              attachment_config_id: String(item.id),
+              file: item.file!,
+            },
+          })
+        )
+      )
+
+      onConfirm(notes)
+    } catch (err) {
+      toast.error("Failed to upload attachment")
     }
   }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
       <div className="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-xl shadow-xl p-6 w-full max-w-md mx-4">
+
+        {/* ICON */}
         <div className="flex items-center justify-center w-12 h-12 rounded-full bg-indigo-100 dark:bg-indigo-900/40 mx-auto mb-4">
-          <svg className="w-6 h-6 text-indigo-600 dark:text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          <svg
+            className="w-6 h-6 text-indigo-600 dark:text-indigo-400"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
           </svg>
         </div>
 
+        {/* TITLE */}
         <h3 className="text-center text-base font-semibold text-gray-900 dark:text-white mb-1">
           Submit Transaction?
         </h3>
@@ -168,7 +222,10 @@ function SubmitModal({
           This transaction will be submitted for verification.
         </p>
 
+        {/* FORM */}
         <div className="space-y-4">
+
+          {/* NOTES */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Notes <span className="text-gray-400 font-normal">(optional)</span>
@@ -182,14 +239,21 @@ function SubmitModal({
             />
           </div>
 
-          <FileUploadField
-            label="Attachment"
-            file={file}
-            onChange={setFile}
-            onRemove={() => setFile(null)}
-          />
+          {/* DYNAMIC ATTACHMENTS */}
+          <div className="space-y-4">
+            {attachments.map((item) => (
+              <FileUploadField
+                key={item.id}
+                label={`${item.name}${item.is_required ? " *" : ""}`}
+                file={item.file}
+                onChange={(file) => handleFileChange(item.id, file)}
+                onRemove={() => handleFileChange(item.id, null)}
+              />
+            ))}
+          </div>
         </div>
 
+        {/* ACTION */}
         <div className="flex gap-3 mt-5">
           <button
             onClick={onCancel}
@@ -198,9 +262,10 @@ function SubmitModal({
           >
             Cancel
           </button>
+
           <button
             onClick={handleSubmit}
-            disabled={isUploading}
+            disabled={isUploading || hasMissingRequired}
             className="flex-1 px-4 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors disabled:opacity-50"
           >
             {isUploading ? "Uploading..." : "Submit"}
@@ -210,7 +275,6 @@ function SubmitModal({
     </div>
   )
 }
-
 // ─── Main Layout ──────────────────────────────────────────────────────────────
 
 export default function DetailTransactionLayout({ data }: { data: detailtransactionProps }) {
@@ -220,11 +284,25 @@ export default function DetailTransactionLayout({ data }: { data: detailtransact
   const totalUnit = items.reduce((sum, item) => sum + item.quantity, 0)
   const totalNilai = items.reduce((sum, item) => sum + item.total_price, 0)
 
+  const { data: attachSetting } = useAttachmentSettingList("procurement")
+
+  const formatAttachmentName = (value: string): string => {
+    return value
+      .toLowerCase()
+      .split("_")
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
+
+  const mappedAttachments = attachSetting?.data?.map(item => ({
+    id: item.id,
+    name: formatAttachmentName(item.attachment_type),
+  })) ?? [];
+
   const { mutate: submitTransaction, isPending: isSubmitting } = useSubmitProcurement({
     onSuccess: () => setShowSubmitModal(false),
   })
 
-  // ✅ onConfirm sekarang benar-benar memanggil submitTransaction
   const handleConfirmSubmit = (notes: string) => {
     submitTransaction({
       id: transaction.transaction_number,
@@ -241,8 +319,9 @@ export default function DetailTransactionLayout({ data }: { data: detailtransact
           transactionNumber={transaction.transaction_number}
           transactionType={transaction.transaction_type}
           stage={transaction.status}
-          onConfirm={handleConfirmSubmit}  // ✅ Pakai handler yang benar
+          onConfirm={handleConfirmSubmit} // ✅ Pakai handler yang benar
           onCancel={() => setShowSubmitModal(false)}
+          mappedAttachments={mappedAttachments}
         />
       )}
 
