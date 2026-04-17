@@ -43,6 +43,7 @@ import HomebasePage from '../components/pages/homebase'
 import CreateHomeBasePage from '../components/pages/homebase/create'
 import AttachmentSettingPage from '../components/pages/settingAttachment'
 import DetailAttachmentSettingPage from '../components/pages/settingAttachment/detail'
+import CreateAttachmentSettingPage from '../components/pages/settingAttachment/create'
 
 export const router = createBrowserRouter([
   // {
@@ -110,6 +111,10 @@ export const router = createBrowserRouter([
           {
             path: 'setting-attachment',
             element: <AttachmentSettingPage />,
+          },
+          {
+            path: 'setting-attachment/create',
+            element: <CreateAttachmentSettingPage />,
           },
           {
             path: 'setting-attachment/:id',

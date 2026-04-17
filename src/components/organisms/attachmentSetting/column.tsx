@@ -2,6 +2,129 @@ import type { ColumnDef } from "@tanstack/react-table"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import type { attachmentSettingState } from "../../../models/attachmentSetting/list"
+import toast from "react-hot-toast"
+import { Textareas } from "../../molecules/input/textAreas"
+import { InputToggle } from "../../molecules/input/inputTogle"
+import { useUpdateAttachmentSetting } from "../../../hooks/mutation/attachSetting/update"
+
+export function ToggleRow({
+    label,
+    value,
+    onChange,
+}: {
+    label: string
+    value: boolean
+    onChange: (val: boolean) => void
+}) {
+    return (
+        <div className="flex items-center justify-between">
+
+            <div>
+                <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                    {label}
+                </p>
+                <p className="text-xs text-gray-400">
+                    {value ? "Enabled" : "Disabled"}
+                </p>
+            </div>
+
+            <InputToggle
+                checked={value}
+                onChange={onChange}
+            />
+        </div>
+    )
+}
+
+function EditModal({
+    row,
+    onClose,
+}: {
+    row: attachmentSettingState
+    onClose: () => void
+}) {
+    const [description, setDescription] = useState(row.description || "")
+    const [isRequired, setIsRequired] = useState(row.is_required)
+    const [isActive, setIsActive] = useState(row.is_active)
+
+    const { mutate, isPending } = useUpdateAttachmentSetting(row.id)
+    const handleSubmit = () => {
+        mutate(
+            {
+                description,
+                is_required: isRequired,
+                is_active: isActive,
+            },
+            {
+                onSuccess: () => {
+                    toast.success("Updated successfully")
+                    onClose()
+                },
+                onError: () => {
+                    toast.error("Failed to update")
+                },
+            }
+        )
+    }
+
+    return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+            <div className="bg-white dark:bg-gray-900 rounded-xl shadow-xl p-6 w-full max-w-md mx-4">
+
+                <h3 className="text-base font-semibold mb-4 text-gray-900 dark:text-white">
+                    Update Attachment Setting
+                </h3>
+
+                <div className="space-y-5">
+
+                    {/* Required */}
+                    <ToggleRow
+                        label="Required"
+                        value={isRequired}
+                        onChange={setIsRequired}
+                    />
+
+                    {/* Active */}
+                    <ToggleRow
+                        label="Active"
+                        value={isActive}
+                        onChange={setIsActive}
+                    />
+
+                    {/* Description (moved to bottom) */}
+                    <Textareas
+                        label="Description"
+                        value={description}
+                        onChange={setDescription}
+                        placeholder="Input description..."
+                        rows={3}
+                        maxLength={200}
+                    />
+
+                </div>
+
+                {/* Actions */}
+                <div className="flex gap-3 mt-6">
+                    <button
+                        onClick={onClose}
+                        disabled={isPending}
+                        className="flex-1 px-4 py-2 text-sm font-medium border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        onClick={handleSubmit}
+                        disabled={isPending}
+                        className="flex-1 px-4 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors"
+                    >
+                        {isPending ? "Saving..." : "Save"}
+                    </button>
+                </div>
+            </div>
+        </div>
+    )
+}
 
 // ─── Delete Modal ─────────────────────────────────────────────────────────────
 
@@ -55,36 +178,46 @@ function DeleteModal({
 // ─── Action Buttons ───────────────────────────────────────────────────────────
 
 function ActionButtons({ row }: { row: attachmentSettingState }) {
-    const [showModal, setShowModal] = useState(false)
+    const [showDelete, setShowDelete] = useState(false)
+    const [showEdit, setShowEdit] = useState(false)
 
     return (
         <>
             <div className="flex items-center gap-2">
                 <Link
                     to={`/dashboard/setting-attachment/${row.id}`}
-                    className="px-3 py-1.5 text-xs font-medium text-white bg-blue-600 rounded hover:bg-blue-700 transition-colors inline-block"
+                    className="px-3 py-1.5 text-xs font-medium text-white bg-blue-600 rounded hover:bg-blue-700"
                 >
                     Detail
                 </Link>
-                <Link
-                    to={`/dashboard/attachment-setting/update/${row.id}`}
-                    className="px-3 py-1.5 text-xs font-medium text-white bg-indigo-600 rounded hover:bg-indigo-700 transition-colors inline-block"
+
+                <button
+                    onClick={() => setShowEdit(true)}
+                    className="px-3 py-1.5 text-xs font-medium text-white bg-indigo-600 rounded hover:bg-indigo-700"
                 >
                     Edit
-                </Link>
+                </button>
+
                 <button
-                    onClick={() => setShowModal(true)}
-                    className="px-3 py-1.5 text-xs font-medium text-white bg-red-600 rounded hover:bg-red-700 transition-colors"
+                    onClick={() => setShowDelete(true)}
+                    className="px-3 py-1.5 text-xs font-medium text-white bg-red-600 rounded hover:bg-red-700"
                 >
                     Delete
                 </button>
             </div>
 
-            {showModal && (
+            {showEdit && (
+                <EditModal
+                    row={row}
+                    onClose={() => setShowEdit(false)}
+                />
+            )}
+
+            {showDelete && (
                 <DeleteModal
                     id={row.id}
                     label={`${row.transaction_type} - ${row.attachment_type}`}
-                    onCancel={() => setShowModal(false)}
+                    onCancel={() => setShowDelete(false)}
                 />
             )}
         </>
@@ -146,11 +279,10 @@ export const attachmentSettingColumns: ColumnDef<attachmentSettingState>[] = [
         cell: ({ row }) => {
             const isRequired = row.getValue('is_required') as boolean
             return (
-                <span className={`px-2 py-1 text-xs font-medium rounded-full ${
-                    isRequired
-                        ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
-                        : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
-                }`}>
+                <span className={`px-2 py-1 text-xs font-medium rounded-full ${isRequired
+                    ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
+                    : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
+                    }`}>
                     {isRequired ? 'Required' : 'Optional'}
                 </span>
             )
@@ -162,11 +294,10 @@ export const attachmentSettingColumns: ColumnDef<attachmentSettingState>[] = [
         cell: ({ row }) => {
             const isActive = row.getValue('is_active') as boolean
             return (
-                <span className={`px-2 py-1 text-xs font-medium rounded-full ${
-                    isActive
-                        ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-                        : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
-                }`}>
+                <span className={`px-2 py-1 text-xs font-medium rounded-full ${isActive
+                    ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                    : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+                    }`}>
                     {isActive ? 'Active' : 'Inactive'}
                 </span>
             )
