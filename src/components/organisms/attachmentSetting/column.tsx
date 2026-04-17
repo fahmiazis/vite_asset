@@ -61,7 +61,7 @@ function ActionButtons({ row }: { row: attachmentSettingState }) {
         <>
             <div className="flex items-center gap-2">
                 <Link
-                    to={`/dashboard/attachment-setting/${row.id}`}
+                    to={`/dashboard/setting-attachment/${row.id}`}
                     className="px-3 py-1.5 text-xs font-medium text-white bg-blue-600 rounded hover:bg-blue-700 transition-colors inline-block"
                 >
                     Detail
