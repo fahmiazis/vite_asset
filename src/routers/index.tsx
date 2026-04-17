@@ -44,6 +44,9 @@ import CreateHomeBasePage from '../components/pages/homebase/create'
 import AttachmentSettingPage from '../components/pages/settingAttachment'
 import DetailAttachmentSettingPage from '../components/pages/settingAttachment/detail'
 import CreateAttachmentSettingPage from '../components/pages/settingAttachment/create'
+import MutationPage from '../components/pages/mutation'
+import CreateMutationPage from '../components/pages/mutation/create'
+import DetailMutationPage from '../components/pages/mutation/detail'
 
 export const router = createBrowserRouter([
   // {
@@ -71,6 +74,18 @@ export const router = createBrowserRouter([
           {
             index: true,
             element: <MainPage />,
+          },
+          {
+            path: 'mutation',
+            element: <MutationPage />,
+          },
+          {
+            path: 'mutation/*',
+            element: <DetailMutationPage />,
+          },
+          {
+            path: 'mutation/create',
+            element: <CreateMutationPage />,
           },
           {
             path: 'menu',
