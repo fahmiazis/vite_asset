@@ -1,32 +1,8 @@
 import { useState } from "react"
 import toast from "react-hot-toast"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useAttachTransaction } from "../../../hooks/query/attachmentSetting/attachTransaction"
 import type { transactionAttachmentState } from "../../../models/attachmentSetting/transactionAttachment"
-import axios from "axios" // sesuaikan instance axios project lo
-
-// ─── Review mutation ──────────────────────────────────────────────────────────
-
-type ReviewPayload = {
-  status: "approved" | "rejected"
-  rejection_reason?: string
-}
-
-async function reviewAttachmentAPI(id: number, payload: ReviewPayload) {
-  const { data } = await axios.put(`/attachments/${id}/review`, payload)
-  return data
-}
-
-function useReviewAttachment(transactionId: string) {
-  const queryClient = useQueryClient()
-  return useMutation({
-    mutationFn: ({ id, payload }: { id: number; payload: ReviewPayload }) =>
-      reviewAttachmentAPI(id, payload),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["attach-transaction", transactionId] })
-    },
-  })
-}
+import { useReviewAttachment } from "../../../hooks/mutation/attachSetting/reviewAttachment"
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -102,6 +78,8 @@ function PreviewPanel({
   const [zoomed, setZoomed] = useState(false)
   const isImage = isImageMime(item.mime_type)
 
+  const ImageURL = import.meta.env.VITE_IMAGE_ACCESS
+
   return (
     <div
       className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 backdrop-blur-sm"
@@ -160,7 +138,7 @@ function PreviewPanel({
           {isImage ? (
             <div className="flex items-center justify-center p-4 min-h-64">
               <img
-                src={`https://dev-ofr.pinusmerahabadi.co.id/rebuild/api/v1/${item.file_path}`}
+                src={`${ImageURL}${item.file_path}`}
                 alt={item.file_name}
                 className="rounded-lg object-contain transition-transform duration-200"
                 style={{
@@ -383,7 +361,8 @@ export function ReviewAttachmentModal({
   const [reviewingId, setReviewingId] = useState<number | null>(null)
 
   const { data, isLoading, error } = useAttachTransaction(transactionId)
-  const { mutateAsync: reviewAttachment } = useReviewAttachment(transactionId)
+  const { mutate: reviewMutate } = useReviewAttachment(transactionId)
+
 
   const attachments = data?.data ?? []
 
@@ -391,20 +370,32 @@ export function ReviewAttachmentModal({
   const approvedCount = attachments.filter((a) => a.status.toLowerCase() === "approved").length
   const rejectedCount = attachments.filter((a) => a.status.toLowerCase() === "rejected").length
 
-  const handleReview = async (
+  const handleReview = (
     id: number,
     status: "approved" | "rejected",
     rejection_reason?: string
   ) => {
     setReviewingId(id)
-    try {
-      await reviewAttachment({ id, payload: { status, rejection_reason } })
-      toast.success(status === "approved" ? "Attachment disetujui" : "Attachment ditolak")
-    } catch {
-      toast.error("Gagal menyimpan review")
-    } finally {
-      setReviewingId(null)
-    }
+    reviewMutate(
+      {
+        id,
+        payload: {
+          status: status.toUpperCase() as "APPROVED" | "REJECTED",
+          rejection_reason,
+        },
+      },
+      {
+        onSuccess: () => {
+          toast.success(status === "approved" ? "Attachment disetujui" : "Attachment ditolak")
+        },
+        onError: () => {
+          toast.error("Gagal menyimpan review")
+        },
+        onSettled: () => {
+          setReviewingId(null)
+        },
+      }
+    )
   }
 
   const handleApproveAll = async () => {
