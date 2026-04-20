@@ -4,6 +4,7 @@ import { useSubmitProcurement } from "../../../../hooks/mutation/transaction/ver
 import toast from "react-hot-toast"
 import { useUploadAttachment } from "../../../../hooks/mutation/transaction/attachFile"
 import { useAttachmentSettingList } from "../../../../hooks/query/attachmentSetting/list"
+import type { detailTransactionWStageProps } from "../../../../models/transaction/detailWStages"
 
 function formatRupiah(num: number) {
   return new Intl.NumberFormat("id-ID", {
@@ -277,7 +278,7 @@ function SubmitModal({
 }
 // ─── Main Layout ──────────────────────────────────────────────────────────────
 
-export default function DetailTransactionLayout({ data }: { data: detailtransactionProps }) {
+export default function DetailTransactionLayout({ data }: { data: detailTransactionWStageProps }) {
   const { transaction, items } = data.data
   const [showSubmitModal, setShowSubmitModal] = useState(false)
 
@@ -346,6 +347,8 @@ export default function DetailTransactionLayout({ data }: { data: detailtransact
               </button>
             )}
             <StatusBadge status={transaction.status} />
+            <StatusBadge status={data.data.stages[0].to_stage} />
+            
           </div>
         </div>
 
