@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { submitProcurement, type SubmitProcurementPayload } from "../../../services/transaction/verifAsset"
+import { submitProcurement, type SubmitProcurementPayload } from "../../../services/transaction/submit"
 import toast from "react-hot-toast"
 
 interface UseSubmitProcurementOptions {

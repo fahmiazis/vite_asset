@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from "react"
 import type { detailtransactionProps } from "../../../../models/transaction/detail"
-import { useSubmitProcurement } from "../../../../hooks/mutation/transaction/verifAsset"
+import { useSubmitProcurement } from "../../../../hooks/mutation/transaction/submit"
 import toast from "react-hot-toast"
 import { useUploadAttachment } from "../../../../hooks/mutation/transaction/attachFile"
 import { useAttachmentSettingList } from "../../../../hooks/query/attachmentSetting/list"
 import type { detailTransactionWStageProps } from "../../../../models/transaction/detailWStages"
 import { ReviewAttachmentModal } from "../../modals/reviewAttachmentTransaction"
 import { useAttachTransaction } from "../../../../hooks/query/attachmentSetting/attachTransaction"
+import { VerifyModal } from "../../modals/veriftTransactionModal"
 
 function formatRupiah(num: number) {
   return new Intl.NumberFormat("id-ID", {
@@ -284,12 +285,12 @@ export default function DetailTransactionLayout({ data, id }: { data: detailTran
   const { transaction, items } = data.data
   const [showSubmitModal, setShowSubmitModal] = useState(false)
   const [showReviewModal, setShowReviewModal] = useState(false)
+  const [showVerifyModal, setShowVerifyModal] = useState(false)
 
   const totalUnit = items.reduce((sum, item) => sum + item.quantity, 0)
   const totalNilai = items.reduce((sum, item) => sum + item.total_price, 0)
 
   const { data: attachSetting } = useAttachmentSettingList("procurement")
-  const { data: attachData } = useAttachTransaction(id)
 
   const formatAttachmentName = (value: string): string => {
     return value
@@ -320,6 +321,13 @@ export default function DetailTransactionLayout({ data, id }: { data: detailTran
 
   return (
     <section className="space-y-4 mt-4">
+      {showVerifyModal && (
+        <VerifyModal
+          transactionNumber={transaction.transaction_number}
+          items={items}
+          onClose={() => setShowVerifyModal(false)}
+        />
+      )}
       {showReviewModal && (
         <ReviewAttachmentModal
           transactionId={transaction.transaction_number}
@@ -381,12 +389,12 @@ export default function DetailTransactionLayout({ data, id }: { data: detailTran
         </div>
         <div className="flex justify-between items-center mt-4">
           <div className="flex flex-col items-center">
-          {transaction.notes && (
-            <div className="border-t border-gray-100 dark:border-gray-700">
-              <p className="text-xs text-gray-400 mb-1">Catatan transaksi</p>
-              <p className="text-sm text-gray-700 dark:text-gray-300">{transaction.notes}</p>
-            </div>
-          )}
+            {transaction.notes && (
+              <div className="border-t border-gray-100 dark:border-gray-700">
+                <p className="text-xs text-gray-400 mb-1">Catatan transaksi</p>
+                <p className="text-sm text-gray-700 dark:text-gray-300">{transaction.notes}</p>
+              </div>
+            )}
           </div>
           {transaction.status.toLowerCase() !== "draft" && (
             <div className="flex flex-col items-center py-auto">
@@ -476,6 +484,14 @@ export default function DetailTransactionLayout({ data, id }: { data: detailTran
             <p className="text-xs text-gray-500 mb-0.5">Total nilai</p>
             <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">{formatRupiah(totalNilai)}</p>
           </div>
+        </div>
+        <div>
+          <button
+            onClick={() => setShowVerifyModal(true)}
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors"
+          >
+            Verify
+          </button>
         </div>
       </div>
     </section>
