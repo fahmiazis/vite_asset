@@ -5,6 +5,8 @@ import toast from "react-hot-toast"
 import { useUploadAttachment } from "../../../../hooks/mutation/transaction/attachFile"
 import { useAttachmentSettingList } from "../../../../hooks/query/attachmentSetting/list"
 import type { detailTransactionWStageProps } from "../../../../models/transaction/detailWStages"
+import { ReviewAttachmentModal } from "../../modals/reviewAttachmentTransaction"
+import { useAttachTransaction } from "../../../../hooks/query/attachmentSetting/attachTransaction"
 
 function formatRupiah(num: number) {
   return new Intl.NumberFormat("id-ID", {
@@ -278,14 +280,16 @@ function SubmitModal({
 }
 // ─── Main Layout ──────────────────────────────────────────────────────────────
 
-export default function DetailTransactionLayout({ data }: { data: detailTransactionWStageProps }) {
+export default function DetailTransactionLayout({ data, id }: { data: detailTransactionWStageProps, id: string }) {
   const { transaction, items } = data.data
   const [showSubmitModal, setShowSubmitModal] = useState(false)
+  const [showReviewModal, setShowReviewModal] = useState(false)
 
   const totalUnit = items.reduce((sum, item) => sum + item.quantity, 0)
   const totalNilai = items.reduce((sum, item) => sum + item.total_price, 0)
 
   const { data: attachSetting } = useAttachmentSettingList("procurement")
+  const { data: attachData } = useAttachTransaction(id)
 
   const formatAttachmentName = (value: string): string => {
     return value
@@ -313,8 +317,18 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
     })
   }
 
+
   return (
     <section className="space-y-4 mt-4">
+      {showReviewModal && (
+        <ReviewAttachmentModal
+          transactionId={transaction.transaction_number}
+          transactionNumber={transaction.transaction_number}
+          transactionType={transaction.transaction_type}
+          stage={transaction.status}
+          onClose={() => setShowReviewModal(false)}
+        />
+      )}
       {showSubmitModal && (
         <SubmitModal
           transactionNumber={transaction.transaction_number}
@@ -348,7 +362,7 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
             )}
             <StatusBadge status={transaction.status} />
             <StatusBadge status={data.data.stages[0].to_stage} />
-            
+
           </div>
         </div>
 
@@ -365,13 +379,31 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
             </div>
           ))}
         </div>
-
-        {transaction.notes && (
-          <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700">
-            <p className="text-xs text-gray-400 mb-1">Catatan transaksi</p>
-            <p className="text-sm text-gray-700 dark:text-gray-300">{transaction.notes}</p>
+        <div className="flex justify-between items-center mt-4">
+          <div className="flex flex-col items-center">
+          {transaction.notes && (
+            <div className="border-t border-gray-100 dark:border-gray-700">
+              <p className="text-xs text-gray-400 mb-1">Catatan transaksi</p>
+              <p className="text-sm text-gray-700 dark:text-gray-300">{transaction.notes}</p>
+            </div>
+          )}
           </div>
-        )}
+          {transaction.status.toLowerCase() !== "draft" && (
+            <div className="flex flex-col items-center py-auto">
+              <button
+                onClick={() => setShowReviewModal(true)}
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+              >
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                    d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                </svg>
+                Review Attachment
+              </button>
+            </div>
+          )}
+        </div>
+
       </div>
 
       {/* Items — tidak ada perubahan di sini */}
