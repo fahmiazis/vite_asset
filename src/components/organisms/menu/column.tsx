@@ -28,7 +28,7 @@ function DeleteModal({
                 <h3 className="text-center text-base font-semibold text-gray-900 dark:text-white mb-1">
                     Delete Menu
                 </h3>
-                <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-6">
+                <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-6 text-wrap">
                     Are you sure want to delete <span className="font-medium text-gray-700 dark:text-gray-300">"{menuName}"</span>? This action cannot be undone.
                 </p>
                 <div className="flex gap-3">

@@ -1,6 +1,6 @@
 import { useForm, useFieldArray, useWatch, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Selects } from "../../../molecules/input/selects"
 import { procurementSchema, type ProcurementFormValues } from "../../../organisms/transaction/create/validation"
 import { useCreateProcurement } from "../../../../hooks/mutation/transaction/create"
@@ -8,6 +8,8 @@ import { useAssetsCategoryList } from "../../../../hooks/query/assetsCategory/li
 import { useBranchList } from "../../../../hooks/query/branch/list"
 import { activeCategoryListToSelectOptions } from "../../../../utils/assetCategory"
 import { activeBranchListToSelectOptions } from "../../../../utils/branch"
+import { useHomebaseList } from "../../../../hooks/query/homebase/list"
+import { activeHomeBaseToSelectOptions } from "../../../../utils/homebase"
 
 function toRupiah(num: number): string {
     if (!num) return ""
@@ -74,7 +76,7 @@ function TextInput({
 }
 
 function DetailFields({
-    itemIndex, detailIndex, control, register, errors, onRemove,
+    itemIndex, detailIndex, control, register, errors, onRemove, setValue
 }: {
     itemIndex: number
     detailIndex: number
@@ -82,8 +84,22 @@ function DetailFields({
     register: any
     errors: any
     onRemove: () => void
+    setValue: any
 }) {
     const { data: branchList } = useBranchList()
+    const { data: homebase } = useHomebaseList()
+
+    const isHo = homebase?.data[0]?.branch.branch_type === "HO"
+    const defaultBranch = homebase?.data[0]?.branch
+
+    useEffect(() => {
+        if (!isHo && defaultBranch?.branch_code) {
+            setValue(
+                `items.${itemIndex}.details.${detailIndex}.branch_code`,
+                defaultBranch.branch_code
+            )
+        }
+    }, [defaultBranch?.branch_code])
 
     return (
         <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-3 bg-white dark:bg-gray-900">
@@ -105,25 +121,29 @@ function DetailFields({
                     error={errors?.items?.[itemIndex]?.details?.[detailIndex]?.requester_name?.message}
                     {...register(`items.${itemIndex}.details.${detailIndex}.requester_name`)}
                 />
-                {branchList && (
-                    <Controller
-                        control={control}
-                        name={`items.${itemIndex}.details.${detailIndex}.branch_code`}  // ✅ FIX
-                        render={({ field, fieldState }) => (
-                            <Selects
-                                label="Kode cabang"
-                                value={field.value ?? ""}
-                                onChange={field.onChange}
-                                options={activeBranchListToSelectOptions(branchList?.data)}
-                                placeholder="Pilih cabang"
-                                error={fieldState.error?.message}
-                                labelClassName="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-                                selectClassName="text-sm py-2"
-                                required
-                            />
-                        )}
-                    />
-                )}
+                <Controller
+                    control={control}
+                    name={`items.${itemIndex}.details.${detailIndex}.branch_code`}
+                    defaultValue={!isHo ? defaultBranch?.branch_code ?? "" : ""}
+                    render={({ field, fieldState }) => (
+                        <Selects
+                            label="Kode cabang"
+                            value={field.value ?? ""}
+                            onChange={field.onChange}
+                            options={
+                                isHo
+                                    ? activeBranchListToSelectOptions(branchList?.data ?? [])
+                                    : [{ id: defaultBranch?.id ?? "", value: defaultBranch?.branch_code ?? "", label: `${defaultBranch?.branch_code} - ${defaultBranch?.branch_name}` }]
+                            }
+                            placeholder="Pilih cabang"
+                            error={fieldState.error?.message}
+                            labelClassName="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                            selectClassName="text-sm py-2"
+                            // disabled={!isHo}
+                            required
+                        />
+                    )}
+                />
                 <TextInput
                     label="Kuantitas"
                     type="number"
@@ -145,7 +165,7 @@ function DetailFields({
 }
 
 function ItemCard({
-    itemIndex, control, register, errors, onRemove, watch,
+    itemIndex, control, register, errors, onRemove, watch, setValue,
 }: {
     itemIndex: number
     control: any
@@ -153,6 +173,7 @@ function ItemCard({
     errors: any
     onRemove: () => void
     watch: any
+    setValue: any
 }) {
     const { fields: detailFields, append: appendDetail, remove: removeDetail } = useFieldArray({
         control,
@@ -330,8 +351,8 @@ function ItemCard({
                                     control={control}
                                     register={register}
                                     errors={errors}
-                                    onRemove={() => removeDetail(detailIndex)}
-                                />
+                                    onRemove={() => removeDetail(detailIndex)} 
+                                    setValue={setValue}                                />
                             ))}
                         </div>
                     )}
@@ -343,7 +364,7 @@ function ItemCard({
 
 export default function CreateTransactionPage() {
     const {
-        register, control, handleSubmit, watch,
+        register, control, handleSubmit, watch, setValue,
         formState: { errors, isSubmitting },
     } = useForm<ProcurementFormValues>({
         resolver: zodResolver(procurementSchema),
@@ -429,6 +450,7 @@ export default function CreateTransactionPage() {
                             register={register}
                             errors={errors}
                             watch={watch}
+                            setValue={setValue}
                             onRemove={() => removeItem(index)}
                         />
                     ))}
