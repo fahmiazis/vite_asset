@@ -8,6 +8,7 @@ import type { detailTransactionWStageProps } from "../../../../models/transactio
 import { ReviewAttachmentModal } from "../../modals/reviewAttachmentTransaction"
 import { useAttachTransaction } from "../../../../hooks/query/attachmentSetting/attachTransaction"
 import { VerifyModal } from "../../modals/veriftTransactionModal"
+import { ApproveModal } from "../approveModal"
 
 function formatRupiah(num: number) {
   return new Intl.NumberFormat("id-ID", {
@@ -286,6 +287,7 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
   const [showSubmitModal, setShowSubmitModal] = useState(false)
   const [showReviewModal, setShowReviewModal] = useState(false)
   const [showVerifyModal, setShowVerifyModal] = useState(false)
+  const [showApproveModal, setShowApproveModal] = useState(false)
 
   const totalUnit = items.reduce((sum, item) => sum + item.quantity, 0)
   const totalNilai = items.reduce((sum, item) => sum + item.total_price, 0)
@@ -319,10 +321,18 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
   }
 
   const isVerif = data.data.stages[data.data.stages.length - 1].to_stage === "ASSET_VERIFICATION" && transaction.status === "PENDING"
+  const isApprove = data.data.stages[data.data.stages.length - 1].to_stage === "APPROVAL" && transaction.status === "PENDING"
 
 
   return (
     <section className="space-y-4 mt-4">
+      {showApproveModal && (
+        <ApproveModal
+          transactionNumber={transaction.transaction_number}
+          transactionApprovalId={transaction.transaction_number} // sesuaikan dari mana approval_id-nya
+          onClose={() => setShowApproveModal(false)}
+        />
+      )}
       {showVerifyModal && (
         <VerifyModal
           transactionNumber={transaction.transaction_number}
@@ -494,6 +504,14 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
               className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors"
             >
               Verify
+            </button>
+          )}
+          {isApprove && (
+            <button
+              onClick={() => setShowApproveModal(true)}
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors"
+            >
+              Approve
             </button>
           )}
         </div>
