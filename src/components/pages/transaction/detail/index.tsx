@@ -11,7 +11,7 @@ export default function DetailTransaction() {
         <section className='py-2'>
             <Head label={`Detail ${id}`} />
             {data && (
-                <DetailTransactionLayout data={data} id={id || ""} />
+                <DetailTransactionLayout data={data} />
             )}
         </section>
     )

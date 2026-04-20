@@ -281,7 +281,7 @@ function SubmitModal({
 }
 // ─── Main Layout ──────────────────────────────────────────────────────────────
 
-export default function DetailTransactionLayout({ data, id }: { data: detailTransactionWStageProps, id: string }) {
+export default function DetailTransactionLayout({ data }: { data: detailTransactionWStageProps }) {
   const { transaction, items } = data.data
   const [showSubmitModal, setShowSubmitModal] = useState(false)
   const [showReviewModal, setShowReviewModal] = useState(false)
@@ -317,6 +317,8 @@ export default function DetailTransactionLayout({ data, id }: { data: detailTran
       },
     })
   }
+
+  const isVerif = data.data.stages[data.data.stages.length - 1].to_stage === "ASSET_VERIFICATION" && transaction.status === "PENDING"
 
 
   return (
@@ -369,7 +371,7 @@ export default function DetailTransactionLayout({ data, id }: { data: detailTran
               </button>
             )}
             <StatusBadge status={transaction.status} />
-            <StatusBadge status={data.data.stages[0].to_stage} />
+            <StatusBadge status={data.data.stages[data.data.stages.length - 1].to_stage} />
 
           </div>
         </div>
@@ -486,12 +488,14 @@ export default function DetailTransactionLayout({ data, id }: { data: detailTran
           </div>
         </div>
         <div>
-          <button
-            onClick={() => setShowVerifyModal(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors"
-          >
-            Verify
-          </button>
+          {isVerif && (
+            <button
+              onClick={() => setShowVerifyModal(true)}
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors"
+            >
+              Verify
+            </button>
+          )}
         </div>
       </div>
     </section>
