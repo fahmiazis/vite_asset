@@ -41,6 +41,8 @@ export interface Item {
   created_at: string
   updated_at: string
   details: Detail[]
+  verification: Verification
+  assets: Asset[]
 }
 
 export interface Detail {
@@ -54,6 +56,26 @@ export interface Detail {
   updated_at: string
 }
 
+export interface Verification {
+  id: number
+  transaction_id: number
+  transaction_procurement_id: number
+  item_name: string
+  item_type: string
+  is_active: boolean
+  verified_by: string
+  verified_at: string
+  notes: string
+}
+
+export interface Asset {
+  id: number
+  asset_number: string
+  asset_name: string
+  asset_status: string
+  gr_status: string
+}
+
 export interface Stage {
   id: number
   transaction_id: number
@@ -63,6 +85,6 @@ export interface Stage {
   action: string
   actor_id: string
   actor_name: any
-  notes: string
+  notes?: string
   created_at: string
 }

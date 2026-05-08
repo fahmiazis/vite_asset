@@ -14,6 +14,7 @@ import type { approvalStatusState } from "../../../../models/transaction/approva
 import { getRolesFromToken } from "../../../../utils/auth"
 import { ProcessBudgetModal } from "../processBudgetModal"
 import { ExecuteAssetModal } from "../executeAssetModal"
+import { GoodsReceiptModal } from "../goodsReceiptModal"
 
 function formatRupiah(num: number) {
   return new Intl.NumberFormat("id-ID", {
@@ -350,9 +351,20 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
   const [showExecuteModal, setShowExecuteModal] = useState(false)
   const isExecute = data.data.transaction.current_stage === "EXECUTE_ASET"
 
+  const [showGRModal, setShowGRModal] = useState(false)
+  const isGR = data.data.transaction.current_stage === "GR"
+
 
   return (
     <section className="space-y-4 mt-4">
+      {showGRModal && (
+        <GoodsReceiptModal
+          transactionNumber={transaction.transaction_number}
+          items={items}
+          onClose={() => setShowGRModal(false)}
+          onSuccess={() => { }}
+        />
+      )}
       {showExecuteModal && (
         <ExecuteAssetModal
           transactionNumber={transaction.transaction_number}
@@ -713,6 +725,14 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
               className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors"
             >
               Execute Asset
+            </button>
+          )}
+          {isGR && (
+            <button
+              onClick={() => setShowGRModal(true)}
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors"
+            >
+              Goods Receipt
             </button>
           )}
         </div>
