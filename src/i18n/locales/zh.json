@@ -1,0 +1,37 @@
+{
+    "Login": "登录",
+    "LoginDesk": "随时随地访问您的任务、笔记和项目，并将所有内容整理在一个地方。",
+    "label": {
+        "dashboard": {
+            "totalAssets": "总资产",
+            "totalAcquisVal": "总收购价值",
+            "totalBookVal": "总账面价值",
+            "totalDepreVal": "折旧率",
+            "vsLastMonth": "与上月相比"
+        }
+    },
+    "transaksiHeader": {
+        "title": "资产采购交易",
+        "period": "周期：{{period}}",
+        "totalTransactions": "已登记 {{count}} 笔交易",
+        "export": "导出",
+        "report": "报告",
+        "newRequest": "新建申请",
+        "new": "新建"
+    },
+    "transaksiTable": {
+        "tabs": {
+            "all": "全部",
+            "pending": "待处理",
+            "approved": "已批准",
+            "rejected": "已拒绝",
+            "draft": "草稿"
+        },
+        "searchPlaceholder": "按资产名称、PO编号或申请人搜索...",
+        "noData": "暂无数据",
+        "pagination": {
+            "showing": "显示第 {{from}} – {{to}} 条，共 {{total}} 条",
+            "page": "第 {{current}} / {{total}} 页"
+        }
+    }
+}

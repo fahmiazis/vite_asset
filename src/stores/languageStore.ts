@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import i18n from '../i18n'
-type Lang = 'id' | 'en'
+export type Lang = 'id' | 'en' | 'zh' | 'th' | 'vn'
 
 interface LanguageStore {
   language: Lang

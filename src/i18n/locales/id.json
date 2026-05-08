@@ -1,13 +1,37 @@
 {
-    "Login": "Masuk",
-    "LoginDesk": "Akses tugas, catatan, dan proyek Anda kapan saja, di mana saja - dan jaga agar semuanya tetap terorganisir di satu tempat.",
-    "label": {
+  "Login": "Masuk",
+  "LoginDesk": "Akses tugas, catatan, dan proyek Anda kapan saja, di mana saja - dan jaga agar semuanya tetap terorganisir di satu tempat.",
+  "label": {
     "dashboard": {
       "totalAssets": "Total Aset",
       "totalAcquisVal": "Total Nilai Akuisisi",
       "totalBookVal": "Total Nilai Buku",
       "totalDepreVal": "Tingkat Nilai Depresiasi",
       "vsLastMonth": "Dibanding bulan Lalu"
+    }
+  },
+  "transaksiHeader": {
+    "title": "Transaksi Pengadaan Aset",
+    "period": "Periode: {{period}}",
+    "totalTransactions": "{{count}} transaksi terdaftar",
+    "export": "Ekspor",
+    "report": "Laporan",
+    "newRequest": "Permintaan Baru",
+    "new": "Baru"
+  },
+  "transaksiTable": {
+    "tabs": {
+      "all": "Semua",
+      "pending": "Menunggu",
+      "approved": "Disetujui",
+      "rejected": "Ditolak",
+      "draft": "Draf"
+    },
+    "searchPlaceholder": "Cari nama aset, nomor PO, atau pemohon...",
+    "noData": "Tidak ada data tersedia",
+    "pagination": {
+      "showing": "Menampilkan {{from}} – {{to}} dari {{total}} entri",
+      "page": "Halaman {{current}} / {{total}}"
     }
   }
 }

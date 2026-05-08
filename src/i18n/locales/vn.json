@@ -1,0 +1,37 @@
+{
+    "Login": "Đăng nhập",
+    "LoginDesk": "Truy cập công việc, ghi chú và dự án của bạn mọi lúc mọi nơi - và giữ mọi thứ được sắp xếp gọn gàng ở một nơi.",
+    "label": {
+        "dashboard": {
+            "totalAssets": "Tổng tài sản",
+            "totalAcquisVal": "Tổng giá trị mua lại",
+            "totalBookVal": "Tổng giá trị sổ sách",
+            "totalDepreVal": "Tỷ lệ khấu hao",
+            "vsLastMonth": "So với tháng trước"
+        }
+    },
+    "transaksiHeader": {
+        "title": "Giao Dịch Mua Sắm Tài Sản",
+        "period": "Kỳ: {{period}}",
+        "totalTransactions": "{{count}} giao dịch đã đăng ký",
+        "export": "Xuất",
+        "report": "Báo cáo",
+        "newRequest": "Yêu Cầu Mới",
+        "new": "Mới"
+    },
+    "transaksiTable": {
+        "tabs": {
+            "all": "Tất cả",
+            "pending": "Chờ xử lý",
+            "approved": "Đã duyệt",
+            "rejected": "Từ chối",
+            "draft": "Bản nháp"
+        },
+        "searchPlaceholder": "Tìm theo tên tài sản, số PO hoặc người yêu cầu...",
+        "noData": "Không có dữ liệu",
+        "pagination": {
+            "showing": "Hiển thị {{from}} – {{to}} trong tổng số {{total}} mục",
+            "page": "Trang {{current}} / {{total}}"
+        }
+    }
+}

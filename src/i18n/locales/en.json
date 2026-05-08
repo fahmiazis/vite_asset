@@ -9,5 +9,29 @@
       "totalDepreVal": "Total Depreciation Value",
       "vsLastMonth": "Dibanding bulan Lalu"
     }
+  },
+  "transaksiHeader": {
+    "title": "Asset Procurement Transactions",
+    "period": "Period: {{period}}",
+    "totalTransactions": "{{count}} transactions registered",
+    "export": "Export",
+    "report": "Report",
+    "newRequest": "New Request",
+    "new": "New"
+  },
+  "transaksiTable": {
+    "tabs": {
+      "all": "All",
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "draft": "Draft"
+    },
+    "searchPlaceholder": "Search by asset name, PO number, or requester...",
+    "noData": "No data available",
+    "pagination": {
+      "showing": "Showing {{from}} – {{to}} of {{total}} entries",
+      "page": "Page {{current}} / {{total}}"
+    }
   }
 }

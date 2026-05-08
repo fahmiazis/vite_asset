@@ -10,8 +10,9 @@ import {
 } from "@tanstack/react-table"
 import { useMemo, useState } from "react"
 import { transaksiColumns } from "./column"
-import { ArrowDown01Icon, SearchingIcon, SlidersHorizontalIcon } from "hugeicons-react"
+import { SearchingIcon } from "hugeicons-react"
 import type { transactionListState } from "../../../models/transaction/list"
+import { useTranslation } from "react-i18next"
 
 interface TransaksiTableProps {
   data: transactionListState[]
@@ -19,23 +20,23 @@ interface TransaksiTableProps {
 }
 
 export function TransaksiTable({ data, isLoading }: TransaksiTableProps) {
+  const { t } = useTranslation()
+
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState("")
   const [activeTab, setActiveTab] = useState("all")
 
   const STATUS_TABS = [
-    { label: "All", value: "all", count: data.length },
-    { label: "Pending", value: "PENDING", count: data.filter(d => d.transaction.status === "PENDING").length },
-    { label: "Approved", value: "APPROVED", count: data.filter(d => d.transaction.status === "APPROVED").length },
-    { label: "Rejected", value: "REJECTED", count: data.filter(d => d.transaction.status === "REJECTED").length },
-    { label: "Draft", value: "DRAFT", count: data.filter(d => d.transaction.status === "DRAFT").length },
+    { label: t("transaksiTable.tabs.all"),      value: "all",      count: data.length },
+    { label: t("transaksiTable.tabs.pending"),  value: "PENDING",  count: data.filter(d => d.transaction.status === "PENDING").length },
+    { label: t("transaksiTable.tabs.approved"), value: "APPROVED", count: data.filter(d => d.transaction.status === "APPROVED").length },
+    { label: t("transaksiTable.tabs.rejected"), value: "REJECTED", count: data.filter(d => d.transaction.status === "REJECTED").length },
+    { label: t("transaksiTable.tabs.draft"),    value: "DRAFT",    count: data.filter(d => d.transaction.status === "DRAFT").length },
   ]
 
   const filteredData = useMemo(
-    () => activeTab === "all"
-      ? data
-      : data.filter((d) => d.transaction.status === activeTab),
+    () => activeTab === "all" ? data : data.filter((d) => d.transaction.status === activeTab),
     [data, activeTab]
   )
 
@@ -52,6 +53,9 @@ export function TransaksiTable({ data, isLoading }: TransaksiTableProps) {
     state: { sorting, columnFilters, globalFilter },
     initialState: { pagination: { pageSize: 10 } },
   })
+
+  const { pageIndex, pageSize } = table.getState().pagination
+  const totalRows = table.getFilteredRowModel().rows.length
 
   if (isLoading) {
     return (
@@ -86,33 +90,20 @@ export function TransaksiTable({ data, isLoading }: TransaksiTableProps) {
             </button>
           ))}
         </div>
-        {/* <button className="flex items-center gap-1.5 px-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors mb-1">
-          <SlidersHorizontalIcon size={14} />
-          Advanced Filter
-        </button> */}
       </div>
 
-      {/* Search & Filter Row */}
+      {/* Search Row */}
       <div className="flex items-center gap-3 py-3">
         <div className="relative flex-1 max-w-md">
           <SearchingIcon size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
           <input
             type="text"
-            placeholder="Search by asset name, PO number, or requester..."
+            placeholder={t("transaksiTable.searchPlaceholder")}
             value={globalFilter ?? ""}
             onChange={(e) => setGlobalFilter(e.target.value)}
             className="w-full pl-9 pr-4 py-2 text-sm border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 placeholder:text-gray-400 dark:placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
           />
         </div>
-        {/* {["All Categories", "All Priorities", "All Periods"].map((label) => (
-          <button
-            key={label}
-            className="flex items-center gap-1.5 px-3 py-2 text-sm border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors whitespace-nowrap"
-          >
-            {label}
-            <ArrowDown01Icon size={14} className="text-gray-400 dark:text-gray-500" />
-          </button>
-        ))} */}
       </div>
 
       {/* Table */}
@@ -127,9 +118,7 @@ export function TransaksiTable({ data, isLoading }: TransaksiTableProps) {
                       key={header.id}
                       className="px-5 py-3 text-left text-[11px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider"
                     >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(header.column.columnDef.header, header.getContext())}
+                      {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                     </th>
                   ))}
                 </tr>
@@ -138,10 +127,7 @@ export function TransaksiTable({ data, isLoading }: TransaksiTableProps) {
             <tbody className="divide-y divide-gray-100 dark:divide-gray-700 bg-white dark:bg-gray-900">
               {table.getRowModel().rows.length ? (
                 table.getRowModel().rows.map((row) => (
-                  <tr
-                    key={row.id}
-                    className="hover:bg-gray-50 dark:hover:bg-gray-800/60 transition-colors"
-                  >
+                  <tr key={row.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/60 transition-colors">
                     {row.getVisibleCells().map((cell) => (
                       <td key={cell.id} className="px-5 py-4 whitespace-nowrap">
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -152,7 +138,7 @@ export function TransaksiTable({ data, isLoading }: TransaksiTableProps) {
               ) : (
                 <tr>
                   <td colSpan={transaksiColumns.length} className="px-5 py-10 text-center text-sm text-gray-400 dark:text-gray-500">
-                    No data available
+                    {t("transaksiTable.noData")}
                   </td>
                 </tr>
               )}
@@ -164,29 +150,18 @@ export function TransaksiTable({ data, isLoading }: TransaksiTableProps) {
       {/* Pagination */}
       <div className="flex items-center justify-between pt-3">
         <p className="text-xs text-gray-500 dark:text-gray-400">
-          Showing{" "}
-          <span className="font-semibold text-gray-800 dark:text-gray-200">
-            {table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1}
-          </span>{" "}
-          –{" "}
-          <span className="font-semibold text-gray-800 dark:text-gray-200">
-            {Math.min(
-              (table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize,
-              table.getFilteredRowModel().rows.length
-            )}
-          </span>{" "}
-          of{" "}
-          <span className="font-semibold text-gray-800 dark:text-gray-200">
-            {table.getFilteredRowModel().rows.length}
-          </span>{" "}
-          entries
+          {t("transaksiTable.pagination.showing", {
+            from: pageIndex * pageSize + 1,
+            to: Math.min((pageIndex + 1) * pageSize, totalRows),
+            total: totalRows,
+          })}
         </p>
 
         <div className="flex items-center gap-1">
           {[
-            { label: "«", action: () => table.setPageIndex(0), disabled: !table.getCanPreviousPage() },
-            { label: "‹", action: () => table.previousPage(), disabled: !table.getCanPreviousPage() },
-            { label: "›", action: () => table.nextPage(), disabled: !table.getCanNextPage() },
+            { label: "«", action: () => table.setPageIndex(0),                        disabled: !table.getCanPreviousPage() },
+            { label: "‹", action: () => table.previousPage(),                         disabled: !table.getCanPreviousPage() },
+            { label: "›", action: () => table.nextPage(),                             disabled: !table.getCanNextPage() },
             { label: "»", action: () => table.setPageIndex(table.getPageCount() - 1), disabled: !table.getCanNextPage() },
           ].map((btn, i) => (
             <button
@@ -199,7 +174,10 @@ export function TransaksiTable({ data, isLoading }: TransaksiTableProps) {
             </button>
           ))}
           <span className="text-xs text-gray-500 dark:text-gray-400 ml-2">
-            Page <strong className="text-gray-800 dark:text-gray-200">{table.getState().pagination.pageIndex + 1}</strong> / {table.getPageCount()}
+            {t("transaksiTable.pagination.page", {
+              current: pageIndex + 1,
+              total: table.getPageCount(),
+            })}
           </span>
         </div>
       </div>

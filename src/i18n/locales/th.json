@@ -1,0 +1,37 @@
+{
+    "Login": "เข้าสู่ระบบ",
+    "LoginDesk": "เข้าถึงงาน บันทึก และโปรเจกต์ของคุณได้ทุกที่ทุกเวลา และจัดระเบียบทุกอย่างไว้ในที่เดียว",
+    "label": {
+        "dashboard": {
+            "totalAssets": "สินทรัพย์รวม",
+            "totalAcquisVal": "มูลค่าการได้มารวม",
+            "totalBookVal": "มูลค่าตามบัญชีรวม",
+            "totalDepreVal": "อัตราค่าเสื่อมราคา",
+            "vsLastMonth": "เทียบกับเดือนที่แล้ว"
+        }
+    },
+    "transaksiHeader": {
+        "title": "รายการจัดซื้อสินทรัพย์",
+        "period": "ช่วงเวลา: {{period}}",
+        "totalTransactions": "ลงทะเบียนแล้ว {{count}} รายการ",
+        "export": "ส่งออก",
+        "report": "รายงาน",
+        "newRequest": "คำขอใหม่",
+        "new": "ใหม่"
+    },
+    "transaksiTable": {
+        "tabs": {
+            "all": "ทั้งหมด",
+            "pending": "รอดำเนินการ",
+            "approved": "อนุมัติแล้ว",
+            "rejected": "ถูกปฏิเสธ",
+            "draft": "ร่าง"
+        },
+        "searchPlaceholder": "ค้นหาชื่อสินทรัพย์ หมายเลข PO หรือผู้ร้องขอ...",
+        "noData": "ไม่มีข้อมูล",
+        "pagination": {
+            "showing": "แสดง {{from}} – {{to}} จาก {{total}} รายการ",
+            "page": "หน้า {{current}} / {{total}}"
+        }
+    }
+}
