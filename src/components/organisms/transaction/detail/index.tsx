@@ -12,6 +12,7 @@ import { ApproveModal } from "../approveModal"
 import { useApprovalStatus } from "../../../../hooks/query/transaction/approvalStatus"
 import type { approvalStatusState } from "../../../../models/transaction/approvalStatus"
 import { getRolesFromToken } from "../../../../utils/auth"
+import { ProcessBudgetModal } from "../processBudgetModal"
 
 function formatRupiah(num: number) {
   return new Intl.NumberFormat("id-ID", {
@@ -342,8 +343,17 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
     userRoles.includes(pendingApproval.approver_role_id)
   )
 
+  const [showBudgetModal, setShowBudgetModal] = useState(false)
+  const isBudget = data.data.transaction.current_stage === "PROCESS_BUDGET"
+
   return (
     <section className="space-y-4 mt-4">
+      {showBudgetModal && (
+        <ProcessBudgetModal
+          transactionNumber={transaction.transaction_number}
+          onClose={() => setShowBudgetModal(false)}
+        />
+      )}
       {showApproveModal && (
         <ApproveModal
           transactionNumber={transaction.transaction_number}
@@ -675,6 +685,14 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
               className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors"
             >
               Approve
+            </button>
+          )}
+          {isBudget && (
+            <button
+              onClick={() => setShowBudgetModal(true)}
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors"
+            >
+              Process Budget
             </button>
           )}
         </div>
