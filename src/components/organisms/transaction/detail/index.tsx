@@ -326,9 +326,15 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
     })
   }
 
-  const isVerif = data.data.stages[data.data.stages.length - 1].to_stage === "ASSET_VERIFICATION" && transaction.status === "PENDING"
-  const isApprove = data.data.stages[data.data.stages.length - 1].to_stage === "APPROVAL" && transaction.status === "PENDING"
+  const lastStage = data?.data?.stages?.at(-1)?.to_stage;
 
+  const isVerif =
+    lastStage === "ASSET_VERIFICATION" &&
+    transaction?.status === "PENDING";
+
+  const isApprove =
+    lastStage === "APPROVAL" &&
+    transaction?.status === "PENDING";
   const { data: approvalData, isLoading: isLoadingApproval } = useApprovalStatus(transaction.transaction_number)
   const approvals = approvalData?.data?.approvals ?? []
   const completedSteps = approvalData?.data?.completed_steps ?? 0
@@ -360,7 +366,6 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
       {showGRModal && (
         <GoodsReceiptModal
           transactionNumber={transaction.transaction_number}
-          items={items}
           onClose={() => setShowGRModal(false)}
           onSuccess={() => { }}
         />
@@ -433,8 +438,9 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
               </button>
             )}
             <StatusBadge status={transaction.status} />
-            <StatusBadge status={data.data.stages[data.data.stages.length - 1].to_stage} />
-
+            <StatusBadge
+              status={data?.data?.stages?.[data?.data?.stages?.length - 1]?.to_stage ?? ""}
+            />
           </div>
         </div>
 
