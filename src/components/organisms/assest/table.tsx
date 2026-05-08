@@ -67,14 +67,6 @@ export function AssetsTable({ data, total, isLoading }: AssetsTableProps) {
             className="pl-9 pr-4 py-2 text-sm border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-72"
           />
         </div>
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => navigate('/dashboard/assets/create')}
-            className="px-4 py-2 text-xs font-medium text-white bg-black dark:bg-white dark:text-black rounded-lg hover:opacity-80 transition-opacity"
-          >
-            + Tambah Aset
-          </button>
-        </div>
       </section>
 
       {/* Table */}

@@ -21,27 +21,27 @@ function Avatar({ name }: { name: string }) {
 
 // --- Status Badge ---
 function StatusBadge({ value }: { value: string }) {
-  const map: Record<string, { dot: string; light: string; dark: string }> = {
-    Disetujui: { dot: "bg-green-500", light: "bg-green-50 text-green-700", dark: "dark:bg-green-900/40 dark:text-green-400" },
-    Menunggu:  { dot: "bg-yellow-400", light: "bg-yellow-50 text-yellow-700", dark: "dark:bg-yellow-900/40 dark:text-yellow-400" },
-    Ditolak:   { dot: "bg-red-500", light: "bg-red-50 text-red-600", dark: "dark:bg-red-900/40 dark:text-red-400" },
-    Draft:     { dot: "bg-gray-400", light: "bg-gray-100 text-gray-600", dark: "dark:bg-gray-700 dark:text-gray-400" },
+  const map: Record<string, { dot: string; light: string; dark: string; label: string }> = {
+    APPROVED: { dot: "bg-green-500", light: "bg-green-50 text-green-700", dark: "dark:bg-green-900/40 dark:text-green-400", label: "Approved" },
+    PENDING: { dot: "bg-yellow-400", light: "bg-yellow-50 text-yellow-700", dark: "dark:bg-yellow-900/40 dark:text-yellow-400", label: "Pending" },
+    REJECTED: { dot: "bg-red-500", light: "bg-red-50 text-red-600", dark: "dark:bg-red-900/40 dark:text-red-400", label: "Rejected" },
+    DRAFT: { dot: "bg-gray-400", light: "bg-gray-100 text-gray-600", dark: "dark:bg-gray-700 dark:text-gray-400", label: "Draft" },
   }
 
-  const LABEL: Record<string, string> = {
-    Disetujui: "Approved",
-    Menunggu: "Pending",
-    Ditolak: "Rejected",
-    Draft: "Draft",
-  }
-
-  const s = map[value] ?? map["Draft"]
+  const s = map[value?.toUpperCase()] ?? map["DRAFT"]
   return (
     <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold ${s.light} ${s.dark}`}>
       <span className={`w-1.5 h-1.5 rounded-full ${s.dot}`} />
-      {LABEL[value] ?? value}
+      {s.label}
     </span>
   )
+}
+
+const LABEL: Record<string, string> = {
+  Disetujui: "Approved",
+  Menunggu: "Pending",
+  Ditolak: "Rejected",
+  Draft: "Draft",
 }
 
 // --- Delete Modal ---
@@ -97,7 +97,6 @@ function DeleteModal({
 function ActionButtons({ id, status }: { id: string; status: string }) {
   const navigate = useNavigate()
   const [showDeleteModal, setShowDeleteModal] = useState(false)
-
   const { mutate: deleteTransaction, isPending: isDeleting } = useDeleteProcurement({
     onSuccess: () => setShowDeleteModal(false),
   })
@@ -111,14 +110,14 @@ function ActionButtons({ id, status }: { id: string; status: string }) {
         >
           Detail
         </button>
-        {status === "Menunggu" && (
+        {/* {status === "PENDING" && (  // fix: was "Menunggu"
           <button
             onClick={() => navigate(`/dashboard/transaksi/${id}/review`)}
             className="px-3 py-1 text-xs font-medium border border-yellow-400 dark:border-yellow-500 text-yellow-600 dark:text-yellow-400 rounded-md hover:bg-yellow-50 dark:hover:bg-yellow-900/20 transition-colors"
           >
             Review
           </button>
-        )}
+        )} */}
         <button
           onClick={() => navigate(`/dashboard/transaction/update/${id}`)}
           className="px-3 py-1 text-xs font-medium border border-blue-400 dark:border-blue-500 text-blue-600 dark:text-blue-400 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
@@ -132,7 +131,6 @@ function ActionButtons({ id, status }: { id: string; status: string }) {
           Delete
         </button>
       </div>
-
       {showDeleteModal && (
         <DeleteModal
           id={id}

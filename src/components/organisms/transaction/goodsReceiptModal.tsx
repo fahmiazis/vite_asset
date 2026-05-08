@@ -1,12 +1,12 @@
 import { useState } from "react"
 import toast from "react-hot-toast"
 import { useGoodsReceipt } from "../../../hooks/mutation/transaction/goodsReceipt"
+import { useGoodsReceiptStatus } from "../../../hooks/query/transaction/goodsReceipt"
 import { useQueryClient } from "@tanstack/react-query"
-import type { Item, Asset } from "../../../models/transaction/detailWStages"
+import type { Item as GRItem, Asset as GRAsset } from "../../../models/transaction/grStatus"
 
 type GoodsReceiptModalProps = {
     transactionNumber: string
-    items: Item[]
     onClose: () => void
     onSuccess?: () => void
 }
@@ -15,36 +15,31 @@ type GRFormState = {
     notes: string
 }
 
-const initialForm: GRFormState = {
-    notes: "",
-}
-
 export function GoodsReceiptModal({
     transactionNumber,
-    items,
     onClose,
     onSuccess,
 }: GoodsReceiptModalProps) {
-    const [selectedItem, setSelectedItem] = useState<Item | null>(null)
-    const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null)
-    const [form, setForm] = useState<GRFormState>(initialForm)
+    const [selectedItem, setSelectedItem] = useState<GRItem | null>(null)
+    const [selectedAsset, setSelectedAsset] = useState<GRAsset | null>(null)
+    const [form, setForm] = useState<GRFormState>({ notes: "" })
 
     const queryClient = useQueryClient()
+
+    const { data: grData, isLoading } = useGoodsReceiptStatus(transactionNumber, "PENDING_RECEIPT")
     const { mutate: submitGR, isPending } = useGoodsReceipt(transactionNumber)
 
+    const items = grData?.data?.items ?? []
+
     const handleSelectItem = (itemId: string) => {
-        const item = items.find((i) => i.id === Number(itemId)) ?? null
+        const item = items.find((i) => i.procurement_item_id === Number(itemId)) ?? null
         setSelectedItem(item)
-        setSelectedAsset(null) // reset asset saat item berubah
+        setSelectedAsset(null)
     }
 
     const handleSelectAsset = (assetId: string) => {
-        const asset = selectedItem?.assets.find((a) => a.id === Number(assetId)) ?? null
+        const asset = selectedItem?.assets.find((a) => a.asset_id === Number(assetId)) ?? null
         setSelectedAsset(asset)
-    }
-
-    const handleChange = (field: keyof GRFormState, value: string) => {
-        setForm((prev) => ({ ...prev, [field]: value }))
     }
 
     const isValid = selectedItem && selectedAsset
@@ -54,7 +49,7 @@ export function GoodsReceiptModal({
 
         submitGR(
             {
-                asset_id: selectedAsset.id,
+                asset_id: selectedAsset.asset_id,
                 asset_number: selectedAsset.asset_number,
                 gr_date: new Date().toISOString().split("T")[0],
                 notes: form.notes,
@@ -62,6 +57,7 @@ export function GoodsReceiptModal({
             {
                 onSuccess: () => {
                     toast.success("Goods Receipt berhasil disubmit")
+                    queryClient.invalidateQueries({ queryKey: ["goods-receipt", transactionNumber] })
                     queryClient.invalidateQueries({ queryKey: ["approval-transaction", transactionNumber] })
                     onSuccess?.()
                     onClose()
@@ -75,7 +71,7 @@ export function GoodsReceiptModal({
 
     const grStatusBadge = (status: string) => {
         const map: Record<string, string> = {
-            pending: "bg-amber-50 text-amber-600 border-amber-200",
+            pending_receipt: "bg-amber-50 text-amber-600 border-amber-200",
             done: "bg-emerald-50 text-emerald-600 border-emerald-200",
             cancelled: "bg-red-50 text-red-600 border-red-200",
         }
@@ -94,10 +90,7 @@ export function GoodsReceiptModal({
                         </h3>
                         <p className="text-xs text-gray-400 mt-0.5">{transactionNumber}</p>
                     </div>
-                    <button
-                        onClick={onClose}
-                        className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-                    >
+                    <button onClick={onClose} className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                         </svg>
@@ -107,25 +100,47 @@ export function GoodsReceiptModal({
                 {/* Body */}
                 <div className="px-5 py-4 space-y-4">
 
+                    {/* Progress summary */}
+                    {grData?.data && (
+                        <div className="flex items-center justify-between px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg">
+                            <span className="text-xs text-gray-500 dark:text-gray-400">Progress GR</span>
+                            <div className="flex items-center gap-3">
+                                <span className="text-xs text-emerald-600 dark:text-emerald-400 font-medium">
+                                    ✓ {grData.data.gr_done} done
+                                </span>
+                                <span className="text-xs text-amber-600 dark:text-amber-400 font-medium">
+                                    ⏳ {grData.data.gr_pending} pending
+                                </span>
+                                <span className="text-xs text-gray-400">
+                                    / {grData.data.total_assets} total
+                                </span>
+                            </div>
+                        </div>
+                    )}
+
                     {/* Select Item */}
                     <div>
                         <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
                             Pilih Item <span className="text-red-500">*</span>
                         </label>
-                        <select
-                            value={selectedItem?.id ?? ""}
-                            onChange={(e) => handleSelectItem(e.target.value)}
-                            className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100"
-                        >
-                            <option value="">-- Pilih item --</option>
-                            {items.map((item) => (
-                                <option key={item.id} value={item.id}>
-                                    {item.item_name} · {item.category_name} · {item.quantity} unit
-                                </option>
-                            ))}
-                        </select>
 
-                        {/* Selected item info */}
+                        {isLoading ? (
+                            <div className="h-9 bg-gray-100 dark:bg-gray-800 rounded-lg animate-pulse" />
+                        ) : (
+                            <select
+                                value={selectedItem?.procurement_item_id ?? ""}
+                                onChange={(e) => handleSelectItem(e.target.value)}
+                                className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100"
+                            >
+                                <option value="">-- Pilih item --</option>
+                                {items.map((item) => (
+                                    <option key={item.procurement_item_id} value={item.procurement_item_id}>
+                                        {item.item_name} · {item.branch_code} · {item.quantity} unit
+                                    </option>
+                                ))}
+                            </select>
+                        )}
+
                         {selectedItem && (
                             <div className="mt-2 px-3 py-2 bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-800 rounded-lg">
                                 <div className="flex items-center justify-between">
@@ -134,7 +149,7 @@ export function GoodsReceiptModal({
                                             {selectedItem.item_name}
                                         </p>
                                         <p className="text-xs text-indigo-400 mt-0.5">
-                                            {selectedItem.category_name} · {selectedItem.branch_code}
+                                            {selectedItem.branch_code}
                                         </p>
                                     </div>
                                     <span className="text-xs font-semibold text-indigo-600 dark:text-indigo-300">
@@ -145,7 +160,7 @@ export function GoodsReceiptModal({
                         )}
                     </div>
 
-                    {/* Select Asset — muncul setelah item dipilih */}
+                    {/* Select Asset */}
                     {selectedItem && (
                         <div>
                             <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
@@ -154,29 +169,23 @@ export function GoodsReceiptModal({
 
                             {selectedItem.assets.length === 0 ? (
                                 <p className="text-xs text-amber-500 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 px-3 py-2 rounded-lg">
-                                    Tidak ada asset tersedia untuk item ini
+                                    Tidak ada asset pending untuk item ini
                                 </p>
                             ) : (
                                 <>
                                     <select
-                                        value={selectedAsset?.id ?? ""}
+                                        value={selectedAsset?.asset_id ?? ""}
                                         onChange={(e) => handleSelectAsset(e.target.value)}
                                         className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100"
                                     >
                                         <option value="">-- Pilih asset number --</option>
                                         {selectedItem.assets.map((asset) => (
-                                            <option
-                                                key={asset.id}
-                                                value={asset.id}
-                                                disabled={asset.gr_status?.toLowerCase() === 'done'}
-                                            >
+                                            <option key={asset.asset_id} value={asset.asset_id}>
                                                 {asset.asset_number} · {asset.asset_name}
-                                                {asset.gr_status?.toLowerCase() === 'done' ? ' (sudah GR)' : ''}
                                             </option>
                                         ))}
                                     </select>
 
-                                    {/* Selected asset info */}
                                     {selectedAsset && (
                                         <div className="mt-2 flex items-center justify-between px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg">
                                             <div>
@@ -184,36 +193,18 @@ export function GoodsReceiptModal({
                                                     {selectedAsset.asset_number}
                                                 </p>
                                                 <p className="text-xs text-gray-400 mt-0.5">
-                                                    {selectedAsset.asset_name}
+                                                    {selectedAsset.asset_name} · {selectedAsset.branch_code}
                                                 </p>
                                             </div>
-                                            <div className="flex flex-col items-end gap-1">
-                                                <span className={`text-xs px-2 py-0.5 rounded-full border font-medium ${grStatusBadge(selectedAsset.gr_status)}`}>
-                                                    GR: {selectedAsset.gr_status}
-                                                </span>
-                                                <span className={`text-xs px-2 py-0.5 rounded-full border font-medium ${grStatusBadge(selectedAsset.asset_status)}`}>
-                                                    {selectedAsset.asset_status}
-                                                </span>
-                                            </div>
+                                            <span className={`text-xs px-2 py-0.5 rounded-full border font-medium ${grStatusBadge(selectedAsset.gr_status)}`}>
+                                                {selectedAsset.gr_status}
+                                            </span>
                                         </div>
                                     )}
                                 </>
                             )}
                         </div>
                     )}
-
-                    {/* GR Date */}
-                    {/* <div>
-                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
-                            Tanggal GR <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                            type="date"
-                            value={form.gr_date}
-                            onChange={(e) => handleChange("gr_date", e.target.value)}
-                            className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100"
-                        />
-                    </div> */}
 
                     {/* Notes */}
                     <div>
@@ -223,7 +214,7 @@ export function GoodsReceiptModal({
                         <textarea
                             rows={3}
                             value={form.notes}
-                            onChange={(e) => handleChange("notes", e.target.value)}
+                            onChange={(e) => setForm({ notes: e.target.value })}
                             placeholder="Barang diterima dalam kondisi baik..."
                             className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 resize-none"
                         />

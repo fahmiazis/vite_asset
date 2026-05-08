@@ -8,7 +8,7 @@ import {
   type SortingState,
   type ColumnFiltersState,
 } from "@tanstack/react-table"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { transaksiColumns } from "./column"
 import { ArrowDown01Icon, SearchingIcon, SlidersHorizontalIcon } from "hugeicons-react"
 import type { transactionListState } from "../../../models/transaction/list"
@@ -26,15 +26,18 @@ export function TransaksiTable({ data, isLoading }: TransaksiTableProps) {
 
   const STATUS_TABS = [
     { label: "All", value: "all", count: data.length },
-    { label: "Pending", value: "Menunggu", count: data.filter(d => d.transaction.status === "Menunggu").length },
-    { label: "Approved", value: "Disetujui", count: data.filter(d => d.transaction.status === "Disetujui").length },
-    { label: "Rejected", value: "Ditolak", count: data.filter(d => d.transaction.status === "Ditolak").length },
-    { label: "Draft", value: "Draft", count: data.filter(d => d.transaction.status === "Draft").length },
+    { label: "Pending", value: "PENDING", count: data.filter(d => d.transaction.status === "PENDING").length },
+    { label: "Approved", value: "APPROVED", count: data.filter(d => d.transaction.status === "APPROVED").length },
+    { label: "Rejected", value: "REJECTED", count: data.filter(d => d.transaction.status === "REJECTED").length },
+    { label: "Draft", value: "DRAFT", count: data.filter(d => d.transaction.status === "DRAFT").length },
   ]
 
-  const filteredData = activeTab === "all"
-    ? data
-    : data.filter((d) => d.transaction.status === activeTab)
+  const filteredData = useMemo(
+    () => activeTab === "all"
+      ? data
+      : data.filter((d) => d.transaction.status === activeTab),
+    [data, activeTab]
+  )
 
   const table = useReactTable({
     data: filteredData,
@@ -68,27 +71,25 @@ export function TransaksiTable({ data, isLoading }: TransaksiTableProps) {
             <button
               key={tab.value}
               onClick={() => setActiveTab(tab.value)}
-              className={`flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium transition-colors rounded-t-md ${
-                activeTab === tab.value
-                  ? "bg-gray-900 dark:bg-white text-white dark:text-gray-900"
-                  : "text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
-              }`}
+              className={`flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium transition-colors rounded-t-md ${activeTab === tab.value
+                ? "bg-gray-900 dark:bg-white text-white dark:text-gray-900"
+                : "text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+                }`}
             >
               {tab.label}
-              <span className={`text-xs px-1.5 py-0.5 rounded-full ${
-                activeTab === tab.value
-                  ? "bg-white/20 dark:bg-black/20 text-white dark:text-gray-900"
-                  : "bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
-              }`}>
+              <span className={`text-xs px-1.5 py-0.5 rounded-full ${activeTab === tab.value
+                ? "bg-white/20 dark:bg-black/20 text-white dark:text-gray-900"
+                : "bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
+                }`}>
                 {tab.count}
               </span>
             </button>
           ))}
         </div>
-        <button className="flex items-center gap-1.5 px-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors mb-1">
+        {/* <button className="flex items-center gap-1.5 px-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors mb-1">
           <SlidersHorizontalIcon size={14} />
           Advanced Filter
-        </button>
+        </button> */}
       </div>
 
       {/* Search & Filter Row */}
@@ -103,7 +104,7 @@ export function TransaksiTable({ data, isLoading }: TransaksiTableProps) {
             className="w-full pl-9 pr-4 py-2 text-sm border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 placeholder:text-gray-400 dark:placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
           />
         </div>
-        {["All Categories", "All Priorities", "All Periods"].map((label) => (
+        {/* {["All Categories", "All Priorities", "All Periods"].map((label) => (
           <button
             key={label}
             className="flex items-center gap-1.5 px-3 py-2 text-sm border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors whitespace-nowrap"
@@ -111,7 +112,7 @@ export function TransaksiTable({ data, isLoading }: TransaksiTableProps) {
             {label}
             <ArrowDown01Icon size={14} className="text-gray-400 dark:text-gray-500" />
           </button>
-        ))}
+        ))} */}
       </div>
 
       {/* Table */}
