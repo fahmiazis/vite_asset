@@ -2,6 +2,7 @@ import { useState } from "react"
 import toast from "react-hot-toast"
 import { useApproveTransaction } from "../../../hooks/mutation/transaction/approveTransaction"
 import { useApprovalStatus } from "../../../hooks/query/transaction/approvalStatus"
+import { useQueryClient } from "@tanstack/react-query"
 
 type ApproveModalProps = {
     transactionNumber: string
@@ -18,15 +19,24 @@ export function ApproveModal({
 }: ApproveModalProps) {
     const [notes, setNotes] = useState("")
 
+    const queryClient = useQueryClient()
+
     const { mutate: approve, isPending } = useApproveTransaction(transactionNumber)
     const { data: approvalId } = useApprovalStatus(transactionApprovalId)
 
+    const pendingIndex = approvalId?.data.approvals.findIndex(
+        (a) => a.status?.toLowerCase() === 'pending'
+    ) ?? 0
+
+    const targetApprovalId = approvalId?.data.approvals[pendingIndex]?.id ?? ""
+
     const handleSubmit = () => {
         approve(
-            { transaction_approval_id: approvalId?.data.approvals[0].id || "", notes },
+            { transaction_approval_id: targetApprovalId, notes },
             {
                 onSuccess: () => {
                     toast.success("Transaksi berhasil disetujui")
+                    queryClient.invalidateQueries({ queryKey: ["approval-status", transactionApprovalId] })
                     onSuccess?.()
                     onClose()
                 },

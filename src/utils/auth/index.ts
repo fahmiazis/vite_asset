@@ -17,3 +17,19 @@ export const deleteCookie = (key: string) => {
 export const getCookie = (key: string) => {
   return Cookies.get(key)
 }
+
+export function getRolesFromToken(): string[] {
+  const cookies = document.cookie.split(';')
+  const tokenCookie = cookies.find(c => c.trim().startsWith('token='))
+  if (!tokenCookie) return []
+
+  const token = tokenCookie.split('=')[1]?.trim()
+  if (!token) return []
+
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]))
+    return payload.roles ?? []
+  } catch {
+    return []
+  }
+}
