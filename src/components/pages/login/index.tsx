@@ -66,10 +66,12 @@ const LoginPage = () => {
 
                 <div className="text-white max-w-md z-10">
                     <div className="flex items-center gap-2 mb-8">
-                        <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
-                            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                            </svg>
+                        <div className="w-24 h-24 rounded-xl flex items-center justify-center">
+                             <img
+                                src="/images/logos.png"
+                                alt="Logo"
+                                className="w-150 h-150 object-contain"
+                            />
                         </div>
                         <span className="text-lg font-semibold tracking-wide">AssetMS</span>
                     </div>
@@ -101,9 +103,11 @@ const LoginPage = () => {
                     {/* Mobile logo */}
                     <div className="flex lg:hidden items-center gap-2 mb-8">
                         <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                            </svg>
+                            <img
+                                src="/images/logos.png"
+                                alt="Logo"
+                                className="w-5 h-5 object-contain"
+                            />
                         </div>
                         <span className="text-lg font-bold text-gray-800">AssetMS</span>
                     </div>
