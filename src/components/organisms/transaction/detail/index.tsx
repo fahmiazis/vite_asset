@@ -13,6 +13,7 @@ import { useApprovalStatus } from "../../../../hooks/query/transaction/approvalS
 import type { approvalStatusState } from "../../../../models/transaction/approvalStatus"
 import { getRolesFromToken } from "../../../../utils/auth"
 import { ProcessBudgetModal } from "../processBudgetModal"
+import { ExecuteAssetModal } from "../executeAssetModal"
 
 function formatRupiah(num: number) {
   return new Intl.NumberFormat("id-ID", {
@@ -346,8 +347,19 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
   const [showBudgetModal, setShowBudgetModal] = useState(false)
   const isBudget = data.data.transaction.current_stage === "PROCESS_BUDGET"
 
+  const [showExecuteModal, setShowExecuteModal] = useState(false)
+  const isExecute = data.data.transaction.current_stage === "EXECUTE_ASET"
+
+
   return (
     <section className="space-y-4 mt-4">
+      {showExecuteModal && (
+        <ExecuteAssetModal
+          transactionNumber={transaction.transaction_number}
+          onClose={() => setShowExecuteModal(false)}
+          onSuccess={() => { }}
+        />
+      )}
       {showBudgetModal && (
         <ProcessBudgetModal
           transactionNumber={transaction.transaction_number}
@@ -693,6 +705,14 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
               className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors"
             >
               Process Budget
+            </button>
+          )}
+          {isExecute && (
+            <button
+              onClick={() => setShowExecuteModal(true)}
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors"
+            >
+              Execute Asset
             </button>
           )}
         </div>
