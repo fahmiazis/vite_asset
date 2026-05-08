@@ -46,7 +46,7 @@ import DetailAttachmentSettingPage from '../components/pages/settingAttachment/d
 import CreateAttachmentSettingPage from '../components/pages/settingAttachment/create'
 import MutationPage from '../components/pages/mutation'
 import CreateMutationPage from '../components/pages/mutation/create'
-import DetailMutationPage from '../components/pages/mutation/detail'
+import MutationDetailPage from '../components/pages/mutation/detail'
 
 export const router = createBrowserRouter([
   // {
@@ -81,7 +81,7 @@ export const router = createBrowserRouter([
           },
           {
             path: 'mutation/*',
-            element: <DetailMutationPage />,
+            element: <MutationDetailPage />,
           },
           {
             path: 'mutation/create',
