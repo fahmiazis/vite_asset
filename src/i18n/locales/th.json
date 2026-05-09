@@ -182,5 +182,74 @@
       "submit": "ส่งการจัดซื้อ",
       "submitting": "กำลังส่ง..."
     }
+  },
+  "reviewAttachmentModal": {
+    "title": "ตรวจสอบไฟล์แนบ",
+    "previewUnavailable": "ไม่สามารถแสดงตัวอย่างในเบราว์เซอร์ได้",
+    "openFile": "เปิดไฟล์",
+    "preview": "ดูตัวอย่าง",
+    "approve": "อนุมัติ",
+    "reject": "ปฏิเสธ",
+    "rejectionReason": "เหตุผลในการปฏิเสธ",
+    "optional": "ไม่บังคับ",
+    "rejectionPlaceholder": "ตัวอย่าง: เอกสารไม่ชัด กรุณาอัปโหลดใหม่...",
+    "cancel": "ยกเลิก",
+    "saving": "กำลังบันทึก...",
+    "confirmReject": "ยืนยันการปฏิเสธ",
+    "reason": "เหตุผล",
+    "reviewedBy": "โดย",
+    "file": "{{count}} ไฟล์",
+    "files": "{{count}} ไฟล์",
+    "pending": "{{count}} รอดำเนินการ",
+    "approved": "{{count}} อนุมัติแล้ว",
+    "rejected": "{{count}} ถูกปฏิเสธ",
+    "failedLoad": "โหลดข้อมูลไฟล์แนบล้มเหลว",
+    "empty": "ยังไม่มีไฟล์แนบ",
+    "requiredNote": "* = จำเป็น",
+    "close": "ปิด",
+    "approveAll": "อนุมัติทั้งหมด ({{count}})",
+    "approvedSuccess": "อนุมัติไฟล์แนบแล้ว",
+    "rejectedSuccess": "ปฏิเสธไฟล์แนบแล้ว",
+    "reviewFailed": "บันทึกการตรวจสอบล้มเหลว",
+    "zoomIn": "ซูมเข้า",
+    "zoomOut": "ซูมออก"
+  },
+  "verifyModal": {
+    "title": "ตรวจสอบธุรกรรม",
+    "item": "รายการ",
+    "asset": "สินทรัพย์",
+    "nonAsset": "ไม่ใช่สินทรัพย์",
+    "itemType": "ประเภทสินค้า",
+    "selectType": "เลือกประเภทสินค้า",
+    "notes": "หมายเหตุ",
+    "optional": "ไม่บังคับ",
+    "notesPlaceholder": "หมายเหตุการตรวจสอบ...",
+    "globalNotes": "หมายเหตุรวม",
+    "globalNotesPlaceholder": "รายการทั้งหมดได้รับการตรวจสอบแล้ว...",
+    "cancel": "ยกเลิก",
+    "verify": "ตรวจสอบ",
+    "verifying": "กำลังตรวจสอบ...",
+    "validation": "กรุณาเลือกทุกสินค้า",
+    "totalItems": "{{count}} รายการสำหรับตรวจสอบ",
+    "toast": {
+      "verifySuccess": "ตรวจสอบธุรกรรมสำเร็จ",
+      "verifyFailed": "ไม่สามารถตรวจสอบธุรกรรมได้",
+      "approvalFailed": "ไม่สามารถเริ่มการอนุมัติได้"
+    }
+  },
+  "approveModal": {
+    "title": "อนุมัติธุรกรรม",
+    "confirmationTitle": "ยืนยันการอนุมัติ",
+    "confirmationDescription": "กรุณาตรวจสอบข้อมูลธุรกรรมทั้งหมดก่อนดำเนินการอนุมัติ",
+    "notes": "หมายเหตุ",
+    "optional": "ไม่บังคับ",
+    "notesPlaceholder": "อนุมัติแล้ว...",
+    "cancel": "ยกเลิก",
+    "approve": "อนุมัติ",
+    "approving": "กำลังอนุมัติ...",
+    "toast": {
+      "success": "อนุมัติธุรกรรมสำเร็จ",
+      "error": "ไม่สามารถอนุมัติธุรกรรมได้"
+    }
   }
 }

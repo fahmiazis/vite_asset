@@ -182,5 +182,74 @@
       "submit": "Gửi đơn mua sắm",
       "submitting": "Đang gửi..."
     }
+  },
+  "reviewAttachmentModal": {
+    "title": "Xem xét tệp đính kèm",
+    "previewUnavailable": "Không thể xem trước trên trình duyệt",
+    "openFile": "Mở tệp",
+    "preview": "Xem trước",
+    "approve": "Phê duyệt",
+    "reject": "Từ chối",
+    "rejectionReason": "Lý do từ chối",
+    "optional": "không bắt buộc",
+    "rejectionPlaceholder": "Ví dụ: Tài liệu bị mờ, vui lòng tải lên lại...",
+    "cancel": "Hủy",
+    "saving": "Đang lưu...",
+    "confirmReject": "Xác nhận từ chối",
+    "reason": "Lý do",
+    "reviewedBy": "Bởi",
+    "file": "{{count}} tệp",
+    "files": "{{count}} tệp",
+    "pending": "{{count}} chờ xử lý",
+    "approved": "{{count}} đã phê duyệt",
+    "rejected": "{{count}} đã từ chối",
+    "failedLoad": "Không thể tải dữ liệu tệp đính kèm",
+    "empty": "Chưa có tệp đính kèm",
+    "requiredNote": "* = bắt buộc",
+    "close": "Đóng",
+    "approveAll": "Phê duyệt tất cả ({{count}})",
+    "approvedSuccess": "Đã phê duyệt tệp đính kèm",
+    "rejectedSuccess": "Đã từ chối tệp đính kèm",
+    "reviewFailed": "Không thể lưu đánh giá",
+    "zoomIn": "Phóng to",
+    "zoomOut": "Thu nhỏ"
+  },
+  "verifyModal": {
+    "title": "Xác Minh Giao Dịch",
+    "item": "Mục",
+    "asset": "Tài sản",
+    "nonAsset": "Không phải tài sản",
+    "itemType": "Loại mục",
+    "selectType": "Chọn loại mục",
+    "notes": "Ghi chú",
+    "optional": "tùy chọn",
+    "notesPlaceholder": "Ghi chú xác minh...",
+    "globalNotes": "Ghi Chú Chung",
+    "globalNotesPlaceholder": "Tất cả mục đã được xác minh...",
+    "cancel": "Hủy",
+    "verify": "Xác minh",
+    "verifying": "Đang xác minh...",
+    "validation": "Tất cả mục phải được chọn",
+    "totalItems": "{{count}} mục cần xác minh",
+    "toast": {
+      "verifySuccess": "Xác minh giao dịch thành công",
+      "verifyFailed": "Xác minh giao dịch thất bại",
+      "approvalFailed": "Không thể bắt đầu phê duyệt"
+    }
+  },
+  "approveModal": {
+    "title": "Phê Duyệt Giao Dịch",
+    "confirmationTitle": "Xác Nhận Phê Duyệt",
+    "confirmationDescription": "Vui lòng đảm bảo tất cả dữ liệu giao dịch đã chính xác trước khi tiếp tục.",
+    "notes": "Ghi chú",
+    "optional": "tùy chọn",
+    "notesPlaceholder": "Đã phê duyệt...",
+    "cancel": "Hủy",
+    "approve": "Phê duyệt",
+    "approving": "Đang phê duyệt...",
+    "toast": {
+      "success": "Phê duyệt giao dịch thành công",
+      "error": "Phê duyệt giao dịch thất bại"
+    }
   }
 }

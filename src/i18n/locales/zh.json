@@ -1,40 +1,40 @@
 {
-    "Login": "登录",
-    "LoginDesk": "随时随地访问您的任务、笔记和项目，并将所有内容整理在一个地方。",
-    "label": {
-        "dashboard": {
-            "totalAssets": "总资产",
-            "totalAcquisVal": "总收购价值",
-            "totalBookVal": "总账面价值",
-            "totalDepreVal": "折旧率",
-            "vsLastMonth": "与上月相比"
-        }
+  "Login": "登录",
+  "LoginDesk": "随时随地访问您的任务、笔记和项目，并将所有内容整理在一个地方。",
+  "label": {
+    "dashboard": {
+      "totalAssets": "总资产",
+      "totalAcquisVal": "总收购价值",
+      "totalBookVal": "总账面价值",
+      "totalDepreVal": "折旧率",
+      "vsLastMonth": "与上月相比"
+    }
+  },
+  "transaksiHeader": {
+    "title": "资产采购交易",
+    "period": "周期：{{period}}",
+    "totalTransactions": "已登记 {{count}} 笔交易",
+    "export": "导出",
+    "report": "报告",
+    "newRequest": "新建申请",
+    "new": "新建"
+  },
+  "transaksiTable": {
+    "tabs": {
+      "all": "全部",
+      "pending": "待处理",
+      "approved": "已批准",
+      "rejected": "已拒绝",
+      "draft": "草稿"
     },
-    "transaksiHeader": {
-        "title": "资产采购交易",
-        "period": "周期：{{period}}",
-        "totalTransactions": "已登记 {{count}} 笔交易",
-        "export": "导出",
-        "report": "报告",
-        "newRequest": "新建申请",
-        "new": "新建"
-    },
-    "transaksiTable": {
-        "tabs": {
-            "all": "全部",
-            "pending": "待处理",
-            "approved": "已批准",
-            "rejected": "已拒绝",
-            "draft": "草稿"
-        },
-        "searchPlaceholder": "按资产名称、PO编号或申请人搜索...",
-        "noData": "暂无数据",
-        "pagination": {
-            "showing": "显示第 {{from}} – {{to}} 条，共 {{total}} 条",
-            "page": "第 {{current}} / {{total}} 页"
-        }
-    },
-    "transaksiColumn": {
+    "searchPlaceholder": "按资产名称、PO编号或申请人搜索...",
+    "noData": "暂无数据",
+    "pagination": {
+      "showing": "显示第 {{from}} – {{to}} 条，共 {{total}} 条",
+      "page": "第 {{current}} / {{total}} 页"
+    }
+  },
+  "transaksiColumn": {
     "headers": {
       "transactionNo": "交易编号",
       "itemName": "项目名称",
@@ -181,6 +181,75 @@
       "saveDraft": "保存草稿",
       "submit": "提交采购",
       "submitting": "提交中..."
+    }
+  },
+  "reviewAttachmentModal": {
+    "title": "附件审核",
+    "previewUnavailable": "浏览器无法预览",
+    "openFile": "打开文件",
+    "preview": "预览",
+    "approve": "批准",
+    "reject": "拒绝",
+    "rejectionReason": "拒绝原因",
+    "optional": "可选",
+    "rejectionPlaceholder": "例如：文件模糊，请重新上传...",
+    "cancel": "取消",
+    "saving": "保存中...",
+    "confirmReject": "确认拒绝",
+    "reason": "原因",
+    "reviewedBy": "审核人",
+    "file": "{{count}} 个文件",
+    "files": "{{count}} 个文件",
+    "pending": "{{count}} 待处理",
+    "approved": "{{count}} 已批准",
+    "rejected": "{{count}} 已拒绝",
+    "failedLoad": "加载附件数据失败",
+    "empty": "暂无附件",
+    "requiredNote": "* = 必填",
+    "close": "关闭",
+    "approveAll": "全部批准 ({{count}})",
+    "approvedSuccess": "附件已批准",
+    "rejectedSuccess": "附件已拒绝",
+    "reviewFailed": "保存审核失败",
+    "zoomIn": "放大",
+    "zoomOut": "缩小"
+  },
+  "verifyModal": {
+    "title": "验证交易",
+    "item": "项目",
+    "asset": "资产",
+    "nonAsset": "非资产",
+    "itemType": "项目类型",
+    "selectType": "选择项目类型",
+    "notes": "备注",
+    "optional": "可选",
+    "notesPlaceholder": "验证备注...",
+    "globalNotes": "整体备注",
+    "globalNotesPlaceholder": "所有项目已验证...",
+    "cancel": "取消",
+    "verify": "验证",
+    "verifying": "验证中...",
+    "validation": "所有项目必须选择",
+    "totalItems": "共 {{count}} 个项目待验证",
+    "toast": {
+      "verifySuccess": "交易验证成功",
+      "verifyFailed": "交易验证失败",
+      "approvalFailed": "无法启动审批流程"
+    }
+  },
+   "approveModal": {
+    "title": "批准交易",
+    "confirmationTitle": "审批确认",
+    "confirmationDescription": "请在继续审批前确认所有交易数据无误。",
+    "notes": "备注",
+    "optional": "可选",
+    "notesPlaceholder": "已批准...",
+    "cancel": "取消",
+    "approve": "批准",
+    "approving": "审批中...",
+    "toast": {
+      "success": "交易审批成功",
+      "error": "交易审批失败"
     }
   }
 }

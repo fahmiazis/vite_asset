@@ -8,7 +8,8 @@ export function useVerifyProcurement(transactionNumber: string) {
         mutationFn: (payload: VerifyProcurementPayload) =>
             verifyProcurement(transactionNumber, payload),
         onSuccess: () => {
-            queryClient.resetQueries({ queryKey: ["transaction-detail", transactionNumber] })
+            queryClient.resetQueries({ queryKey: ["transaction-detail"] })
+            queryClient.invalidateQueries({ queryKey: ["transaction-detail-with-stage"] })
         },
     })
 }

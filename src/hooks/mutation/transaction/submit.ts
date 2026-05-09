@@ -16,6 +16,7 @@ export const useSubmitProcurement = (options?: UseSubmitProcurementOptions) => {
 
         onSuccess: (_, variables) => {
             queryClient.invalidateQueries({ queryKey: ["transaction-list"] })
+            queryClient.invalidateQueries({ queryKey: ["transaction-detail-with-stage"] })
             queryClient.invalidateQueries({ queryKey: ["transaction-detail", variables.id] })
             toast.success("Transaction submitted successfully")
             options?.onSuccess?.()

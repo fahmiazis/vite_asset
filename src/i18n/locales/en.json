@@ -182,5 +182,74 @@
       "submit": "Submit procurement",
       "submitting": "Submitting..."
     }
+  },
+  "reviewAttachmentModal": {
+    "title": "Review Attachment",
+    "previewUnavailable": "Preview is not available in browser",
+    "openFile": "Open File",
+    "preview": "Preview",
+    "approve": "Approve",
+    "reject": "Reject",
+    "rejectionReason": "Rejection reason",
+    "optional": "optional",
+    "rejectionPlaceholder": "Example: Blurry document, please re-upload...",
+    "cancel": "Cancel",
+    "saving": "Saving...",
+    "confirmReject": "Confirm Reject",
+    "reason": "Reason",
+    "reviewedBy": "By",
+    "file": "{{count}} file",
+    "files": "{{count}} files",
+    "pending": "{{count}} pending",
+    "approved": "{{count}} approved",
+    "rejected": "{{count}} rejected",
+    "failedLoad": "Failed to load attachment data",
+    "empty": "No attachments yet",
+    "requiredNote": "* = required",
+    "close": "Close",
+    "approveAll": "Approve all ({{count}})",
+    "approvedSuccess": "Attachment approved",
+    "rejectedSuccess": "Attachment rejected",
+    "reviewFailed": "Failed to save review",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out"
+  },
+  "verifyModal": {
+    "title": "Verify Transaction",
+    "item": "Item",
+    "asset": "Asset",
+    "nonAsset": "Non Asset",
+    "itemType": "Item Type",
+    "selectType": "Select item type",
+    "notes": "Notes",
+    "optional": "optional",
+    "notesPlaceholder": "Verification notes...",
+    "globalNotes": "Global Notes",
+    "globalNotesPlaceholder": "All items have been verified...",
+    "cancel": "Cancel",
+    "verify": "Verify",
+    "verifying": "Verifying...",
+    "validation": "All items must be selected",
+    "totalItems": "{{count}} items to verify",
+    "toast": {
+      "verifySuccess": "Transaction verified successfully",
+      "verifyFailed": "Failed to verify transaction",
+      "approvalFailed": "Failed to initiate approval"
+    }
+  },
+  "approveModal": {
+    "title": "Approve Transaction",
+    "confirmationTitle": "Approval Confirmation",
+    "confirmationDescription": "Please ensure all transaction data is correct before proceeding with approval.",
+    "notes": "Notes",
+    "optional": "optional",
+    "notesPlaceholder": "Approved...",
+    "cancel": "Cancel",
+    "approve": "Approve",
+    "approving": "Approving...",
+    "toast": {
+      "success": "Transaction approved successfully",
+      "error": "Failed to approve transaction"
+    }
   }
 }

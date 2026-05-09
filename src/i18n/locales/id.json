@@ -182,5 +182,74 @@
       "submit": "Submit pengadaan",
       "submitting": "Mengirim..."
     }
+  },
+  "reviewAttachmentModal": {
+    "title": "Review Attachment",
+    "previewUnavailable": "Preview tidak tersedia di browser",
+    "openFile": "Buka file",
+    "preview": "Preview",
+    "approve": "Setujui",
+    "reject": "Tolak",
+    "rejectionReason": "Alasan penolakan",
+    "optional": "opsional",
+    "rejectionPlaceholder": "Contoh: Dokumen buram, mohon upload ulang...",
+    "cancel": "Batal",
+    "saving": "Menyimpan...",
+    "confirmReject": "Konfirmasi Tolak",
+    "reason": "Alasan",
+    "reviewedBy": "Oleh",
+    "file": "{{count}} file",
+    "files": "{{count}} file",
+    "pending": "{{count}} pending",
+    "approved": "{{count}} disetujui",
+    "rejected": "{{count}} ditolak",
+    "failedLoad": "Gagal memuat data attachment",
+    "empty": "Belum ada attachment",
+    "requiredNote": "* = wajib dilengkapi",
+    "close": "Tutup",
+    "approveAll": "Approve semua ({{count}})",
+    "approvedSuccess": "Attachment disetujui",
+    "rejectedSuccess": "Attachment ditolak",
+    "reviewFailed": "Gagal menyimpan review",
+    "zoomIn": "Perbesar",
+    "zoomOut": "Perkecil"
+  },
+   "verifyModal": {
+    "title": "Verifikasi Transaksi",
+    "item": "Item",
+    "asset": "Asset",
+    "nonAsset": "Non Asset",
+    "itemType": "Tipe Item",
+    "selectType": "Pilih tipe item",
+    "notes": "Catatan",
+    "optional": "opsional",
+    "notesPlaceholder": "Catatan verifikasi...",
+    "globalNotes": "Catatan Keseluruhan",
+    "globalNotesPlaceholder": "Semua item terverifikasi...",
+    "cancel": "Batal",
+    "verify": "Verifikasi",
+    "verifying": "Memverifikasi...",
+    "validation": "Semua item wajib dipilih",
+    "totalItems": "{{count}} item untuk diverifikasi",
+    "toast": {
+      "verifySuccess": "Transaksi berhasil diverifikasi",
+      "verifyFailed": "Gagal memverifikasi transaksi",
+      "approvalFailed": "Gagal memulai approval"
+    }
+  },
+  "approveModal": {
+    "title": "Approve Transaksi",
+    "confirmationTitle": "Konfirmasi Approval",
+    "confirmationDescription": "Pastikan seluruh data transaksi sudah sesuai sebelum melanjutkan approval.",
+    "notes": "Catatan",
+    "optional": "opsional",
+    "notesPlaceholder": "Disetujui...",
+    "cancel": "Batal",
+    "approve": "Approve",
+    "approving": "Menyetujui...",
+    "toast": {
+      "success": "Transaksi berhasil disetujui",
+      "error": "Gagal menyetujui transaksi"
+    }
   }
 }

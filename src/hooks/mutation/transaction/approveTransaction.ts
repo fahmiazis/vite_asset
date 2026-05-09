@@ -8,6 +8,7 @@ export function useApproveTransaction(transactionNumber: string) {
         mutationFn: (payload: ApproveTransactionPayload) => approveTransaction(payload),
         onSuccess: () => {
             queryClient.resetQueries({ queryKey: ["approval-transaction", transactionNumber] })
+            queryClient.resetQueries({ queryKey: ["attach-transaction"] })
         },
     })
 }

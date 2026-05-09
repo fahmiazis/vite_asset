@@ -3,6 +3,7 @@ import toast from "react-hot-toast"
 import { useAttachTransaction } from "../../../hooks/query/attachmentSetting/attachTransaction"
 import type { transactionAttachmentState } from "../../../models/attachmentSetting/transactionAttachment"
 import { useReviewAttachment } from "../../../hooks/mutation/attachSetting/reviewAttachment"
+import { useTranslation } from "react-i18next"
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -77,8 +78,9 @@ function PreviewPanel({
 }) {
   const [zoomed, setZoomed] = useState(false)
   const isImage = isImageMime(item.mime_type)
-
   const ImageURL = import.meta.env.VITE_IMAGE_ACCESS
+
+  const { t } = useTranslation()
 
   return (
     <div
@@ -89,52 +91,82 @@ function PreviewPanel({
         className="relative max-w-3xl w-full mx-4 bg-white dark:bg-gray-950 rounded-xl overflow-hidden shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
         <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-700">
           <div className="flex items-center gap-2 min-w-0">
             <FileTypeIcon mime={item.mime_type} />
+
             <div className="min-w-0">
               <p className="text-sm font-medium text-gray-800 dark:text-gray-200 truncate">
                 {formatAttachmentName(item.attachment_type)}
               </p>
+
               <p className="text-xs text-gray-400 truncate">
                 {item.file_name} · {formatFileSize(item.file_size)}
               </p>
             </div>
           </div>
+
           <div className="flex items-center gap-2 flex-shrink-0">
             {isImage && (
               <button
                 onClick={() => setZoomed((z) => !z)}
                 className="p-1.5 rounded-lg border border-gray-200 dark:border-gray-600 text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-                title={zoomed ? "Zoom out" : "Zoom in"}
+                title={
+                  zoomed
+                    ? t("reviewAttachmentModal.zoomOut")
+                    : t("reviewAttachmentModal.zoomIn")
+                }
               >
-                {zoomed ? (
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10H7" />
-                  </svg>
-                ) : (
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-                  </svg>
-                )}
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  {zoomed ? (
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10H7"
+                    />
+                  ) : (
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
+                    />
+                  )}
+                </svg>
               </button>
             )}
+
             <button
               onClick={onClose}
               className="p-1.5 rounded-lg border border-gray-200 dark:border-gray-600 text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
             >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             </button>
           </div>
         </div>
 
-        {/* Content */}
-        <div className="overflow-auto bg-gray-50 dark:bg-gray-900" style={{ maxHeight: "70vh" }}>
+        <div
+          className="overflow-auto bg-gray-50 dark:bg-gray-900"
+          style={{ maxHeight: "70vh" }}
+        >
           {isImage ? (
             <div className="flex items-center justify-center p-4 min-h-64">
               <img
@@ -152,27 +184,38 @@ function PreviewPanel({
           ) : (
             <div className="flex flex-col items-center justify-center gap-4 py-16 px-8">
               <div className="w-16 h-16 rounded-2xl bg-red-50 flex items-center justify-center">
-                <svg className="w-8 h-8 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
-                    d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
-                  <polyline strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} points="14 2 14 8 20 8" />
+                <svg
+                  className="w-8 h-8 text-red-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"
+                  />
                 </svg>
               </div>
+
               <div className="text-center">
-                <p className="text-sm font-medium text-gray-700 dark:text-gray-300">{item.file_name}</p>
-                <p className="text-xs text-gray-400 mt-1">Preview tidak tersedia di browser</p>
+                <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  {item.file_name}
+                </p>
+
+                <p className="text-xs text-gray-400 mt-1">
+                  {t("reviewAttachmentModal.previewUnavailable")}
+                </p>
               </div>
+
               <a
                 href={item.file_path}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors"
               >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-                Buka file
+                {t("reviewAttachmentModal.openFile")}
               </a>
             </div>
           )}
@@ -357,18 +400,31 @@ export function ReviewAttachmentModal({
   stage,
   onClose,
 }: ReviewAttachmentModalProps) {
-  const [previewItem, setPreviewItem] = useState<transactionAttachmentState | null>(null)
+  const [previewItem, setPreviewItem] =
+    useState<transactionAttachmentState | null>(null)
+
   const [reviewingId, setReviewingId] = useState<number | null>(null)
 
-  const { data, isLoading, error } = useAttachTransaction(transactionId)
-  const { mutate: reviewMutate } = useReviewAttachment(transactionId)
+  const { t } = useTranslation()
+  const { data, isLoading, error } =
+    useAttachTransaction(transactionId)
 
+  const { mutate: reviewMutate } =
+    useReviewAttachment(transactionId)
 
   const attachments = data?.data ?? []
 
-  const pendingCount = attachments.filter((a) => a.status.toLowerCase() === "pending").length
-  const approvedCount = attachments.filter((a) => a.status.toLowerCase() === "approved").length
-  const rejectedCount = attachments.filter((a) => a.status.toLowerCase() === "rejected").length
+  const pendingCount = attachments.filter(
+    (a) => a.status.toLowerCase() === "pending"
+  ).length
+
+  const approvedCount = attachments.filter(
+    (a) => a.status.toLowerCase() === "approved"
+  ).length
+
+  const rejectedCount = attachments.filter(
+    (a) => a.status.toLowerCase() === "rejected"
+  ).length
 
   const handleReview = (
     id: number,
@@ -376,21 +432,32 @@ export function ReviewAttachmentModal({
     rejection_reason?: string
   ) => {
     setReviewingId(id)
+
     reviewMutate(
       {
         id,
         payload: {
-          status: status.toUpperCase() as "APPROVED" | "REJECTED",
+          status: status.toUpperCase() as
+            | "APPROVED"
+            | "REJECTED",
           rejection_reason,
         },
       },
       {
         onSuccess: () => {
-          toast.success(status === "approved" ? "Attachment disetujui" : "Attachment ditolak")
+          toast.success(
+            status === "approved"
+              ? t("reviewAttachmentModal.approvedSuccess")
+              : t("reviewAttachmentModal.rejectedSuccess")
+          )
         },
+
         onError: () => {
-          toast.error("Gagal menyimpan review")
+          toast.error(
+            t("reviewAttachmentModal.reviewFailed")
+          )
         },
+
         onSettled: () => {
           setReviewingId(null)
         },
@@ -398,60 +465,137 @@ export function ReviewAttachmentModal({
     )
   }
 
+  // Better async handling
   const handleApproveAll = async () => {
-    const pending = attachments.filter((a) => a.status.toLowerCase() === "pending")
-    for (const item of pending) {
-      await handleReview(item.id, "approved")
+    const pending = attachments.filter(
+      (a) => a.status.toLowerCase() === "pending"
+    )
+
+    try {
+      await Promise.all(
+        pending.map(
+          (item) =>
+            new Promise<void>((resolve, reject) => {
+              reviewMutate(
+                {
+                  id: item.id,
+                  payload: {
+                    status: "APPROVED",
+                  },
+                },
+                {
+                  onSuccess: () => resolve(),
+                  onError: () => reject(),
+                }
+              )
+            })
+        )
+      )
+
+      toast.success(
+        t("reviewAttachmentModal.allApprovedSuccess")
+      )
+    } catch {
+      toast.error(
+        t("reviewAttachmentModal.bulkApproveFailed")
+      )
+    } finally {
+      onClose()
     }
   }
 
   return (
     <>
       {previewItem && (
-        <PreviewPanel item={previewItem} onClose={() => setPreviewItem(null)} />
+        <PreviewPanel
+          item={previewItem}
+          onClose={() => setPreviewItem(null)}
+        />
       )}
 
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-        <div className="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-xl shadow-xl w-full max-w-xl mx-4 flex flex-col max-h-[90vh]">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+        <div className="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-2xl w-full max-w-2xl flex flex-col max-h-[90vh] overflow-hidden">
 
           {/* Header */}
           <div className="flex items-start justify-between px-5 py-4 border-b border-gray-100 dark:border-gray-700 flex-shrink-0">
-            <div>
-              <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
-                Review Attachment
+            <div className="min-w-0">
+              <h3 className="text-base font-semibold text-gray-900 dark:text-white">
+                {t("reviewAttachmentModal.title")}
               </h3>
-              <p className="text-xs text-gray-400 mt-0.5">
+
+              <p className="text-xs text-gray-400 mt-1 break-all">
                 {transactionNumber} · {transactionType} · {stage}
               </p>
             </div>
+
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              aria-label={t("reviewAttachmentModal.close")}
+              className="p-2 rounded-xl text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             </button>
           </div>
 
-          {/* Summary badges */}
+          {/* Summary */}
           {!isLoading && !error && (
-            <div className="flex items-center gap-2 px-5 py-2.5 border-b border-gray-100 dark:border-gray-700 flex-shrink-0">
-              <span className="text-xs text-gray-400">{attachments.length} file</span>
+            <div className="flex flex-wrap items-center gap-2 px-5 py-3 border-b border-gray-100 dark:border-gray-700 flex-shrink-0">
+
+              <span className="text-xs text-gray-400">
+                {t(
+                  attachments.length > 1
+                    ? "reviewAttachmentModal.files"
+                    : "reviewAttachmentModal.file",
+                  {
+                    count: attachments.length,
+                  }
+                )}
+              </span>
+
               <span className="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600" />
+
               {pendingCount > 0 && (
                 <span className="text-xs bg-yellow-50 text-yellow-700 border border-yellow-200 px-2 py-0.5 rounded-md">
-                  {pendingCount} pending
+                  {t(
+                    "reviewAttachmentModal.pending",
+                    {
+                      count: pendingCount,
+                    }
+                  )}
                 </span>
               )}
+
               {approvedCount > 0 && (
                 <span className="text-xs bg-green-50 text-green-700 border border-green-200 px-2 py-0.5 rounded-md">
-                  {approvedCount} approved
+                  {t(
+                    "reviewAttachmentModal.approved",
+                    {
+                      count: approvedCount,
+                    }
+                  )}
                 </span>
               )}
+
               {rejectedCount > 0 && (
                 <span className="text-xs bg-red-50 text-red-700 border border-red-200 px-2 py-0.5 rounded-md">
-                  {rejectedCount} rejected
+                  {t(
+                    "reviewAttachmentModal.rejected",
+                    {
+                      count: rejectedCount,
+                    }
+                  )}
                 </span>
               )}
             </div>
@@ -459,6 +603,7 @@ export function ReviewAttachmentModal({
 
           {/* Body */}
           <div className="overflow-y-auto flex-1 px-5 py-4 space-y-3">
+
             {isLoading && (
               <>
                 <SkeletonRow />
@@ -469,59 +614,98 @@ export function ReviewAttachmentModal({
 
             {error && (
               <div className="flex flex-col items-center justify-center py-12 text-center">
-                <p className="text-sm text-red-500">Gagal memuat data attachment</p>
+                <p className="text-sm text-red-500">
+                  {t("reviewAttachmentModal.failedLoad")}
+                </p>
               </div>
             )}
 
-            {!isLoading && !error && attachments.length === 0 && (
-              <div className="flex flex-col items-center justify-center py-12 text-center">
-                <div className="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mb-3">
-                  <svg className="w-6 h-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
-                      d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
-                  </svg>
+            {!isLoading &&
+              !error &&
+              attachments.length === 0 && (
+                <div className="flex flex-col items-center justify-center py-12 text-center">
+
+                  <div className="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mb-3">
+                    <svg
+                      className="w-6 h-6 text-gray-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1.5}
+                        d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
+                      />
+                    </svg>
+                  </div>
+
+                  <p className="text-sm text-gray-500">
+                    {t("reviewAttachmentModal.empty")}
+                  </p>
                 </div>
-                <p className="text-sm text-gray-500">Belum ada attachment</p>
-              </div>
-            )}
+              )}
 
-            {!isLoading && !error && attachments.map((item) => (
-              <AttachmentRow
-                key={item.id}
-                item={item}
-                onPreview={() => setPreviewItem(item)}
-                onReview={(status, rejection_reason) =>
-                  handleReview(item.id, status, rejection_reason)
-                }
-                isReviewing={reviewingId === item.id}
-              />
-            ))}
+            {!isLoading &&
+              !error &&
+              attachments.map((item) => (
+                <AttachmentRow
+                  key={item.id}
+                  item={item}
+                  onPreview={() =>
+                    setPreviewItem(item)
+                  }
+                  onReview={(
+                    status,
+                    rejection_reason
+                  ) =>
+                    handleReview(
+                      item.id,
+                      status,
+                      rejection_reason
+                    )
+                  }
+                  isReviewing={
+                    reviewingId === item.id
+                  }
+                />
+              ))}
           </div>
 
           {/* Footer */}
-          <div className="flex items-center justify-between px-5 py-4 border-t border-gray-100 dark:border-gray-700 flex-shrink-0">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 px-5 py-4 border-t border-gray-100 dark:border-gray-700 flex-shrink-0">
+
             <p className="text-xs text-gray-400">
-              <span className="text-red-400">*</span> = wajib dilengkapi
+              {t(
+                "reviewAttachmentModal.requiredNote"
+              )}
             </p>
+
             <div className="flex gap-2">
               <button
                 onClick={onClose}
-                className="px-3 py-1.5 text-xs border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                className="px-3 py-2 text-xs border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
               >
-                Tutup
+                {t("reviewAttachmentModal.close")}
               </button>
+
               {pendingCount > 0 && (
                 <button
                   onClick={handleApproveAll}
                   disabled={reviewingId !== null}
-                  className="px-3 py-1.5 text-xs bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors disabled:opacity-50"
+                  className="px-3 py-2 text-xs bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-colors disabled:opacity-50"
                 >
-                  Approve semua ({pendingCount})
+                  {t(
+                    "reviewAttachmentModal.approveAll",
+                    {
+                      count: pendingCount,
+                    }
+                  )}
                 </button>
               )}
             </div>
           </div>
-
         </div>
       </div>
     </>

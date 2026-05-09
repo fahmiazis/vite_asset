@@ -9,6 +9,7 @@ export function useReviewAttachment(transactionId: string) {
             reviewAttachment(id, payload),
         onSuccess: () => {
             queryClient.resetQueries({ queryKey: ["review-attach-transaction", transactionId] })
+            queryClient.resetQueries({ queryKey: ["attach-transaction"] })
         },
     })
 }
