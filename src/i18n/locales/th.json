@@ -33,5 +33,154 @@
             "showing": "แสดง {{from}} – {{to}} จาก {{total}} รายการ",
             "page": "หน้า {{current}} / {{total}}"
         }
+    },
+    "transaksiColumn": {
+    "headers": {
+      "transactionNo": "หมายเลขธุรกรรม",
+      "itemName": "ชื่อรายการ",
+      "createdBy": "สร้างโดย",
+      "transactionDate": "วันที่ทำธุรกรรม",
+      "qty": "จำนวน",
+      "totalValue": "มูลค่ารวม",
+      "status": "สถานะ",
+      "action": "การดำเนินการ"
+    },
+    "status": {
+      "approved": "อนุมัติแล้ว",
+      "pending": "รอดำเนินการ",
+      "rejected": "ถูกปฏิเสธ",
+      "draft": "ร่าง"
+    },
+    "moreItems": "+{{count}} รายการ",
+    "unit": "หน่วย",
+    "actions": {
+      "detail": "รายละเอียด",
+      "edit": "แก้ไข",
+      "delete": "ลบ"
+    },
+    "deleteModal": {
+      "title": "ลบธุรกรรม?",
+      "desc": "คุณแน่ใจหรือไม่ที่จะลบ",
+      "warning": "การดำเนินการนี้ไม่สามารถยกเลิกได้",
+      "cancel": "ยกเลิก",
+      "confirm": "ใช่, ลบ",
+      "deleting": "กำลังลบ..."
     }
+  },
+  "detailTransaction": {
+    "fileUpload": {
+      "maxSize": "สูงสุด 10 MB",
+      "sizeError": "{{label}}: ขนาดไฟล์ต้องไม่เกิน 10 MB",
+      "clickToUpload": "คลิกเพื่ออัปโหลดไฟล์"
+    },
+    "submitModal": {
+      "title": "ส่งธุรกรรม?",
+      "desc": "ธุรกรรมนี้จะถูกส่งเพื่อตรวจสอบ",
+      "notes": "หมายเหตุ",
+      "optional": "ไม่บังคับ",
+      "notesPlaceholder": "เช่น โปรดตรวจสอบโดยเร็ว...",
+      "cancel": "ยกเลิก",
+      "submit": "ส่ง",
+      "uploading": "กำลังอัปโหลด...",
+      "uploadError": "อัปโหลดไฟล์แนบล้มเหลว"
+    },
+    "header": {
+      "submitForVerification": "ส่งเพื่อตรวจสอบ",
+      "submitting": "กำลังส่ง...",
+      "reviewAttachment": "ตรวจสอบไฟล์แนบ"
+    },
+    "info": {
+      "transactionNumber": "หมายเลขธุรกรรม",
+      "transactionType": "ประเภทธุรกรรม",
+      "date": "วันที่",
+      "createdBy": "สร้างโดย",
+      "approvedBy": "อนุมัติโดย",
+      "notYetApproved": "ยังไม่ได้รับการอนุมัติ",
+      "transactionNotes": "หมายเหตุธุรกรรม"
+    },
+    "items": {
+      "title": "รายการสินค้า",
+      "count": "{{count}} รายการ",
+      "quantity": "จำนวน",
+      "unit": "หน่วย",
+      "unitPrice": "ราคาต่อหน่วย",
+      "branchCode": "รหัสสาขา",
+      "notes": "หมายเหตุ",
+      "recipientDetail": "รายละเอียดผู้รับ"
+    },
+    "approval": {
+      "title": "ขั้นตอนการอนุมัติ",
+      "stepsCompleted": "{{completed}}/{{total}} ขั้นตอนเสร็จสิ้น",
+      "noData": "ยังไม่มีข้อมูลการอนุมัติ",
+      "stepFallback": "ขั้นตอนที่ {{index}}",
+      "approvedAt": "อนุมัติเมื่อ {{date}}",
+      "rejectedAt": "ปฏิเสธเมื่อ {{date}}",
+      "by": "โดย",
+      "status": {
+        "approved": "อนุมัติแล้ว",
+        "rejected": "ถูกปฏิเสธ",
+        "pending": "รอดำเนินการ"
+      }
+    },
+    "summary": {
+      "totalItems": "รายการทั้งหมด",
+      "itemsValue": "{{types}} ประเภท · {{units}} หน่วย",
+      "totalValue": "มูลค่ารวม"
+    },
+    "actions": {
+      "verify": "ตรวจสอบ",
+      "approve": "อนุมัติ",
+      "processBudget": "ดำเนินการงบประมาณ",
+      "executeAsset": "ดำเนินการสินทรัพย์",
+      "goodsReceipt": "รับสินค้า"
+    }
+  },
+  "createTransaction": {
+    "section": {
+      "transactionInfo": "ข้อมูลธุรกรรม",
+      "transactionNotes": "หมายเหตุธุรกรรม",
+      "transactionNotesPlaceholder": "การจัดซื้อยานพาหนะปฏิบัติการ Q1 2026...",
+      "itemList": "รายการสินค้า",
+      "itemCount": "{{count}} รายการ",
+      "addItem": "เพิ่มรายการ"
+    },
+    "item": {
+      "fallbackName": "รายการ #{{index}}",
+      "removeItem": "ลบรายการ",
+      "itemName": "ชื่อรายการ",
+      "itemNamePlaceholder": "Toyota Avanza 2026",
+      "category": "หมวดหมู่",
+      "categoryPlaceholder": "เลือกหมวดหมู่",
+      "quantity": "จำนวน",
+      "unitPrice": "ราคาต่อหน่วย",
+      "branchCode": "รหัสสาขา",
+      "branchCodePlaceholder": "เลือกสาขา",
+      "itemNotes": "หมายเหตุรายการ",
+      "itemNotesPlaceholder": "สำหรับการดำเนินงานสาขา...",
+      "recipientDetail": "รายละเอียดผู้รับ",
+      "optional": "ไม่บังคับ",
+      "addRecipient": "+ เพิ่มผู้รับ",
+      "qtyAllocated": "จัดสรรแล้ว {{total}} / {{max}} หน่วย",
+      "qtyExceededWarning": "จำนวนรายละเอียดรวม ({{total}}) เกินจำนวนรายการ ({{max}}) โปรดปรับแก้"
+    },
+    "detail": {
+      "recipient": "ผู้รับ",
+      "remove": "ลบ",
+      "requesterName": "ชื่อผู้ร้องขอ",
+      "requesterNamePlaceholder": "สมชาย ใจดี",
+      "branchCode": "รหัสสาขา",
+      "branchCodePlaceholder": "เลือกสาขา",
+      "quantity": "จำนวน",
+      "notes": "หมายเหตุ",
+      "notesPlaceholder": "ความต้องการพิเศษ..."
+    },
+    "summary": {
+      "totalItems": "รายการทั้งหมด",
+      "itemsValue": "{{types}} ประเภท · {{units}} หน่วย",
+      "totalValue": "มูลค่ารวม",
+      "saveDraft": "บันทึกร่าง",
+      "submit": "ส่งการจัดซื้อ",
+      "submitting": "กำลังส่ง..."
+    }
+  }
 }

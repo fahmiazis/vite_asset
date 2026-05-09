@@ -22,7 +22,10 @@ export function useUploadAttachment({
             payload: UploadAttachmentPayload
         }) => uploadAttachment(params, payload),
 
-        onSuccess: (data) => {
+        onSuccess: (_, variables) => {
+            queryClient.invalidateQueries({
+                queryKey: ['transaction-detail-with-stage'],
+            })
             queryClient.invalidateQueries({
                 queryKey: ['attachments'],
             })

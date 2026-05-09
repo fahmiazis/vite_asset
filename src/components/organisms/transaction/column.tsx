@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import type { transactionListState } from "../../../models/transaction/list"
 import { useState } from "react"
 import { useDeleteProcurement } from "../../../hooks/mutation/transaction/delete"
+import { useTranslation } from "react-i18next"
 
 // --- Avatar ---
 function Avatar({ name }: { name: string }) {
@@ -21,38 +22,32 @@ function Avatar({ name }: { name: string }) {
 
 // --- Status Badge ---
 function StatusBadge({ value }: { value: string }) {
-  const map: Record<string, { dot: string; light: string; dark: string; label: string }> = {
-    APPROVED: { dot: "bg-green-500", light: "bg-green-50 text-green-700", dark: "dark:bg-green-900/40 dark:text-green-400", label: "Approved" },
-    PENDING: { dot: "bg-yellow-400", light: "bg-yellow-50 text-yellow-700", dark: "dark:bg-yellow-900/40 dark:text-yellow-400", label: "Pending" },
-    REJECTED: { dot: "bg-red-500", light: "bg-red-50 text-red-600", dark: "dark:bg-red-900/40 dark:text-red-400", label: "Rejected" },
-    DRAFT: { dot: "bg-gray-400", light: "bg-gray-100 text-gray-600", dark: "dark:bg-gray-700 dark:text-gray-400", label: "Draft" },
+  const { t } = useTranslation()
+
+  const map: Record<string, { dot: string; light: string; dark: string; labelKey: string }> = {
+    APPROVED: { dot: "bg-green-500", light: "bg-green-50 text-green-700",   dark: "dark:bg-green-900/40 dark:text-green-400",   labelKey: "transaksiColumn.status.approved" },
+    PENDING:  { dot: "bg-yellow-400", light: "bg-yellow-50 text-yellow-700", dark: "dark:bg-yellow-900/40 dark:text-yellow-400", labelKey: "transaksiColumn.status.pending"  },
+    REJECTED: { dot: "bg-red-500",    light: "bg-red-50 text-red-600",       dark: "dark:bg-red-900/40 dark:text-red-400",       labelKey: "transaksiColumn.status.rejected" },
+    DRAFT:    { dot: "bg-gray-400",   light: "bg-gray-100 text-gray-600",    dark: "dark:bg-gray-700 dark:text-gray-400",        labelKey: "transaksiColumn.status.draft"    },
   }
 
   const s = map[value?.toUpperCase()] ?? map["DRAFT"]
   return (
     <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold ${s.light} ${s.dark}`}>
       <span className={`w-1.5 h-1.5 rounded-full ${s.dot}`} />
-      {s.label}
+      {t(s.labelKey)}
     </span>
   )
 }
 
-const LABEL: Record<string, string> = {
-  Disetujui: "Approved",
-  Menunggu: "Pending",
-  Ditolak: "Rejected",
-  Draft: "Draft",
-}
-
 // --- Delete Modal ---
-function DeleteModal({
-  id, onConfirm, onCancel, isLoading,
-}: {
+function DeleteModal({ id, onConfirm, onCancel, isLoading }: {
   id: string
   onConfirm: () => void
   onCancel: () => void
   isLoading?: boolean
 }) {
+  const { t } = useTranslation()
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
       <div className="bg-white dark:bg-gray-900 rounded-xl shadow-xl p-6 w-full max-w-sm mx-4 border border-gray-200 dark:border-gray-700">
@@ -63,14 +58,12 @@ function DeleteModal({
           </svg>
         </div>
         <h3 className="text-center text-base font-semibold text-gray-900 dark:text-white mb-1">
-          Delete Transaction?
+          {t("transaksiColumn.deleteModal.title")}
         </h3>
         <p className="text-center text-sm text-gray-500 dark:text-gray-400">
-          Are you sure you want to delete{" "}
-          <span className="block font-mono font-semibold text-gray-700 dark:text-gray-200 break-all mt-1">
-            {id}
-          </span>
-          <span className="block mt-1">This action cannot be undone.</span>
+          {t("transaksiColumn.deleteModal.desc")}
+          <span className="block font-mono font-semibold text-gray-700 dark:text-gray-200 break-all mt-1">{id}</span>
+          <span className="block mt-1">{t("transaksiColumn.deleteModal.warning")}</span>
         </p>
         <div className="flex gap-3 mt-6">
           <button
@@ -78,14 +71,14 @@ function DeleteModal({
             disabled={isLoading}
             className="flex-1 px-4 py-2 text-sm font-medium border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-50"
           >
-            Cancel
+            {t("transaksiColumn.deleteModal.cancel")}
           </button>
           <button
             onClick={onConfirm}
             disabled={isLoading}
             className="flex-1 px-4 py-2 text-sm font-medium bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors disabled:opacity-50"
           >
-            {isLoading ? "Deleting..." : "Yes, Delete"}
+            {isLoading ? t("transaksiColumn.deleteModal.deleting") : t("transaksiColumn.deleteModal.confirm")}
           </button>
         </div>
       </div>
@@ -95,6 +88,7 @@ function DeleteModal({
 
 // --- Action Buttons ---
 function ActionButtons({ id, status }: { id: string; status: string }) {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const { mutate: deleteTransaction, isPending: isDeleting } = useDeleteProcurement({
@@ -108,27 +102,19 @@ function ActionButtons({ id, status }: { id: string; status: string }) {
           onClick={() => navigate(`/dashboard/transaction/${id}`)}
           className="px-3 py-1 text-xs font-medium border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
         >
-          Detail
+          {t("transaksiColumn.actions.detail")}
         </button>
-        {/* {status === "PENDING" && (  // fix: was "Menunggu"
-          <button
-            onClick={() => navigate(`/dashboard/transaksi/${id}/review`)}
-            className="px-3 py-1 text-xs font-medium border border-yellow-400 dark:border-yellow-500 text-yellow-600 dark:text-yellow-400 rounded-md hover:bg-yellow-50 dark:hover:bg-yellow-900/20 transition-colors"
-          >
-            Review
-          </button>
-        )} */}
         <button
           onClick={() => navigate(`/dashboard/transaction/update/${id}`)}
           className="px-3 py-1 text-xs font-medium border border-blue-400 dark:border-blue-500 text-blue-600 dark:text-blue-400 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
         >
-          Edit
+          {t("transaksiColumn.actions.edit")}
         </button>
         <button
           onClick={() => setShowDeleteModal(true)}
           className="px-3 py-1 text-xs font-medium border border-red-400 dark:border-red-500 text-red-600 dark:text-red-400 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
         >
-          Delete
+          {t("transaksiColumn.actions.delete")}
         </button>
       </div>
       {showDeleteModal && (
@@ -144,11 +130,17 @@ function ActionButtons({ id, status }: { id: string; status: string }) {
 }
 
 // --- Columns ---
+// Header kolom pakai fungsi agar bisa akses hook
+function HeaderCell({ labelKey }: { labelKey: string }) {
+  const { t } = useTranslation()
+  return <>{t(labelKey)}</>
+}
+
 export const transaksiColumns: ColumnDef<transactionListState>[] = [
   {
     accessorKey: "transaction.transaction_number",
     id: "transaction_number",
-    header: "Transaction No.",
+    header: () => <HeaderCell labelKey="transaksiColumn.headers.transactionNo" />,
     cell: ({ row }) => (
       <div className="text-xs text-gray-500 dark:text-gray-400 font-mono leading-tight">
         {row.original.transaction.transaction_number}
@@ -157,8 +149,9 @@ export const transaksiColumns: ColumnDef<transactionListState>[] = [
   },
   {
     id: "item_name",
-    header: "Item Name",
+    header: () => <HeaderCell labelKey="transaksiColumn.headers.itemName" />,
     cell: ({ row }) => {
+      const { t } = useTranslation()
       const items = row.original.items
       return (
         <div>
@@ -169,7 +162,7 @@ export const transaksiColumns: ColumnDef<transactionListState>[] = [
             {items[0]?.category_name ?? "-"}
             {items.length > 1 && (
               <span className="ml-1 text-blue-500 dark:text-blue-400">
-                +{items.length - 1} more items
+                {t("transaksiColumn.moreItems", { count: items.length - 1 })}
               </span>
             )}
           </p>
@@ -179,12 +172,12 @@ export const transaksiColumns: ColumnDef<transactionListState>[] = [
   },
   {
     id: "created_by",
-    header: "Created By",
+    header: () => <HeaderCell labelKey="transaksiColumn.headers.createdBy" />,
     cell: ({ row }) => <Avatar name={row.original.transaction.created_by} />,
   },
   {
     id: "transaction_date",
-    header: "Transaction Date",
+    header: () => <HeaderCell labelKey="transaksiColumn.headers.transactionDate" />,
     cell: ({ row }) => {
       const date = new Date(row.original.transaction.transaction_date)
       return (
@@ -196,41 +189,38 @@ export const transaksiColumns: ColumnDef<transactionListState>[] = [
   },
   {
     id: "qty",
-    header: "Qty",
+    header: () => <HeaderCell labelKey="transaksiColumn.headers.qty" />,
     cell: ({ row }) => {
+      const { t } = useTranslation()
       const totalQty = row.original.items.reduce((sum, item) => sum + item.quantity, 0)
       return (
         <div className="text-center">
           <p className="text-sm font-medium text-gray-800 dark:text-gray-200">{totalQty}</p>
-          <p className="text-xs text-gray-400 dark:text-gray-500">unit</p>
+          <p className="text-xs text-gray-400 dark:text-gray-500">{t("transaksiColumn.unit")}</p>
         </div>
       )
     },
   },
   {
     id: "total_price",
-    header: "Total Value",
+    header: () => <HeaderCell labelKey="transaksiColumn.headers.totalValue" />,
     cell: ({ row }) => {
       const total = row.original.items.reduce((sum, item) => sum + item.total_price, 0)
       return (
         <span className="text-sm font-semibold tabular-nums text-gray-800 dark:text-gray-200">
-          {new Intl.NumberFormat("id-ID", {
-            style: "currency",
-            currency: "IDR",
-            maximumFractionDigits: 0,
-          }).format(total)}
+          {new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(total)}
         </span>
       )
     },
   },
   {
     id: "status",
-    header: "Status",
+    header: () => <HeaderCell labelKey="transaksiColumn.headers.status" />,
     cell: ({ row }) => <StatusBadge value={row.original.transaction.status} />,
   },
   {
     id: "action",
-    header: "Action",
+    header: () => <HeaderCell labelKey="transaksiColumn.headers.action" />,
     cell: ({ row }) => (
       <ActionButtons
         id={row.original.transaction.transaction_number}

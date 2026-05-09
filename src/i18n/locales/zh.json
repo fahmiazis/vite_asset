@@ -33,5 +33,154 @@
             "showing": "显示第 {{from}} – {{to}} 条，共 {{total}} 条",
             "page": "第 {{current}} / {{total}} 页"
         }
+    },
+    "transaksiColumn": {
+    "headers": {
+      "transactionNo": "交易编号",
+      "itemName": "项目名称",
+      "createdBy": "创建人",
+      "transactionDate": "交易日期",
+      "qty": "数量",
+      "totalValue": "总价值",
+      "status": "状态",
+      "action": "操作"
+    },
+    "status": {
+      "approved": "已批准",
+      "pending": "待处理",
+      "rejected": "已拒绝",
+      "draft": "草稿"
+    },
+    "moreItems": "+{{count}} 个项目",
+    "unit": "单位",
+    "actions": {
+      "detail": "详情",
+      "edit": "编辑",
+      "delete": "删除"
+    },
+    "deleteModal": {
+      "title": "删除交易？",
+      "desc": "您确定要删除",
+      "warning": "此操作无法撤销。",
+      "cancel": "取消",
+      "confirm": "确认删除",
+      "deleting": "删除中..."
     }
+  },
+  "detailTransaction": {
+    "fileUpload": {
+      "maxSize": "最大 10 MB",
+      "sizeError": "{{label}}：文件大小不得超过 10 MB",
+      "clickToUpload": "点击上传文件"
+    },
+    "submitModal": {
+      "title": "提交交易？",
+      "desc": "该交易将被提交审核。",
+      "notes": "备注",
+      "optional": "可选",
+      "notesPlaceholder": "例：请尽快审核...",
+      "cancel": "取消",
+      "submit": "提交",
+      "uploading": "上传中...",
+      "uploadError": "附件上传失败"
+    },
+    "header": {
+      "submitForVerification": "提交审核",
+      "submitting": "提交中...",
+      "reviewAttachment": "查看附件"
+    },
+    "info": {
+      "transactionNumber": "交易编号",
+      "transactionType": "交易类型",
+      "date": "日期",
+      "createdBy": "创建人",
+      "approvedBy": "审批人",
+      "notYetApproved": "尚未审批",
+      "transactionNotes": "交易备注"
+    },
+    "items": {
+      "title": "项目列表",
+      "count": "{{count}} 项",
+      "quantity": "数量",
+      "unit": "单位",
+      "unitPrice": "单价",
+      "branchCode": "分支代码",
+      "notes": "备注",
+      "recipientDetail": "收件人详情"
+    },
+    "approval": {
+      "title": "审批流程",
+      "stepsCompleted": "{{completed}}/{{total}} 步已完成",
+      "noData": "暂无审批数据",
+      "stepFallback": "第 {{index}} 步",
+      "approvedAt": "审批于 {{date}}",
+      "rejectedAt": "拒绝于 {{date}}",
+      "by": "由",
+      "status": {
+        "approved": "已批准",
+        "rejected": "已拒绝",
+        "pending": "待处理"
+      }
+    },
+    "summary": {
+      "totalItems": "总项目",
+      "itemsValue": "{{types}} 类 · {{units}} 件",
+      "totalValue": "总价值"
+    },
+    "actions": {
+      "verify": "验证",
+      "approve": "批准",
+      "processBudget": "处理预算",
+      "executeAsset": "执行资产",
+      "goodsReceipt": "收货"
+    }
+  },
+  "createTransaction": {
+    "section": {
+      "transactionInfo": "交易信息",
+      "transactionNotes": "交易备注",
+      "transactionNotesPlaceholder": "2026年第一季度运营车辆采购...",
+      "itemList": "项目列表",
+      "itemCount": "{{count}} 项",
+      "addItem": "添加项目"
+    },
+    "item": {
+      "fallbackName": "项目 #{{index}}",
+      "removeItem": "删除项目",
+      "itemName": "项目名称",
+      "itemNamePlaceholder": "丰田Avanza 2026",
+      "category": "类别",
+      "categoryPlaceholder": "选择类别",
+      "quantity": "数量",
+      "unitPrice": "单价",
+      "branchCode": "分支代码",
+      "branchCodePlaceholder": "选择分支",
+      "itemNotes": "项目备注",
+      "itemNotesPlaceholder": "用于分支运营...",
+      "recipientDetail": "收件人详情",
+      "optional": "可选",
+      "addRecipient": "+ 添加收件人",
+      "qtyAllocated": "已分配 {{total}} / {{max}} 件",
+      "qtyExceededWarning": "明细总数量 ({{total}}) 超过项目数量 ({{max}})，请调整。"
+    },
+    "detail": {
+      "recipient": "收件人",
+      "remove": "删除",
+      "requesterName": "申请人姓名",
+      "requesterNamePlaceholder": "张三",
+      "branchCode": "分支代码",
+      "branchCodePlaceholder": "选择分支",
+      "quantity": "数量",
+      "notes": "备注",
+      "notesPlaceholder": "特殊要求..."
+    },
+    "summary": {
+      "totalItems": "总项目",
+      "itemsValue": "{{types}} 类 · {{units}} 件",
+      "totalValue": "总价值",
+      "saveDraft": "保存草稿",
+      "submit": "提交采购",
+      "submitting": "提交中..."
+    }
+  }
 }

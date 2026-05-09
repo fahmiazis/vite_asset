@@ -12,6 +12,6 @@ export const useTransactionDetailWStage = (id: string) => {
     queryKey: ["transaction-detail-with-stage", id],
     queryFn: () => TransactionDetailWStage(id),
   });
-
+  
   return { data, isLoading, error, refetch };
 };

@@ -33,5 +33,154 @@
       "showing": "Showing {{from}} – {{to}} of {{total}} entries",
       "page": "Page {{current}} / {{total}}"
     }
+  },
+  "transaksiColumn": {
+    "headers": {
+      "transactionNo": "Transaction No.",
+      "itemName": "Item Name",
+      "createdBy": "Created By",
+      "transactionDate": "Transaction Date",
+      "qty": "Qty",
+      "totalValue": "Total Value",
+      "status": "Status",
+      "action": "Action"
+    },
+    "status": {
+      "approved": "Approved",
+      "pending": "Pending",
+      "rejected": "Rejected",
+      "draft": "Draft"
+    },
+    "moreItems": "+{{count}} more items",
+    "unit": "unit",
+    "actions": {
+      "detail": "Detail",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "deleteModal": {
+      "title": "Delete Transaction?",
+      "desc": "Are you sure you want to delete",
+      "warning": "This action cannot be undone.",
+      "cancel": "Cancel",
+      "confirm": "Yes, Delete",
+      "deleting": "Deleting..."
+    }
+  },
+  "detailTransaction": {
+    "fileUpload": {
+      "maxSize": "max 10 MB",
+      "sizeError": "{{label}}: File size must not exceed 10 MB",
+      "clickToUpload": "Click to upload file"
+    },
+    "submitModal": {
+      "title": "Submit Transaction?",
+      "desc": "This transaction will be submitted for verification.",
+      "notes": "Notes",
+      "optional": "optional",
+      "notesPlaceholder": "e.g. Please verify immediately...",
+      "cancel": "Cancel",
+      "submit": "Submit",
+      "uploading": "Uploading...",
+      "uploadError": "Failed to upload attachment"
+    },
+    "header": {
+      "submitForVerification": "Submit for Verification",
+      "submitting": "Submitting...",
+      "reviewAttachment": "Review Attachment"
+    },
+    "info": {
+      "transactionNumber": "Transaction number",
+      "transactionType": "Transaction type",
+      "date": "Date",
+      "createdBy": "Created by",
+      "approvedBy": "Approved by",
+      "notYetApproved": "Not yet approved",
+      "transactionNotes": "Transaction notes"
+    },
+    "items": {
+      "title": "Item list",
+      "count": "{{count}} items",
+      "quantity": "Quantity",
+      "unit": "unit",
+      "unitPrice": "Unit price",
+      "branchCode": "Branch code",
+      "notes": "Notes",
+      "recipientDetail": "Recipient details"
+    },
+    "approval": {
+      "title": "Approval Flow",
+      "stepsCompleted": "{{completed}}/{{total}} steps completed",
+      "noData": "No approval data yet",
+      "stepFallback": "Step {{index}}",
+      "approvedAt": "Approved on {{date}}",
+      "rejectedAt": "Rejected on {{date}}",
+      "by": "by",
+      "status": {
+        "approved": "Approved",
+        "rejected": "Rejected",
+        "pending": "Pending"
+      }
+    },
+    "summary": {
+      "totalItems": "Total items",
+      "itemsValue": "{{types}} types · {{units}} units",
+      "totalValue": "Total value"
+    },
+    "actions": {
+      "verify": "Verify",
+      "approve": "Approve",
+      "processBudget": "Process Budget",
+      "executeAsset": "Execute Asset",
+      "goodsReceipt": "Goods Receipt"
+    }
+  },
+  "createTransaction": {
+    "section": {
+      "transactionInfo": "Transaction Information",
+      "transactionNotes": "Transaction notes",
+      "transactionNotesPlaceholder": "Q1 2026 operational vehicle procurement...",
+      "itemList": "Item list",
+      "itemCount": "{{count}} items",
+      "addItem": "Add item"
+    },
+    "item": {
+      "fallbackName": "Item #{{index}}",
+      "removeItem": "Remove item",
+      "itemName": "Item name",
+      "itemNamePlaceholder": "Toyota Avanza 2026",
+      "category": "Category",
+      "categoryPlaceholder": "Select category",
+      "quantity": "Quantity",
+      "unitPrice": "Unit price",
+      "branchCode": "Branch code",
+      "branchCodePlaceholder": "Select branch",
+      "itemNotes": "Item notes",
+      "itemNotesPlaceholder": "For branch operations...",
+      "recipientDetail": "Recipient details",
+      "optional": "optional",
+      "addRecipient": "+ Add recipient",
+      "qtyAllocated": "{{total}} / {{max}} units allocated",
+      "qtyExceededWarning": "Total detail quantity ({{total}}) exceeds item quantity ({{max}}). Please adjust."
+    },
+    "detail": {
+      "recipient": "Recipient",
+      "remove": "Remove",
+      "requesterName": "Requester name",
+      "requesterNamePlaceholder": "John Doe",
+      "branchCode": "Branch code",
+      "branchCodePlaceholder": "Select branch",
+      "quantity": "Quantity",
+      "notes": "Notes",
+      "notesPlaceholder": "Special requirements..."
+    },
+    "summary": {
+      "totalItems": "Total items",
+      "itemsValue": "{{types}} types · {{units}} units",
+      "totalValue": "Total value",
+      "saveDraft": "Save draft",
+      "submit": "Submit procurement",
+      "submitting": "Submitting..."
+    }
   }
 }

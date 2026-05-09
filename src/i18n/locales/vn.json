@@ -33,5 +33,154 @@
             "showing": "Hiển thị {{from}} – {{to}} trong tổng số {{total}} mục",
             "page": "Trang {{current}} / {{total}}"
         }
+    },
+    "transaksiColumn": {
+    "headers": {
+      "transactionNo": "Số Giao Dịch",
+      "itemName": "Tên Mặt Hàng",
+      "createdBy": "Người Tạo",
+      "transactionDate": "Ngày Giao Dịch",
+      "qty": "SL",
+      "totalValue": "Tổng Giá Trị",
+      "status": "Trạng Thái",
+      "action": "Hành Động"
+    },
+    "status": {
+      "approved": "Đã duyệt",
+      "pending": "Chờ xử lý",
+      "rejected": "Từ chối",
+      "draft": "Bản nháp"
+    },
+    "moreItems": "+{{count}} mặt hàng",
+    "unit": "đơn vị",
+    "actions": {
+      "detail": "Chi tiết",
+      "edit": "Sửa",
+      "delete": "Xóa"
+    },
+    "deleteModal": {
+      "title": "Xóa giao dịch?",
+      "desc": "Bạn có chắc muốn xóa",
+      "warning": "Hành động này không thể hoàn tác.",
+      "cancel": "Hủy",
+      "confirm": "Có, Xóa",
+      "deleting": "Đang xóa..."
     }
+  },
+  "detailTransaction": {
+    "fileUpload": {
+      "maxSize": "tối đa 10 MB",
+      "sizeError": "{{label}}: Kích thước tệp không được vượt quá 10 MB",
+      "clickToUpload": "Nhấp để tải tệp lên"
+    },
+    "submitModal": {
+      "title": "Gửi giao dịch?",
+      "desc": "Giao dịch này sẽ được gửi để xác minh.",
+      "notes": "Ghi chú",
+      "optional": "tùy chọn",
+      "notesPlaceholder": "vd. Vui lòng xác minh ngay...",
+      "cancel": "Hủy",
+      "submit": "Gửi",
+      "uploading": "Đang tải lên...",
+      "uploadError": "Tải tệp đính kèm thất bại"
+    },
+    "header": {
+      "submitForVerification": "Gửi để Xác minh",
+      "submitting": "Đang gửi...",
+      "reviewAttachment": "Xem tệp đính kèm"
+    },
+    "info": {
+      "transactionNumber": "Số giao dịch",
+      "transactionType": "Loại giao dịch",
+      "date": "Ngày",
+      "createdBy": "Người tạo",
+      "approvedBy": "Người phê duyệt",
+      "notYetApproved": "Chưa được phê duyệt",
+      "transactionNotes": "Ghi chú giao dịch"
+    },
+    "items": {
+      "title": "Danh sách mặt hàng",
+      "count": "{{count}} mặt hàng",
+      "quantity": "Số lượng",
+      "unit": "đơn vị",
+      "unitPrice": "Đơn giá",
+      "branchCode": "Mã chi nhánh",
+      "notes": "Ghi chú",
+      "recipientDetail": "Chi tiết người nhận"
+    },
+    "approval": {
+      "title": "Quy trình phê duyệt",
+      "stepsCompleted": "{{completed}}/{{total}} bước hoàn thành",
+      "noData": "Chưa có dữ liệu phê duyệt",
+      "stepFallback": "Bước {{index}}",
+      "approvedAt": "Đã duyệt vào {{date}}",
+      "rejectedAt": "Đã từ chối vào {{date}}",
+      "by": "bởi",
+      "status": {
+        "approved": "Đã duyệt",
+        "rejected": "Từ chối",
+        "pending": "Chờ xử lý"
+      }
+    },
+    "summary": {
+      "totalItems": "Tổng mặt hàng",
+      "itemsValue": "{{types}} loại · {{units}} đơn vị",
+      "totalValue": "Tổng giá trị"
+    },
+    "actions": {
+      "verify": "Xác minh",
+      "approve": "Phê duyệt",
+      "processBudget": "Xử lý ngân sách",
+      "executeAsset": "Thực hiện tài sản",
+      "goodsReceipt": "Biên nhận hàng hóa"
+    }
+  },
+  "createTransaction": {
+    "section": {
+      "transactionInfo": "Thông tin giao dịch",
+      "transactionNotes": "Ghi chú giao dịch",
+      "transactionNotesPlaceholder": "Mua sắm xe vận hành Q1 2026...",
+      "itemList": "Danh sách mặt hàng",
+      "itemCount": "{{count}} mặt hàng",
+      "addItem": "Thêm mặt hàng"
+    },
+    "item": {
+      "fallbackName": "Mặt hàng #{{index}}",
+      "removeItem": "Xóa mặt hàng",
+      "itemName": "Tên mặt hàng",
+      "itemNamePlaceholder": "Toyota Avanza 2026",
+      "category": "Danh mục",
+      "categoryPlaceholder": "Chọn danh mục",
+      "quantity": "Số lượng",
+      "unitPrice": "Đơn giá",
+      "branchCode": "Mã chi nhánh",
+      "branchCodePlaceholder": "Chọn chi nhánh",
+      "itemNotes": "Ghi chú mặt hàng",
+      "itemNotesPlaceholder": "Dành cho hoạt động chi nhánh...",
+      "recipientDetail": "Chi tiết người nhận",
+      "optional": "tùy chọn",
+      "addRecipient": "+ Thêm người nhận",
+      "qtyAllocated": "Đã phân bổ {{total}} / {{max}} đơn vị",
+      "qtyExceededWarning": "Tổng số lượng chi tiết ({{total}}) vượt quá số lượng mặt hàng ({{max}}). Vui lòng điều chỉnh."
+    },
+    "detail": {
+      "recipient": "Người nhận",
+      "remove": "Xóa",
+      "requesterName": "Tên người yêu cầu",
+      "requesterNamePlaceholder": "Nguyễn Văn A",
+      "branchCode": "Mã chi nhánh",
+      "branchCodePlaceholder": "Chọn chi nhánh",
+      "quantity": "Số lượng",
+      "notes": "Ghi chú",
+      "notesPlaceholder": "Yêu cầu đặc biệt..."
+    },
+    "summary": {
+      "totalItems": "Tổng mặt hàng",
+      "itemsValue": "{{types}} loại · {{units}} đơn vị",
+      "totalValue": "Tổng giá trị",
+      "saveDraft": "Lưu bản nháp",
+      "submit": "Gửi đơn mua sắm",
+      "submitting": "Đang gửi..."
+    }
+  }
 }

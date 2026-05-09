@@ -33,5 +33,154 @@
       "showing": "Menampilkan {{from}} – {{to}} dari {{total}} entri",
       "page": "Halaman {{current}} / {{total}}"
     }
+  },
+  "transaksiColumn": {
+    "headers": {
+      "transactionNo": "No. Transaksi",
+      "itemName": "Nama Item",
+      "createdBy": "Dibuat Oleh",
+      "transactionDate": "Tanggal Transaksi",
+      "qty": "Qty",
+      "totalValue": "Total Nilai",
+      "status": "Status",
+      "action": "Aksi"
+    },
+    "status": {
+      "approved": "Disetujui",
+      "pending": "Menunggu",
+      "rejected": "Ditolak",
+      "draft": "Draf"
+    },
+    "moreItems": "+{{count}} item lainnya",
+    "unit": "unit",
+    "actions": {
+      "detail": "Detail",
+      "edit": "Edit",
+      "delete": "Hapus"
+    },
+    "deleteModal": {
+      "title": "Hapus Transaksi?",
+      "desc": "Apakah Anda yakin ingin menghapus",
+      "warning": "Tindakan ini tidak dapat dibatalkan.",
+      "cancel": "Batal",
+      "confirm": "Ya, Hapus",
+      "deleting": "Menghapus..."
+    }
+  },
+  "detailTransaction": {
+    "fileUpload": {
+      "maxSize": "maks 10 MB",
+      "sizeError": "{{label}}: Ukuran file tidak boleh melebihi 10 MB",
+      "clickToUpload": "Klik untuk unggah file"
+    },
+    "submitModal": {
+      "title": "Kirim Transaksi?",
+      "desc": "Transaksi ini akan dikirim untuk verifikasi.",
+      "notes": "Catatan",
+      "optional": "opsional",
+      "notesPlaceholder": "mis. Mohon segera diverifikasi...",
+      "cancel": "Batal",
+      "submit": "Kirim",
+      "uploading": "Mengunggah...",
+      "uploadError": "Gagal mengunggah lampiran"
+    },
+    "header": {
+      "submitForVerification": "Kirim untuk Verifikasi",
+      "submitting": "Mengirim...",
+      "reviewAttachment": "Tinjau Lampiran"
+    },
+    "info": {
+      "transactionNumber": "Nomor transaksi",
+      "transactionType": "Tipe transaksi",
+      "date": "Tanggal",
+      "createdBy": "Dibuat oleh",
+      "approvedBy": "Disetujui oleh",
+      "notYetApproved": "Belum disetujui",
+      "transactionNotes": "Catatan transaksi"
+    },
+    "items": {
+      "title": "Daftar item",
+      "count": "{{count}} item",
+      "quantity": "Kuantitas",
+      "unit": "unit",
+      "unitPrice": "Harga satuan",
+      "branchCode": "Kode cabang",
+      "notes": "Catatan",
+      "recipientDetail": "Detail penerima"
+    },
+    "approval": {
+      "title": "Alur Approval",
+      "stepsCompleted": "{{completed}}/{{total}} step selesai",
+      "noData": "Belum ada data approval",
+      "stepFallback": "Step {{index}}",
+      "approvedAt": "Disetujui pada {{date}}",
+      "rejectedAt": "Ditolak pada {{date}}",
+      "by": "oleh",
+      "status": {
+        "approved": "Disetujui",
+        "rejected": "Ditolak",
+        "pending": "Menunggu"
+      }
+    },
+    "summary": {
+      "totalItems": "Total item",
+      "itemsValue": "{{types}} jenis · {{units}} unit",
+      "totalValue": "Total nilai"
+    },
+    "actions": {
+      "verify": "Verifikasi",
+      "approve": "Setujui",
+      "processBudget": "Proses Anggaran",
+      "executeAsset": "Eksekusi Aset",
+      "goodsReceipt": "Penerimaan Barang"
+    }
+  },
+  "createTransaction": {
+    "section": {
+      "transactionInfo": "Informasi transaksi",
+      "transactionNotes": "Catatan transaksi",
+      "transactionNotesPlaceholder": "Pengadaan kendaraan operasional Q1 2026...",
+      "itemList": "Daftar item",
+      "itemCount": "{{count}} item",
+      "addItem": "Tambah item"
+    },
+    "item": {
+      "fallbackName": "Item #{{index}}",
+      "removeItem": "Hapus item",
+      "itemName": "Nama item",
+      "itemNamePlaceholder": "Toyota Avanza 2026",
+      "category": "Kategori",
+      "categoryPlaceholder": "Pilih kategori",
+      "quantity": "Kuantitas",
+      "unitPrice": "Harga satuan",
+      "branchCode": "Kode cabang",
+      "branchCodePlaceholder": "Pilih cabang",
+      "itemNotes": "Catatan item",
+      "itemNotesPlaceholder": "Untuk operasional cabang...",
+      "recipientDetail": "Detail penerima",
+      "optional": "opsional",
+      "addRecipient": "+ Tambah penerima",
+      "qtyAllocated": "{{total}} / {{max}} unit teralokasi",
+      "qtyExceededWarning": "Total kuantitas detail ({{total}}) melebihi kuantitas item ({{max}}). Harap sesuaikan."
+    },
+    "detail": {
+      "recipient": "Penerima",
+      "remove": "Hapus",
+      "requesterName": "Nama pemohon",
+      "requesterNamePlaceholder": "Budi Santoso",
+      "branchCode": "Kode cabang",
+      "branchCodePlaceholder": "Pilih cabang",
+      "quantity": "Kuantitas",
+      "notes": "Catatan",
+      "notesPlaceholder": "Kebutuhan khusus..."
+    },
+    "summary": {
+      "totalItems": "Total item",
+      "itemsValue": "{{types}} jenis · {{units}} unit",
+      "totalValue": "Total nilai",
+      "saveDraft": "Simpan draft",
+      "submit": "Submit pengadaan",
+      "submitting": "Mengirim..."
+    }
   }
 }
