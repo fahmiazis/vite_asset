@@ -9,6 +9,8 @@ export function useApproveTransaction(transactionNumber: string) {
         onSuccess: () => {
             queryClient.resetQueries({ queryKey: ["approval-transaction", transactionNumber] })
             queryClient.resetQueries({ queryKey: ["attach-transaction"] })
+            queryClient.resetQueries({ queryKey: ["transaction-detail-with-stage"] })
+
         },
     })
 }

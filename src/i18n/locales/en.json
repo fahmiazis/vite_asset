@@ -105,6 +105,7 @@
       "unit": "unit",
       "unitPrice": "Unit price",
       "branchCode": "Branch code",
+      "assetNumber": "Asset Number",
       "notes": "Notes",
       "recipientDetail": "Recipient details"
     },
@@ -251,5 +252,71 @@
       "success": "Transaction approved successfully",
       "error": "Failed to approve transaction"
     }
-  }
+  },
+  "processBudget": {
+    "title": "Process Budget",
+    "notes": "Notes",
+    "optional": "optional",
+    "placeholder": "Budget has been allocated...",
+    "cancel": "Cancel",
+    "submit": "Process Budget",
+    "submitting": "Processing...",
+    "success": "Budget processed successfully",
+    "error": "Failed to process budget"
+  },
+  "executeAsset": {
+    "title": "Execute Asset",
+    "notes": "Notes",
+    "optional": "optional",
+    "placeholder": "Asset has been generated and is ready...",
+    "cancel": "Cancel",
+    "submit": "Execute Asset",
+    "submitting": "Processing...",
+    "success": "Asset executed successfully",
+    "error": "Failed to execute asset"
+  },
+  "goodsReceipt": {
+      "title": "Goods Receipt",
+      "mode": {
+        "label": "GR Mode",
+        "single": "1 Asset",
+        "bulkItem": "Per Item",
+        "bulkAll": "All"
+      },
+      "progress": {
+        "label": "GR Progress",
+        "done": "done",
+        "pending": "pending",
+        "total": "total",
+        "processing": "Processing GR..."
+      },
+      "selectItem": {
+        "label": "Select Item",
+        "placeholder": "-- Select item --",
+        "assetPending": "pending assets",
+        "noAsset": "No pending assets for this item"
+      },
+      "selectAsset": {
+        "label": "Asset Number",
+        "placeholder": "-- Select asset number --"
+      },
+      "bulkAll": {
+        "label": "All pending assets",
+        "empty": "No pending assets"
+      },
+      "notes": {
+        "label": "Notes",
+        "optional": "optional",
+        "placeholder": "Goods received in good condition..."
+      },
+      "cancel": "Cancel",
+      "submit": "Submit GR",
+      "submitBulkItem": "GR All Assets ({{count}})",
+      "submitBulkAll": "GR All ({{count}} assets)",
+      "processing": "Processing {{done}}/{{total}}...",
+      "success": "All {{count}} assets successfully processed",
+      "successPartial": "{{success}} succeeded, {{fail}} failed",
+      "error": "Failed to submit Goods Receipt",
+      "noPending": "No pending assets"
+    }
 }

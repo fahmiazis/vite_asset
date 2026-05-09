@@ -105,6 +105,7 @@
       "unit": "unit",
       "unitPrice": "Harga satuan",
       "branchCode": "Kode cabang",
+      "assetNumber": "Nomor Asset",
       "notes": "Catatan",
       "recipientDetail": "Detail penerima"
     },
@@ -214,7 +215,7 @@
     "zoomIn": "Perbesar",
     "zoomOut": "Perkecil"
   },
-   "verifyModal": {
+  "verifyModal": {
     "title": "Verifikasi Transaksi",
     "item": "Item",
     "asset": "Asset",
@@ -251,5 +252,71 @@
       "success": "Transaksi berhasil disetujui",
       "error": "Gagal menyetujui transaksi"
     }
+  },
+  "processBudget": {
+    "title": "Process Budget",
+    "notes": "Catatan",
+    "optional": "opsional",
+    "placeholder": "Budget sudah dialokasikan...",
+    "cancel": "Batal",
+    "submit": "Process Budget",
+    "submitting": "Memproses...",
+    "success": "Budget berhasil diproses",
+    "error": "Gagal memproses budget"
+  },
+  "executeAsset": {
+    "title": "Execute Asset",
+    "notes": "Catatan",
+    "optional": "opsional",
+    "placeholder": "Asset sudah digenerate, siap diterima...",
+    "cancel": "Batal",
+    "submit": "Execute Asset",
+    "submitting": "Memproses...",
+    "success": "Asset berhasil di-execute",
+    "error": "Gagal melakukan execute asset"
+  },
+  "goodsReceipt": {
+    "title": "Goods Receipt",
+    "mode": {
+      "label": "Mode GR",
+      "single": "1 Asset",
+      "bulkItem": "Per Item",
+      "bulkAll": "Semua"
+    },
+    "progress": {
+      "label": "Progress GR",
+      "done": "done",
+      "pending": "pending",
+      "total": "total",
+      "processing": "Memproses GR..."
+    },
+    "selectItem": {
+      "label": "Pilih Item",
+      "placeholder": "-- Pilih item --",
+      "assetPending": "asset pending",
+      "noAsset": "Tidak ada asset pending untuk item ini"
+    },
+    "selectAsset": {
+      "label": "Asset Number",
+      "placeholder": "-- Pilih asset number --"
+    },
+    "bulkAll": {
+      "label": "Semua asset pending",
+      "empty": "Tidak ada asset pending"
+    },
+    "notes": {
+      "label": "Catatan",
+      "optional": "opsional",
+      "placeholder": "Barang diterima dalam kondisi baik..."
+    },
+    "cancel": "Batal",
+    "submit": "Submit GR",
+    "submitBulkItem": "GR Semua Asset Item ({{count}})",
+    "submitBulkAll": "GR Semua ({{count}} asset)",
+    "processing": "Memproses {{done}}/{{total}}...",
+    "success": "Semua {{count}} asset berhasil di-GR",
+    "successPartial": "{{success}} berhasil, {{fail}} gagal",
+    "error": "Gagal submit Goods Receipt",
+    "noPending": "Tidak ada asset pending"
   }
 }

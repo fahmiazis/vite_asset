@@ -105,6 +105,7 @@
       "unit": "单位",
       "unitPrice": "单价",
       "branchCode": "分支代码",
+      "assetNumber": "资产编号",
       "notes": "备注",
       "recipientDetail": "收件人详情"
     },
@@ -237,7 +238,7 @@
       "approvalFailed": "无法启动审批流程"
     }
   },
-   "approveModal": {
+  "approveModal": {
     "title": "批准交易",
     "confirmationTitle": "审批确认",
     "confirmationDescription": "请在继续审批前确认所有交易数据无误。",
@@ -251,5 +252,71 @@
       "success": "交易审批成功",
       "error": "交易审批失败"
     }
-  }
+  },
+  "processBudget": {
+    "title": "处理预算",
+    "notes": "备注",
+    "optional": "可选",
+    "placeholder": "预算已分配...",
+    "cancel": "取消",
+    "submit": "处理预算",
+    "submitting": "处理中...",
+    "success": "预算处理成功",
+    "error": "预算处理失败"
+  },
+  "executeAsset": {
+    "title": "执行资产",
+    "notes": "备注",
+    "optional": "可选",
+    "placeholder": "资产已生成，准备接收...",
+    "cancel": "取消",
+    "submit": "执行资产",
+    "submitting": "处理中...",
+    "success": "资产执行成功",
+    "error": "资产执行失败"
+  },
+  "goodsReceipt": {
+      "title": "收货单",
+      "mode": {
+        "label": "收货模式",
+        "single": "单个资产",
+        "bulkItem": "按项目",
+        "bulkAll": "全部"
+      },
+      "progress": {
+        "label": "收货进度",
+        "done": "已完成",
+        "pending": "待处理",
+        "total": "总计",
+        "processing": "正在处理收货..."
+      },
+      "selectItem": {
+        "label": "选择项目",
+        "placeholder": "-- 请选择项目 --",
+        "assetPending": "个待处理资产",
+        "noAsset": "该项目没有待处理的资产"
+      },
+      "selectAsset": {
+        "label": "资产编号",
+        "placeholder": "-- 请选择资产编号 --"
+      },
+      "bulkAll": {
+        "label": "所有待处理资产",
+        "empty": "没有待处理的资产"
+      },
+      "notes": {
+        "label": "备注",
+        "optional": "可选",
+        "placeholder": "货物已完好无损地收到..."
+      },
+      "cancel": "取消",
+      "submit": "提交收货",
+      "submitBulkItem": "批量收货 - 当前项目 ({{count}} 个)",
+      "submitBulkAll": "全部收货 ({{count}} 个资产)",
+      "processing": "正在处理 {{done}}/{{total}}...",
+      "success": "全部 {{count}} 个资产收货成功",
+      "successPartial": "成功 {{success}} 个，失败 {{fail}} 个",
+      "error": "收货提交失败",
+      "noPending": "没有待处理的资产"
+    }
 }

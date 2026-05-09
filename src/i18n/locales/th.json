@@ -1,40 +1,40 @@
 {
-    "Login": "เข้าสู่ระบบ",
-    "LoginDesk": "เข้าถึงงาน บันทึก และโปรเจกต์ของคุณได้ทุกที่ทุกเวลา และจัดระเบียบทุกอย่างไว้ในที่เดียว",
-    "label": {
-        "dashboard": {
-            "totalAssets": "สินทรัพย์รวม",
-            "totalAcquisVal": "มูลค่าการได้มารวม",
-            "totalBookVal": "มูลค่าตามบัญชีรวม",
-            "totalDepreVal": "อัตราค่าเสื่อมราคา",
-            "vsLastMonth": "เทียบกับเดือนที่แล้ว"
-        }
+  "Login": "เข้าสู่ระบบ",
+  "LoginDesk": "เข้าถึงงาน บันทึก และโปรเจกต์ของคุณได้ทุกที่ทุกเวลา และจัดระเบียบทุกอย่างไว้ในที่เดียว",
+  "label": {
+    "dashboard": {
+      "totalAssets": "สินทรัพย์รวม",
+      "totalAcquisVal": "มูลค่าการได้มารวม",
+      "totalBookVal": "มูลค่าตามบัญชีรวม",
+      "totalDepreVal": "อัตราค่าเสื่อมราคา",
+      "vsLastMonth": "เทียบกับเดือนที่แล้ว"
+    }
+  },
+  "transaksiHeader": {
+    "title": "รายการจัดซื้อสินทรัพย์",
+    "period": "ช่วงเวลา: {{period}}",
+    "totalTransactions": "ลงทะเบียนแล้ว {{count}} รายการ",
+    "export": "ส่งออก",
+    "report": "รายงาน",
+    "newRequest": "คำขอใหม่",
+    "new": "ใหม่"
+  },
+  "transaksiTable": {
+    "tabs": {
+      "all": "ทั้งหมด",
+      "pending": "รอดำเนินการ",
+      "approved": "อนุมัติแล้ว",
+      "rejected": "ถูกปฏิเสธ",
+      "draft": "ร่าง"
     },
-    "transaksiHeader": {
-        "title": "รายการจัดซื้อสินทรัพย์",
-        "period": "ช่วงเวลา: {{period}}",
-        "totalTransactions": "ลงทะเบียนแล้ว {{count}} รายการ",
-        "export": "ส่งออก",
-        "report": "รายงาน",
-        "newRequest": "คำขอใหม่",
-        "new": "ใหม่"
-    },
-    "transaksiTable": {
-        "tabs": {
-            "all": "ทั้งหมด",
-            "pending": "รอดำเนินการ",
-            "approved": "อนุมัติแล้ว",
-            "rejected": "ถูกปฏิเสธ",
-            "draft": "ร่าง"
-        },
-        "searchPlaceholder": "ค้นหาชื่อสินทรัพย์ หมายเลข PO หรือผู้ร้องขอ...",
-        "noData": "ไม่มีข้อมูล",
-        "pagination": {
-            "showing": "แสดง {{from}} – {{to}} จาก {{total}} รายการ",
-            "page": "หน้า {{current}} / {{total}}"
-        }
-    },
-    "transaksiColumn": {
+    "searchPlaceholder": "ค้นหาชื่อสินทรัพย์ หมายเลข PO หรือผู้ร้องขอ...",
+    "noData": "ไม่มีข้อมูล",
+    "pagination": {
+      "showing": "แสดง {{from}} – {{to}} จาก {{total}} รายการ",
+      "page": "หน้า {{current}} / {{total}}"
+    }
+  },
+  "transaksiColumn": {
     "headers": {
       "transactionNo": "หมายเลขธุรกรรม",
       "itemName": "ชื่อรายการ",
@@ -105,6 +105,7 @@
       "unit": "หน่วย",
       "unitPrice": "ราคาต่อหน่วย",
       "branchCode": "รหัสสาขา",
+      "assetNumber": "หมายเลขสินทรัพย์",
       "notes": "หมายเหตุ",
       "recipientDetail": "รายละเอียดผู้รับ"
     },
@@ -251,5 +252,71 @@
       "success": "อนุมัติธุรกรรมสำเร็จ",
       "error": "ไม่สามารถอนุมัติธุรกรรมได้"
     }
+  },
+  "processBudget": {
+    "title": "ดำเนินการงบประมาณ",
+    "notes": "หมายเหตุ",
+    "optional": "ไม่บังคับ",
+    "placeholder": "งบประมาณถูกจัดสรรแล้ว...",
+    "cancel": "ยกเลิก",
+    "submit": "ดำเนินการงบประมาณ",
+    "submitting": "กำลังดำเนินการ...",
+    "success": "ดำเนินการงบประมาณสำเร็จ",
+    "error": "ไม่สามารถดำเนินการงบประมาณได้"
+  },
+  "executeAsset": {
+    "title": "ดำเนินการสินทรัพย์",
+    "notes": "หมายเหตุ",
+    "optional": "ไม่บังคับ",
+    "placeholder": "สร้างสินทรัพย์เรียบร้อย พร้อมรับ...",
+    "cancel": "ยกเลิก",
+    "submit": "ดำเนินการสินทรัพย์",
+    "submitting": "กำลังประมวลผล...",
+    "success": "ดำเนินการสินทรัพย์สำเร็จ",
+    "error": "ไม่สามารถดำเนินการสินทรัพย์ได้"
+  },
+  "goodsReceipt": {
+    "title": "ใบรับสินค้า",
+    "mode": {
+      "label": "โหมด GR",
+      "single": "1 สินทรัพย์",
+      "bulkItem": "ต่อรายการ",
+      "bulkAll": "ทั้งหมด"
+    },
+    "progress": {
+      "label": "ความคืบหน้า GR",
+      "done": "เสร็จแล้ว",
+      "pending": "รอดำเนินการ",
+      "total": "ทั้งหมด",
+      "processing": "กำลังประมวลผล GR..."
+    },
+    "selectItem": {
+      "label": "เลือกรายการ",
+      "placeholder": "-- เลือกรายการ --",
+      "assetPending": "สินทรัพย์ที่รอดำเนินการ",
+      "noAsset": "ไม่มีสินทรัพย์ที่รอดำเนินการสำหรับรายการนี้"
+    },
+    "selectAsset": {
+      "label": "หมายเลขสินทรัพย์",
+      "placeholder": "-- เลือกหมายเลขสินทรัพย์ --"
+    },
+    "bulkAll": {
+      "label": "สินทรัพย์ที่รอดำเนินการทั้งหมด",
+      "empty": "ไม่มีสินทรัพย์ที่รอดำเนินการ"
+    },
+    "notes": {
+      "label": "หมายเหตุ",
+      "optional": "ไม่บังคับ",
+      "placeholder": "ได้รับสินค้าในสภาพดี..."
+    },
+    "cancel": "ยกเลิก",
+    "submit": "ยืนยัน GR",
+    "submitBulkItem": "GR สินทรัพย์ทั้งหมดในรายการ ({{count}})",
+    "submitBulkAll": "GR ทั้งหมด ({{count}} สินทรัพย์)",
+    "processing": "กำลังประมวลผล {{done}}/{{total}}...",
+    "success": "สินทรัพย์ทั้งหมด {{count}} รายการสำเร็จ",
+    "successPartial": "สำเร็จ {{success}} รายการ, ล้มเหลว {{fail}} รายการ",
+    "error": "ไม่สามารถยืนยัน Goods Receipt ได้",
+    "noPending": "ไม่มีสินทรัพย์ที่รอดำเนินการ"
   }
 }

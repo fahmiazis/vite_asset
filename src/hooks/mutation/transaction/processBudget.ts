@@ -8,6 +8,7 @@ export function useProcessBudget(transactionNumber: string) {
         mutationFn: (payload: ProcessBudgetPayload) => processBudget(transactionNumber, payload),
         onSuccess: () => {
             queryClient.resetQueries({ queryKey: ["approval-transaction", transactionNumber] })
+            queryClient.resetQueries({ queryKey: ["transaction-detail-with-stage"] })
         },
     })
 }

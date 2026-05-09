@@ -4,7 +4,7 @@ import { useSubmitProcurement } from "../../../../hooks/mutation/transaction/sub
 import toast from "react-hot-toast"
 import { useUploadAttachment } from "../../../../hooks/mutation/transaction/attachFile"
 import { useAttachmentSettingList } from "../../../../hooks/query/attachmentSetting/list"
-import type { detailTransactionWStageProps } from "../../../../models/transaction/detailWStages"
+import type { Asset, detailTransactionWStageProps } from "../../../../models/transaction/detailWStages"
 import { ReviewAttachmentModal } from "../../modals/reviewAttachmentTransaction"
 import { useAttachTransaction } from "../../../../hooks/query/attachmentSetting/attachTransaction"
 import { VerifyModal } from "../../modals/veriftTransactionModal"
@@ -152,7 +152,7 @@ function SubmitModal({ transactionNumber, transactionType, stage, mappedAttachme
       )
       await queryClient.resetQueries({
         queryKey: ["transaction-detail-with-stage"],
-      })  
+      })
       onConfirm(notes)
     } catch {
       toast.error(t("detailTransaction.submitModal.uploadError"))
@@ -274,6 +274,12 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
     { label: t("detailTransaction.info.approvedBy"), value: transaction.approved_by ?? t("detailTransaction.info.notYetApproved") },
   ]
 
+  function getAssetNumberRange(assets: Asset[]) {
+    if (!assets || assets.length === 0) return "-"
+    if (assets.length === 1) return assets[0].asset_number
+    return `${assets[0].asset_number} – ${assets[assets.length - 1].asset_number}`
+  }
+
   return (
     <section className="space-y-4 mt-4">
       {showGRModal && <GoodsReceiptModal transactionNumber={transaction.transaction_number} onClose={() => setShowGRModal(false)} onSuccess={() => { }} />}
@@ -382,7 +388,7 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
               </div>
 
               <div className="p-4 space-y-3">
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-4 gap-4">
                   <div>
                     <p className="text-xs text-gray-400 mb-1">{t("detailTransaction.items.quantity")}</p>
                     <p className="text-sm font-medium text-gray-800 dark:text-gray-200">{item.quantity} {t("detailTransaction.items.unit")}</p>
@@ -394,6 +400,10 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
                   <div>
                     <p className="text-xs text-gray-400 mb-1">{t("detailTransaction.items.branchCode")}</p>
                     <p className="text-sm font-medium text-gray-800 dark:text-gray-200">{item.branch_code}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-400 mb-1">{t("detailTransaction.items.assetNumber")}</p>
+                    <p className="text-sm font-medium text-gray-800 dark:text-gray-200">{getAssetNumberRange(item.assets)}</p>
                   </div>
                 </div>
 
@@ -414,7 +424,7 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
                             {detail.requester_name.slice(0, 2).toUpperCase()}
                           </div>
                           <div className="flex-1">
-                            <p className="text-sm font-medium text-gray-800 dark:text-gray-200">{detail.requester_name}</p>
+                            <p className="text-sm font-medium text-gray-800 dark:text-gray-200 capitalize">{detail.requester_name}</p>
                             <p className="text-xs text-gray-400">
                               {detail.branch_code} · {detail.quantity} {t("detailTransaction.items.unit")}
                             </p>

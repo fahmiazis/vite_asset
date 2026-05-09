@@ -8,6 +8,7 @@ export function useExecuteAsset(transactionNumber: string) {
         mutationFn: (payload: ExecuteAssetPayload) => executeAsset(transactionNumber, payload),
         onSuccess: () => {
             queryClient.resetQueries({ queryKey: ["approval-transaction", transactionNumber] })
+            queryClient.invalidateQueries({ queryKey: ["transaction-detail-with-stage"] })
         },
     })
 }

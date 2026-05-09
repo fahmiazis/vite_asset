@@ -1,40 +1,40 @@
 {
-    "Login": "Đăng nhập",
-    "LoginDesk": "Truy cập công việc, ghi chú và dự án của bạn mọi lúc mọi nơi - và giữ mọi thứ được sắp xếp gọn gàng ở một nơi.",
-    "label": {
-        "dashboard": {
-            "totalAssets": "Tổng tài sản",
-            "totalAcquisVal": "Tổng giá trị mua lại",
-            "totalBookVal": "Tổng giá trị sổ sách",
-            "totalDepreVal": "Tỷ lệ khấu hao",
-            "vsLastMonth": "So với tháng trước"
-        }
+  "Login": "Đăng nhập",
+  "LoginDesk": "Truy cập công việc, ghi chú và dự án của bạn mọi lúc mọi nơi - và giữ mọi thứ được sắp xếp gọn gàng ở một nơi.",
+  "label": {
+    "dashboard": {
+      "totalAssets": "Tổng tài sản",
+      "totalAcquisVal": "Tổng giá trị mua lại",
+      "totalBookVal": "Tổng giá trị sổ sách",
+      "totalDepreVal": "Tỷ lệ khấu hao",
+      "vsLastMonth": "So với tháng trước"
+    }
+  },
+  "transaksiHeader": {
+    "title": "Giao Dịch Mua Sắm Tài Sản",
+    "period": "Kỳ: {{period}}",
+    "totalTransactions": "{{count}} giao dịch đã đăng ký",
+    "export": "Xuất",
+    "report": "Báo cáo",
+    "newRequest": "Yêu Cầu Mới",
+    "new": "Mới"
+  },
+  "transaksiTable": {
+    "tabs": {
+      "all": "Tất cả",
+      "pending": "Chờ xử lý",
+      "approved": "Đã duyệt",
+      "rejected": "Từ chối",
+      "draft": "Bản nháp"
     },
-    "transaksiHeader": {
-        "title": "Giao Dịch Mua Sắm Tài Sản",
-        "period": "Kỳ: {{period}}",
-        "totalTransactions": "{{count}} giao dịch đã đăng ký",
-        "export": "Xuất",
-        "report": "Báo cáo",
-        "newRequest": "Yêu Cầu Mới",
-        "new": "Mới"
-    },
-    "transaksiTable": {
-        "tabs": {
-            "all": "Tất cả",
-            "pending": "Chờ xử lý",
-            "approved": "Đã duyệt",
-            "rejected": "Từ chối",
-            "draft": "Bản nháp"
-        },
-        "searchPlaceholder": "Tìm theo tên tài sản, số PO hoặc người yêu cầu...",
-        "noData": "Không có dữ liệu",
-        "pagination": {
-            "showing": "Hiển thị {{from}} – {{to}} trong tổng số {{total}} mục",
-            "page": "Trang {{current}} / {{total}}"
-        }
-    },
-    "transaksiColumn": {
+    "searchPlaceholder": "Tìm theo tên tài sản, số PO hoặc người yêu cầu...",
+    "noData": "Không có dữ liệu",
+    "pagination": {
+      "showing": "Hiển thị {{from}} – {{to}} trong tổng số {{total}} mục",
+      "page": "Trang {{current}} / {{total}}"
+    }
+  },
+  "transaksiColumn": {
     "headers": {
       "transactionNo": "Số Giao Dịch",
       "itemName": "Tên Mặt Hàng",
@@ -105,6 +105,7 @@
       "unit": "đơn vị",
       "unitPrice": "Đơn giá",
       "branchCode": "Mã chi nhánh",
+      "assetNumber": "Mã tài sản",
       "notes": "Ghi chú",
       "recipientDetail": "Chi tiết người nhận"
     },
@@ -251,5 +252,71 @@
       "success": "Phê duyệt giao dịch thành công",
       "error": "Phê duyệt giao dịch thất bại"
     }
-  }
+  },
+  "processBudget": {
+    "title": "Xử lý ngân sách",
+    "notes": "Ghi chú",
+    "optional": "tùy chọn",
+    "placeholder": "Ngân sách đã được phân bổ...",
+    "cancel": "Hủy",
+    "submit": "Xử lý ngân sách",
+    "submitting": "Đang xử lý...",
+    "success": "Xử lý ngân sách thành công",
+    "error": "Không thể xử lý ngân sách"
+  },
+  "executeAsset": {
+    "title": "Thực thi tài sản",
+    "notes": "Ghi chú",
+    "optional": "tùy chọn",
+    "placeholder": "Tài sản đã được tạo và sẵn sàng...",
+    "cancel": "Hủy",
+    "submit": "Thực thi tài sản",
+    "submitting": "Đang xử lý...",
+    "success": "Thực thi tài sản thành công",
+    "error": "Không thể thực thi tài sản"
+  },
+  "goodsReceipt": {
+      "title": "Biên Nhận Hàng Hóa",
+      "mode": {
+        "label": "Chế độ GR",
+        "single": "1 Tài sản",
+        "bulkItem": "Theo mục",
+        "bulkAll": "Tất cả"
+      },
+      "progress": {
+        "label": "Tiến độ GR",
+        "done": "hoàn thành",
+        "pending": "đang chờ",
+        "total": "tổng",
+        "processing": "Đang xử lý GR..."
+      },
+      "selectItem": {
+        "label": "Chọn mục",
+        "placeholder": "-- Chọn mục --",
+        "assetPending": "tài sản đang chờ",
+        "noAsset": "Không có tài sản đang chờ cho mục này"
+      },
+      "selectAsset": {
+        "label": "Số tài sản",
+        "placeholder": "-- Chọn số tài sản --"
+      },
+      "bulkAll": {
+        "label": "Tất cả tài sản đang chờ",
+        "empty": "Không có tài sản đang chờ"
+      },
+      "notes": {
+        "label": "Ghi chú",
+        "optional": "tùy chọn",
+        "placeholder": "Hàng hóa nhận được trong tình trạng tốt..."
+      },
+      "cancel": "Hủy",
+      "submit": "Xác nhận GR",
+      "submitBulkItem": "GR Tất cả tài sản trong mục ({{count}})",
+      "submitBulkAll": "GR Tất cả ({{count}} tài sản)",
+      "processing": "Đang xử lý {{done}}/{{total}}...",
+      "success": "Tất cả {{count}} tài sản đã xử lý thành công",
+      "successPartial": "{{success}} thành công, {{fail}} thất bại",
+      "error": "Không thể xác nhận Goods Receipt",
+      "noPending": "Không có tài sản đang chờ"
+    }
 }
