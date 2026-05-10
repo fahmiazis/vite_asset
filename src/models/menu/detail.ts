@@ -9,6 +9,7 @@ export interface detailMenuState {
   parent_id: any
   name: string
   path: string
+  route_path: string
   icon_name: any
   order_index: number
   status: string

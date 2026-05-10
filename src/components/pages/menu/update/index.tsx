@@ -25,6 +25,7 @@ export default function UpdateMenu() {
             setName(detail.name ?? '')
             setParentId(detail.parent_id ?? '')
             setPath(detail.path ?? '')
+            setRoutePath(detail.route_path ?? '')
             setIconName(detail.icon_name ?? '')
             setStatus(detail.status ?? 'active')
         }
