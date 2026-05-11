@@ -134,6 +134,14 @@
       "processBudget": "Xử lý ngân sách",
       "executeAsset": "Thực hiện tài sản",
       "goodsReceipt": "Biên nhận hàng hóa"
+    },
+    "assetModal": {
+      "title": "Danh sách tài sản",
+      "totalAssets": "Tổng tài sản",
+      "unit": "tài sản",
+      "showAll": "Xem tất cả ({{count}})",
+      "close": "Đóng",
+      "downloadExcel": "Tải xuống Excel"
     }
   },
   "createTransaction": {

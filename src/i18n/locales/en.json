@@ -134,6 +134,14 @@
       "processBudget": "Process Budget",
       "executeAsset": "Execute Asset",
       "goodsReceipt": "Goods Receipt"
+    },
+    "assetModal": {
+      "title": "Asset List",
+      "totalAssets": "Total assets",
+      "unit": "assets",
+      "showAll": "Show all ({{count}})",
+      "close": "Close",
+      "downloadExcel": "Download Excel"
     }
   },
   "createTransaction": {

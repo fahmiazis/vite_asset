@@ -134,6 +134,14 @@
       "processBudget": "处理预算",
       "executeAsset": "执行资产",
       "goodsReceipt": "收货"
+    },
+    "assetModal": {
+      "title": "资产列表",
+      "totalAssets": "资产总数",
+      "unit": "项",
+      "showAll": "查看全部（{{count}}）",
+      "close": "关闭",
+      "downloadExcel": "下载 Excel"
     }
   },
   "createTransaction": {

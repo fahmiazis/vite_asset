@@ -134,6 +134,14 @@
       "processBudget": "Proses Anggaran",
       "executeAsset": "Eksekusi Aset",
       "goodsReceipt": "Penerimaan Barang"
+    },
+    "assetModal": {
+      "title": "Daftar Aset",
+      "totalAssets": "Total aset",
+      "unit": "aset",
+      "showAll": "Lihat semua ({{count}})",
+      "close": "Tutup",
+      "downloadExcel": "Unduh Excel"
     }
   },
   "createTransaction": {

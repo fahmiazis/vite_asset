@@ -134,6 +134,14 @@
       "processBudget": "ดำเนินการงบประมาณ",
       "executeAsset": "ดำเนินการสินทรัพย์",
       "goodsReceipt": "รับสินค้า"
+    },
+    "assetModal": {
+      "title": "รายการสินทรัพย์",
+      "totalAssets": "สินทรัพย์ทั้งหมด",
+      "unit": "รายการ",
+      "showAll": "ดูทั้งหมด ({{count}})",
+      "close": "ปิด",
+      "downloadExcel": "ดาวน์โหลด Excel"
     }
   },
   "createTransaction": {

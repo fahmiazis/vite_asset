@@ -17,6 +17,7 @@ import { ExecuteAssetModal } from "../executeAssetModal"
 import { GoodsReceiptModal } from "../goodsReceiptModal"
 import { useTranslation } from "react-i18next"
 import { useQueryClient } from "@tanstack/react-query"
+import { AssetNumberCell } from "../assetNumberCellModal"
 
 function formatRupiah(num: number) {
   return new Intl.NumberFormat("id-ID", {
@@ -403,7 +404,7 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
                   </div>
                   <div>
                     <p className="text-xs text-gray-400 mb-1">{t("detailTransaction.items.assetNumber")}</p>
-                    <p className="text-sm font-medium text-gray-800 dark:text-gray-200">{getAssetNumberRange(item.assets)}</p>
+                    <AssetNumberCell assets={item.assets} itemName={item.item_name} />
                   </div>
                 </div>
 
