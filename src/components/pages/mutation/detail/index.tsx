@@ -1,5 +1,7 @@
 import { useParams } from "react-router-dom"
 import { useMutationDetail } from "../../../../hooks/query/mutation/detail";
+import { useState } from "react";
+import { AddAssetModal } from "../../../organisms/mutation/addAssetModal";
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString("id-ID", {
@@ -17,9 +19,9 @@ function formatDateTime(dateStr: string) {
 function StatusBadge({ status }: { status: string }) {
   const map: Record<string, { dot: string; light: string; dark: string; label: string }> = {
     APPROVED: { dot: "bg-green-500", light: "bg-green-50 text-green-700", dark: "dark:bg-green-900/40 dark:text-green-400", label: "Approved" },
-    PENDING:  { dot: "bg-yellow-400", light: "bg-yellow-50 text-yellow-700", dark: "dark:bg-yellow-900/40 dark:text-yellow-400", label: "Pending" },
+    PENDING: { dot: "bg-yellow-400", light: "bg-yellow-50 text-yellow-700", dark: "dark:bg-yellow-900/40 dark:text-yellow-400", label: "Pending" },
     REJECTED: { dot: "bg-red-500", light: "bg-red-50 text-red-600", dark: "dark:bg-red-900/40 dark:text-red-400", label: "Rejected" },
-    DRAFT:    { dot: "bg-gray-400", light: "bg-gray-100 text-gray-600", dark: "dark:bg-gray-700 dark:text-gray-400", label: "Draft" },
+    DRAFT: { dot: "bg-gray-400", light: "bg-gray-100 text-gray-600", dark: "dark:bg-gray-700 dark:text-gray-400", label: "Draft" },
   }
   const s = map[status?.toUpperCase()] ?? map["DRAFT"]
   return (
@@ -32,10 +34,10 @@ function StatusBadge({ status }: { status: string }) {
 
 function AssetStatusBadge({ status }: { status: string }) {
   const map: Record<string, string> = {
-    ACTIVE:    "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-700",
-    INACTIVE:  "bg-gray-100 text-gray-600 border-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700",
-    MUTATED:   "bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-400 dark:border-blue-700",
-    PENDING:   "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-700",
+    ACTIVE: "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-700",
+    INACTIVE: "bg-gray-100 text-gray-600 border-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700",
+    MUTATED: "bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-400 dark:border-blue-700",
+    PENDING: "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-700",
   }
   return (
     <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border ${map[status?.toUpperCase()] ?? map["INACTIVE"]}`}>
@@ -45,8 +47,9 @@ function AssetStatusBadge({ status }: { status: string }) {
 }
 
 export default function MutationDetailPage() {
-    const { "*": id } = useParams()
+  const { "*": id } = useParams()
   const { data, isLoading } = useMutationDetail(id ?? "")
+  const [showAddAsset, setShowAddAsset] = useState(false)
 
   if (isLoading) {
     return (
@@ -60,8 +63,16 @@ export default function MutationDetailPage() {
 
   const { transaction, assets, stages } = data.data
 
+
   return (
     <section className="space-y-4 mt-4">
+      {showAddAsset && (
+        <AddAssetModal
+          transactionNumber={id || ""}
+          onClose={() => setShowAddAsset(false)}
+          onSuccess={() => { /* refresh list */ }}
+        />
+      )}
 
       {/* Header */}
       <div className="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-xl p-5">
@@ -109,9 +120,20 @@ export default function MutationDetailPage() {
       <div className="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-xl p-5">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200">Daftar Aset</h3>
-          <span className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-500 px-2 py-0.5 rounded-full">
-            {assets.length} aset
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-500 px-2 py-0.5 rounded-full">
+              {assets.length} aset
+            </span>
+            <button
+              onClick={() => setShowAddAsset(true)}
+              className="flex items-center gap-1.5 text-xs font-medium text-indigo-600 hover:text-indigo-700 bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-900/30 dark:hover:bg-indigo-900/50 px-2.5 py-1 rounded-lg transition-colors"
+            >
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
+              Tambah aset
+            </button>
+          </div>
         </div>
 
         <div className="space-y-3">
