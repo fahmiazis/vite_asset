@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom"
 import { useMutationDetail } from "../../../../hooks/query/mutation/detail";
 import { useState } from "react";
 import { AddAssetModal } from "../../../organisms/mutation/addAssetModal";
+import { SubmitMutationModal } from "../../../organisms/mutation/submitDraftMutationModal";
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString("id-ID", {
@@ -50,6 +51,7 @@ export default function MutationDetailPage() {
   const { "*": id } = useParams()
   const { data, isLoading } = useMutationDetail(id ?? "")
   const [showAddAsset, setShowAddAsset] = useState(false)
+  const [showSubmit, setShowSubmit] = useState(false)
 
   if (isLoading) {
     return (
@@ -71,6 +73,12 @@ export default function MutationDetailPage() {
           transactionNumber={id || ""}
           onClose={() => setShowAddAsset(false)}
           onSuccess={() => { /* refresh list */ }}
+        />
+      )}
+      {showSubmit && (
+        <SubmitMutationModal
+          transactionNumber={id || ""}
+          onClose={() => setShowSubmit(false)}
         />
       )}
 
@@ -262,6 +270,21 @@ export default function MutationDetailPage() {
           })}
         </div>
       </div>
+
+      {/* Submit */}
+      {transaction.status === "DRAFT" && (
+        <div className="flex justify-end">
+          <button
+            onClick={() => setShowSubmit(true)}
+            className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-colors"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+            </svg>
+            Submit transaksi
+          </button>
+        </div>
+      )}
 
     </section>
   )
