@@ -1,47 +1,58 @@
 import {
   flexRender,
   getCoreRowModel,
-  getPaginationRowModel,
   getSortedRowModel,
-  getFilteredRowModel,
   useReactTable,
   type SortingState,
-  type ColumnFiltersState,
-} from '@tanstack/react-table'
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { assetsColumns } from './column'
-import type { listAssetsState } from '../../../models/asset/list'
-import { Search01Icon } from 'hugeicons-react'
+} from "@tanstack/react-table"
+import { useState } from "react"
+import { assetsColumns } from "./column"
+import type { listAssetsState } from "../../../models/asset/list"
+import { Search01Icon } from "hugeicons-react"
 
 interface AssetsTableProps {
   data: listAssetsState[]
-  total?: number
+  total: number
+  page: number
+  pageSize: number
   isLoading?: boolean
+  onPageChange: (page: number) => void
+  onSearchChange: (value: string) => void
 }
 
-export function AssetsTable({ data, total, isLoading }: AssetsTableProps) {
-  const navigate = useNavigate()
-
+export function AssetsTable({
+  data,
+  total,
+  page,
+  pageSize,
+  isLoading,
+  onPageChange,
+  onSearchChange,
+}: AssetsTableProps) {
   const [sorting, setSorting] = useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-  const [globalFilter, setGlobalFilter] = useState('')
+  const [searchValue, setSearchValue] = useState("")
+
+  const totalPages = Math.max(1, Math.ceil(total / pageSize))
+  const from = total === 0 ? 0 : (page - 1) * pageSize + 1
+  const to   = Math.min(page * pageSize, total)
 
   const table = useReactTable({
     data,
     columns: assetsColumns,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
     onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
-    onGlobalFilterChange: setGlobalFilter,
-    state: { sorting, columnFilters, globalFilter },
-    initialState: { pagination: { pageSize: 10 } },
+    state: { sorting },
+    manualPagination: true, // pagination dihandle server
+    pageCount: totalPages,
   })
 
-  if (isLoading) {
+  const handleSearch = (val: string) => {
+    setSearchValue(val)
+    onSearchChange(val)
+  }
+
+  if (isLoading && data.length === 0) {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="text-center">
@@ -55,22 +66,30 @@ export function AssetsTable({ data, total, isLoading }: AssetsTableProps) {
   return (
     <div className="space-y-4 bg-white dark:bg-gray-950 p-6 rounded-2xl">
 
-      {/* Search + Actions */}
+      {/* Search */}
       <section className="flex items-center justify-between w-full">
         <div className="relative">
           <Search01Icon size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray1" />
           <input
             type="text"
             placeholder="Cari nama aset, nomor aset..."
-            value={globalFilter ?? ''}
-            onChange={(e) => setGlobalFilter(e.target.value)}
+            value={searchValue}
+            onChange={(e) => handleSearch(e.target.value)}
             className="pl-9 pr-4 py-2 text-sm border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-72"
           />
         </div>
+
+        {/* Loading indicator saat fetch halaman baru */}
+        {isLoading && (
+          <div className="flex items-center gap-2 text-xs text-gray1">
+            <div className="animate-spin rounded-full h-3.5 w-3.5 border-b-2 border-gray-500" />
+            Memuat...
+          </div>
+        )}
       </section>
 
       {/* Table */}
-      <div className="rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden bg-white dark:bg-gray-900">
+      <div className={`rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden bg-white dark:bg-gray-900 transition-opacity ${isLoading ? "opacity-60" : "opacity-100"}`}>
         <div className="overflow-x-auto">
           <table className="min-w-[860px] w-full">
             <thead className="bg-gray-50 dark:bg-gray-900/60">
@@ -121,42 +140,33 @@ export function AssetsTable({ data, total, isLoading }: AssetsTableProps) {
       {/* Pagination */}
       <div className="flex items-center justify-between">
         <p className="text-xs text-gray1">
-          Menampilkan{' '}
-          <span className="font-semibold text-[var(--text-color)]">
-            {table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1}
-          </span>{' '}
-          –{' '}
-          <span className="font-semibold text-[var(--text-color)]">
-            {Math.min(
-              (table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize,
-              table.getFilteredRowModel().rows.length
-            )}
-          </span>{' '}
-          dari{' '}
-          <span className="font-semibold text-[var(--text-color)]">
-            {total ?? table.getFilteredRowModel().rows.length}
-          </span>{' '}
-          data
+          Menampilkan{" "}
+          <span className="font-semibold text-[var(--text-color)]">{from}</span>
+          {" "}–{" "}
+          <span className="font-semibold text-[var(--text-color)]">{to}</span>
+          {" "}dari{" "}
+          <span className="font-semibold text-[var(--text-color)]">{total}</span>
+          {" "}data
         </p>
 
         <div className="flex items-center gap-1">
           {[
-            { label: '«', action: () => table.setPageIndex(0), disabled: !table.getCanPreviousPage() },
-            { label: '‹', action: () => table.previousPage(), disabled: !table.getCanPreviousPage() },
-            { label: '›', action: () => table.nextPage(), disabled: !table.getCanNextPage() },
-            { label: '»', action: () => table.setPageIndex(table.getPageCount() - 1), disabled: !table.getCanNextPage() },
+            { label: "«", action: () => onPageChange(1),          disabled: page <= 1 },
+            { label: "‹", action: () => onPageChange(page - 1),   disabled: page <= 1 },
+            { label: "›", action: () => onPageChange(page + 1),   disabled: page >= totalPages },
+            { label: "»", action: () => onPageChange(totalPages), disabled: page >= totalPages },
           ].map((btn, i) => (
             <button
               key={i}
               onClick={btn.action}
-              disabled={btn.disabled}
+              disabled={btn.disabled || isLoading}
               className="w-8 h-8 flex items-center justify-center text-sm border border-gray-200 dark:border-gray-700 rounded-md disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             >
               {btn.label}
             </button>
           ))}
           <span className="text-xs text-gray1 ml-2 whitespace-nowrap">
-            Hal <strong>{table.getState().pagination.pageIndex + 1}</strong> / {table.getPageCount()}
+            Hal <strong>{page}</strong> / {totalPages}
           </span>
         </div>
       </div>

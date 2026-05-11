@@ -1,12 +1,26 @@
 import { axiosPrivate } from "../../libs/instance";
 import type { listAssestProps } from "../../models/asset/list";
-export const assetList = async (): Promise<listAssestProps> => {
-  const res = await axiosPrivate.get(`/assets?page=1&limit=100`)
+
+export interface AssetListParams {
+  page: number
+  limit: number
+  search?: string
+}
+
+export const assetList = async (params: AssetListParams): Promise<listAssestProps> => {
+  const { page, limit, search } = params
+
+  const query = new URLSearchParams({
+    page: String(page),
+    limit: String(limit),
+    ...(search ? { search } : {}),
+  })
+
+  const res = await axiosPrivate.get(`/assets?${query.toString()}`)
 
   if (!res) {
-    throw new Error('fail to get list assets')
+    throw new Error("fail to get list assets")
   }
 
-  const data = await res.data
-  return data
+  return res.data
 }
