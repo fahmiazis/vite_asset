@@ -6,6 +6,8 @@ import { SubmitMutationModal } from "../../../organisms/mutation/submitDraftMuta
 import { useMutationApprovalStatus } from "../../../../hooks/query/mutation/approvalStatus";
 import { MutationApprovalStatus } from "../../../organisms/mutation/approvalStatus";
 import { ApproveModal } from "../../../organisms/mutation/approveModal";
+import { ConfirmReceivingModal } from "../../../organisms/mutation/confirmReceiveModal";
+import { ExecuteMutationModal } from "../../../organisms/mutation/executeMutationModal";
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString("id-ID", {
@@ -56,8 +58,8 @@ export default function MutationDetailPage() {
   const [showAddAsset, setShowAddAsset] = useState(false)
   const [showSubmit, setShowSubmit] = useState(false)
   const [showApprove, setShowApprove] = useState(false)
-
-
+  const [showConfirmReceiving, setShowConfirmReceiving] = useState(false)
+  const [showExecute, setShowExecute] = useState(false)
 
   if (isLoading) {
     return (
@@ -92,6 +94,18 @@ export default function MutationDetailPage() {
           transactionNumber={id ?? ""}
           onClose={() => setShowApprove(false)}
           onSuccess={() => { /* optional */ }}
+        />
+      )}
+      {showConfirmReceiving && (
+        <ConfirmReceivingModal
+          transactionNumber={id || ""}
+          onClose={() => setShowConfirmReceiving(false)}
+        />
+      )}
+      {showExecute && (
+        <ExecuteMutationModal
+          transactionNumber={id || ""}
+          onClose={() => setShowExecute(false)}
         />
       )}
 
@@ -301,7 +315,44 @@ export default function MutationDetailPage() {
           </button>
         </div>
       )}
-      <button onClick={() => setShowApprove(true)}>Approve</button>
+      <div className="flex justify-end">
+        <button
+          onClick={() => setShowApprove(true)}
+          className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl transition-colors"
+        >
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+          Approve
+        </button>
+      </div>
+      {/* Confirm Receiving */}
+      {/* {transaction.status === "APPROVED" && ( */}
+      <div className="flex justify-end">
+        <button
+          onClick={() => setShowConfirmReceiving(true)}
+          className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl transition-colors"
+        >
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+          Konfirmasi terima
+        </button>
+      </div>
+      {/* )} */}
+      {/* Execute */}
+      {/* {transaction.status === "EXECUTE_MUTATION" && ( */}
+        <div className="flex justify-end">
+          <button
+            onClick={() => setShowExecute(true)}
+            className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-colors"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            Eksekusi mutasi
+          </button>
+        </div>
 
 
     </section>
