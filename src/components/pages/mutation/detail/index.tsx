@@ -3,6 +3,9 @@ import { useMutationDetail } from "../../../../hooks/query/mutation/detail";
 import { useState } from "react";
 import { AddAssetModal } from "../../../organisms/mutation/addAssetModal";
 import { SubmitMutationModal } from "../../../organisms/mutation/submitDraftMutationModal";
+import { useMutationApprovalStatus } from "../../../../hooks/query/mutation/approvalStatus";
+import { MutationApprovalStatus } from "../../../organisms/mutation/approvalStatus";
+import { ApproveModal } from "../../../organisms/mutation/approveModal";
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString("id-ID", {
@@ -52,6 +55,9 @@ export default function MutationDetailPage() {
   const { data, isLoading } = useMutationDetail(id ?? "")
   const [showAddAsset, setShowAddAsset] = useState(false)
   const [showSubmit, setShowSubmit] = useState(false)
+  const [showApprove, setShowApprove] = useState(false)
+
+
 
   if (isLoading) {
     return (
@@ -79,6 +85,13 @@ export default function MutationDetailPage() {
         <SubmitMutationModal
           transactionNumber={id || ""}
           onClose={() => setShowSubmit(false)}
+        />
+      )}
+      {showApprove && (
+        <ApproveModal
+          transactionNumber={id ?? ""}
+          onClose={() => setShowApprove(false)}
+          onSuccess={() => { /* optional */ }}
         />
       )}
 
@@ -271,6 +284,9 @@ export default function MutationDetailPage() {
         </div>
       </div>
 
+      {/* Stage approval */}
+      <MutationApprovalStatus transactionNumber={id ?? ""} />
+
       {/* Submit */}
       {transaction.status === "DRAFT" && (
         <div className="flex justify-end">
@@ -285,6 +301,8 @@ export default function MutationDetailPage() {
           </button>
         </div>
       )}
+      <button onClick={() => setShowApprove(true)}>Approve</button>
+
 
     </section>
   )

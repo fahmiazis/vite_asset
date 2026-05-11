@@ -2,6 +2,7 @@ import { useState } from "react"
 import toast from "react-hot-toast"
 import { useQueryClient } from "@tanstack/react-query"
 import { useSubmitDraftMutation } from "../../../hooks/mutation/mutation/submitDraftMutation"
+import { useInitiateApprovalMutation } from "../../../hooks/mutation/mutation/initiateApprovalMutation"
 
 type SubmitMutationModalProps = {
   transactionNumber: string
@@ -17,21 +18,31 @@ export function SubmitMutationModal({
   const [notes, setNotes] = useState("")
 
   const queryClient = useQueryClient()
-  const { mutate: submitMutation, isPending } = useSubmitDraftMutation(transactionNumber)
+  const { mutate: submitMutation, isPending: isSubmitting }   = useSubmitDraftMutation(transactionNumber)
+  const { mutate: initiateApproval, isPending: isInitiating } = useInitiateApprovalMutation(transactionNumber)
+
+  const isPending = isSubmitting || isInitiating
 
   const handleSubmit = () => {
     submitMutation(
       { notes: notes.trim() },
       {
         onSuccess: () => {
-          toast.success("Transaksi berhasil disubmit")
+          initiateApproval(undefined, {
+            onSuccess: () => {
+              toast.success("Transaksi berhasil disubmit")
 
-          queryClient.invalidateQueries({
-            queryKey: ["mutation-draft-detail", transactionNumber],
+              queryClient.invalidateQueries({
+                queryKey: ["mutation-draft-detail", transactionNumber],
+              })
+
+              onSuccess?.()
+              onClose()
+            },
+            onError: () => {
+              toast.error("Gagal inisiasi approval")
+            },
           })
-
-          onSuccess?.()
-          onClose()
         },
         onError: () => {
           toast.error("Gagal submit transaksi")
@@ -129,7 +140,11 @@ export function SubmitMutationModal({
               disabled:opacity-50 disabled:cursor-not-allowed
             "
           >
-            {isPending ? "Menyimpan..." : "Submit"}
+            {isSubmitting
+              ? "Menyimpan..."
+              : isInitiating
+              ? "Memproses..."
+              : "Submit"}
           </button>
         </div>
 
