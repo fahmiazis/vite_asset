@@ -1,5 +1,7 @@
 import { useParams } from "react-router-dom"
 import { useDisposalDetail } from "../../../../hooks/query/disposal/detail"
+import { useState } from "react"
+import { AddAssetToDisposalModal } from "../../../organisms/disposal/addAssetModal"
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString("id-ID", {
@@ -16,12 +18,12 @@ function formatDateTime(dateStr: string) {
 
 function StatusBadge({ status }: { status: string }) {
   const map: Record<string, { dot: string; light: string; dark: string; label: string }> = {
-    APPROVED:  { dot: "bg-green-500",  light: "bg-green-50 text-green-700",   dark: "dark:bg-green-900/40 dark:text-green-400",   label: "Approved" },
-    PENDING:   { dot: "bg-yellow-400", light: "bg-yellow-50 text-yellow-700", dark: "dark:bg-yellow-900/40 dark:text-yellow-400", label: "Pending" },
-    REJECTED:  { dot: "bg-red-500",    light: "bg-red-50 text-red-600",       dark: "dark:bg-red-900/40 dark:text-red-400",       label: "Rejected" },
-    DRAFT:     { dot: "bg-gray-400",   light: "bg-gray-100 text-gray-600",    dark: "dark:bg-gray-700 dark:text-gray-400",        label: "Draft" },
-    COMPLETED: { dot: "bg-blue-500",   light: "bg-blue-50 text-blue-700",     dark: "dark:bg-blue-900/40 dark:text-blue-400",     label: "Completed" },
-    CANCELLED: { dot: "bg-gray-400",   light: "bg-gray-100 text-gray-500",    dark: "dark:bg-gray-700 dark:text-gray-400",        label: "Cancelled" },
+    APPROVED: { dot: "bg-green-500", light: "bg-green-50 text-green-700", dark: "dark:bg-green-900/40 dark:text-green-400", label: "Approved" },
+    PENDING: { dot: "bg-yellow-400", light: "bg-yellow-50 text-yellow-700", dark: "dark:bg-yellow-900/40 dark:text-yellow-400", label: "Pending" },
+    REJECTED: { dot: "bg-red-500", light: "bg-red-50 text-red-600", dark: "dark:bg-red-900/40 dark:text-red-400", label: "Rejected" },
+    DRAFT: { dot: "bg-gray-400", light: "bg-gray-100 text-gray-600", dark: "dark:bg-gray-700 dark:text-gray-400", label: "Draft" },
+    COMPLETED: { dot: "bg-blue-500", light: "bg-blue-50 text-blue-700", dark: "dark:bg-blue-900/40 dark:text-blue-400", label: "Completed" },
+    CANCELLED: { dot: "bg-gray-400", light: "bg-gray-100 text-gray-500", dark: "dark:bg-gray-700 dark:text-gray-400", label: "Cancelled" },
   }
   const s = map[status?.toUpperCase()] ?? map["DRAFT"]
   return (
@@ -33,17 +35,17 @@ function StatusBadge({ status }: { status: string }) {
 }
 
 const DISPOSAL_TYPE_LABEL: Record<string, string> = {
-  sale:      "Penjualan",
-  scrap:     "Pemusnahan / Scrap",
-  donation:  "Donasi / Hibah",
+  sale: "Penjualan",
+  scrap: "Pemusnahan / Scrap",
+  donation: "Donasi / Hibah",
   write_off: "Penghapusan (Write-off)",
 }
 
 function DisposalTypeBadge({ value }: { value: string }) {
   const map: Record<string, string> = {
-    sale:      "bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-400 dark:border-blue-700",
-    scrap:     "bg-red-50 text-red-600 border-red-200 dark:bg-red-900/30 dark:text-red-400 dark:border-red-700",
-    donation:  "bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-900/30 dark:text-purple-400 dark:border-purple-700",
+    sale: "bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-400 dark:border-blue-700",
+    scrap: "bg-red-50 text-red-600 border-red-200 dark:bg-red-900/30 dark:text-red-400 dark:border-red-700",
+    donation: "bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-900/30 dark:text-purple-400 dark:border-purple-700",
     write_off: "bg-orange-50 text-orange-700 border-orange-200 dark:bg-orange-900/30 dark:text-orange-400 dark:border-orange-700",
   }
   const cls = map[value?.toLowerCase()] ?? "bg-gray-100 text-gray-600 border-gray-200"
@@ -56,10 +58,10 @@ function DisposalTypeBadge({ value }: { value: string }) {
 
 function AssetStatusBadge({ status }: { status: string }) {
   const map: Record<string, string> = {
-    ACTIVE:   "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-700",
+    ACTIVE: "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-700",
     INACTIVE: "bg-gray-100 text-gray-600 border-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700",
     DISPOSED: "bg-red-50 text-red-600 border-red-200 dark:bg-red-900/30 dark:text-red-400 dark:border-red-700",
-    PENDING:  "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-700",
+    PENDING: "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-700",
   }
   return (
     <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border ${map[status?.toUpperCase()] ?? map["INACTIVE"]}`}>
@@ -71,6 +73,7 @@ function AssetStatusBadge({ status }: { status: string }) {
 export default function DisposalDetailPage() {
   const { "*": id } = useParams()
   const { data, isLoading } = useDisposalDetail(id ?? "")
+  const [showAddAsset, setShowAddAsset] = useState(false)
 
   if (isLoading) {
     return (
@@ -86,6 +89,13 @@ export default function DisposalDetailPage() {
 
   return (
     <section className="space-y-4 mt-4">
+
+      {showAddAsset && (
+        <AddAssetToDisposalModal
+          transactionNumber={transaction.transaction_number}
+          onClose={() => setShowAddAsset(false)}
+        />
+      )}
 
       {/* Header */}
       <div className="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-xl p-5">
@@ -107,12 +117,12 @@ export default function DisposalDetailPage() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {[
-            { label: "Tipe transaksi",   value: transaction.transaction_type },
-            { label: "Tanggal",          value: formatDate(transaction.transaction_date) },
-            { label: "Tipe disposal",    value: DISPOSAL_TYPE_LABEL[transaction.disposal_type?.toLowerCase()] ?? transaction.disposal_type },
-            { label: "Dibuat oleh",      value: transaction.created_by },
-            { label: "Dibuat pada",      value: formatDateTime(transaction.created_at) },
-            { label: "Diupdate pada",    value: formatDateTime(transaction.updated_at) },
+            { label: "Tipe transaksi", value: transaction.transaction_type },
+            { label: "Tanggal", value: formatDate(transaction.transaction_date) },
+            { label: "Tipe disposal", value: DISPOSAL_TYPE_LABEL[transaction.disposal_type?.toLowerCase()] ?? transaction.disposal_type },
+            { label: "Dibuat oleh", value: transaction.created_by },
+            { label: "Dibuat pada", value: formatDateTime(transaction.created_at) },
+            { label: "Diupdate pada", value: formatDateTime(transaction.updated_at) },
             ...(transaction.sale_value != null
               ? [{ label: "Nilai jual", value: new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", minimumFractionDigits: 0 }).format(transaction.sale_value) }]
               : []
@@ -150,7 +160,7 @@ export default function DisposalDetailPage() {
               {assets.length} aset
             </span>
             <button
-              onClick={() => console.log("TODO: add asset modal", { transactionNumber: transaction.transaction_number })}
+              onClick={() => setShowAddAsset(true)}
               className="flex items-center gap-1.5 text-xs font-medium text-indigo-600 hover:text-indigo-700 bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-900/30 dark:hover:bg-indigo-900/50 px-2.5 py-1 rounded-lg transition-colors"
             >
               <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
