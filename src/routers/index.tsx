@@ -49,6 +49,7 @@ import CreateMutationPage from '../components/pages/mutation/create'
 import MutationDetailPage from '../components/pages/mutation/detail'
 import DisposalFormPage from '../components/pages/disposal/create'
 import DisposalPage from '../components/pages/disposal'
+import DisposalDetailPage from '../components/pages/disposal/detail'
 
 export const router = createBrowserRouter([
   // {
@@ -132,6 +133,10 @@ export const router = createBrowserRouter([
           {
             path: 'disposal/create',
             element: <DisposalFormPage />,
+          },
+          {
+            path: 'disposal/*',
+            element: <DisposalDetailPage />,
           },
           {
             path: 'setting-attachment',

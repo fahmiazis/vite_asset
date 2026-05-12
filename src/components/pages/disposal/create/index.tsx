@@ -6,8 +6,7 @@ import { useCreateDisposal } from "../../../../hooks/mutation/disposal/create"
 
 const DISPOSAL_TYPE_OPTIONS = [
   { value: "DISPOSE", label: "Dispose", desc: "Penghapusan aset dari pencatatan" },
-  { value: "WRITE_OFF", label: "Write Off", desc: "Penghapusbukuan nilai aset" },
-  { value: "AUCTION", label: "Auction", desc: "Penjualan aset melalui lelang" },
+  { value: "SELL", label: "Sell", desc: "jual jual" },
 ]
 
 const todayISO = new Date().toISOString().split("T")[0]

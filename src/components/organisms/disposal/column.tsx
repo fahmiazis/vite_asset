@@ -54,7 +54,7 @@ function StatusBadge({ value }: { value: string }) {
 }
 
 // --- Action Buttons ---
-function ActionButtons({ id }: { id: number }) {
+function ActionButtons({ id }: { id: string }) {
   const navigate = useNavigate()
   return (
     <div className="flex items-center gap-1.5">
@@ -146,6 +146,6 @@ export const disposalColumns: ColumnDef<disposalListState>[] = [
   {
     id: "aksi",
     header: "AKSI",
-    cell: ({ row }) => <ActionButtons id={row.original.transaction.id} />,
+    cell: ({ row }) => <ActionButtons id={row.original.transaction.transaction_number} />,
   },
 ]
