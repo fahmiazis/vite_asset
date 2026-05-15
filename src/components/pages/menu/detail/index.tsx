@@ -4,6 +4,7 @@ import InfoCard from '../../../molecules/card/infoCard'
 import Head from '../../../molecules/head'
 import Links from '../../../atoms/links'
 import type { Children } from '../../../../models/menu/detail'
+import { MenuChildrenTable } from '../../../organisms/menu/detail/table'
 
 export default function DetailMenu() {
     const { id } = useParams()
@@ -28,26 +29,13 @@ export default function DetailMenu() {
                     </section>
 
                     <div>
-                        <p className='text-xs font-medium text-gray-400 uppercase tracking-wide mb-2'>
-                            Children ({menu.children?.length ?? 0})
-                        </p>
-
-                        {menu.children && menu.children.length > 0 ? (
-                            <div className='space-y-2'>
-                                {menu.children.map((child: Children, index: number) => (
-                                    <div key={child.id} className='border border-gray-100 rounded-lg p-3 bg-gray-50'>
-                                        <p className='text-xs text-gray-400 mb-2'>#{index + 1}</p>
-                                        <section className='grid grid-cols-2 gap-3'>
-                                            <InfoCard Label='Name' value={child.name} />
-                                            <InfoCard Label='Icon Name' value={child.icon_name ?? '-'} />
-                                            <InfoCard Label='Path' value={child.path} />
-                                            <InfoCard Label='Status' value={child.status} />
-                                        </section>
-                                    </div>
-                                ))}
+                        {menu.children && menu.children.length > 0 && (
+                            <div>
+                                <p className='text-xs font-medium text-gray-400 uppercase tracking-wide mb-2'>
+                                    Sub Menu ({menu.children.length})
+                                </p>
+                                <MenuChildrenTable data={menu.children} />
                             </div>
-                        ) : (
-                            <p className='text-xs text-gray-400 italic'>Tidak ada children.</p>
                         )}
                     </div>
                 </>

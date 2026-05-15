@@ -10,10 +10,10 @@ import toast from 'react-hot-toast'
 import { Inputs } from '../../../molecules/input/inputs'
 import Head from '../../../molecules/head'
 
-type MenuType = 'parent' | 'child'
+type MenuType = 'main menu' | 'sub menu'
 
 export default function AssignMenuPage() {
-    const [menuType, setMenuType] = useState<MenuType>('parent')
+    const [menuType, setMenuType] = useState<MenuType>('main menu')
     const [permissionInput, setPermissionInput] = useState<string>('')
     const [selectedPermission, setSelectedPermission] = useState<string[]>([])
     const [selectedRole, setSelectedRole] = useState<string>('')
@@ -68,7 +68,7 @@ export default function AssignMenuPage() {
     const parentOptions = menuList ? menuListToSelectOptions(menuList.data) : []
     const childOptions = menuList ? menuChildrenToSelectOptions(menuList.data) : []
 
-    const menuOptions = menuType === 'parent' ? parentOptions : childOptions
+    const menuOptions = menuType === 'main menu' ? parentOptions : childOptions
 
     const isSubmitting = assignMenusMutation.isPending
 
@@ -77,7 +77,7 @@ export default function AssignMenuPage() {
             <Head label='Menu Assignment' className='mb-4'/>
             {/* Toggle Parent / Child */}
             <div className='flex gap-2'>
-                {(['parent', 'child'] as MenuType[]).map((type) => (
+                {(['main menu', 'sub menu'] as MenuType[]).map((type) => (
                     <button
                         key={type}
                         type='button'
