@@ -4,8 +4,8 @@ interface DisposalItem {
   id: string;
   name: string;
   description: string;
-  avatar: string; // URL atau path gambar
-  avatarBgColor?: string; // Fallback color jika gambar gagal load
+  avatar: string; 
+  avatarBgColor?: string; 
 }
 
 interface DisposalListProps {
@@ -19,7 +19,7 @@ interface DisposalListProps {
 }
 
 const DisposalList = ({
-  title = 'My asset',
+  title = 'Assets',
   items,
   maxHeight = '400px',
   showArrow = true,
