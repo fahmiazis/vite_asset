@@ -3,20 +3,24 @@ import { Selects } from '../../../molecules/input/selects'
 import { useRoleList } from '../../../../hooks/query/role/list'
 import { useMenuList } from '../../../../hooks/query/menu/list'
 import { roleListToSelectOptions } from '../../../../utils/role'
-import { menuListToSelectOptions } from '../../../../utils/menu'
+import { menuChildrenToSelectOptions, menuListToSelectOptions } from '../../../../utils/menu'
 import Buttons from '../../../atoms/buttons'
 import { useAssignMenus } from '../../../../hooks/mutation/menu/useAssignMenus'
 import toast from 'react-hot-toast'
 import { Inputs } from '../../../molecules/input/inputs'
+import Head from '../../../molecules/head'
+
+type MenuType = 'parent' | 'child'
 
 export default function AssignMenuPage() {
+    const [menuType, setMenuType] = useState<MenuType>('parent')
     const [permissionInput, setPermissionInput] = useState<string>('')
     const [selectedPermission, setSelectedPermission] = useState<string[]>([])
     const [selectedRole, setSelectedRole] = useState<string>('')
     const [selectedMenu, setSelectedMenu] = useState<string>('')
 
-    const { data: roleList, isLoading: isLoadingRoles } = useRoleList()
-    const { data: menuList, isLoading: isLoadingMenus } = useMenuList()
+    const { data: roleList } = useRoleList()
+    const { data: menuList } = useMenuList()
 
     const assignMenusMutation = useAssignMenus({
         roleId: selectedRole,
@@ -26,6 +30,11 @@ export default function AssignMenuPage() {
             setPermissionInput('')
         },
     })
+
+    const handleMenuTypeChange = (type: MenuType) => {
+        setMenuType(type)
+        setSelectedMenu('')
+    }
 
     const handlePermissionKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter' || e.key === ',') {
@@ -46,30 +55,46 @@ export default function AssignMenuPage() {
     }
 
     const handleSubmit = () => {
-        if (!selectedRole) {
-            toast.error('Please select a role')
-            return
-        }
-        if (!selectedMenu) {
-            toast.error('Please select a menu')
-            return
-        }
-        if (selectedPermission.length === 0) {
-            toast.error('Please select at least one permission')
-            return
-        }
+        if (!selectedRole) return toast.error('Please select a role')
+        if (!selectedMenu) return toast.error('Please select a menu')
+        if (selectedPermission.length === 0) return toast.error('Please add at least one permission')
 
         assignMenusMutation.mutate({
             menus: [{ menu_id: selectedMenu, permissions: selectedPermission }],
         })
     }
 
+    // TODO: ganti dengan hook yang sesuai
+    const parentOptions = menuList ? menuListToSelectOptions(menuList.data) : []
+    const childOptions = menuList ? menuChildrenToSelectOptions(menuList.data) : []
+
+    const menuOptions = menuType === 'parent' ? parentOptions : childOptions
+
     const isSubmitting = assignMenusMutation.isPending
 
     return (
-        <div>
+        <div className='space-y-4'>
+            <Head label='Menu Assignment' className='mb-4'/>
+            {/* Toggle Parent / Child */}
+            <div className='flex gap-2'>
+                {(['parent', 'child'] as MenuType[]).map((type) => (
+                    <button
+                        key={type}
+                        type='button'
+                        onClick={() => handleMenuTypeChange(type)}
+                        className={`px-4 py-1.5 rounded-md text-xs font-medium transition-colors capitalize
+                            ${menuType === type
+                                ? 'bg-blue-600 text-white'
+                                : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                            }`}
+                    >
+                        {type}
+                    </button>
+                ))}
+            </div>
+
             <section className='flex gap-4 justify-between'>
-                <div className='w-1/2'>
+                <div className='w-1/2 space-y-1'>
                     {roleList && (
                         <Selects
                             label='Select Role'
@@ -78,14 +103,12 @@ export default function AssignMenuPage() {
                             onChange={setSelectedRole}
                         />
                     )}
-                    {menuList && (
-                        <Selects
-                            label='Select Menu'
-                            value={selectedMenu}
-                            options={menuListToSelectOptions(menuList.data)}
-                            onChange={setSelectedMenu}
-                        />
-                    )}
+                    <Selects
+                        label={`Select Menu (${menuType})`}
+                        value={selectedMenu}
+                        options={menuOptions}
+                        onChange={setSelectedMenu}
+                    />
                 </div>
 
                 <div className='w-1/2'>
@@ -96,7 +119,6 @@ export default function AssignMenuPage() {
                         placeholder='Type and press Enter...'
                         onKeyDown={handlePermissionKeyDown}
                     />
-                    {/* Tags */}
                     {selectedPermission.length > 0 && (
                         <div className='flex flex-wrap gap-2 mt-2'>
                             {selectedPermission.map((tag) => (
