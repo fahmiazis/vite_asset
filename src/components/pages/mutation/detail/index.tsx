@@ -159,15 +159,17 @@ export default function MutationDetailPage() {
             <span className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-500 px-2 py-0.5 rounded-full">
               {assets.length} aset
             </span>
-            <button
-              onClick={() => setShowAddAsset(true)}
-              className="flex items-center gap-1.5 text-xs font-medium text-indigo-600 hover:text-indigo-700 bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-900/30 dark:hover:bg-indigo-900/50 px-2.5 py-1 rounded-lg transition-colors"
-            >
-              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-              </svg>
-              Tambah aset
-            </button>
+            {data.data.transaction.current_stage === "DRAFT" && (
+              <button
+                onClick={() => setShowAddAsset(true)}
+                className="flex items-center gap-1.5 text-xs font-medium text-indigo-600 hover:text-indigo-700 bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-900/30 dark:hover:bg-indigo-900/50 px-2.5 py-1 rounded-lg transition-colors"
+              >
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                </svg>
+                Tambah aset
+              </button>
+            )}
           </div>
         </div>
 
@@ -342,17 +344,17 @@ export default function MutationDetailPage() {
       {/* )} */}
       {/* Execute */}
       {/* {transaction.status === "EXECUTE_MUTATION" && ( */}
-        <div className="flex justify-end">
-          <button
-            onClick={() => setShowExecute(true)}
-            className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-colors"
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
-            Eksekusi mutasi
-          </button>
-        </div>
+      <div className="flex justify-end">
+        <button
+          onClick={() => setShowExecute(true)}
+          className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-colors"
+        >
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          Eksekusi mutasi
+        </button>
+      </div>
 
 
     </section>
