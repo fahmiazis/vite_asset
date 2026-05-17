@@ -2,6 +2,8 @@ import { useParams } from "react-router-dom"
 import { useDisposalDetail } from "../../../../hooks/query/disposal/detail"
 import { useState } from "react"
 import { AddAssetToDisposalModal } from "../../../organisms/disposal/addAssetModal"
+import { RemoveAssetModal } from "../../../organisms/disposal/deleteAssetModal"
+import { SubmitDisposalModal } from "../../../organisms/disposal/submitDraftModal"
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString("id-ID", {
@@ -74,6 +76,8 @@ export default function DisposalDetailPage() {
   const { "*": id } = useParams()
   const { data, isLoading } = useDisposalDetail(id ?? "")
   const [showAddAsset, setShowAddAsset] = useState(false)
+  const [assetToRemove, setAssetToRemove] = useState<{ id: number; name: string } | null>(null)
+  const [showSubmit, setShowSubmit] = useState(false)
 
   if (isLoading) {
     return (
@@ -94,6 +98,20 @@ export default function DisposalDetailPage() {
         <AddAssetToDisposalModal
           transactionNumber={transaction.transaction_number}
           onClose={() => setShowAddAsset(false)}
+        />
+      )}
+      {assetToRemove && (
+        <RemoveAssetModal
+          transactionNumber={transaction.transaction_number}
+          assetId={assetToRemove.id}
+          assetName={assetToRemove.name}
+          onClose={() => setAssetToRemove(null)}
+        />
+      )}
+      {showSubmit && (
+        <SubmitDisposalModal
+          transactionNumber={transaction.transaction_number}
+          onClose={() => setShowSubmit(false)}
         />
       )}
 
@@ -192,7 +210,20 @@ export default function DisposalDetailPage() {
                       <p className="text-xs text-gray-400 font-mono mt-0.5">{asset.asset_number ?? "-"}</p>
                     </div>
                   </div>
-                  <AssetStatusBadge status={asset.status ?? "INACTIVE"} />
+                  <div className="flex items-center gap-2">
+                    <AssetStatusBadge status={asset.status ?? "INACTIVE"} />
+                    {transaction.current_stage === "DRAFT" && (
+                      <button
+                        onClick={() => setAssetToRemove({ id: asset.asset_id, name: asset.asset_name })}
+                        className="flex items-center justify-center w-7 h-7 rounded-lg text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors"
+                        title="Hapus aset"
+                      >
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                      </button>
+                    )}
+                  </div>
                 </div>
 
                 {/* Asset Body */}
@@ -303,7 +334,7 @@ export default function DisposalDetailPage() {
       <div className="flex flex-wrap justify-end gap-3">
         {transaction.status === "DRAFT" && (
           <button
-            onClick={() => console.log("TODO: submit disposal", { transactionNumber: transaction.transaction_number })}
+            onClick={() => setShowSubmit(true)}
             className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-colors"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
