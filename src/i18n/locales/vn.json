@@ -250,6 +250,7 @@
     "title": "Phê Duyệt Giao Dịch",
     "confirmationTitle": "Xác Nhận Phê Duyệt",
     "confirmationDescription": "Vui lòng đảm bảo tất cả dữ liệu giao dịch đã chính xác trước khi tiếp tục.",
+    "confirmationDescriptions": "Hành động này sẽ phê duyệt giao dịch chuyển nhượng và không thể hoàn tác. Hãy đảm bảo dữ liệu chính xác trước khi tiếp tục.",
     "notes": "Ghi chú",
     "optional": "tùy chọn",
     "notesPlaceholder": "Đã phê duyệt...",
@@ -354,21 +355,71 @@
     }
   },
   "addAssetModal": {
-  "title": "Thêm Tài Sản Thanh Lý",
-  "asset": "Tài Sản",
-  "assetPlaceholder": "Chọn tài sản...",
-  "assetLoading": "Đang tải tài sản...",
-  "disposalReason": "Lý Do Thanh Lý",
-  "disposalReasonPlaceholder": "vd. Hư hỏng và không thể sửa chữa",
+    "title": "Thêm Tài Sản Thanh Lý",
+    "asset": "Tài Sản",
+    "assetPlaceholder": "Chọn tài sản...",
+    "assetLoading": "Đang tải tài sản...",
+    "disposalReason": "Lý Do Thanh Lý",
+    "disposalReasonPlaceholder": "vd. Hư hỏng và không thể sửa chữa",
+    "notes": "Ghi Chú",
+    "optional": "tùy chọn",
+    "notesPlaceholder": "vd. Tình trạng không còn phù hợp để sử dụng",
+    "cancel": "Hủy",
+    "submit": "Thêm Tài Sản",
+    "submitting": "Đang lưu...",
+    "toast": {
+      "noAsset": "Vui lòng chọn tài sản trước",
+      "noReason": "Lý do thanh lý là bắt buộc"
+    }
+  },
+  "addAssetMutationModal": {
+    "title": "Thêm Tài Sản",
+    "asset": "Tài Sản",
+    "assetPlaceholder": "Chọn tài sản...",
+    "assetLoading": "Đang tải tài sản...",
+    "fromLocation": "Vị Trí Xuất Phát",
+    "fromLocationPlaceholder": "vd. Tòa nhà A tầng 2",
+    "toLocation": "Vị Trí Đích",
+    "toLocationPlaceholder": "vd. Tòa nhà B tầng 1",
+    "notes": "Ghi Chú",
+    "optional": "tùy chọn",
+    "notesPlaceholder": "Lý do chuyển tài sản...",
+    "cancel": "Hủy",
+    "submit": "Thêm Tài Sản",
+    "submitting": "Đang lưu...",
+    "toast": {
+      "noAsset": "Vui lòng chọn tài sản trước",
+      "noLocation": "Vị trí xuất phát và đích đến là bắt buộc",
+      "success": "Thêm tài sản thành công",
+      "error": "Không thể thêm tài sản"
+    }
+  },
+  "approvalStatus": {
+    "title": "Trạng Thái Phê Duyệt",
+    "completed": "hoàn thành",
+    "noData": "Chưa có dữ liệu phê duyệt",
+    "step": "Bước",
+    "by": "bởi",
+    "badge": {
+      "approved": "Đã duyệt",
+      "rejected": "Từ chối",
+      "pending": "Đang chờ"
+    }
+  },
+  "submitMutationModal": {
+  "title": "Gửi Giao Dịch",
+  "warningMessage": "Giao dịch đã gửi không thể chỉnh sửa lại. Hãy đảm bảo tất cả tài sản đã chính xác trước khi tiếp tục.",
   "notes": "Ghi Chú",
   "optional": "tùy chọn",
-  "notesPlaceholder": "vd. Tình trạng không còn phù hợp để sử dụng",
+  "notesPlaceholder": "vd. Vui lòng xử lý ngay",
   "cancel": "Hủy",
-  "submit": "Thêm Tài Sản",
-  "submitting": "Đang lưu...",
+  "submit": "Gửi",
+  "saving": "Đang lưu...",
+  "processing": "Đang xử lý...",
   "toast": {
-    "noAsset": "Vui lòng chọn tài sản trước",
-    "noReason": "Lý do thanh lý là bắt buộc"
+    "success": "Gửi giao dịch thành công",
+    "errorSubmit": "Không thể gửi giao dịch",
+    "errorInitiate": "Không thể khởi tạo phê duyệt"
   }
 }
 }

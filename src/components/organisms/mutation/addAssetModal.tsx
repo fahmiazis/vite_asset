@@ -1,5 +1,6 @@
 import { useState } from "react"
 import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
 import { useAddAssetDraftMutation } from "../../../hooks/mutation/mutation/addAssetDraftMutation"
 import { useAssetList } from "../../../hooks/query/asset/list"
 
@@ -19,6 +20,7 @@ export function AddAssetModal({
   const [toLocation, setToLocation]     = useState("")
   const [notes, setNotes]               = useState("")
 
+  const { t } = useTranslation()
   const { data: assetData, isLoading: isLoadingAssets } = useAssetList({ page: 1, limit: 100 })
   const { mutate: addAsset, isPending } = useAddAssetDraftMutation(transactionNumber)
 
@@ -27,11 +29,11 @@ export function AddAssetModal({
 
   const handleSubmit = () => {
     if (!selectedAsset) {
-      toast.error("Pilih aset terlebih dahulu")
+      toast.error(t("addAssetMutationModal.toast.noAsset"))
       return
     }
     if (!fromLocation.trim() || !toLocation.trim()) {
-      toast.error("Lokasi asal dan tujuan wajib diisi")
+      toast.error(t("addAssetMutationModal.toast.noLocation"))
       return
     }
 
@@ -45,12 +47,12 @@ export function AddAssetModal({
       },
       {
         onSuccess: () => {
-          toast.success("Aset berhasil ditambahkan")
+          toast.success(t("addAssetMutationModal.toast.success"))
           onSuccess?.()
           onClose()
         },
         onError: () => {
-          toast.error("Gagal menambahkan aset")
+          toast.error(t("addAssetMutationModal.toast.error"))
         },
       }
     )
@@ -64,7 +66,7 @@ export function AddAssetModal({
         <div className="flex items-start justify-between px-5 py-4 border-b border-gray-100 dark:border-gray-800">
           <div className="min-w-0">
             <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
-              Tambah aset
+              {t("addAssetMutationModal.title")}
             </h3>
             <p className="text-xs text-gray-400 font-mono mt-1 truncate">
               {transactionNumber}
@@ -88,23 +90,16 @@ export function AddAssetModal({
           {/* Select aset */}
           <div className="space-y-1.5">
             <label className="block text-xs font-medium text-gray-700 dark:text-gray-300">
-              Aset
+              {t("addAssetMutationModal.asset")}
             </label>
             <select
               value={selectedAssetId ?? ""}
               onChange={(e) => setSelectedAssetId(Number(e.target.value) || null)}
               disabled={isPending || isLoadingAssets}
-              className="
-                w-full px-3 py-2.5 text-sm
-                border border-gray-300 dark:border-gray-700
-                rounded-xl bg-white dark:bg-gray-900
-                text-gray-800 dark:text-gray-100
-                focus:outline-none focus:ring-2 focus:ring-indigo-500
-                disabled:opacity-50
-              "
+              className="w-full px-3 py-2.5 text-sm border border-gray-300 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
             >
               <option value="">
-                {isLoadingAssets ? "Memuat aset..." : "Pilih aset..."}
+                {isLoadingAssets ? t("addAssetMutationModal.assetLoading") : t("addAssetMutationModal.assetPlaceholder")}
               </option>
               {assets.map((asset) => (
                 <option key={asset.id} value={asset.id}>
@@ -118,45 +113,29 @@ export function AddAssetModal({
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1.5">
               <label className="block text-xs font-medium text-gray-700 dark:text-gray-300">
-                Lokasi asal
+                {t("addAssetMutationModal.fromLocation")}
               </label>
               <input
                 type="text"
                 value={fromLocation}
                 onChange={(e) => setFromLocation(e.target.value)}
-                placeholder="cth. Gedung A Lt. 2"
+                placeholder={t("addAssetMutationModal.fromLocationPlaceholder")}
                 disabled={isPending}
-                className="
-                  w-full px-3 py-2.5 text-sm
-                  border border-gray-300 dark:border-gray-700
-                  rounded-xl bg-white dark:bg-gray-900
-                  text-gray-800 dark:text-gray-100
-                  placeholder:text-gray-400
-                  focus:outline-none focus:ring-2 focus:ring-indigo-500
-                  disabled:opacity-50
-                "
+                className="w-full px-3 py-2.5 text-sm border border-gray-300 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
               />
             </div>
 
             <div className="space-y-1.5">
               <label className="block text-xs font-medium text-gray-700 dark:text-gray-300">
-                Lokasi tujuan
+                {t("addAssetMutationModal.toLocation")}
               </label>
               <input
                 type="text"
                 value={toLocation}
                 onChange={(e) => setToLocation(e.target.value)}
-                placeholder="cth. Gedung B Lt. 1"
+                placeholder={t("addAssetMutationModal.toLocationPlaceholder")}
                 disabled={isPending}
-                className="
-                  w-full px-3 py-2.5 text-sm
-                  border border-gray-300 dark:border-gray-700
-                  rounded-xl bg-white dark:bg-gray-900
-                  text-gray-800 dark:text-gray-100
-                  placeholder:text-gray-400
-                  focus:outline-none focus:ring-2 focus:ring-indigo-500
-                  disabled:opacity-50
-                "
+                className="w-full px-3 py-2.5 text-sm border border-gray-300 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
               />
             </div>
           </div>
@@ -164,24 +143,16 @@ export function AddAssetModal({
           {/* Notes */}
           <div className="space-y-1.5">
             <label className="block text-xs font-medium text-gray-700 dark:text-gray-300">
-              Catatan{" "}
-              <span className="text-gray-400 font-normal">(opsional)</span>
+              {t("addAssetMutationModal.notes")}{" "}
+              <span className="text-gray-400 font-normal">({t("addAssetMutationModal.optional")})</span>
             </label>
             <textarea
               rows={3}
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              placeholder="Alasan pemindahan aset..."
+              placeholder={t("addAssetMutationModal.notesPlaceholder")}
               disabled={isPending}
-              className="
-                w-full px-3 py-2.5 text-sm
-                border border-gray-300 dark:border-gray-700
-                rounded-xl bg-white dark:bg-gray-900
-                text-gray-800 dark:text-gray-100
-                placeholder:text-gray-400
-                focus:outline-none focus:ring-2 focus:ring-indigo-500
-                resize-none transition-all disabled:opacity-50
-              "
+              className="w-full px-3 py-2.5 text-sm border border-gray-300 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none transition-all disabled:opacity-50"
             />
           </div>
         </div>
@@ -191,28 +162,17 @@ export function AddAssetModal({
           <button
             onClick={onClose}
             disabled={isPending}
-            className="
-              flex-1 px-4 py-2 text-sm font-medium
-              border border-gray-300 dark:border-gray-700
-              text-gray-700 dark:text-gray-300
-              rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800
-              transition-colors disabled:opacity-50
-            "
+            className="flex-1 px-4 py-2 text-sm font-medium border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors disabled:opacity-50"
           >
-            Batal
+            {t("addAssetMutationModal.cancel")}
           </button>
 
           <button
             onClick={handleSubmit}
             disabled={isPending || isLoadingAssets}
-            className="
-              flex-1 px-4 py-2 text-sm font-medium
-              bg-indigo-600 hover:bg-indigo-700
-              text-white rounded-xl transition-colors
-              disabled:opacity-50 disabled:cursor-not-allowed
-            "
+            className="flex-1 px-4 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isPending ? "Menyimpan..." : "Tambah aset"}
+            {isPending ? t("addAssetMutationModal.submitting") : t("addAssetMutationModal.submit")}
           </button>
         </div>
 

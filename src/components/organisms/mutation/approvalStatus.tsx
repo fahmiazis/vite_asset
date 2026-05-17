@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next"
 import { useMutationApprovalStatus } from "../../../hooks/query/mutation/approvalStatus"
 import type { Approval } from "../../../models/mutation/approvalStatus"
 
@@ -6,22 +7,23 @@ type MutationApprovalStatusProps = {
 }
 
 export function MutationApprovalStatus({ transactionNumber }: MutationApprovalStatusProps) {
+  const { t } = useTranslation()
   const { data, isLoading } = useMutationApprovalStatus(transactionNumber)
 
-  const approvalData  = data?.data
-  const approvals     = approvalData?.approvals     ?? []
-  const totalSteps    = approvalData?.total_steps   ?? 0
+  const approvalData   = data?.data
+  const approvals      = approvalData?.approvals      ?? []
+  const totalSteps     = approvalData?.total_steps    ?? 0
   const completedSteps = approvalData?.completed_steps ?? 0
 
   return (
     <div className="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-xl p-5">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200">
-          Status Approval
+          {t("approvalStatus.title")}
         </h3>
         {totalSteps > 0 && (
           <span className="text-xs text-gray-500 dark:text-gray-400">
-            {completedSteps} / {totalSteps} selesai
+            {completedSteps} / {totalSteps} {t("approvalStatus.completed")}
           </span>
         )}
       </div>
@@ -51,7 +53,7 @@ export function MutationApprovalStatus({ transactionNumber }: MutationApprovalSt
         </div>
       ) : approvals.length === 0 ? (
         <p className="text-xs text-gray-400 text-center py-4">
-          Belum ada data approval
+          {t("approvalStatus.noData")}
         </p>
       ) : (
         <div>
@@ -74,7 +76,11 @@ export function MutationApprovalStatus({ transactionNumber }: MutationApprovalSt
               : "text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/30 border-amber-200 dark:border-amber-700"
 
             const dotColor   = isApproved ? "bg-emerald-500" : isRejected ? "bg-red-500" : "bg-amber-400"
-            const badgeLabel = isApproved ? "Approved" : isRejected ? "Rejected" : "Pending"
+            const badgeLabel = isApproved
+              ? t("approvalStatus.badge.approved")
+              : isRejected
+              ? t("approvalStatus.badge.rejected")
+              : t("approvalStatus.badge.pending")
 
             return (
               <div key={approval.id} className="flex gap-3">
@@ -103,7 +109,7 @@ export function MutationApprovalStatus({ transactionNumber }: MutationApprovalSt
                   <div className="flex items-start justify-between gap-2">
                     <div>
                       <p className="text-xs font-semibold text-gray-800 dark:text-gray-100">
-                        {approval.flow_step?.step_name ?? `Langkah ${index + 1}`}
+                        {approval.flow_step?.step_name ?? `${t("approvalStatus.step")} ${index + 1}`}
                       </p>
                       <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">
                         {approval.approver_role_name}
@@ -127,7 +133,7 @@ export function MutationApprovalStatus({ transactionNumber }: MutationApprovalSt
                       })}
                       {approval.approved_by && (
                         <span className="text-gray-400 dark:text-gray-500 ml-1">
-                          · oleh {approval.approved_by}
+                          · {t("approvalStatus.by")} {approval.approved_by}
                         </span>
                       )}
                     </div>
@@ -145,7 +151,7 @@ export function MutationApprovalStatus({ transactionNumber }: MutationApprovalSt
                       })}
                       {approval.rejected_by && (
                         <span className="text-gray-400 dark:text-gray-500 ml-1">
-                          · oleh {approval.rejected_by}
+                          · {t("approvalStatus.by")} {approval.rejected_by}
                         </span>
                       )}
                     </div>

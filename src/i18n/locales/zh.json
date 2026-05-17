@@ -250,6 +250,7 @@
     "title": "批准交易",
     "confirmationTitle": "审批确认",
     "confirmationDescription": "请在继续审批前确认所有交易数据无误。",
+    "confirmationDescriptions": "此操作将批准调拨交易且无法撤销。请确保数据正确后再继续操作。",
     "notes": "备注",
     "optional": "可选",
     "notesPlaceholder": "已批准...",
@@ -354,21 +355,71 @@
     }
   },
   "addAssetModal": {
-  "title": "添加处置资产",
-  "asset": "资产",
-  "assetPlaceholder": "选择资产...",
-  "assetLoading": "加载资产中...",
-  "disposalReason": "处置原因",
-  "disposalReasonPlaceholder": "例如：已损坏且无法修复",
+    "title": "添加处置资产",
+    "asset": "资产",
+    "assetPlaceholder": "选择资产...",
+    "assetLoading": "加载资产中...",
+    "disposalReason": "处置原因",
+    "disposalReasonPlaceholder": "例如：已损坏且无法修复",
+    "notes": "备注",
+    "optional": "可选",
+    "notesPlaceholder": "例如：状态已不适合使用",
+    "cancel": "取消",
+    "submit": "添加资产",
+    "submitting": "保存中...",
+    "toast": {
+      "noAsset": "请先选择一个资产",
+      "noReason": "处置原因为必填项"
+    }
+  },
+  "addAssetMutationModal": {
+    "title": "添加资产",
+    "asset": "资产",
+    "assetPlaceholder": "选择资产...",
+    "assetLoading": "加载资产中...",
+    "fromLocation": "起始位置",
+    "fromLocationPlaceholder": "例如：A栋2楼",
+    "toLocation": "目标位置",
+    "toLocationPlaceholder": "例如：B栋1楼",
+    "notes": "备注",
+    "optional": "可选",
+    "notesPlaceholder": "资产转移原因...",
+    "cancel": "取消",
+    "submit": "添加资产",
+    "submitting": "保存中...",
+    "toast": {
+      "noAsset": "请先选择一个资产",
+      "noLocation": "起始位置和目标位置为必填项",
+      "success": "资产添加成功",
+      "error": "添加资产失败"
+    }
+  },
+  "approvalStatus": {
+    "title": "审批状态",
+    "completed": "已完成",
+    "noData": "暂无审批数据",
+    "step": "步骤",
+    "by": "由",
+    "badge": {
+      "approved": "已批准",
+      "rejected": "已拒绝",
+      "pending": "待审批"
+    }
+  },
+  "submitMutationModal": {
+  "title": "提交交易",
+  "warningMessage": "已提交的交易无法再次编辑。请确保所有资产正确后再继续操作。",
   "notes": "备注",
   "optional": "可选",
-  "notesPlaceholder": "例如：状态已不适合使用",
+  "notesPlaceholder": "例如：请尽快处理",
   "cancel": "取消",
-  "submit": "添加资产",
-  "submitting": "保存中...",
+  "submit": "提交",
+  "saving": "保存中...",
+  "processing": "处理中...",
   "toast": {
-    "noAsset": "请先选择一个资产",
-    "noReason": "处置原因为必填项"
+    "success": "交易提交成功",
+    "errorSubmit": "提交交易失败",
+    "errorInitiate": "启动审批失败"
   }
 }
 }

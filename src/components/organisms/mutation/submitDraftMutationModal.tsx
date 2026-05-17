@@ -1,5 +1,6 @@
 import { useState } from "react"
 import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
 import { useQueryClient } from "@tanstack/react-query"
 import { useSubmitDraftMutation } from "../../../hooks/mutation/mutation/submitDraftMutation"
 import { useInitiateApprovalMutation } from "../../../hooks/mutation/mutation/initiateApprovalMutation"
@@ -16,8 +17,9 @@ export function SubmitMutationModal({
   onSuccess,
 }: SubmitMutationModalProps) {
   const [notes, setNotes] = useState("")
-
+  const { t } = useTranslation()
   const queryClient = useQueryClient()
+
   const { mutate: submitMutation, isPending: isSubmitting }   = useSubmitDraftMutation(transactionNumber)
   const { mutate: initiateApproval, isPending: isInitiating } = useInitiateApprovalMutation(transactionNumber)
 
@@ -30,7 +32,7 @@ export function SubmitMutationModal({
         onSuccess: () => {
           initiateApproval(undefined, {
             onSuccess: () => {
-              toast.success("Transaksi berhasil disubmit")
+              toast.success(t("submitMutationModal.toast.success"))
 
               queryClient.invalidateQueries({
                 queryKey: ["mutation-draft-detail", transactionNumber],
@@ -40,12 +42,12 @@ export function SubmitMutationModal({
               onClose()
             },
             onError: () => {
-              toast.error("Gagal inisiasi approval")
+              toast.error(t("submitMutationModal.toast.errorInitiate"))
             },
           })
         },
         onError: () => {
-          toast.error("Gagal submit transaksi")
+          toast.error(t("submitMutationModal.toast.errorSubmit"))
         },
       }
     )
@@ -59,7 +61,7 @@ export function SubmitMutationModal({
         <div className="flex items-start justify-between px-5 py-4 border-b border-gray-100 dark:border-gray-800">
           <div className="min-w-0">
             <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
-              Submit transaksi
+              {t("submitMutationModal.title")}
             </h3>
             <p className="text-xs text-gray-400 font-mono mt-1 truncate">
               {transactionNumber}
@@ -85,21 +87,21 @@ export function SubmitMutationModal({
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
             </svg>
             <p className="text-xs text-amber-700 dark:text-amber-400 leading-relaxed">
-              Transaksi yang sudah disubmit tidak dapat diedit kembali. Pastikan semua aset sudah benar sebelum melanjutkan.
+              {t("submitMutationModal.warningMessage")}
             </p>
           </div>
 
           {/* Notes */}
           <div className="space-y-1.5">
             <label className="block text-xs font-medium text-gray-700 dark:text-gray-300">
-              Catatan{" "}
-              <span className="text-gray-400 font-normal">(opsional)</span>
+              {t("submitMutationModal.notes")}{" "}
+              <span className="text-gray-400 font-normal">({t("submitMutationModal.optional")})</span>
             </label>
             <textarea
               rows={4}
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              placeholder="cth. Mohon segera diproses"
+              placeholder={t("submitMutationModal.notesPlaceholder")}
               disabled={isPending}
               className="
                 w-full px-3 py-2.5 text-sm
@@ -119,32 +121,21 @@ export function SubmitMutationModal({
           <button
             onClick={onClose}
             disabled={isPending}
-            className="
-              flex-1 px-4 py-2 text-sm font-medium
-              border border-gray-300 dark:border-gray-700
-              text-gray-700 dark:text-gray-300
-              rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800
-              transition-colors disabled:opacity-50
-            "
+            className="flex-1 px-4 py-2 text-sm font-medium border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors disabled:opacity-50"
           >
-            Batal
+            {t("submitMutationModal.cancel")}
           </button>
 
           <button
             onClick={handleSubmit}
             disabled={isPending}
-            className="
-              flex-1 px-4 py-2 text-sm font-medium
-              bg-indigo-600 hover:bg-indigo-700
-              text-white rounded-xl transition-colors
-              disabled:opacity-50 disabled:cursor-not-allowed
-            "
+            className="flex-1 px-4 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isSubmitting
-              ? "Menyimpan..."
+              ? t("submitMutationModal.saving")
               : isInitiating
-              ? "Memproses..."
-              : "Submit"}
+              ? t("submitMutationModal.processing")
+              : t("submitMutationModal.submit")}
           </button>
         </div>
 

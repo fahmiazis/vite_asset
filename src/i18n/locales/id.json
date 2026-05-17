@@ -250,6 +250,7 @@
     "title": "Approve Transaksi",
     "confirmationTitle": "Konfirmasi Approval",
     "confirmationDescription": "Pastikan seluruh data transaksi sudah sesuai sebelum melanjutkan approval.",
+    "confirmationDescriptions": "Tindakan ini akan menyetujui transaksi mutasi dan tidak dapat dibatalkan. Pastikan data sudah benar sebelum melanjutkan.",
     "notes": "Catatan",
     "optional": "opsional",
     "notesPlaceholder": "Disetujui...",
@@ -354,21 +355,71 @@
     }
   },
   "addAssetModal": {
-  "title": "Tambah Aset Disposal",
-  "asset": "Aset",
-  "assetPlaceholder": "Pilih aset...",
-  "assetLoading": "Memuat aset...",
-  "disposalReason": "Alasan Disposal",
-  "disposalReasonPlaceholder": "cth. Rusak dan tidak dapat diperbaiki",
+    "title": "Tambah Aset Disposal",
+    "asset": "Aset",
+    "assetPlaceholder": "Pilih aset...",
+    "assetLoading": "Memuat aset...",
+    "disposalReason": "Alasan Disposal",
+    "disposalReasonPlaceholder": "cth. Rusak dan tidak dapat diperbaiki",
+    "notes": "Catatan",
+    "optional": "opsional",
+    "notesPlaceholder": "cth. Kondisi sudah tidak layak pakai",
+    "cancel": "Batal",
+    "submit": "Tambah Aset",
+    "submitting": "Menyimpan...",
+    "toast": {
+      "noAsset": "Pilih aset terlebih dahulu",
+      "noReason": "Alasan disposal wajib diisi"
+    }
+  },
+  "addAssetMutationModal": {
+    "title": "Tambah Aset",
+    "asset": "Aset",
+    "assetPlaceholder": "Pilih aset...",
+    "assetLoading": "Memuat aset...",
+    "fromLocation": "Lokasi Asal",
+    "fromLocationPlaceholder": "cth. Gedung A Lt. 2",
+    "toLocation": "Lokasi Tujuan",
+    "toLocationPlaceholder": "cth. Gedung B Lt. 1",
+    "notes": "Catatan",
+    "optional": "opsional",
+    "notesPlaceholder": "Alasan pemindahan aset...",
+    "cancel": "Batal",
+    "submit": "Tambah Aset",
+    "submitting": "Menyimpan...",
+    "toast": {
+      "noAsset": "Pilih aset terlebih dahulu",
+      "noLocation": "Lokasi asal dan tujuan wajib diisi",
+      "success": "Aset berhasil ditambahkan",
+      "error": "Gagal menambahkan aset"
+    }
+  },
+  "approvalStatus": {
+    "title": "Status Approval",
+    "completed": "selesai",
+    "noData": "Belum ada data approval",
+    "step": "Langkah",
+    "by": "oleh",
+    "badge": {
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "pending": "Pending"
+    }
+  },
+  "submitMutationModal": {
+  "title": "Submit Transaksi",
+  "warningMessage": "Transaksi yang sudah disubmit tidak dapat diedit kembali. Pastikan semua aset sudah benar sebelum melanjutkan.",
   "notes": "Catatan",
   "optional": "opsional",
-  "notesPlaceholder": "cth. Kondisi sudah tidak layak pakai",
+  "notesPlaceholder": "cth. Mohon segera diproses",
   "cancel": "Batal",
-  "submit": "Tambah Aset",
-  "submitting": "Menyimpan...",
+  "submit": "Submit",
+  "saving": "Menyimpan...",
+  "processing": "Memproses...",
   "toast": {
-    "noAsset": "Pilih aset terlebih dahulu",
-    "noReason": "Alasan disposal wajib diisi"
+    "success": "Transaksi berhasil disubmit",
+    "errorSubmit": "Gagal submit transaksi",
+    "errorInitiate": "Gagal inisiasi approval"
   }
 }
 }

@@ -250,6 +250,7 @@
     "title": "Approve Transaction",
     "confirmationTitle": "Approval Confirmation",
     "confirmationDescription": "Please ensure all transaction data is correct before proceeding with approval.",
+    "confirmationDescriptions": "This action will approve the mutation transaction and cannot be undone. Make sure the data is correct before proceeding.",
     "notes": "Notes",
     "optional": "optional",
     "notesPlaceholder": "Approved...",
@@ -354,21 +355,71 @@
     }
   },
   "addAssetModal": {
-  "title": "Add Disposal Asset",
-  "asset": "Asset",
-  "assetPlaceholder": "Select asset...",
-  "assetLoading": "Loading assets...",
-  "disposalReason": "Disposal Reason",
-  "disposalReasonPlaceholder": "e.g. Damaged and cannot be repaired",
+    "title": "Add Disposal Asset",
+    "asset": "Asset",
+    "assetPlaceholder": "Select asset...",
+    "assetLoading": "Loading assets...",
+    "disposalReason": "Disposal Reason",
+    "disposalReasonPlaceholder": "e.g. Damaged and cannot be repaired",
+    "notes": "Notes",
+    "optional": "optional",
+    "notesPlaceholder": "e.g. Condition is no longer fit for use",
+    "cancel": "Cancel",
+    "submit": "Add Asset",
+    "submitting": "Saving...",
+    "toast": {
+      "noAsset": "Please select an asset first",
+      "noReason": "Disposal reason is required"
+    }
+  },
+  "addAssetMutationModal": {
+    "title": "Add Asset",
+    "asset": "Asset",
+    "assetPlaceholder": "Select asset...",
+    "assetLoading": "Loading assets...",
+    "fromLocation": "Origin Location",
+    "fromLocationPlaceholder": "e.g. Building A 2nd Floor",
+    "toLocation": "Destination Location",
+    "toLocationPlaceholder": "e.g. Building B 1st Floor",
+    "notes": "Notes",
+    "optional": "optional",
+    "notesPlaceholder": "Reason for asset transfer...",
+    "cancel": "Cancel",
+    "submit": "Add Asset",
+    "submitting": "Saving...",
+    "toast": {
+      "noAsset": "Please select an asset first",
+      "noLocation": "Origin and destination location are required",
+      "success": "Asset added successfully",
+      "error": "Failed to add asset"
+    }
+  },
+  "approvalStatus": {
+    "title": "Approval Status",
+    "completed": "completed",
+    "noData": "No approval data yet",
+    "step": "Step",
+    "by": "by",
+    "badge": {
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "pending": "Pending"
+    }
+  },
+  "submitMutationModal": {
+  "title": "Submit Transaction",
+  "warningMessage": "Submitted transactions cannot be edited again. Make sure all assets are correct before proceeding.",
   "notes": "Notes",
   "optional": "optional",
-  "notesPlaceholder": "e.g. Condition is no longer fit for use",
+  "notesPlaceholder": "e.g. Please process immediately",
   "cancel": "Cancel",
-  "submit": "Add Asset",
-  "submitting": "Saving...",
+  "submit": "Submit",
+  "saving": "Saving...",
+  "processing": "Processing...",
   "toast": {
-    "noAsset": "Please select an asset first",
-    "noReason": "Disposal reason is required"
+    "success": "Transaction submitted successfully",
+    "errorSubmit": "Failed to submit transaction",
+    "errorInitiate": "Failed to initiate approval"
   }
 }
 }

@@ -1,5 +1,6 @@
 import { useState } from "react"
 import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
 import { useQueryClient } from "@tanstack/react-query"
 import { useApproveTransactionApproval } from "../../../hooks/mutation/mutation/approve"
 import { useMutationApprovalStatus } from "../../../hooks/query/mutation/approvalStatus"
@@ -16,7 +17,7 @@ export function ApproveModal({
   onSuccess,
 }: ApproveModalProps) {
   const [notes, setNotes] = useState("")
-
+  const { t } = useTranslation()
   const queryClient = useQueryClient()
 
   const { mutate: approve, isPending } =
@@ -41,7 +42,7 @@ export function ApproveModal({
       },
       {
         onSuccess: () => {
-          toast.success("Transaksi berhasil diapprove")
+          toast.success(t("approveModal.toast.success"))
 
           queryClient.invalidateQueries({
             queryKey: ["mutation-approval-status", transactionNumber],
@@ -51,7 +52,7 @@ export function ApproveModal({
           onClose()
         },
         onError: () => {
-          toast.error("Gagal approve transaksi")
+          toast.error(t("approveModal.toast.error"))
         },
       }
     )
@@ -71,7 +72,7 @@ export function ApproveModal({
             </div>
             <div>
               <h3 className="text-base font-semibold text-gray-900 dark:text-white">
-                Approve transaksi
+                {t("approveModal.title")}
               </h3>
               <p className="text-xs text-gray-400 font-mono mt-1">
                 {transactionNumber}
@@ -101,10 +102,10 @@ export function ApproveModal({
               </svg>
               <div>
                 <p className="text-xs font-medium text-indigo-800 dark:text-indigo-300">
-                  Konfirmasi persetujuan
+                  {t("approveModal.confirmationTitle")}
                 </p>
                 <p className="text-xs text-indigo-700 dark:text-indigo-400 mt-1 leading-relaxed">
-                  Tindakan ini akan menyetujui transaksi mutasi dan tidak dapat dibatalkan. Pastikan data sudah benar sebelum melanjutkan.
+                  {t("approveModal.confirmationDescriptions")}
                 </p>
               </div>
             </div>
@@ -113,14 +114,14 @@ export function ApproveModal({
           {/* Notes */}
           <div>
             <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-              Catatan{" "}
-              <span className="text-gray-400 font-normal">(opsional)</span>
+              {t("approveModal.notes")}{" "}
+              <span className="text-gray-400 font-normal">({t("approveModal.optional")})</span>
             </label>
             <textarea
               rows={4}
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              placeholder="Tambahkan catatan approval..."
+              placeholder={t("approveModal.notesPlaceholder")}
               disabled={isPending}
               className="w-full px-3 py-2.5 text-sm border border-gray-300 dark:border-gray-600 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 placeholder:text-gray-400 resize-none transition-all disabled:opacity-50"
             />
@@ -134,7 +135,7 @@ export function ApproveModal({
             disabled={isPending}
             className="flex-1 px-4 py-2.5 text-sm border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-all disabled:opacity-50"
           >
-            Batal
+            {t("approveModal.cancel")}
           </button>
 
           <button
@@ -148,7 +149,7 @@ export function ApproveModal({
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
               </svg>
             )}
-            {isPending ? "Menyetujui..." : "Approve"}
+            {isPending ? t("approveModal.approving") : t("approveModal.approve")}
           </button>
         </div>
 
