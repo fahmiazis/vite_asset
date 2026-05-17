@@ -326,5 +326,49 @@
     "successPartial": "{{success}} berhasil, {{fail}} gagal",
     "error": "Gagal submit Goods Receipt",
     "noPending": "Tidak ada asset pending"
+  },
+  "submitDisposalModal": {
+    "title": "Submit Transaksi",
+    "infoMessage": "Transaksi akan dikirim untuk proses approval. Pastikan semua data sudah benar.",
+    "notes": "Catatan",
+    "optional": "opsional",
+    "notesPlaceholder": "Tambahkan catatan untuk proses approval...",
+    "cancel": "Batal",
+    "submit": "Submit",
+    "submitting": "Mengsubmit...",
+    "toast": {
+      "success": "Disposal berhasil disubmit",
+      "error": "Gagal mengsubmit disposal"
+    }
+  },
+  "removeAssetModal": {
+    "title": "Hapus Aset",
+    "confirmationMessage": "Yakin ingin menghapus aset ini?",
+    "warningMessage": "Aset yang dihapus tidak dapat dikembalikan ke transaksi ini secara otomatis.",
+    "cancel": "Batal",
+    "confirm": "Hapus Aset",
+    "removing": "Menghapus...",
+    "toast": {
+      "success": "Aset berhasil dihapus dari disposal",
+      "error": "Gagal menghapus aset dari disposal"
+    }
+  },
+  "addAssetModal": {
+  "title": "Tambah Aset Disposal",
+  "asset": "Aset",
+  "assetPlaceholder": "Pilih aset...",
+  "assetLoading": "Memuat aset...",
+  "disposalReason": "Alasan Disposal",
+  "disposalReasonPlaceholder": "cth. Rusak dan tidak dapat diperbaiki",
+  "notes": "Catatan",
+  "optional": "opsional",
+  "notesPlaceholder": "cth. Kondisi sudah tidak layak pakai",
+  "cancel": "Batal",
+  "submit": "Tambah Aset",
+  "submitting": "Menyimpan...",
+  "toast": {
+    "noAsset": "Pilih aset terlebih dahulu",
+    "noReason": "Alasan disposal wajib diisi"
   }
+}
 }

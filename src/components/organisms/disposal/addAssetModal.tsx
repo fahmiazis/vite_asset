@@ -1,5 +1,6 @@
 import { useState } from "react"
 import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
 import { useAssetList } from "../../../hooks/query/asset/list"
 import { useAddAssetToDisposal } from "../../../hooks/mutation/disposal/addAsset"
 
@@ -18,6 +19,7 @@ export function AddAssetToDisposalModal({
   const [disposalReason, setDisposalReason] = useState("")
   const [notes, setNotes] = useState("")
 
+  const { t } = useTranslation()
   const { data: assetData, isLoading: isLoadingAssets } = useAssetList({ page: 1, limit: 100 })
   const { mutate: addAsset, isPending } = useAddAssetToDisposal({ transactionNumber })
 
@@ -26,11 +28,11 @@ export function AddAssetToDisposalModal({
 
   const handleSubmit = () => {
     if (!selectedAsset) {
-      toast.error("Pilih aset terlebih dahulu")
+      toast.error(t("addAssetModal.toast.noAsset"))
       return
     }
     if (!disposalReason.trim()) {
-      toast.error("Alasan disposal wajib diisi")
+      toast.error(t("addAssetModal.toast.noReason"))
       return
     }
 
@@ -58,7 +60,7 @@ export function AddAssetToDisposalModal({
         <div className="flex items-start justify-between px-5 py-4 border-b border-gray-100 dark:border-gray-800">
           <div className="min-w-0">
             <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
-              Tambah aset disposal
+              {t("addAssetModal.title")}
             </h3>
             <p className="text-xs text-gray-400 font-mono mt-1 truncate">
               {transactionNumber}
@@ -81,7 +83,7 @@ export function AddAssetToDisposalModal({
           {/* Select Aset */}
           <div className="space-y-1.5">
             <label className="block text-xs font-medium text-gray-700 dark:text-gray-300">
-              Aset <span className="text-red-500">*</span>
+              {t("addAssetModal.asset")} <span className="text-red-500">*</span>
             </label>
             <select
               value={selectedAssetId ?? ""}
@@ -90,7 +92,7 @@ export function AddAssetToDisposalModal({
               className="w-full px-3 py-2.5 text-sm border border-gray-300 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
             >
               <option value="">
-                {isLoadingAssets ? "Memuat aset..." : "Pilih aset..."}
+                {isLoadingAssets ? t("addAssetModal.assetLoading") : t("addAssetModal.assetPlaceholder")}
               </option>
               {assets.map((asset) => (
                 <option key={asset.id} value={asset.id}>
@@ -120,13 +122,13 @@ export function AddAssetToDisposalModal({
           {/* Disposal Reason */}
           <div className="space-y-1.5">
             <label className="block text-xs font-medium text-gray-700 dark:text-gray-300">
-              Alasan disposal <span className="text-red-500">*</span>
+              {t("addAssetModal.disposalReason")} <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               value={disposalReason}
               onChange={(e) => setDisposalReason(e.target.value)}
-              placeholder="cth. Rusak dan tidak dapat diperbaiki"
+              placeholder={t("addAssetModal.disposalReasonPlaceholder")}
               disabled={isPending}
               className="w-full px-3 py-2.5 text-sm border border-gray-300 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
             />
@@ -135,14 +137,14 @@ export function AddAssetToDisposalModal({
           {/* Notes */}
           <div className="space-y-1.5">
             <label className="block text-xs font-medium text-gray-700 dark:text-gray-300">
-              Catatan{" "}
-              <span className="text-gray-400 font-normal">(opsional)</span>
+              {t("addAssetModal.notes")}{" "}
+              <span className="text-gray-400 font-normal">({t("addAssetModal.optional")})</span>
             </label>
             <textarea
               rows={3}
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              placeholder="cth. Kondisi sudah tidak layak pakai"
+              placeholder={t("addAssetModal.notesPlaceholder")}
               disabled={isPending}
               className="w-full px-3 py-2.5 text-sm border border-gray-300 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none disabled:opacity-50"
             />
@@ -156,14 +158,14 @@ export function AddAssetToDisposalModal({
             disabled={isPending}
             className="flex-1 px-4 py-2 text-sm font-medium border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors disabled:opacity-50"
           >
-            Batal
+            {t("addAssetModal.cancel")}
           </button>
           <button
             onClick={handleSubmit}
             disabled={isPending || isLoadingAssets || !selectedAssetId || !disposalReason.trim()}
             className="flex-1 px-4 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isPending ? "Menyimpan..." : "Tambah aset"}
+            {isPending ? t("addAssetModal.submitting") : t("addAssetModal.submit")}
           </button>
         </div>
 

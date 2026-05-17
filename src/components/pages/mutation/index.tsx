@@ -4,7 +4,6 @@ import { MutationTable } from '../../organisms/mutation/table'
 
 export default function MutationPage() {
   const { data } = useMutationList()
-  console.log('mutation data ==>', data)
   return (
     <div>
       <Head label='Mutation List' className='mb-4'/>

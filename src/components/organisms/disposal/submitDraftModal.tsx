@@ -1,5 +1,6 @@
 import { useState } from "react"
 import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
 import { useQueryClient } from "@tanstack/react-query"
 import { useSubmitDisposal } from "../../../hooks/mutation/disposal/submitDraft"
 
@@ -15,7 +16,7 @@ export function SubmitDisposalModal({
   onSuccess,
 }: SubmitDisposalModalProps) {
   const [notes, setNotes] = useState("")
-
+  const { t } = useTranslation()
   const queryClient = useQueryClient()
 
   const { mutate: submitDisposal, isPending } = useSubmitDisposal({
@@ -27,7 +28,7 @@ export function SubmitDisposalModal({
       { notes },
       {
         onSuccess: () => {
-          toast.success("Disposal berhasil disubmit")
+          toast.success(t("submitDisposalModal.toast.success"))
 
           queryClient.invalidateQueries({
             queryKey: ["disposal", transactionNumber],
@@ -38,7 +39,7 @@ export function SubmitDisposalModal({
         },
 
         onError: () => {
-          toast.error("Gagal mengsubmit disposal")
+          toast.error(t("submitDisposalModal.toast.error"))
         },
       }
     )
@@ -52,7 +53,7 @@ export function SubmitDisposalModal({
         <div className="flex items-start justify-between px-5 py-4 border-b border-gray-100 dark:border-gray-800">
           <div className="min-w-0">
             <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
-              Submit Transaksi
+              {t("submitDisposalModal.title")}
             </h3>
             <p className="text-xs text-gray-400 mt-1 truncate">
               {transactionNumber}
@@ -79,20 +80,22 @@ export function SubmitDisposalModal({
               </svg>
             </div>
             <p className="text-xs text-indigo-700 dark:text-indigo-400 font-medium">
-              Transaksi akan dikirim untuk proses approval. Pastikan semua data sudah benar.
+              {t("submitDisposalModal.infoMessage")}
             </p>
           </div>
 
           <div className="space-y-1.5">
             <label className="block text-xs font-medium text-gray-700 dark:text-gray-300">
-              Catatan{" "}
-              <span className="text-gray-400 font-normal">(opsional)</span>
+              {t("submitDisposalModal.notes")}{" "}
+              <span className="text-gray-400 font-normal">
+                ({t("submitDisposalModal.optional")})
+              </span>
             </label>
             <textarea
               rows={4}
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              placeholder="Tambahkan catatan untuk proses approval..."
+              placeholder={t("submitDisposalModal.notesPlaceholder")}
               disabled={isPending}
               className="
                 w-full px-3 py-2.5 text-sm
@@ -116,7 +119,7 @@ export function SubmitDisposalModal({
             disabled={isPending}
             className="flex-1 px-4 py-2 text-sm font-medium border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors disabled:opacity-50"
           >
-            Batal
+            {t("submitDisposalModal.cancel")}
           </button>
 
           <button
@@ -124,7 +127,7 @@ export function SubmitDisposalModal({
             disabled={isPending}
             className="flex-1 px-4 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isPending ? "Mengsubmit..." : "Submit"}
+            {isPending ? t("submitDisposalModal.submitting") : t("submitDisposalModal.submit")}
           </button>
         </div>
       </div>

@@ -284,47 +284,91 @@
     "error": "Không thể thực thi tài sản"
   },
   "goodsReceipt": {
-      "title": "Biên Nhận Hàng Hóa",
-      "mode": {
-        "label": "Chế độ GR",
-        "single": "1 Tài sản",
-        "bulkItem": "Theo mục",
-        "bulkAll": "Tất cả"
-      },
-      "progress": {
-        "label": "Tiến độ GR",
-        "done": "hoàn thành",
-        "pending": "đang chờ",
-        "total": "tổng",
-        "processing": "Đang xử lý GR..."
-      },
-      "selectItem": {
-        "label": "Chọn mục",
-        "placeholder": "-- Chọn mục --",
-        "assetPending": "tài sản đang chờ",
-        "noAsset": "Không có tài sản đang chờ cho mục này"
-      },
-      "selectAsset": {
-        "label": "Số tài sản",
-        "placeholder": "-- Chọn số tài sản --"
-      },
-      "bulkAll": {
-        "label": "Tất cả tài sản đang chờ",
-        "empty": "Không có tài sản đang chờ"
-      },
-      "notes": {
-        "label": "Ghi chú",
-        "optional": "tùy chọn",
-        "placeholder": "Hàng hóa nhận được trong tình trạng tốt..."
-      },
-      "cancel": "Hủy",
-      "submit": "Xác nhận GR",
-      "submitBulkItem": "GR Tất cả tài sản trong mục ({{count}})",
-      "submitBulkAll": "GR Tất cả ({{count}} tài sản)",
-      "processing": "Đang xử lý {{done}}/{{total}}...",
-      "success": "Tất cả {{count}} tài sản đã xử lý thành công",
-      "successPartial": "{{success}} thành công, {{fail}} thất bại",
-      "error": "Không thể xác nhận Goods Receipt",
-      "noPending": "Không có tài sản đang chờ"
+    "title": "Biên Nhận Hàng Hóa",
+    "mode": {
+      "label": "Chế độ GR",
+      "single": "1 Tài sản",
+      "bulkItem": "Theo mục",
+      "bulkAll": "Tất cả"
+    },
+    "progress": {
+      "label": "Tiến độ GR",
+      "done": "hoàn thành",
+      "pending": "đang chờ",
+      "total": "tổng",
+      "processing": "Đang xử lý GR..."
+    },
+    "selectItem": {
+      "label": "Chọn mục",
+      "placeholder": "-- Chọn mục --",
+      "assetPending": "tài sản đang chờ",
+      "noAsset": "Không có tài sản đang chờ cho mục này"
+    },
+    "selectAsset": {
+      "label": "Số tài sản",
+      "placeholder": "-- Chọn số tài sản --"
+    },
+    "bulkAll": {
+      "label": "Tất cả tài sản đang chờ",
+      "empty": "Không có tài sản đang chờ"
+    },
+    "notes": {
+      "label": "Ghi chú",
+      "optional": "tùy chọn",
+      "placeholder": "Hàng hóa nhận được trong tình trạng tốt..."
+    },
+    "cancel": "Hủy",
+    "submit": "Xác nhận GR",
+    "submitBulkItem": "GR Tất cả tài sản trong mục ({{count}})",
+    "submitBulkAll": "GR Tất cả ({{count}} tài sản)",
+    "processing": "Đang xử lý {{done}}/{{total}}...",
+    "success": "Tất cả {{count}} tài sản đã xử lý thành công",
+    "successPartial": "{{success}} thành công, {{fail}} thất bại",
+    "error": "Không thể xác nhận Goods Receipt",
+    "noPending": "Không có tài sản đang chờ"
+  },
+  "submitDisposalModal": {
+    "title": "Gửi Giao Dịch",
+    "infoMessage": "Giao dịch sẽ được gửi để phê duyệt. Vui lòng đảm bảo tất cả dữ liệu đã chính xác.",
+    "notes": "Ghi chú",
+    "optional": "tùy chọn",
+    "notesPlaceholder": "Thêm ghi chú cho quá trình phê duyệt...",
+    "cancel": "Hủy",
+    "submit": "Gửi",
+    "submitting": "Đang gửi...",
+    "toast": {
+      "success": "Gửi thanh lý thành công",
+      "error": "Không thể gửi thanh lý"
     }
+  },
+  "removeAssetModal": {
+    "title": "Xóa Tài Sản",
+    "confirmationMessage": "Bạn có chắc chắn muốn xóa tài sản này không?",
+    "warningMessage": "Tài sản đã xóa không thể tự động khôi phục về giao dịch này.",
+    "cancel": "Hủy",
+    "confirm": "Xóa Tài Sản",
+    "removing": "Đang xóa...",
+    "toast": {
+      "success": "Xóa tài sản khỏi thanh lý thành công",
+      "error": "Không thể xóa tài sản khỏi thanh lý"
+    }
+  },
+  "addAssetModal": {
+  "title": "Thêm Tài Sản Thanh Lý",
+  "asset": "Tài Sản",
+  "assetPlaceholder": "Chọn tài sản...",
+  "assetLoading": "Đang tải tài sản...",
+  "disposalReason": "Lý Do Thanh Lý",
+  "disposalReasonPlaceholder": "vd. Hư hỏng và không thể sửa chữa",
+  "notes": "Ghi Chú",
+  "optional": "tùy chọn",
+  "notesPlaceholder": "vd. Tình trạng không còn phù hợp để sử dụng",
+  "cancel": "Hủy",
+  "submit": "Thêm Tài Sản",
+  "submitting": "Đang lưu...",
+  "toast": {
+    "noAsset": "Vui lòng chọn tài sản trước",
+    "noReason": "Lý do thanh lý là bắt buộc"
+  }
+}
 }

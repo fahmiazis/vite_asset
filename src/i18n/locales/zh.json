@@ -284,47 +284,91 @@
     "error": "资产执行失败"
   },
   "goodsReceipt": {
-      "title": "收货单",
-      "mode": {
-        "label": "收货模式",
-        "single": "单个资产",
-        "bulkItem": "按项目",
-        "bulkAll": "全部"
-      },
-      "progress": {
-        "label": "收货进度",
-        "done": "已完成",
-        "pending": "待处理",
-        "total": "总计",
-        "processing": "正在处理收货..."
-      },
-      "selectItem": {
-        "label": "选择项目",
-        "placeholder": "-- 请选择项目 --",
-        "assetPending": "个待处理资产",
-        "noAsset": "该项目没有待处理的资产"
-      },
-      "selectAsset": {
-        "label": "资产编号",
-        "placeholder": "-- 请选择资产编号 --"
-      },
-      "bulkAll": {
-        "label": "所有待处理资产",
-        "empty": "没有待处理的资产"
-      },
-      "notes": {
-        "label": "备注",
-        "optional": "可选",
-        "placeholder": "货物已完好无损地收到..."
-      },
-      "cancel": "取消",
-      "submit": "提交收货",
-      "submitBulkItem": "批量收货 - 当前项目 ({{count}} 个)",
-      "submitBulkAll": "全部收货 ({{count}} 个资产)",
-      "processing": "正在处理 {{done}}/{{total}}...",
-      "success": "全部 {{count}} 个资产收货成功",
-      "successPartial": "成功 {{success}} 个，失败 {{fail}} 个",
-      "error": "收货提交失败",
-      "noPending": "没有待处理的资产"
+    "title": "收货单",
+    "mode": {
+      "label": "收货模式",
+      "single": "单个资产",
+      "bulkItem": "按项目",
+      "bulkAll": "全部"
+    },
+    "progress": {
+      "label": "收货进度",
+      "done": "已完成",
+      "pending": "待处理",
+      "total": "总计",
+      "processing": "正在处理收货..."
+    },
+    "selectItem": {
+      "label": "选择项目",
+      "placeholder": "-- 请选择项目 --",
+      "assetPending": "个待处理资产",
+      "noAsset": "该项目没有待处理的资产"
+    },
+    "selectAsset": {
+      "label": "资产编号",
+      "placeholder": "-- 请选择资产编号 --"
+    },
+    "bulkAll": {
+      "label": "所有待处理资产",
+      "empty": "没有待处理的资产"
+    },
+    "notes": {
+      "label": "备注",
+      "optional": "可选",
+      "placeholder": "货物已完好无损地收到..."
+    },
+    "cancel": "取消",
+    "submit": "提交收货",
+    "submitBulkItem": "批量收货 - 当前项目 ({{count}} 个)",
+    "submitBulkAll": "全部收货 ({{count}} 个资产)",
+    "processing": "正在处理 {{done}}/{{total}}...",
+    "success": "全部 {{count}} 个资产收货成功",
+    "successPartial": "成功 {{success}} 个，失败 {{fail}} 个",
+    "error": "收货提交失败",
+    "noPending": "没有待处理的资产"
+  },
+  "submitDisposalModal": {
+    "title": "提交交易",
+    "infoMessage": "交易将被发送以进行审批流程。请确保所有数据均已正确无误。",
+    "notes": "备注",
+    "optional": "可选",
+    "notesPlaceholder": "为审批流程添加备注...",
+    "cancel": "取消",
+    "submit": "提交",
+    "submitting": "提交中...",
+    "toast": {
+      "success": "处置提交成功",
+      "error": "提交处置失败"
     }
+  },
+  "removeAssetModal": {
+    "title": "移除资产",
+    "confirmationMessage": "您确定要移除此资产吗？",
+    "warningMessage": "已移除的资产无法自动恢复到此交易中。",
+    "cancel": "取消",
+    "confirm": "移除资产",
+    "removing": "移除中...",
+    "toast": {
+      "success": "资产已成功从处置中移除",
+      "error": "从处置中移除资产失败"
+    }
+  },
+  "addAssetModal": {
+  "title": "添加处置资产",
+  "asset": "资产",
+  "assetPlaceholder": "选择资产...",
+  "assetLoading": "加载资产中...",
+  "disposalReason": "处置原因",
+  "disposalReasonPlaceholder": "例如：已损坏且无法修复",
+  "notes": "备注",
+  "optional": "可选",
+  "notesPlaceholder": "例如：状态已不适合使用",
+  "cancel": "取消",
+  "submit": "添加资产",
+  "submitting": "保存中...",
+  "toast": {
+    "noAsset": "请先选择一个资产",
+    "noReason": "处置原因为必填项"
+  }
+}
 }
