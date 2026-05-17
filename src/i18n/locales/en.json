@@ -487,5 +487,44 @@
   "approve": "Approve",
   "confirmReceiving": "Confirm Receiving",
   "executeTransaction": "Execute Mutation"
+},
+"menuTable": {
+  "search": "Search menu...",
+  "assign": "Assign",
+  "create": "Create",
+  "loading": "Loading data...",
+  "noData": "No data available",
+  "show": "Show",
+  "until": "until",
+  "from": "from",
+  "data": "data",
+  "page": "Page",
+  "of": "of",
+  "columns": {
+    "no": "No",
+    "id": "ID",
+    "parentId": "Parent ID",
+    "menuName": "Menu Name",
+    "path": "Path",
+    "status": "Status",
+    "action": "Action"
+  },
+  "status": {
+    "active": "Active",
+    "inactive": "Inactive"
+  },
+  "actions": {
+    "detail": "Detail",
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "deleteModal": {
+    "title": "Delete Menu",
+    "description": "Are you sure you want to delete",
+    "warning": "This action cannot be undone.",
+    "cancel": "Cancel",
+    "confirm": "Delete",
+    "deleting": "Deleting..."
+  }
 }
 }

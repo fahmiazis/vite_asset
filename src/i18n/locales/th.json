@@ -487,5 +487,44 @@
   "approve": "อนุมัติ",
   "confirmReceiving": "ยืนยันการรับ",
   "executeTransaction": "ดำเนินการโอนย้าย"
+},
+"menuTable": {
+  "search": "ค้นหาเมนู...",
+  "assign": "มอบหมาย",
+  "create": "สร้าง",
+  "loading": "กำลังโหลดข้อมูล...",
+  "noData": "ไม่มีข้อมูล",
+  "show": "แสดง",
+  "until": "ถึง",
+  "from": "จาก",
+  "data": "ข้อมูล",
+  "page": "หน้า",
+  "of": "จาก",
+  "columns": {
+    "no": "ลำดับ",
+    "id": "ID",
+    "parentId": "ID หลัก",
+    "menuName": "ชื่อเมนู",
+    "path": "เส้นทาง",
+    "status": "สถานะ",
+    "action": "การดำเนินการ"
+  },
+  "status": {
+    "active": "ใช้งาน",
+    "inactive": "ไม่ใช้งาน"
+  },
+  "actions": {
+    "detail": "รายละเอียด",
+    "edit": "แก้ไข",
+    "delete": "ลบ"
+  },
+  "deleteModal": {
+    "title": "ลบเมนู",
+    "description": "คุณแน่ใจหรือไม่ว่าต้องการลบ",
+    "warning": "การดำเนินการนี้ไม่สามารถยกเลิกได้",
+    "cancel": "ยกเลิก",
+    "confirm": "ลบ",
+    "deleting": "กำลังลบ..."
+  }
 }
 }

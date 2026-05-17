@@ -487,5 +487,44 @@
   "approve": "Phê Duyệt",
   "confirmReceiving": "Xác Nhận Nhận Hàng",
   "executeTransaction": "Thực Thi Chuyển Nhượng"
+},
+"menuTable": {
+  "search": "Tìm kiếm menu...",
+  "assign": "Phân công",
+  "create": "Tạo mới",
+  "loading": "Đang tải dữ liệu...",
+  "noData": "Không có dữ liệu",
+  "show": "Hiển thị",
+  "until": "đến",
+  "from": "từ",
+  "data": "dữ liệu",
+  "page": "Trang",
+  "of": "của",
+  "columns": {
+    "no": "STT",
+    "id": "ID",
+    "parentId": "ID Cha",
+    "menuName": "Tên Menu",
+    "path": "Đường Dẫn",
+    "status": "Trạng Thái",
+    "action": "Hành Động"
+  },
+  "status": {
+    "active": "Hoạt động",
+    "inactive": "Không hoạt động"
+  },
+  "actions": {
+    "detail": "Chi tiết",
+    "edit": "Chỉnh sửa",
+    "delete": "Xóa"
+  },
+  "deleteModal": {
+    "title": "Xóa Menu",
+    "description": "Bạn có chắc chắn muốn xóa",
+    "warning": "Hành động này không thể hoàn tác.",
+    "cancel": "Hủy",
+    "confirm": "Xóa",
+    "deleting": "Đang xóa..."
+  }
 }
 }

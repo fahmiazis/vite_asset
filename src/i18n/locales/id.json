@@ -487,5 +487,44 @@
   "approve": "Approve",
   "confirmReceiving": "Konfirmasi Terima",
   "executeTransaction": "Eksekusi Mutasi"
+},
+"menuTable": {
+  "search": "Cari menu...",
+  "assign": "Tetapkan",
+  "create": "Buat",
+  "loading": "Memuat data...",
+  "noData": "Tidak ada data",
+  "show": "Menampilkan",
+  "until": "hingga",
+  "from": "dari",
+  "data": "data",
+  "page": "Halaman",
+  "of": "dari",
+  "columns": {
+    "no": "No",
+    "id": "ID",
+    "parentId": "ID Parent",
+    "menuName": "Nama Menu",
+    "path": "Path",
+    "status": "Status",
+    "action": "Aksi"
+  },
+  "status": {
+    "active": "Aktif",
+    "inactive": "Tidak Aktif"
+  },
+  "actions": {
+    "detail": "Detail",
+    "edit": "Edit",
+    "delete": "Hapus"
+  },
+  "deleteModal": {
+    "title": "Hapus Menu",
+    "description": "Apakah Anda yakin ingin menghapus",
+    "warning": "Tindakan ini tidak dapat dibatalkan.",
+    "cancel": "Batal",
+    "confirm": "Hapus",
+    "deleting": "Menghapus..."
+  }
 }
 }

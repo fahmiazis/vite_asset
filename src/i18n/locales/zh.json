@@ -487,5 +487,44 @@
   "approve": "批准",
   "confirmReceiving": "确认接收",
   "executeTransaction": "执行调拨"
+},
+"menuTable": {
+  "search": "搜索菜单...",
+  "assign": "分配",
+  "create": "创建",
+  "loading": "加载数据中...",
+  "noData": "暂无数据",
+  "show": "显示",
+  "until": "至",
+  "from": "共",
+  "data": "条数据",
+  "page": "第",
+  "of": "页，共",
+  "columns": {
+    "no": "序号",
+    "id": "ID",
+    "parentId": "父级ID",
+    "menuName": "菜单名称",
+    "path": "路径",
+    "status": "状态",
+    "action": "操作"
+  },
+  "status": {
+    "active": "启用",
+    "inactive": "禁用"
+  },
+  "actions": {
+    "detail": "详情",
+    "edit": "编辑",
+    "delete": "删除"
+  },
+  "deleteModal": {
+    "title": "删除菜单",
+    "description": "您确定要删除",
+    "warning": "此操作无法撤销。",
+    "cancel": "取消",
+    "confirm": "删除",
+    "deleting": "删除中..."
+  }
 }
 }
