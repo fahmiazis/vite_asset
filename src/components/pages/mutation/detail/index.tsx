@@ -1,13 +1,14 @@
 import { useParams } from "react-router-dom"
-import { useMutationDetail } from "../../../../hooks/query/mutation/detail";
-import { useState } from "react";
-import { AddAssetModal } from "../../../organisms/mutation/addAssetModal";
-import { SubmitMutationModal } from "../../../organisms/mutation/submitDraftMutationModal";
-import { useMutationApprovalStatus } from "../../../../hooks/query/mutation/approvalStatus";
-import { MutationApprovalStatus } from "../../../organisms/mutation/approvalStatus";
-import { ApproveModal } from "../../../organisms/mutation/approveModal";
-import { ConfirmReceivingModal } from "../../../organisms/mutation/confirmReceiveModal";
-import { ExecuteMutationModal } from "../../../organisms/mutation/executeMutationModal";
+import { useTranslation } from "react-i18next"
+import { useMutationDetail } from "../../../../hooks/query/mutation/detail"
+import { useState } from "react"
+import { AddAssetModal } from "../../../organisms/mutation/addAssetModal"
+import { SubmitMutationModal } from "../../../organisms/mutation/submitDraftMutationModal"
+import { useMutationApprovalStatus } from "../../../../hooks/query/mutation/approvalStatus"
+import { MutationApprovalStatus } from "../../../organisms/mutation/approvalStatus"
+import { ApproveModal } from "../../../organisms/mutation/approveModal"
+import { ConfirmReceivingModal } from "../../../organisms/mutation/confirmReceiveModal"
+import { ExecuteMutationModal } from "../../../organisms/mutation/executeMutationModal"
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString("id-ID", {
@@ -25,9 +26,9 @@ function formatDateTime(dateStr: string) {
 function StatusBadge({ status }: { status: string }) {
   const map: Record<string, { dot: string; light: string; dark: string; label: string }> = {
     APPROVED: { dot: "bg-green-500", light: "bg-green-50 text-green-700", dark: "dark:bg-green-900/40 dark:text-green-400", label: "Approved" },
-    PENDING: { dot: "bg-yellow-400", light: "bg-yellow-50 text-yellow-700", dark: "dark:bg-yellow-900/40 dark:text-yellow-400", label: "Pending" },
+    PENDING:  { dot: "bg-yellow-400", light: "bg-yellow-50 text-yellow-700", dark: "dark:bg-yellow-900/40 dark:text-yellow-400", label: "Pending" },
     REJECTED: { dot: "bg-red-500", light: "bg-red-50 text-red-600", dark: "dark:bg-red-900/40 dark:text-red-400", label: "Rejected" },
-    DRAFT: { dot: "bg-gray-400", light: "bg-gray-100 text-gray-600", dark: "dark:bg-gray-700 dark:text-gray-400", label: "Draft" },
+    DRAFT:    { dot: "bg-gray-400", light: "bg-gray-100 text-gray-600", dark: "dark:bg-gray-700 dark:text-gray-400", label: "Draft" },
   }
   const s = map[status?.toUpperCase()] ?? map["DRAFT"]
   return (
@@ -40,10 +41,10 @@ function StatusBadge({ status }: { status: string }) {
 
 function AssetStatusBadge({ status }: { status: string }) {
   const map: Record<string, string> = {
-    ACTIVE: "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-700",
+    ACTIVE:   "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-700",
     INACTIVE: "bg-gray-100 text-gray-600 border-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700",
-    MUTATED: "bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-400 dark:border-blue-700",
-    PENDING: "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-700",
+    MUTATED:  "bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-400 dark:border-blue-700",
+    PENDING:  "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-700",
   }
   return (
     <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border ${map[status?.toUpperCase()] ?? map["INACTIVE"]}`}>
@@ -54,12 +55,13 @@ function AssetStatusBadge({ status }: { status: string }) {
 
 export default function MutationDetailPage() {
   const { "*": id } = useParams()
+  const { t } = useTranslation()
   const { data, isLoading } = useMutationDetail(id ?? "")
-  const [showAddAsset, setShowAddAsset] = useState(false)
-  const [showSubmit, setShowSubmit] = useState(false)
-  const [showApprove, setShowApprove] = useState(false)
+  const [showAddAsset, setShowAddAsset]             = useState(false)
+  const [showSubmit, setShowSubmit]                 = useState(false)
+  const [showApprove, setShowApprove]               = useState(false)
   const [showConfirmReceiving, setShowConfirmReceiving] = useState(false)
-  const [showExecute, setShowExecute] = useState(false)
+  const [showExecute, setShowExecute]               = useState(false)
 
   if (isLoading) {
     return (
@@ -73,14 +75,13 @@ export default function MutationDetailPage() {
 
   const { transaction, assets, stages } = data.data
 
-
   return (
     <section className="space-y-4 mt-4">
       {showAddAsset && (
         <AddAssetModal
           transactionNumber={id || ""}
           onClose={() => setShowAddAsset(false)}
-          onSuccess={() => { /* refresh list */ }}
+          onSuccess={() => {}}
         />
       )}
       {showSubmit && (
@@ -93,7 +94,7 @@ export default function MutationDetailPage() {
         <ApproveModal
           transactionNumber={id ?? ""}
           onClose={() => setShowApprove(false)}
-          onSuccess={() => { /* optional */ }}
+          onSuccess={() => {}}
         />
       )}
       {showConfirmReceiving && (
@@ -113,7 +114,7 @@ export default function MutationDetailPage() {
       <div className="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-xl p-5">
         <div className="flex items-start justify-between mb-4">
           <div>
-            <p className="text-xs text-gray-400 mb-1">Nomor transaksi</p>
+            <p className="text-xs text-gray-400 mb-1">{t("mutationDetail.transactionNumber")}</p>
             <p className="text-base font-semibold text-gray-800 dark:text-gray-200 font-mono">
               {transaction.transaction_number}
             </p>
@@ -128,13 +129,13 @@ export default function MutationDetailPage() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {[
-            { label: "Tipe transaksi", value: transaction.transaction_type },
-            { label: "Tanggal", value: formatDate(transaction.transaction_date) },
-            { label: "Kategori", value: transaction.category_name },
-            { label: "Tujuan cabang", value: transaction.to_branch_code },
-            { label: "Dibuat oleh", value: transaction.created_by },
-            { label: "Dibuat pada", value: formatDateTime(transaction.created_at) },
-            { label: "Diupdate pada", value: formatDateTime(transaction.updated_at) },
+            { label: t("mutationDetail.transactionType"), value: transaction.transaction_type },
+            { label: t("mutationDetail.date"),            value: formatDate(transaction.transaction_date) },
+            { label: t("mutationDetail.category"),        value: transaction.category_name },
+            { label: t("mutationDetail.targetBranch"),    value: transaction.to_branch_code },
+            { label: t("mutationDetail.createdBy"),       value: transaction.created_by },
+            { label: t("mutationDetail.createdAt"),       value: formatDateTime(transaction.created_at) },
+            { label: t("mutationDetail.updatedAt"),       value: formatDateTime(transaction.updated_at) },
           ].map((item) => (
             <div key={item.label} className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
               <p className="text-xs text-gray-400 mb-1">{item.label}</p>
@@ -145,7 +146,7 @@ export default function MutationDetailPage() {
 
         {transaction.notes && (
           <div className="mt-3 pt-3 border-t border-gray-100 dark:border-gray-700">
-            <p className="text-xs text-gray-400 mb-1">Catatan</p>
+            <p className="text-xs text-gray-400 mb-1">{t("mutationDetail.notes")}</p>
             <p className="text-sm text-gray-700 dark:text-gray-300">{transaction.notes}</p>
           </div>
         )}
@@ -154,10 +155,12 @@ export default function MutationDetailPage() {
       {/* Assets */}
       <div className="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-xl p-5">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200">Daftar Aset</h3>
+          <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200">
+            {t("mutationDetail.assetList")}
+          </h3>
           <div className="flex items-center gap-2">
             <span className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-500 px-2 py-0.5 rounded-full">
-              {assets.length} aset
+              {assets.length} {t("mutationDetail.assets")}
             </span>
             {data.data.transaction.current_stage === "DRAFT" && (
               <button
@@ -167,7 +170,7 @@ export default function MutationDetailPage() {
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                 </svg>
-                Tambah aset
+                {t("mutationDetail.addAsset")}
               </button>
             )}
           </div>
@@ -194,11 +197,11 @@ export default function MutationDetailPage() {
               <div className="p-4">
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-3">
                   <div>
-                    <p className="text-xs text-gray-400 mb-1">Kategori</p>
+                    <p className="text-xs text-gray-400 mb-1">{t("mutationDetail.category2")}</p>
                     <p className="text-sm font-medium text-gray-800 dark:text-gray-200">{asset.category_name}</p>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-400 mb-1">No. Dokumen</p>
+                    <p className="text-xs text-gray-400 mb-1">{t("mutationDetail.documentNumber")}</p>
                     <p className="text-sm font-medium text-gray-800 dark:text-gray-200 font-mono">{asset.document_number || "-"}</p>
                   </div>
                 </div>
@@ -206,7 +209,7 @@ export default function MutationDetailPage() {
                 {/* Mutation route */}
                 <div className="flex items-center gap-3 p-3 bg-blue-50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-800 rounded-lg">
                   <div className="flex-1 text-center">
-                    <p className="text-xs text-gray-400 mb-1">Dari Cabang</p>
+                    <p className="text-xs text-gray-400 mb-1">{t("mutationDetail.fromBranch")}</p>
                     <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">{asset.from_branch_code}</p>
                     {asset.from_location && (
                       <p className="text-xs text-gray-400 mt-0.5">{asset.from_location}</p>
@@ -218,7 +221,7 @@ export default function MutationDetailPage() {
                     </svg>
                   </div>
                   <div className="flex-1 text-center">
-                    <p className="text-xs text-gray-400 mb-1">Ke Cabang</p>
+                    <p className="text-xs text-gray-400 mb-1">{t("mutationDetail.toBranch")}</p>
                     <p className="text-sm font-semibold text-indigo-600 dark:text-indigo-400">{asset.to_branch_code}</p>
                     {asset.to_location && (
                       <p className="text-xs text-gray-400 mt-0.5">{asset.to_location}</p>
@@ -239,14 +242,15 @@ export default function MutationDetailPage() {
 
       {/* Stage History */}
       <div className="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-xl p-5">
-        <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-4">Riwayat Stage</h3>
+        <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-4">
+          {t("mutationDetail.stageHistory")}
+        </h3>
 
         <div className="space-y-0">
           {stages.map((stage, index) => {
             const isLast = index === stages.length - 1
             return (
               <div key={stage.id} className="flex gap-3">
-                {/* Timeline dot + line */}
                 <div className="flex flex-col items-center">
                   <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold border-2 flex-shrink-0
                     ${isLast
@@ -261,25 +265,20 @@ export default function MutationDetailPage() {
                   )}
                 </div>
 
-                {/* Content */}
                 <div className="pb-4 flex-1">
                   <div className="flex items-start justify-between gap-2">
                     <div>
                       <div className="flex items-center gap-2">
-                        <p className="text-xs font-semibold text-gray-800 dark:text-gray-100">
-                          {stage.from_stage}
-                        </p>
+                        <p className="text-xs font-semibold text-gray-800 dark:text-gray-100">{stage.from_stage}</p>
                         <svg className="w-3 h-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                         </svg>
-                        <p className="text-xs font-semibold text-indigo-600 dark:text-indigo-400">
-                          {stage.to_stage}
-                        </p>
+                        <p className="text-xs font-semibold text-indigo-600 dark:text-indigo-400">{stage.to_stage}</p>
                       </div>
                       <p className="text-xs text-gray-400 mt-0.5">
                         {stage.action}
                         {stage.actor_name && (
-                          <span className="ml-1">· oleh {stage.actor_name}</span>
+                          <span className="ml-1">· {t("mutationDetail.by")} {stage.actor_name}</span>
                         )}
                       </p>
                     </div>
@@ -300,10 +299,10 @@ export default function MutationDetailPage() {
         </div>
       </div>
 
-      {/* Stage approval */}
+      {/* Approval Status */}
       <MutationApprovalStatus transactionNumber={id ?? ""} />
 
-      {/* Submit */}
+      {/* Actions */}
       {transaction.status === "DRAFT" && (
         <div className="flex justify-end">
           <button
@@ -313,10 +312,11 @@ export default function MutationDetailPage() {
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
             </svg>
-            Submit transaksi
+            {t("mutationDetail.submitTransaction")}
           </button>
         </div>
       )}
+
       <div className="flex justify-end">
         <button
           onClick={() => setShowApprove(true)}
@@ -325,11 +325,10 @@ export default function MutationDetailPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
-          Approve
+          {t("mutationDetail.approve")}
         </button>
       </div>
-      {/* Confirm Receiving */}
-      {/* {transaction.status === "APPROVED" && ( */}
+
       <div className="flex justify-end">
         <button
           onClick={() => setShowConfirmReceiving(true)}
@@ -338,12 +337,10 @@ export default function MutationDetailPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
-          Konfirmasi terima
+          {t("mutationDetail.confirmReceiving")}
         </button>
       </div>
-      {/* )} */}
-      {/* Execute */}
-      {/* {transaction.status === "EXECUTE_MUTATION" && ( */}
+
       <div className="flex justify-end">
         <button
           onClick={() => setShowExecute(true)}
@@ -352,11 +349,9 @@ export default function MutationDetailPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
           </svg>
-          Eksekusi mutasi
+          {t("mutationDetail.executeTransaction")}
         </button>
       </div>
-
-
     </section>
   )
 }

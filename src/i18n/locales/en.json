@@ -8,6 +8,47 @@
       "totalBookVal": "Total Book Value",
       "totalDepreVal": "Total Depreciation Value",
       "vsLastMonth": "Dibanding bulan Lalu"
+    },
+    "loginPage": {
+      "systemName": "Asset Management System",
+      "heroTitle": "Track, manage, and optimize all your company assets in one place.",
+      "heroDescription": "From procurement to disposal — gain full visibility and control over your organization's assets with ease.",
+      "featureTracking": "Asset Tracking",
+      "featureMaintenance": "Maintenance Logs",
+      "featureApproval": "Approval Flows",
+      "featureBranch": "Branch Management",
+      "signIn": "Sign In",
+      "signInDesc": "Sign in to your account to manage and monitor your assets.",
+      "usernameLabel": "Username or Email",
+      "usernamePlaceholder": "Enter your username or email",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "submitButton": "Sign In to Dashboard",
+      "restrictedAccess": "Access is restricted to authorized personnel only.",
+      "contactAdmin": "Contact your system administrator if you need access.",
+      "successLogin": "Sign in successful",
+      "invalidCredential": "Invalid username or password"
+    },
+    "mutation": {
+      "searchPlaceholder": "Search by transaction number, type, or creator...",
+      "create": "Create",
+      "noData": "No data available",
+      "showing": "Showing",
+      "of": "of",
+      "entries": "entries",
+      "page": "Page",
+      "detail": "Detail",
+      "no": "No",
+      "transactionNumber": "Transaction Number",
+      "type": "Type",
+      "date": "Date",
+      "status": "Status",
+      "createdBy": "Created By",
+      "createdAt": "Created At",
+      "action": "Action",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "pending": "Pending"
     }
   },
   "transaksiHeader": {
@@ -407,19 +448,44 @@
     }
   },
   "submitMutationModal": {
-  "title": "Submit Transaction",
-  "warningMessage": "Submitted transactions cannot be edited again. Make sure all assets are correct before proceeding.",
+    "title": "Submit Transaction",
+    "warningMessage": "Submitted transactions cannot be edited again. Make sure all assets are correct before proceeding.",
+    "notes": "Notes",
+    "optional": "optional",
+    "notesPlaceholder": "e.g. Please process immediately",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "saving": "Saving...",
+    "processing": "Processing...",
+    "toast": {
+      "success": "Transaction submitted successfully",
+      "errorSubmit": "Failed to submit transaction",
+      "errorInitiate": "Failed to initiate approval"
+    }
+  },
+  "mutationDetail": {
+  "transactionNumber": "Transaction Number",
+  "transactionType": "Transaction Type",
+  "date": "Date",
+  "category": "Category",
+  "targetBranch": "Target Branch",
+  "createdBy": "Created By",
+  "createdAt": "Created At",
+  "updatedAt": "Updated At",
   "notes": "Notes",
-  "optional": "optional",
-  "notesPlaceholder": "e.g. Please process immediately",
-  "cancel": "Cancel",
-  "submit": "Submit",
-  "saving": "Saving...",
-  "processing": "Processing...",
-  "toast": {
-    "success": "Transaction submitted successfully",
-    "errorSubmit": "Failed to submit transaction",
-    "errorInitiate": "Failed to initiate approval"
-  }
+  "assetList": "Asset List",
+  "assets": "assets",
+  "addAsset": "Add Asset",
+  "noAssets": "No assets added yet",
+  "category2": "Category",
+  "documentNumber": "Document Number",
+  "fromBranch": "From Branch",
+  "toBranch": "To Branch",
+  "stageHistory": "Stage History",
+  "by": "by",
+  "submitTransaction": "Submit Transaction",
+  "approve": "Approve",
+  "confirmReceiving": "Confirm Receiving",
+  "executeTransaction": "Execute Mutation"
 }
 }

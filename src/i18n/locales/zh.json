@@ -8,6 +8,47 @@
       "totalBookVal": "总账面价值",
       "totalDepreVal": "折旧率",
       "vsLastMonth": "与上月相比"
+    },
+    "loginPage": {
+      "systemName": "资产管理系统",
+      "heroTitle": "在一个平台中跟踪、管理并优化您公司的所有资产。",
+      "heroDescription": "从采购到处置 —— 轻松全面掌控组织资产。",
+      "featureTracking": "资产追踪",
+      "featureMaintenance": "维护日志",
+      "featureApproval": "审批流程",
+      "featureBranch": "分支管理",
+      "signIn": "登录",
+      "signInDesc": "登录您的账户以管理和监控资产。",
+      "usernameLabel": "用户名或邮箱",
+      "usernamePlaceholder": "请输入用户名或邮箱",
+      "passwordLabel": "密码",
+      "passwordPlaceholder": "请输入密码",
+      "submitButton": "登录到仪表板",
+      "restrictedAccess": "仅限授权人员访问。",
+      "contactAdmin": "如需访问权限，请联系系统管理员。",
+      "successLogin": "登录成功",
+      "invalidCredential": "用户名或密码错误"
+    },
+     "mutation": {
+      "searchPlaceholder": "按交易编号、类型或创建者搜索...",
+      "create": "创建",
+      "noData": "暂无数据",
+      "showing": "显示",
+      "of": "共",
+      "entries": "条数据",
+      "page": "页",
+      "detail": "详情",
+      "no": "序号",
+      "transactionNumber": "交易编号",
+      "type": "类型",
+      "date": "日期",
+      "status": "状态",
+      "createdBy": "创建者",
+      "createdAt": "创建时间",
+      "action": "操作",
+      "approved": "已批准",
+      "rejected": "已拒绝",
+      "pending": "待处理"
     }
   },
   "transaksiHeader": {
@@ -421,5 +462,30 @@
     "errorSubmit": "提交交易失败",
     "errorInitiate": "启动审批失败"
   }
+},
+"mutationDetail": {
+  "transactionNumber": "交易编号",
+  "transactionType": "交易类型",
+  "date": "日期",
+  "category": "类别",
+  "targetBranch": "目标分支",
+  "createdBy": "创建人",
+  "createdAt": "创建时间",
+  "updatedAt": "更新时间",
+  "notes": "备注",
+  "assetList": "资产列表",
+  "assets": "资产",
+  "addAsset": "添加资产",
+  "noAssets": "暂无资产",
+  "category2": "类别",
+  "documentNumber": "文件编号",
+  "fromBranch": "来源分支",
+  "toBranch": "目标分支",
+  "stageHistory": "阶段历史",
+  "by": "由",
+  "submitTransaction": "提交交易",
+  "approve": "批准",
+  "confirmReceiving": "确认接收",
+  "executeTransaction": "执行调拨"
 }
 }

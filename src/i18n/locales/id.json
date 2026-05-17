@@ -8,6 +8,47 @@
       "totalBookVal": "Total Nilai Buku",
       "totalDepreVal": "Tingkat Nilai Depresiasi",
       "vsLastMonth": "Dibanding bulan Lalu"
+    },
+    "loginPage": {
+      "systemName": "Sistem Manajemen Aset",
+      "heroTitle": "Lacak, kelola, dan optimalkan seluruh aset perusahaan Anda dalam satu tempat.",
+      "heroDescription": "Dari pengadaan hingga penghapusan — dapatkan visibilitas dan kontrol penuh atas aset organisasi Anda dengan mudah.",
+      "featureTracking": "Pelacakan Aset",
+      "featureMaintenance": "Log Pemeliharaan",
+      "featureApproval": "Alur Persetujuan",
+      "featureBranch": "Manajemen Cabang",
+      "signIn": "Masuk",
+      "signInDesc": "Masuk ke akun Anda untuk mengelola dan memantau aset.",
+      "usernameLabel": "Username atau Email",
+      "usernamePlaceholder": "Masukkan username atau email",
+      "passwordLabel": "Kata Sandi",
+      "passwordPlaceholder": "Masukkan kata sandi",
+      "submitButton": "Masuk ke Dashboard",
+      "restrictedAccess": "Akses hanya diperbolehkan untuk personel yang berwenang.",
+      "contactAdmin": "Hubungi administrator sistem jika Anda membutuhkan akses.",
+      "successLogin": "Berhasil masuk",
+      "invalidCredential": "Username atau password salah"
+    },
+    "mutation": {
+      "searchPlaceholder": "Cari berdasarkan nomor transaksi, tipe, atau pembuat...",
+      "create": "Buat",
+      "noData": "Tidak ada data tersedia",
+      "showing": "Menampilkan",
+      "of": "dari",
+      "entries": "data",
+      "page": "Halaman",
+      "detail": "Detail",
+      "no": "No",
+      "transactionNumber": "Nomor Transaksi",
+      "type": "Tipe",
+      "date": "Tanggal",
+      "status": "Status",
+      "createdBy": "Dibuat Oleh",
+      "createdAt": "Dibuat Pada",
+      "action": "Aksi",
+      "approved": "Disetujui",
+      "rejected": "Ditolak",
+      "pending": "Menunggu"
     }
   },
   "transaksiHeader": {
@@ -421,5 +462,30 @@
     "errorSubmit": "Gagal submit transaksi",
     "errorInitiate": "Gagal inisiasi approval"
   }
+},
+"mutationDetail": {
+  "transactionNumber": "Nomor Transaksi",
+  "transactionType": "Tipe Transaksi",
+  "date": "Tanggal",
+  "category": "Kategori",
+  "targetBranch": "Tujuan Cabang",
+  "createdBy": "Dibuat Oleh",
+  "createdAt": "Dibuat Pada",
+  "updatedAt": "Diupdate Pada",
+  "notes": "Catatan",
+  "assetList": "Daftar Aset",
+  "assets": "aset",
+  "addAsset": "Tambah Aset",
+  "noAssets": "Belum ada aset yang ditambahkan",
+  "category2": "Kategori",
+  "documentNumber": "No. Dokumen",
+  "fromBranch": "Dari Cabang",
+  "toBranch": "Ke Cabang",
+  "stageHistory": "Riwayat Stage",
+  "by": "oleh",
+  "submitTransaction": "Submit Transaksi",
+  "approve": "Approve",
+  "confirmReceiving": "Konfirmasi Terima",
+  "executeTransaction": "Eksekusi Mutasi"
 }
 }

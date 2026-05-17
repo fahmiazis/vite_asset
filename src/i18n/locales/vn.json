@@ -8,6 +8,47 @@
       "totalBookVal": "Tổng giá trị sổ sách",
       "totalDepreVal": "Tỷ lệ khấu hao",
       "vsLastMonth": "So với tháng trước"
+    },
+    "loginPage": {
+      "systemName": "Hệ thống quản lý tài sản",
+      "heroTitle": "Theo dõi, quản lý và tối ưu hóa tất cả tài sản của công ty tại một nơi.",
+      "heroDescription": "Từ mua sắm đến thanh lý — dễ dàng kiểm soát toàn bộ tài sản của tổ chức.",
+      "featureTracking": "Theo dõi tài sản",
+      "featureMaintenance": "Nhật ký bảo trì",
+      "featureApproval": "Quy trình phê duyệt",
+      "featureBranch": "Quản lý chi nhánh",
+      "signIn": "Đăng nhập",
+      "signInDesc": "Đăng nhập vào tài khoản để quản lý và theo dõi tài sản.",
+      "usernameLabel": "Tên người dùng hoặc Email",
+      "usernamePlaceholder": "Nhập tên người dùng hoặc email",
+      "passwordLabel": "Mật khẩu",
+      "passwordPlaceholder": "Nhập mật khẩu",
+      "submitButton": "Đăng nhập vào Dashboard",
+      "restrictedAccess": "Chỉ nhân sự được ủy quyền mới có quyền truy cập.",
+      "contactAdmin": "Liên hệ quản trị viên hệ thống nếu bạn cần quyền truy cập.",
+      "successLogin": "Đăng nhập thành công",
+      "invalidCredential": "Tên người dùng hoặc mật khẩu không đúng"
+    },
+    "mutation": {
+      "searchPlaceholder": "Tìm kiếm theo mã giao dịch, loại hoặc người tạo...",
+      "create": "Tạo",
+      "noData": "Không có dữ liệu",
+      "showing": "Hiển thị",
+      "of": "trong",
+      "entries": "mục",
+      "page": "Trang",
+      "detail": "Chi tiết",
+      "no": "STT",
+      "transactionNumber": "Mã giao dịch",
+      "type": "Loại",
+      "date": "Ngày",
+      "status": "Trạng thái",
+      "createdBy": "Tạo bởi",
+      "createdAt": "Tạo lúc",
+      "action": "Hành động",
+      "approved": "Đã duyệt",
+      "rejected": "Đã từ chối",
+      "pending": "Đang chờ"
     }
   },
   "transaksiHeader": {
@@ -421,5 +462,30 @@
     "errorSubmit": "Không thể gửi giao dịch",
     "errorInitiate": "Không thể khởi tạo phê duyệt"
   }
+},
+"mutationDetail": {
+  "transactionNumber": "Số Giao Dịch",
+  "transactionType": "Loại Giao Dịch",
+  "date": "Ngày",
+  "category": "Danh Mục",
+  "targetBranch": "Chi Nhánh Đích",
+  "createdBy": "Tạo Bởi",
+  "createdAt": "Tạo Lúc",
+  "updatedAt": "Cập Nhật Lúc",
+  "notes": "Ghi Chú",
+  "assetList": "Danh Sách Tài Sản",
+  "assets": "tài sản",
+  "addAsset": "Thêm Tài Sản",
+  "noAssets": "Chưa có tài sản nào được thêm",
+  "category2": "Danh Mục",
+  "documentNumber": "Số Tài Liệu",
+  "fromBranch": "Từ Chi Nhánh",
+  "toBranch": "Đến Chi Nhánh",
+  "stageHistory": "Lịch Sử Giai Đoạn",
+  "by": "bởi",
+  "submitTransaction": "Gửi Giao Dịch",
+  "approve": "Phê Duyệt",
+  "confirmReceiving": "Xác Nhận Nhận Hàng",
+  "executeTransaction": "Thực Thi Chuyển Nhượng"
 }
 }
