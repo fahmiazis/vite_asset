@@ -4,6 +4,9 @@ import { useState } from "react"
 import { AddAssetToDisposalModal } from "../../../organisms/disposal/addAssetModal"
 import { RemoveAssetModal } from "../../../organisms/disposal/deleteAssetModal"
 import { SubmitDisposalModal } from "../../../organisms/disposal/submitDraftModal"
+import AddAttachmentModal from "../../../organisms/disposal/addAttachmentModal"
+import { useTranslation } from "react-i18next"
+import { menuListToSelectOptionsWithPath } from "../../../../utils/menu"
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString("id-ID", {
@@ -74,10 +77,13 @@ function AssetStatusBadge({ status }: { status: string }) {
 
 export default function DisposalDetailPage() {
   const { "*": id } = useParams()
+  const { t } = useTranslation()
   const { data, isLoading } = useDisposalDetail(id ?? "")
   const [showAddAsset, setShowAddAsset] = useState(false)
   const [assetToRemove, setAssetToRemove] = useState<{ id: number; name: string } | null>(null)
   const [showSubmit, setShowSubmit] = useState(false)
+  const [showAddAttachment, setShowAddAttachment] = useState(false)
+  const [assetsAttachID, setAssetAttachID] = useState("")
 
   if (isLoading) {
     return (
@@ -114,6 +120,16 @@ export default function DisposalDetailPage() {
           onClose={() => setShowSubmit(false)}
         />
       )}
+      {showAddAttachment && (
+        <AddAttachmentModal
+          transactionNumber={transaction.transaction_number}
+          transactionDisposalAssetId={String(assetsAttachID)}
+          transactionType="disposal"
+          stage={"currentStage"}
+          onConfirm={() => setShowAddAttachment(false)}
+          onCancel={() => setShowAddAttachment(false)}
+        />
+      )}
 
       {/* Header */}
       <div className="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-xl p-5">
@@ -130,6 +146,7 @@ export default function DisposalDetailPage() {
             <span className="text-xs px-2.5 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-700 font-medium">
               {transaction.current_stage}
             </span>
+
           </div>
         </div>
 
@@ -223,6 +240,23 @@ export default function DisposalDetailPage() {
                         </svg>
                       </button>
                     )}
+                     {transaction.status.toLowerCase() === "draft" && (
+                        <button
+                          onClick={() => {
+                            setShowAddAttachment(true)
+                            setAssetAttachID(asset.asset_id)
+                          }}
+                          // disabled={isSubmitting}
+                          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors disabled:opacity-50"
+                        >
+                          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                          Attach Document
+                          {/* {t("detailTransaction.header.submitting")} */}
+                          {/* {isSubmitting ? t("detailTransaction.header.submitting") : t("detailTransaction.header.submitForVerification")} */}
+                        </button>
+                      )}
                   </div>
                 </div>
 

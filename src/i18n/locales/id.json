@@ -526,5 +526,17 @@
     "confirm": "Hapus",
     "deleting": "Menghapus..."
   }
+},
+"attachment": {
+  "modal": {
+    "title": "Tambah Lampiran",
+    "desc": "Unggah dokumen yang diperlukan untuk transaksi ini.",
+    "cancel": "Batal",
+    "submit": "Unggah",
+    "uploading": "Mengunggah...",
+    "empty": "Tidak ada lampiran tersedia untuk tahap ini."
+  },
+  "uploadSuccess": "Lampiran berhasil diunggah.",
+  "uploadError": "Gagal mengunggah lampiran."
 }
 }

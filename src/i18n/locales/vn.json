@@ -526,5 +526,17 @@
     "confirm": "Xóa",
     "deleting": "Đang xóa..."
   }
+},
+"attachment": {
+  "modal": {
+    "title": "Thêm Tệp Đính Kèm",
+    "desc": "Tải lên các tài liệu cần thiết cho giao dịch này.",
+    "cancel": "Hủy",
+    "submit": "Tải lên",
+    "uploading": "Đang tải lên...",
+    "empty": "Không có tệp đính kèm nào cho giai đoạn này."
+  },
+  "uploadSuccess": "Tải lên tệp đính kèm thành công.",
+  "uploadError": "Tải lên tệp đính kèm thất bại."
 }
 }

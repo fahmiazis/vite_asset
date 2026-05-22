@@ -48,7 +48,7 @@ const MAX_FILE_SIZE = 10 * 1024 * 1024
 
 // ─── File Upload Field ────────────────────────────────────────────────────────
 
-function FileUploadField({ label, file, onChange, onRemove }: {
+export function FileUploadField({ label, file, onChange, onRemove }: {
   label: string
   file: File | null
   onChange: (file: File) => void

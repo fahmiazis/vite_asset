@@ -526,5 +526,17 @@
     "confirm": "删除",
     "deleting": "删除中..."
   }
+},
+"attachment": {
+  "modal": {
+    "title": "添加附件",
+    "desc": "请上传此交易所需的文件。",
+    "cancel": "取消",
+    "submit": "上传",
+    "uploading": "上传中...",
+    "empty": "此阶段没有可用的附件。"
+  },
+  "uploadSuccess": "附件上传成功。",
+  "uploadError": "附件上传失败。"
 }
 }

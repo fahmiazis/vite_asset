@@ -526,5 +526,17 @@
     "confirm": "Delete",
     "deleting": "Deleting..."
   }
+},
+"attachment": {
+  "modal": {
+    "title": "Add Attachment",
+    "desc": "Upload the required documents for this transaction.",
+    "cancel": "Cancel",
+    "submit": "Upload",
+    "uploading": "Uploading...",
+    "empty": "No attachments available for this stage."
+  },
+  "uploadSuccess": "Attachments uploaded successfully.",
+  "uploadError": "Failed to upload attachments."
 }
 }
