@@ -1,3 +1,5 @@
+import { useAssetList } from "../../../hooks/query/asset/list";
+import type { listAssetsState } from "../../../models/asset/list";
 import BalanceCard from "../../molecules/card/informationCard";
 import RecentTransactions from "../../organisms/dashboard/activityTable";
 import CyrcleChart from "../../organisms/dashboard/cyrcleChart";
@@ -141,6 +143,36 @@ export const contactsData = [
   },
 ];
 
+interface DisposalItem {
+  id: string
+  name: string
+  description: string
+  avatar: string
+  avatarBgColor?: string
+}
+
+function generateColorFromString(str: string): string {
+  const colors = [
+    '#6366f1', '#8b5cf6', '#ec4899', '#f97316',
+    '#14b8a6', '#0ea5e9', '#84cc16', '#f59e0b',
+  ]
+  let hash = 0
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash)
+  }
+  return colors[Math.abs(hash) % colors.length]
+}
+
+export function assetListToDisposalItems(assets: listAssetsState[]): DisposalItem[] {
+  return assets.map((asset) => ({
+    id: String(asset.id),
+    name: asset.asset_name,
+    description: asset.category_name ?? asset.description ?? '-',
+    avatar: '',
+    avatarBgColor: generateColorFromString(asset.asset_name),
+  }))
+}
+
 export default function MainPage() {
   const { t } = useTranslation()
 
@@ -155,6 +187,8 @@ export default function MainPage() {
     isPositive: false,
     label: t("label.dashboard.vsLastMonth")
   }
+
+  const { data } = useAssetList({ page: 1, limit: 100 })
 
   return (
     <div className="w-full">
@@ -207,7 +241,12 @@ export default function MainPage() {
           }} />
       </section>
       <section className="flex justify-between gap-4 mt-4">
-        <DisposalList items={contactsData} className="w-1/3" />
+        {data && (
+          <DisposalList
+            items={assetListToDisposalItems(data.data.data)}
+            className="w-1/3"
+          />
+        )}
         <RecentTransactions transactions={transactions} className="w-2/3" />
       </section>
     </div>

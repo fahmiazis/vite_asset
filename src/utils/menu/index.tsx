@@ -10,6 +10,16 @@ export function menuListToSelectOptions(menus: allMenuState[]): SelectOption[] {
   }));
 }
 
+export function menuChildrenToSelectOptions(menus: allMenuState[]): SelectOption[] {
+    return menus.flatMap((menu) =>
+        (menu.children ?? []).map((child) => ({
+            id: child.id,
+            value: child.id,
+            label: child.name,
+        }))
+    )
+}
+
 export function menuListToSelectOptionsWithPath(
   menus: allMenuState[]
 ): SelectOption[] {

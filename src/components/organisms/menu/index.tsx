@@ -7,11 +7,12 @@ import {
   useReactTable,
   type SortingState,
   type ColumnFiltersState,
-} from '@tanstack/react-table'
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import type { allMenuState } from '../../../models/menu/list'
-import { menuColumns } from './column'
+} from "@tanstack/react-table"
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { useTranslation } from "react-i18next"
+import type { allMenuState } from "../../../models/menu/list"
+import { menuColumns } from "./column"
 
 interface MenuTableProps {
   data: allMenuState[]
@@ -20,10 +21,11 @@ interface MenuTableProps {
 
 export function MenuTable({ data, isLoading }: MenuTableProps) {
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
-  const [sorting, setSorting] = useState<SortingState>([])
+  const [sorting, setSorting]           = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-  const [globalFilter, setGlobalFilter] = useState('')
+  const [globalFilter, setGlobalFilter] = useState("")
 
   const table = useReactTable({
     data,
@@ -35,24 +37,16 @@ export function MenuTable({ data, isLoading }: MenuTableProps) {
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onGlobalFilterChange: setGlobalFilter,
-    state: {
-      sorting,
-      columnFilters,
-      globalFilter,
-    },
-    initialState: {
-      pagination: {
-        pageSize: 10,
-      },
-    },
+    state: { sorting, columnFilters, globalFilter },
+    initialState: { pagination: { pageSize: 10 } },
   })
 
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading data...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto" />
+          <p className="mt-4 text-gray-600">{t("menuTable.loading")}</p>
         </div>
       </div>
     )
@@ -60,29 +54,28 @@ export function MenuTable({ data, isLoading }: MenuTableProps) {
 
   return (
     <div className="space-y-4">
-      <section className='flex items-center justify-between w-full'>
-        {/* Search Bar */}
+      <section className="flex items-center justify-between w-full">
         <div className="flex items-center gap-4">
           <input
             type="text"
-            placeholder="Search menu..."
-            value={globalFilter ?? ''}
+            placeholder={t("menuTable.search")}
+            value={globalFilter ?? ""}
             onChange={(e) => setGlobalFilter(e.target.value)}
             className="px-4 py-2 border border-gray-900 dark:border-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-sm"
           />
         </div>
-        <div className='flex gap-4 items-center'>
+        <div className="flex gap-4 items-center">
           <button
-            onClick={() => navigate('/dashboard/menu/assign')}
+            onClick={() => navigate("/dashboard/menu/assign")}
             className="px-4 py-2 text-xs font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
-            Assign
+            {t("menuTable.assign")}
           </button>
           <button
-            onClick={() => navigate('/dashboard/menu/create')}
+            onClick={() => navigate("/dashboard/menu/create")}
             className="px-4 py-2 text-xs font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
-            Create
+            {t("menuTable.create")}
           </button>
         </div>
       </section>
@@ -101,10 +94,7 @@ export function MenuTable({ data, isLoading }: MenuTableProps) {
                     >
                       {header.isPlaceholder
                         ? null
-                        : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                        : flexRender(header.column.columnDef.header, header.getContext())}
                     </th>
                   ))}
                 </tr>
@@ -113,27 +103,18 @@ export function MenuTable({ data, isLoading }: MenuTableProps) {
             <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200">
               {table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map((row) => (
-                  <tr
-                    key={row.id}
-                    className="transition-colors hover:bg-gray-50 dark:hover:bg-gray-800"
-                  >
+                  <tr key={row.id} className="transition-colors hover:bg-gray-50 dark:hover:bg-gray-800">
                     {row.getVisibleCells().map((cell) => (
                       <td key={cell.id} className="px-6 py-4 whitespace-nowrap">
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
                       </td>
                     ))}
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td
-                    colSpan={menuColumns.length}
-                    className="px-6 py-4 text-center"
-                  >
-                    Tidak ada data
+                  <td colSpan={menuColumns.length} className="px-6 py-4 text-center">
+                    {t("menuTable.noData")}
                   </td>
                 </tr>
               )}
@@ -145,65 +126,35 @@ export function MenuTable({ data, isLoading }: MenuTableProps) {
       {/* Pagination */}
       <div className="flex items-center justify-between">
         <div className="text-xs">
-          Show{' '}
+          {t("menuTable.show")}{" "}
           <span className="font-medium">
-            {table.getState().pagination.pageIndex *
-              table.getState().pagination.pageSize +
-              1}
-          </span>{' '}
-          Until{' '}
+            {table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1}
+          </span>{" "}
+          {t("menuTable.until")}{" "}
           <span className="font-medium">
             {Math.min(
-              (table.getState().pagination.pageIndex + 1) *
-              table.getState().pagination.pageSize,
+              (table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize,
               table.getFilteredRowModel().rows.length
             )}
-          </span>{' '}
-          From{' '}
-          <span className="font-medium">
-            {table.getFilteredRowModel().rows.length}
-          </span>{' '}
-          data
+          </span>{" "}
+          {t("menuTable.from")}{" "}
+          <span className="font-medium">{table.getFilteredRowModel().rows.length}</span>{" "}
+          {t("menuTable.data")}
         </div>
 
         <div className="flex items-center gap-2">
-          <button
-            onClick={() => table.setPageIndex(0)}
-            disabled={!table.getCanPreviousPage()}
-            className="px-3 py-1 border rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
-          >
-            {'<<'}
-          </button>
-          <button
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-            className="px-3 py-1 border rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
-          >
-            {'<'}
-          </button>
+          <button onClick={() => table.setPageIndex(0)} disabled={!table.getCanPreviousPage()} className="px-3 py-1 border rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50">{"<<"}</button>
+          <button onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()} className="px-3 py-1 border rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50">{"<"}</button>
 
           <span className="text-xs">
-            Page{' '}
+            {t("menuTable.page")}{" "}
             <strong>
-              {table.getState().pagination.pageIndex + 1} From{' '}
-              {table.getPageCount()}
+              {table.getState().pagination.pageIndex + 1} {t("menuTable.of")} {table.getPageCount()}
             </strong>
           </span>
 
-          <button
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-            className="px-3 py-1 border rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
-          >
-            {'>'}
-          </button>
-          <button
-            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-            disabled={!table.getCanNextPage()}
-            className="px-3 py-1 border rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
-          >
-            {'>>'}
-          </button>
+          <button onClick={() => table.nextPage()} disabled={!table.getCanNextPage()} className="px-3 py-1 border rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50">{">"}</button>
+          <button onClick={() => table.setPageIndex(table.getPageCount() - 1)} disabled={!table.getCanNextPage()} className="px-3 py-1 border rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50">{">>"}</button>
         </div>
       </div>
     </div>

@@ -8,6 +8,47 @@
       "totalBookVal": "Total Nilai Buku",
       "totalDepreVal": "Tingkat Nilai Depresiasi",
       "vsLastMonth": "Dibanding bulan Lalu"
+    },
+    "loginPage": {
+      "systemName": "Sistem Manajemen Aset",
+      "heroTitle": "Lacak, kelola, dan optimalkan seluruh aset perusahaan Anda dalam satu tempat.",
+      "heroDescription": "Dari pengadaan hingga penghapusan — dapatkan visibilitas dan kontrol penuh atas aset organisasi Anda dengan mudah.",
+      "featureTracking": "Pelacakan Aset",
+      "featureMaintenance": "Log Pemeliharaan",
+      "featureApproval": "Alur Persetujuan",
+      "featureBranch": "Manajemen Cabang",
+      "signIn": "Masuk",
+      "signInDesc": "Masuk ke akun Anda untuk mengelola dan memantau aset.",
+      "usernameLabel": "Username atau Email",
+      "usernamePlaceholder": "Masukkan username atau email",
+      "passwordLabel": "Kata Sandi",
+      "passwordPlaceholder": "Masukkan kata sandi",
+      "submitButton": "Masuk ke Dashboard",
+      "restrictedAccess": "Akses hanya diperbolehkan untuk personel yang berwenang.",
+      "contactAdmin": "Hubungi administrator sistem jika Anda membutuhkan akses.",
+      "successLogin": "Berhasil masuk",
+      "invalidCredential": "Username atau password salah"
+    },
+    "mutation": {
+      "searchPlaceholder": "Cari berdasarkan nomor transaksi, tipe, atau pembuat...",
+      "create": "Buat",
+      "noData": "Tidak ada data tersedia",
+      "showing": "Menampilkan",
+      "of": "dari",
+      "entries": "data",
+      "page": "Halaman",
+      "detail": "Detail",
+      "no": "No",
+      "transactionNumber": "Nomor Transaksi",
+      "type": "Tipe",
+      "date": "Tanggal",
+      "status": "Status",
+      "createdBy": "Dibuat Oleh",
+      "createdAt": "Dibuat Pada",
+      "action": "Aksi",
+      "approved": "Disetujui",
+      "rejected": "Ditolak",
+      "pending": "Menunggu"
     }
   },
   "transaksiHeader": {
@@ -134,6 +175,14 @@
       "processBudget": "Proses Anggaran",
       "executeAsset": "Eksekusi Aset",
       "goodsReceipt": "Penerimaan Barang"
+    },
+    "assetModal": {
+      "title": "Daftar Aset",
+      "totalAssets": "Total aset",
+      "unit": "aset",
+      "showAll": "Lihat semua ({{count}})",
+      "close": "Tutup",
+      "downloadExcel": "Unduh Excel"
     }
   },
   "createTransaction": {
@@ -242,6 +291,7 @@
     "title": "Approve Transaksi",
     "confirmationTitle": "Konfirmasi Approval",
     "confirmationDescription": "Pastikan seluruh data transaksi sudah sesuai sebelum melanjutkan approval.",
+    "confirmationDescriptions": "Tindakan ini akan menyetujui transaksi mutasi dan tidak dapat dibatalkan. Pastikan data sudah benar sebelum melanjutkan.",
     "notes": "Catatan",
     "optional": "opsional",
     "notesPlaceholder": "Disetujui...",
@@ -318,5 +368,175 @@
     "successPartial": "{{success}} berhasil, {{fail}} gagal",
     "error": "Gagal submit Goods Receipt",
     "noPending": "Tidak ada asset pending"
+  },
+  "submitDisposalModal": {
+    "title": "Submit Transaksi",
+    "infoMessage": "Transaksi akan dikirim untuk proses approval. Pastikan semua data sudah benar.",
+    "notes": "Catatan",
+    "optional": "opsional",
+    "notesPlaceholder": "Tambahkan catatan untuk proses approval...",
+    "cancel": "Batal",
+    "submit": "Submit",
+    "submitting": "Mengsubmit...",
+    "toast": {
+      "success": "Disposal berhasil disubmit",
+      "error": "Gagal mengsubmit disposal"
+    }
+  },
+  "removeAssetModal": {
+    "title": "Hapus Aset",
+    "confirmationMessage": "Yakin ingin menghapus aset ini?",
+    "warningMessage": "Aset yang dihapus tidak dapat dikembalikan ke transaksi ini secara otomatis.",
+    "cancel": "Batal",
+    "confirm": "Hapus Aset",
+    "removing": "Menghapus...",
+    "toast": {
+      "success": "Aset berhasil dihapus dari disposal",
+      "error": "Gagal menghapus aset dari disposal"
+    }
+  },
+  "addAssetModal": {
+    "title": "Tambah Aset Disposal",
+    "asset": "Aset",
+    "assetPlaceholder": "Pilih aset...",
+    "assetLoading": "Memuat aset...",
+    "disposalReason": "Alasan Disposal",
+    "disposalReasonPlaceholder": "cth. Rusak dan tidak dapat diperbaiki",
+    "notes": "Catatan",
+    "optional": "opsional",
+    "notesPlaceholder": "cth. Kondisi sudah tidak layak pakai",
+    "cancel": "Batal",
+    "submit": "Tambah Aset",
+    "submitting": "Menyimpan...",
+    "toast": {
+      "noAsset": "Pilih aset terlebih dahulu",
+      "noReason": "Alasan disposal wajib diisi"
+    }
+  },
+  "addAssetMutationModal": {
+    "title": "Tambah Aset",
+    "asset": "Aset",
+    "assetPlaceholder": "Pilih aset...",
+    "assetLoading": "Memuat aset...",
+    "fromLocation": "Lokasi Asal",
+    "fromLocationPlaceholder": "cth. Gedung A Lt. 2",
+    "toLocation": "Lokasi Tujuan",
+    "toLocationPlaceholder": "cth. Gedung B Lt. 1",
+    "notes": "Catatan",
+    "optional": "opsional",
+    "notesPlaceholder": "Alasan pemindahan aset...",
+    "cancel": "Batal",
+    "submit": "Tambah Aset",
+    "submitting": "Menyimpan...",
+    "toast": {
+      "noAsset": "Pilih aset terlebih dahulu",
+      "noLocation": "Lokasi asal dan tujuan wajib diisi",
+      "success": "Aset berhasil ditambahkan",
+      "error": "Gagal menambahkan aset"
+    }
+  },
+  "approvalStatus": {
+    "title": "Status Approval",
+    "completed": "selesai",
+    "noData": "Belum ada data approval",
+    "step": "Langkah",
+    "by": "oleh",
+    "badge": {
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "pending": "Pending"
+    }
+  },
+  "submitMutationModal": {
+  "title": "Submit Transaksi",
+  "warningMessage": "Transaksi yang sudah disubmit tidak dapat diedit kembali. Pastikan semua aset sudah benar sebelum melanjutkan.",
+  "notes": "Catatan",
+  "optional": "opsional",
+  "notesPlaceholder": "cth. Mohon segera diproses",
+  "cancel": "Batal",
+  "submit": "Submit",
+  "saving": "Menyimpan...",
+  "processing": "Memproses...",
+  "toast": {
+    "success": "Transaksi berhasil disubmit",
+    "errorSubmit": "Gagal submit transaksi",
+    "errorInitiate": "Gagal inisiasi approval"
   }
+},
+"mutationDetail": {
+  "transactionNumber": "Nomor Transaksi",
+  "transactionType": "Tipe Transaksi",
+  "date": "Tanggal",
+  "category": "Kategori",
+  "targetBranch": "Tujuan Cabang",
+  "createdBy": "Dibuat Oleh",
+  "createdAt": "Dibuat Pada",
+  "updatedAt": "Diupdate Pada",
+  "notes": "Catatan",
+  "assetList": "Daftar Aset",
+  "assets": "aset",
+  "addAsset": "Tambah Aset",
+  "noAssets": "Belum ada aset yang ditambahkan",
+  "category2": "Kategori",
+  "documentNumber": "No. Dokumen",
+  "fromBranch": "Dari Cabang",
+  "toBranch": "Ke Cabang",
+  "stageHistory": "Riwayat Stage",
+  "by": "oleh",
+  "submitTransaction": "Submit Transaksi",
+  "approve": "Approve",
+  "confirmReceiving": "Konfirmasi Terima",
+  "executeTransaction": "Eksekusi Mutasi"
+},
+"menuTable": {
+  "search": "Cari menu...",
+  "assign": "Tetapkan",
+  "create": "Buat",
+  "loading": "Memuat data...",
+  "noData": "Tidak ada data",
+  "show": "Menampilkan",
+  "until": "hingga",
+  "from": "dari",
+  "data": "data",
+  "page": "Halaman",
+  "of": "dari",
+  "columns": {
+    "no": "No",
+    "id": "ID",
+    "parentId": "ID Parent",
+    "menuName": "Nama Menu",
+    "path": "Path",
+    "status": "Status",
+    "action": "Aksi"
+  },
+  "status": {
+    "active": "Aktif",
+    "inactive": "Tidak Aktif"
+  },
+  "actions": {
+    "detail": "Detail",
+    "edit": "Edit",
+    "delete": "Hapus"
+  },
+  "deleteModal": {
+    "title": "Hapus Menu",
+    "description": "Apakah Anda yakin ingin menghapus",
+    "warning": "Tindakan ini tidak dapat dibatalkan.",
+    "cancel": "Batal",
+    "confirm": "Hapus",
+    "deleting": "Menghapus..."
+  }
+},
+"attachment": {
+  "modal": {
+    "title": "Tambah Lampiran",
+    "desc": "Unggah dokumen yang diperlukan untuk transaksi ini.",
+    "cancel": "Batal",
+    "submit": "Unggah",
+    "uploading": "Mengunggah...",
+    "empty": "Tidak ada lampiran tersedia untuk tahap ini."
+  },
+  "uploadSuccess": "Lampiran berhasil diunggah.",
+  "uploadError": "Gagal mengunggah lampiran."
+}
 }

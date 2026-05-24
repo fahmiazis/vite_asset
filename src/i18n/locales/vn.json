@@ -8,6 +8,47 @@
       "totalBookVal": "Tổng giá trị sổ sách",
       "totalDepreVal": "Tỷ lệ khấu hao",
       "vsLastMonth": "So với tháng trước"
+    },
+    "loginPage": {
+      "systemName": "Hệ thống quản lý tài sản",
+      "heroTitle": "Theo dõi, quản lý và tối ưu hóa tất cả tài sản của công ty tại một nơi.",
+      "heroDescription": "Từ mua sắm đến thanh lý — dễ dàng kiểm soát toàn bộ tài sản của tổ chức.",
+      "featureTracking": "Theo dõi tài sản",
+      "featureMaintenance": "Nhật ký bảo trì",
+      "featureApproval": "Quy trình phê duyệt",
+      "featureBranch": "Quản lý chi nhánh",
+      "signIn": "Đăng nhập",
+      "signInDesc": "Đăng nhập vào tài khoản để quản lý và theo dõi tài sản.",
+      "usernameLabel": "Tên người dùng hoặc Email",
+      "usernamePlaceholder": "Nhập tên người dùng hoặc email",
+      "passwordLabel": "Mật khẩu",
+      "passwordPlaceholder": "Nhập mật khẩu",
+      "submitButton": "Đăng nhập vào Dashboard",
+      "restrictedAccess": "Chỉ nhân sự được ủy quyền mới có quyền truy cập.",
+      "contactAdmin": "Liên hệ quản trị viên hệ thống nếu bạn cần quyền truy cập.",
+      "successLogin": "Đăng nhập thành công",
+      "invalidCredential": "Tên người dùng hoặc mật khẩu không đúng"
+    },
+    "mutation": {
+      "searchPlaceholder": "Tìm kiếm theo mã giao dịch, loại hoặc người tạo...",
+      "create": "Tạo",
+      "noData": "Không có dữ liệu",
+      "showing": "Hiển thị",
+      "of": "trong",
+      "entries": "mục",
+      "page": "Trang",
+      "detail": "Chi tiết",
+      "no": "STT",
+      "transactionNumber": "Mã giao dịch",
+      "type": "Loại",
+      "date": "Ngày",
+      "status": "Trạng thái",
+      "createdBy": "Tạo bởi",
+      "createdAt": "Tạo lúc",
+      "action": "Hành động",
+      "approved": "Đã duyệt",
+      "rejected": "Đã từ chối",
+      "pending": "Đang chờ"
     }
   },
   "transaksiHeader": {
@@ -134,6 +175,14 @@
       "processBudget": "Xử lý ngân sách",
       "executeAsset": "Thực hiện tài sản",
       "goodsReceipt": "Biên nhận hàng hóa"
+    },
+    "assetModal": {
+      "title": "Danh sách tài sản",
+      "totalAssets": "Tổng tài sản",
+      "unit": "tài sản",
+      "showAll": "Xem tất cả ({{count}})",
+      "close": "Đóng",
+      "downloadExcel": "Tải xuống Excel"
     }
   },
   "createTransaction": {
@@ -242,6 +291,7 @@
     "title": "Phê Duyệt Giao Dịch",
     "confirmationTitle": "Xác Nhận Phê Duyệt",
     "confirmationDescription": "Vui lòng đảm bảo tất cả dữ liệu giao dịch đã chính xác trước khi tiếp tục.",
+    "confirmationDescriptions": "Hành động này sẽ phê duyệt giao dịch chuyển nhượng và không thể hoàn tác. Hãy đảm bảo dữ liệu chính xác trước khi tiếp tục.",
     "notes": "Ghi chú",
     "optional": "tùy chọn",
     "notesPlaceholder": "Đã phê duyệt...",
@@ -276,47 +326,217 @@
     "error": "Không thể thực thi tài sản"
   },
   "goodsReceipt": {
-      "title": "Biên Nhận Hàng Hóa",
-      "mode": {
-        "label": "Chế độ GR",
-        "single": "1 Tài sản",
-        "bulkItem": "Theo mục",
-        "bulkAll": "Tất cả"
-      },
-      "progress": {
-        "label": "Tiến độ GR",
-        "done": "hoàn thành",
-        "pending": "đang chờ",
-        "total": "tổng",
-        "processing": "Đang xử lý GR..."
-      },
-      "selectItem": {
-        "label": "Chọn mục",
-        "placeholder": "-- Chọn mục --",
-        "assetPending": "tài sản đang chờ",
-        "noAsset": "Không có tài sản đang chờ cho mục này"
-      },
-      "selectAsset": {
-        "label": "Số tài sản",
-        "placeholder": "-- Chọn số tài sản --"
-      },
-      "bulkAll": {
-        "label": "Tất cả tài sản đang chờ",
-        "empty": "Không có tài sản đang chờ"
-      },
-      "notes": {
-        "label": "Ghi chú",
-        "optional": "tùy chọn",
-        "placeholder": "Hàng hóa nhận được trong tình trạng tốt..."
-      },
-      "cancel": "Hủy",
-      "submit": "Xác nhận GR",
-      "submitBulkItem": "GR Tất cả tài sản trong mục ({{count}})",
-      "submitBulkAll": "GR Tất cả ({{count}} tài sản)",
-      "processing": "Đang xử lý {{done}}/{{total}}...",
-      "success": "Tất cả {{count}} tài sản đã xử lý thành công",
-      "successPartial": "{{success}} thành công, {{fail}} thất bại",
-      "error": "Không thể xác nhận Goods Receipt",
-      "noPending": "Không có tài sản đang chờ"
+    "title": "Biên Nhận Hàng Hóa",
+    "mode": {
+      "label": "Chế độ GR",
+      "single": "1 Tài sản",
+      "bulkItem": "Theo mục",
+      "bulkAll": "Tất cả"
+    },
+    "progress": {
+      "label": "Tiến độ GR",
+      "done": "hoàn thành",
+      "pending": "đang chờ",
+      "total": "tổng",
+      "processing": "Đang xử lý GR..."
+    },
+    "selectItem": {
+      "label": "Chọn mục",
+      "placeholder": "-- Chọn mục --",
+      "assetPending": "tài sản đang chờ",
+      "noAsset": "Không có tài sản đang chờ cho mục này"
+    },
+    "selectAsset": {
+      "label": "Số tài sản",
+      "placeholder": "-- Chọn số tài sản --"
+    },
+    "bulkAll": {
+      "label": "Tất cả tài sản đang chờ",
+      "empty": "Không có tài sản đang chờ"
+    },
+    "notes": {
+      "label": "Ghi chú",
+      "optional": "tùy chọn",
+      "placeholder": "Hàng hóa nhận được trong tình trạng tốt..."
+    },
+    "cancel": "Hủy",
+    "submit": "Xác nhận GR",
+    "submitBulkItem": "GR Tất cả tài sản trong mục ({{count}})",
+    "submitBulkAll": "GR Tất cả ({{count}} tài sản)",
+    "processing": "Đang xử lý {{done}}/{{total}}...",
+    "success": "Tất cả {{count}} tài sản đã xử lý thành công",
+    "successPartial": "{{success}} thành công, {{fail}} thất bại",
+    "error": "Không thể xác nhận Goods Receipt",
+    "noPending": "Không có tài sản đang chờ"
+  },
+  "submitDisposalModal": {
+    "title": "Gửi Giao Dịch",
+    "infoMessage": "Giao dịch sẽ được gửi để phê duyệt. Vui lòng đảm bảo tất cả dữ liệu đã chính xác.",
+    "notes": "Ghi chú",
+    "optional": "tùy chọn",
+    "notesPlaceholder": "Thêm ghi chú cho quá trình phê duyệt...",
+    "cancel": "Hủy",
+    "submit": "Gửi",
+    "submitting": "Đang gửi...",
+    "toast": {
+      "success": "Gửi thanh lý thành công",
+      "error": "Không thể gửi thanh lý"
     }
+  },
+  "removeAssetModal": {
+    "title": "Xóa Tài Sản",
+    "confirmationMessage": "Bạn có chắc chắn muốn xóa tài sản này không?",
+    "warningMessage": "Tài sản đã xóa không thể tự động khôi phục về giao dịch này.",
+    "cancel": "Hủy",
+    "confirm": "Xóa Tài Sản",
+    "removing": "Đang xóa...",
+    "toast": {
+      "success": "Xóa tài sản khỏi thanh lý thành công",
+      "error": "Không thể xóa tài sản khỏi thanh lý"
+    }
+  },
+  "addAssetModal": {
+    "title": "Thêm Tài Sản Thanh Lý",
+    "asset": "Tài Sản",
+    "assetPlaceholder": "Chọn tài sản...",
+    "assetLoading": "Đang tải tài sản...",
+    "disposalReason": "Lý Do Thanh Lý",
+    "disposalReasonPlaceholder": "vd. Hư hỏng và không thể sửa chữa",
+    "notes": "Ghi Chú",
+    "optional": "tùy chọn",
+    "notesPlaceholder": "vd. Tình trạng không còn phù hợp để sử dụng",
+    "cancel": "Hủy",
+    "submit": "Thêm Tài Sản",
+    "submitting": "Đang lưu...",
+    "toast": {
+      "noAsset": "Vui lòng chọn tài sản trước",
+      "noReason": "Lý do thanh lý là bắt buộc"
+    }
+  },
+  "addAssetMutationModal": {
+    "title": "Thêm Tài Sản",
+    "asset": "Tài Sản",
+    "assetPlaceholder": "Chọn tài sản...",
+    "assetLoading": "Đang tải tài sản...",
+    "fromLocation": "Vị Trí Xuất Phát",
+    "fromLocationPlaceholder": "vd. Tòa nhà A tầng 2",
+    "toLocation": "Vị Trí Đích",
+    "toLocationPlaceholder": "vd. Tòa nhà B tầng 1",
+    "notes": "Ghi Chú",
+    "optional": "tùy chọn",
+    "notesPlaceholder": "Lý do chuyển tài sản...",
+    "cancel": "Hủy",
+    "submit": "Thêm Tài Sản",
+    "submitting": "Đang lưu...",
+    "toast": {
+      "noAsset": "Vui lòng chọn tài sản trước",
+      "noLocation": "Vị trí xuất phát và đích đến là bắt buộc",
+      "success": "Thêm tài sản thành công",
+      "error": "Không thể thêm tài sản"
+    }
+  },
+  "approvalStatus": {
+    "title": "Trạng Thái Phê Duyệt",
+    "completed": "hoàn thành",
+    "noData": "Chưa có dữ liệu phê duyệt",
+    "step": "Bước",
+    "by": "bởi",
+    "badge": {
+      "approved": "Đã duyệt",
+      "rejected": "Từ chối",
+      "pending": "Đang chờ"
+    }
+  },
+  "submitMutationModal": {
+  "title": "Gửi Giao Dịch",
+  "warningMessage": "Giao dịch đã gửi không thể chỉnh sửa lại. Hãy đảm bảo tất cả tài sản đã chính xác trước khi tiếp tục.",
+  "notes": "Ghi Chú",
+  "optional": "tùy chọn",
+  "notesPlaceholder": "vd. Vui lòng xử lý ngay",
+  "cancel": "Hủy",
+  "submit": "Gửi",
+  "saving": "Đang lưu...",
+  "processing": "Đang xử lý...",
+  "toast": {
+    "success": "Gửi giao dịch thành công",
+    "errorSubmit": "Không thể gửi giao dịch",
+    "errorInitiate": "Không thể khởi tạo phê duyệt"
+  }
+},
+"mutationDetail": {
+  "transactionNumber": "Số Giao Dịch",
+  "transactionType": "Loại Giao Dịch",
+  "date": "Ngày",
+  "category": "Danh Mục",
+  "targetBranch": "Chi Nhánh Đích",
+  "createdBy": "Tạo Bởi",
+  "createdAt": "Tạo Lúc",
+  "updatedAt": "Cập Nhật Lúc",
+  "notes": "Ghi Chú",
+  "assetList": "Danh Sách Tài Sản",
+  "assets": "tài sản",
+  "addAsset": "Thêm Tài Sản",
+  "noAssets": "Chưa có tài sản nào được thêm",
+  "category2": "Danh Mục",
+  "documentNumber": "Số Tài Liệu",
+  "fromBranch": "Từ Chi Nhánh",
+  "toBranch": "Đến Chi Nhánh",
+  "stageHistory": "Lịch Sử Giai Đoạn",
+  "by": "bởi",
+  "submitTransaction": "Gửi Giao Dịch",
+  "approve": "Phê Duyệt",
+  "confirmReceiving": "Xác Nhận Nhận Hàng",
+  "executeTransaction": "Thực Thi Chuyển Nhượng"
+},
+"menuTable": {
+  "search": "Tìm kiếm menu...",
+  "assign": "Phân công",
+  "create": "Tạo mới",
+  "loading": "Đang tải dữ liệu...",
+  "noData": "Không có dữ liệu",
+  "show": "Hiển thị",
+  "until": "đến",
+  "from": "từ",
+  "data": "dữ liệu",
+  "page": "Trang",
+  "of": "của",
+  "columns": {
+    "no": "STT",
+    "id": "ID",
+    "parentId": "ID Cha",
+    "menuName": "Tên Menu",
+    "path": "Đường Dẫn",
+    "status": "Trạng Thái",
+    "action": "Hành Động"
+  },
+  "status": {
+    "active": "Hoạt động",
+    "inactive": "Không hoạt động"
+  },
+  "actions": {
+    "detail": "Chi tiết",
+    "edit": "Chỉnh sửa",
+    "delete": "Xóa"
+  },
+  "deleteModal": {
+    "title": "Xóa Menu",
+    "description": "Bạn có chắc chắn muốn xóa",
+    "warning": "Hành động này không thể hoàn tác.",
+    "cancel": "Hủy",
+    "confirm": "Xóa",
+    "deleting": "Đang xóa..."
+  }
+},
+"attachment": {
+  "modal": {
+    "title": "Thêm Tệp Đính Kèm",
+    "desc": "Tải lên các tài liệu cần thiết cho giao dịch này.",
+    "cancel": "Hủy",
+    "submit": "Tải lên",
+    "uploading": "Đang tải lên...",
+    "empty": "Không có tệp đính kèm nào cho giai đoạn này."
+  },
+  "uploadSuccess": "Tải lên tệp đính kèm thành công.",
+  "uploadError": "Tải lên tệp đính kèm thất bại."
+}
 }

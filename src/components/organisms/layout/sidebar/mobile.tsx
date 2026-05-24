@@ -16,7 +16,7 @@ export default function MobileSidebar({
         >
             <div className='p-4 relative'>
                 <Cancel01Icon onClick={() => setIsOpen(false)} className="cursor-pointer text-white text-lg mb-4 absolute right-4" />
-                <h4 className='text-3xl mt-6 font-bold'>Crypto</h4>
+                <h4 className='text-3xl mt-6 font-bold'>Assets</h4>
                 <section className='flex flex-col gap-4 max-h-[90vh] overflow-y-scroll hide-scrollbar'>
                     <SidebarContent className='h-[65vh]'/>
                 </section>

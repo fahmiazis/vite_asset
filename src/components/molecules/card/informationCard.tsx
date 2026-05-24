@@ -56,9 +56,9 @@ const BalanceCard = ({
             onClick={onArrowClick}
             className="
               w-8 h-8 rounded-full flex items-center justify-center
-              border border-gray-200 dark:border-gray-700
+              border border-gray-100 dark:border-zinc-800
               text-gray-500 dark:text-zinc-400
-              hover:bg-gray-50 dark:hover:bg-zinc-800
+              hover:bg-gray-50 dark:hover:bg-zinc-900
               transition-colors flex-shrink-0
             "
           >

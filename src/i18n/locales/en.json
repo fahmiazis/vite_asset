@@ -8,6 +8,47 @@
       "totalBookVal": "Total Book Value",
       "totalDepreVal": "Total Depreciation Value",
       "vsLastMonth": "Dibanding bulan Lalu"
+    },
+    "loginPage": {
+      "systemName": "Asset Management System",
+      "heroTitle": "Track, manage, and optimize all your company assets in one place.",
+      "heroDescription": "From procurement to disposal — gain full visibility and control over your organization's assets with ease.",
+      "featureTracking": "Asset Tracking",
+      "featureMaintenance": "Maintenance Logs",
+      "featureApproval": "Approval Flows",
+      "featureBranch": "Branch Management",
+      "signIn": "Sign In",
+      "signInDesc": "Sign in to your account to manage and monitor your assets.",
+      "usernameLabel": "Username or Email",
+      "usernamePlaceholder": "Enter your username or email",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "submitButton": "Sign In to Dashboard",
+      "restrictedAccess": "Access is restricted to authorized personnel only.",
+      "contactAdmin": "Contact your system administrator if you need access.",
+      "successLogin": "Sign in successful",
+      "invalidCredential": "Invalid username or password"
+    },
+    "mutation": {
+      "searchPlaceholder": "Search by transaction number, type, or creator...",
+      "create": "Create",
+      "noData": "No data available",
+      "showing": "Showing",
+      "of": "of",
+      "entries": "entries",
+      "page": "Page",
+      "detail": "Detail",
+      "no": "No",
+      "transactionNumber": "Transaction Number",
+      "type": "Type",
+      "date": "Date",
+      "status": "Status",
+      "createdBy": "Created By",
+      "createdAt": "Created At",
+      "action": "Action",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "pending": "Pending"
     }
   },
   "transaksiHeader": {
@@ -134,6 +175,14 @@
       "processBudget": "Process Budget",
       "executeAsset": "Execute Asset",
       "goodsReceipt": "Goods Receipt"
+    },
+    "assetModal": {
+      "title": "Asset List",
+      "totalAssets": "Total assets",
+      "unit": "assets",
+      "showAll": "Show all ({{count}})",
+      "close": "Close",
+      "downloadExcel": "Download Excel"
     }
   },
   "createTransaction": {
@@ -242,6 +291,7 @@
     "title": "Approve Transaction",
     "confirmationTitle": "Approval Confirmation",
     "confirmationDescription": "Please ensure all transaction data is correct before proceeding with approval.",
+    "confirmationDescriptions": "This action will approve the mutation transaction and cannot be undone. Make sure the data is correct before proceeding.",
     "notes": "Notes",
     "optional": "optional",
     "notesPlaceholder": "Approved...",
@@ -276,47 +326,217 @@
     "error": "Failed to execute asset"
   },
   "goodsReceipt": {
-      "title": "Goods Receipt",
-      "mode": {
-        "label": "GR Mode",
-        "single": "1 Asset",
-        "bulkItem": "Per Item",
-        "bulkAll": "All"
-      },
-      "progress": {
-        "label": "GR Progress",
-        "done": "done",
-        "pending": "pending",
-        "total": "total",
-        "processing": "Processing GR..."
-      },
-      "selectItem": {
-        "label": "Select Item",
-        "placeholder": "-- Select item --",
-        "assetPending": "pending assets",
-        "noAsset": "No pending assets for this item"
-      },
-      "selectAsset": {
-        "label": "Asset Number",
-        "placeholder": "-- Select asset number --"
-      },
-      "bulkAll": {
-        "label": "All pending assets",
-        "empty": "No pending assets"
-      },
-      "notes": {
-        "label": "Notes",
-        "optional": "optional",
-        "placeholder": "Goods received in good condition..."
-      },
-      "cancel": "Cancel",
-      "submit": "Submit GR",
-      "submitBulkItem": "GR All Assets ({{count}})",
-      "submitBulkAll": "GR All ({{count}} assets)",
-      "processing": "Processing {{done}}/{{total}}...",
-      "success": "All {{count}} assets successfully processed",
-      "successPartial": "{{success}} succeeded, {{fail}} failed",
-      "error": "Failed to submit Goods Receipt",
-      "noPending": "No pending assets"
+    "title": "Goods Receipt",
+    "mode": {
+      "label": "GR Mode",
+      "single": "1 Asset",
+      "bulkItem": "Per Item",
+      "bulkAll": "All"
+    },
+    "progress": {
+      "label": "GR Progress",
+      "done": "done",
+      "pending": "pending",
+      "total": "total",
+      "processing": "Processing GR..."
+    },
+    "selectItem": {
+      "label": "Select Item",
+      "placeholder": "-- Select item --",
+      "assetPending": "pending assets",
+      "noAsset": "No pending assets for this item"
+    },
+    "selectAsset": {
+      "label": "Asset Number",
+      "placeholder": "-- Select asset number --"
+    },
+    "bulkAll": {
+      "label": "All pending assets",
+      "empty": "No pending assets"
+    },
+    "notes": {
+      "label": "Notes",
+      "optional": "optional",
+      "placeholder": "Goods received in good condition..."
+    },
+    "cancel": "Cancel",
+    "submit": "Submit GR",
+    "submitBulkItem": "GR All Assets ({{count}})",
+    "submitBulkAll": "GR All ({{count}} assets)",
+    "processing": "Processing {{done}}/{{total}}...",
+    "success": "All {{count}} assets successfully processed",
+    "successPartial": "{{success}} succeeded, {{fail}} failed",
+    "error": "Failed to submit Goods Receipt",
+    "noPending": "No pending assets"
+  },
+  "submitDisposalModal": {
+    "title": "Submit Transaction",
+    "infoMessage": "Transaction will be sent for approval process. Make sure all data is correct.",
+    "notes": "Notes",
+    "optional": "optional",
+    "notesPlaceholder": "Add notes for the approval process...",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "submitting": "Submitting...",
+    "toast": {
+      "success": "Disposal submitted successfully",
+      "error": "Failed to submit disposal"
     }
+  },
+  "removeAssetModal": {
+    "title": "Remove Asset",
+    "confirmationMessage": "Are you sure you want to remove this asset?",
+    "warningMessage": "Removed assets cannot be automatically restored to this transaction.",
+    "cancel": "Cancel",
+    "confirm": "Remove Asset",
+    "removing": "Removing...",
+    "toast": {
+      "success": "Asset successfully removed from disposal",
+      "error": "Failed to remove asset from disposal"
+    }
+  },
+  "addAssetModal": {
+    "title": "Add Disposal Asset",
+    "asset": "Asset",
+    "assetPlaceholder": "Select asset...",
+    "assetLoading": "Loading assets...",
+    "disposalReason": "Disposal Reason",
+    "disposalReasonPlaceholder": "e.g. Damaged and cannot be repaired",
+    "notes": "Notes",
+    "optional": "optional",
+    "notesPlaceholder": "e.g. Condition is no longer fit for use",
+    "cancel": "Cancel",
+    "submit": "Add Asset",
+    "submitting": "Saving...",
+    "toast": {
+      "noAsset": "Please select an asset first",
+      "noReason": "Disposal reason is required"
+    }
+  },
+  "addAssetMutationModal": {
+    "title": "Add Asset",
+    "asset": "Asset",
+    "assetPlaceholder": "Select asset...",
+    "assetLoading": "Loading assets...",
+    "fromLocation": "Origin Location",
+    "fromLocationPlaceholder": "e.g. Building A 2nd Floor",
+    "toLocation": "Destination Location",
+    "toLocationPlaceholder": "e.g. Building B 1st Floor",
+    "notes": "Notes",
+    "optional": "optional",
+    "notesPlaceholder": "Reason for asset transfer...",
+    "cancel": "Cancel",
+    "submit": "Add Asset",
+    "submitting": "Saving...",
+    "toast": {
+      "noAsset": "Please select an asset first",
+      "noLocation": "Origin and destination location are required",
+      "success": "Asset added successfully",
+      "error": "Failed to add asset"
+    }
+  },
+  "approvalStatus": {
+    "title": "Approval Status",
+    "completed": "completed",
+    "noData": "No approval data yet",
+    "step": "Step",
+    "by": "by",
+    "badge": {
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "pending": "Pending"
+    }
+  },
+  "submitMutationModal": {
+    "title": "Submit Transaction",
+    "warningMessage": "Submitted transactions cannot be edited again. Make sure all assets are correct before proceeding.",
+    "notes": "Notes",
+    "optional": "optional",
+    "notesPlaceholder": "e.g. Please process immediately",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "saving": "Saving...",
+    "processing": "Processing...",
+    "toast": {
+      "success": "Transaction submitted successfully",
+      "errorSubmit": "Failed to submit transaction",
+      "errorInitiate": "Failed to initiate approval"
+    }
+  },
+  "mutationDetail": {
+  "transactionNumber": "Transaction Number",
+  "transactionType": "Transaction Type",
+  "date": "Date",
+  "category": "Category",
+  "targetBranch": "Target Branch",
+  "createdBy": "Created By",
+  "createdAt": "Created At",
+  "updatedAt": "Updated At",
+  "notes": "Notes",
+  "assetList": "Asset List",
+  "assets": "assets",
+  "addAsset": "Add Asset",
+  "noAssets": "No assets added yet",
+  "category2": "Category",
+  "documentNumber": "Document Number",
+  "fromBranch": "From Branch",
+  "toBranch": "To Branch",
+  "stageHistory": "Stage History",
+  "by": "by",
+  "submitTransaction": "Submit Transaction",
+  "approve": "Approve",
+  "confirmReceiving": "Confirm Receiving",
+  "executeTransaction": "Execute Mutation"
+},
+"menuTable": {
+  "search": "Search menu...",
+  "assign": "Assign",
+  "create": "Create",
+  "loading": "Loading data...",
+  "noData": "No data available",
+  "show": "Show",
+  "until": "until",
+  "from": "from",
+  "data": "data",
+  "page": "Page",
+  "of": "of",
+  "columns": {
+    "no": "No",
+    "id": "ID",
+    "parentId": "Parent ID",
+    "menuName": "Menu Name",
+    "path": "Path",
+    "status": "Status",
+    "action": "Action"
+  },
+  "status": {
+    "active": "Active",
+    "inactive": "Inactive"
+  },
+  "actions": {
+    "detail": "Detail",
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "deleteModal": {
+    "title": "Delete Menu",
+    "description": "Are you sure you want to delete",
+    "warning": "This action cannot be undone.",
+    "cancel": "Cancel",
+    "confirm": "Delete",
+    "deleting": "Deleting..."
+  }
+},
+"attachment": {
+  "modal": {
+    "title": "Add Attachment",
+    "desc": "Upload the required documents for this transaction.",
+    "cancel": "Cancel",
+    "submit": "Upload",
+    "uploading": "Uploading...",
+    "empty": "No attachments available for this stage."
+  },
+  "uploadSuccess": "Attachments uploaded successfully.",
+  "uploadError": "Failed to upload attachments."
+}
 }

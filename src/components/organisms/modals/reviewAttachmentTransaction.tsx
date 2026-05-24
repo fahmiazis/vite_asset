@@ -1,9 +1,10 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import toast from "react-hot-toast"
 import { useAttachTransaction } from "../../../hooks/query/attachmentSetting/attachTransaction"
 import type { transactionAttachmentState } from "../../../models/attachmentSetting/transactionAttachment"
 import { useReviewAttachment } from "../../../hooks/mutation/attachSetting/reviewAttachment"
 import { useTranslation } from "react-i18next"
+import { axiosPrivate } from "../../../libs/instance"
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -77,10 +78,29 @@ function PreviewPanel({
   onClose: () => void
 }) {
   const [zoomed, setZoomed] = useState(false)
+  const [objectURL, setObjectURL] = useState<string | null>(null)
+  const [loadError, setLoadError] = useState(false)
   const isImage = isImageMime(item.mime_type)
   const ImageURL = import.meta.env.VITE_IMAGE_ACCESS
 
   const { t } = useTranslation()
+
+  const fileURL = `${ImageURL}/api/v1/attachments/${item.id}/file`
+
+  useEffect(() => {
+    let url: string
+    axiosPrivate
+      .get(fileURL, { responseType: "blob" })
+      .then((res) => {
+        url = URL.createObjectURL(res.data)
+        setObjectURL(url)
+      })
+      .catch(() => setLoadError(true))
+
+    return () => {
+      if (url) URL.revokeObjectURL(url)
+    }
+  }, [fileURL])
 
   return (
     <div
@@ -94,12 +114,10 @@ function PreviewPanel({
         <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-700">
           <div className="flex items-center gap-2 min-w-0">
             <FileTypeIcon mime={item.mime_type} />
-
             <div className="min-w-0">
               <p className="text-sm font-medium text-gray-800 dark:text-gray-200 truncate">
                 {formatAttachmentName(item.attachment_type)}
               </p>
-
               <p className="text-xs text-gray-400 truncate">
                 {item.file_name} · {formatFileSize(item.file_size)}
               </p>
@@ -111,32 +129,13 @@ function PreviewPanel({
               <button
                 onClick={() => setZoomed((z) => !z)}
                 className="p-1.5 rounded-lg border border-gray-200 dark:border-gray-600 text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-                title={
-                  zoomed
-                    ? t("reviewAttachmentModal.zoomOut")
-                    : t("reviewAttachmentModal.zoomIn")
-                }
+                title={zoomed ? t("reviewAttachmentModal.zoomOut") : t("reviewAttachmentModal.zoomIn")}
               >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   {zoomed ? (
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10H7"
-                    />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10H7" />
                   ) : (
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
-                    />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
                   )}
                 </svg>
               </button>
@@ -146,82 +145,68 @@ function PreviewPanel({
               onClick={onClose}
               className="p-1.5 rounded-lg border border-gray-200 dark:border-gray-600 text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
             >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
         </div>
 
-        <div
-          className="overflow-auto bg-gray-50 dark:bg-gray-900"
-          style={{ maxHeight: "70vh" }}
-        >
-          {isImage ? (
-            <div className="flex items-center justify-center p-4 min-h-64">
-              <img
-                src={`${ImageURL}${item.file_path}`}
-                alt={item.file_name}
-                className="rounded-lg object-contain transition-transform duration-200"
-                style={{
-                  maxWidth: zoomed ? "200%" : "100%",
-                  maxHeight: "60vh",
-                  cursor: zoomed ? "zoom-out" : "zoom-in",
-                }}
-                onClick={() => setZoomed((z) => !z)}
-              />
+        <div className="overflow-auto bg-gray-50 dark:bg-gray-900" style={{ maxHeight: "70vh" }}>
+          {/* Loading state */}
+          {!objectURL && !loadError && (
+            <div className="flex items-center justify-center py-16">
+              <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
             </div>
-          ) : (
-            <div className="flex flex-col items-center justify-center gap-4 py-16 px-8">
-              <div className="w-16 h-16 rounded-2xl bg-red-50 flex items-center justify-center">
-                <svg
-                  className="w-8 h-8 text-red-400"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+          )}
+
+          {/* Error state */}
+          {loadError && (
+            <div className="flex flex-col items-center justify-center py-16 gap-2">
+              <p className="text-sm text-red-500">{t("reviewAttachmentModal.failedLoad")}</p>
+            </div>
+          )}
+
+          {/* Content */}
+          {objectURL && (
+            isImage ? (
+              <div className="flex items-center justify-center p-4 min-h-64">
+                <img
+                  src={objectURL}
+                  alt={item.file_name}
+                  className="rounded-lg object-contain transition-transform duration-200"
+                  style={{
+                    maxWidth: zoomed ? "200%" : "100%",
+                    maxHeight: "60vh",
+                    cursor: zoomed ? "zoom-out" : "zoom-in",
+                  }}
+                  onClick={() => setZoomed((z) => !z)}
+                />
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center gap-4 py-16 px-8">
+                <div className="w-16 h-16 rounded-2xl bg-red-50 flex items-center justify-center">
+                  <svg className="w-8 h-8 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                  </svg>
+                </div>
+                <div className="text-center">
+                  <p className="text-sm font-medium text-gray-700 dark:text-gray-300">{item.file_name}</p>
+                  <p className="text-xs text-gray-400 mt-1">{t("reviewAttachmentModal.previewUnavailable")}</p>
+                </div>
+                <a
+                  href={objectURL}
+                  download={item.file_name}
+                  className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"
-                  />
-                </svg>
+                  {t("reviewAttachmentModal.openFile")}
+                </a>
               </div>
-
-              <div className="text-center">
-                <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {item.file_name}
-                </p>
-
-                <p className="text-xs text-gray-400 mt-1">
-                  {t("reviewAttachmentModal.previewUnavailable")}
-                </p>
-              </div>
-
-              <a
-                href={item.file_path}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors"
-              >
-                {t("reviewAttachmentModal.openFile")}
-              </a>
-            </div>
+            )
           )}
         </div>
       </div>
-    </div>
+    </div >
   )
 }
 

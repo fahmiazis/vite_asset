@@ -8,6 +8,47 @@
       "totalBookVal": "มูลค่าตามบัญชีรวม",
       "totalDepreVal": "อัตราค่าเสื่อมราคา",
       "vsLastMonth": "เทียบกับเดือนที่แล้ว"
+    },
+    "loginPage": {
+      "systemName": "ระบบจัดการสินทรัพย์",
+      "heroTitle": "ติดตาม จัดการ และเพิ่มประสิทธิภาพสินทรัพย์ทั้งหมดของบริษัทในที่เดียว",
+      "heroDescription": "ตั้งแต่การจัดซื้อจนถึงการจำหน่าย — มองเห็นและควบคุมสินทรัพย์ขององค์กรได้อย่างเต็มที่",
+      "featureTracking": "การติดตามสินทรัพย์",
+      "featureMaintenance": "บันทึกการบำรุงรักษา",
+      "featureApproval": "กระบวนการอนุมัติ",
+      "featureBranch": "การจัดการสาขา",
+      "signIn": "เข้าสู่ระบบ",
+      "signInDesc": "เข้าสู่ระบบเพื่อจัดการและตรวจสอบสินทรัพย์ของคุณ",
+      "usernameLabel": "ชื่อผู้ใช้หรืออีเมล",
+      "usernamePlaceholder": "กรอกชื่อผู้ใช้หรืออีเมล",
+      "passwordLabel": "รหัสผ่าน",
+      "passwordPlaceholder": "กรอกรหัสผ่าน",
+      "submitButton": "เข้าสู่แดชบอร์ด",
+      "restrictedAccess": "อนุญาตให้เฉพาะผู้ที่ได้รับสิทธิ์เท่านั้น",
+      "contactAdmin": "ติดต่อผู้ดูแลระบบหากคุณต้องการสิทธิ์การเข้าถึง",
+      "successLogin": "เข้าสู่ระบบสำเร็จ",
+      "invalidCredential": "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง"
+    },
+    "mutation": {
+      "searchPlaceholder": "ค้นหาด้วยหมายเลขธุรกรรม ประเภท หรือผู้สร้าง...",
+      "create": "สร้าง",
+      "noData": "ไม่มีข้อมูล",
+      "showing": "กำลังแสดง",
+      "of": "จาก",
+      "entries": "รายการ",
+      "page": "หน้า",
+      "detail": "รายละเอียด",
+      "no": "ลำดับ",
+      "transactionNumber": "หมายเลขธุรกรรม",
+      "type": "ประเภท",
+      "date": "วันที่",
+      "status": "สถานะ",
+      "createdBy": "สร้างโดย",
+      "createdAt": "สร้างเมื่อ",
+      "action": "การกระทำ",
+      "approved": "อนุมัติแล้ว",
+      "rejected": "ถูกปฏิเสธ",
+      "pending": "รอดำเนินการ"
     }
   },
   "transaksiHeader": {
@@ -134,6 +175,14 @@
       "processBudget": "ดำเนินการงบประมาณ",
       "executeAsset": "ดำเนินการสินทรัพย์",
       "goodsReceipt": "รับสินค้า"
+    },
+    "assetModal": {
+      "title": "รายการสินทรัพย์",
+      "totalAssets": "สินทรัพย์ทั้งหมด",
+      "unit": "รายการ",
+      "showAll": "ดูทั้งหมด ({{count}})",
+      "close": "ปิด",
+      "downloadExcel": "ดาวน์โหลด Excel"
     }
   },
   "createTransaction": {
@@ -242,6 +291,7 @@
     "title": "อนุมัติธุรกรรม",
     "confirmationTitle": "ยืนยันการอนุมัติ",
     "confirmationDescription": "กรุณาตรวจสอบข้อมูลธุรกรรมทั้งหมดก่อนดำเนินการอนุมัติ",
+    "confirmationDescriptions": "การดำเนินการนี้จะอนุมัติธุรกรรมการโอนย้ายและไม่สามารถยกเลิกได้ กรุณาตรวจสอบข้อมูลให้ถูกต้องก่อนดำเนินการ",
     "notes": "หมายเหตุ",
     "optional": "ไม่บังคับ",
     "notesPlaceholder": "อนุมัติแล้ว...",
@@ -318,5 +368,175 @@
     "successPartial": "สำเร็จ {{success}} รายการ, ล้มเหลว {{fail}} รายการ",
     "error": "ไม่สามารถยืนยัน Goods Receipt ได้",
     "noPending": "ไม่มีสินทรัพย์ที่รอดำเนินการ"
+  },
+  "submitDisposalModal": {
+    "title": "ส่งธุรกรรม",
+    "infoMessage": "ธุรกรรมจะถูกส่งเพื่อขออนุมัติ กรุณาตรวจสอบข้อมูลให้ถูกต้องก่อนดำเนินการ",
+    "notes": "หมายเหตุ",
+    "optional": "ไม่บังคับ",
+    "notesPlaceholder": "เพิ่มหมายเหตุสำหรับกระบวนการอนุมัติ...",
+    "cancel": "ยกเลิก",
+    "submit": "ส่ง",
+    "submitting": "กำลังส่ง...",
+    "toast": {
+      "success": "ส่งการจำหน่ายสำเร็จแล้ว",
+      "error": "ไม่สามารถส่งการจำหน่ายได้"
+    }
+  },
+  "removeAssetModal": {
+    "title": "ลบสินทรัพย์",
+    "confirmationMessage": "คุณแน่ใจหรือไม่ว่าต้องการลบสินทรัพย์นี้?",
+    "warningMessage": "สินทรัพย์ที่ถูกลบไม่สามารถกู้คืนไปยังธุรกรรมนี้โดยอัตโนมัติได้",
+    "cancel": "ยกเลิก",
+    "confirm": "ลบสินทรัพย์",
+    "removing": "กำลังลบ...",
+    "toast": {
+      "success": "ลบสินทรัพย์ออกจากการจำหน่ายสำเร็จแล้ว",
+      "error": "ไม่สามารถลบสินทรัพย์ออกจากการจำหน่ายได้"
+    }
+  },
+  "addAssetModal": {
+    "title": "เพิ่มสินทรัพย์สำหรับจำหน่าย",
+    "asset": "สินทรัพย์",
+    "assetPlaceholder": "เลือกสินทรัพย์...",
+    "assetLoading": "กำลังโหลดสินทรัพย์...",
+    "disposalReason": "เหตุผลในการจำหน่าย",
+    "disposalReasonPlaceholder": "เช่น ชำรุดและไม่สามารถซ่อมได้",
+    "notes": "หมายเหตุ",
+    "optional": "ไม่บังคับ",
+    "notesPlaceholder": "เช่น สภาพไม่เหมาะสมสำหรับการใช้งาน",
+    "cancel": "ยกเลิก",
+    "submit": "เพิ่มสินทรัพย์",
+    "submitting": "กำลังบันทึก...",
+    "toast": {
+      "noAsset": "กรุณาเลือกสินทรัพย์ก่อน",
+      "noReason": "กรุณาระบุเหตุผลในการจำหน่าย"
+    }
+  },
+  "addAssetMutationModal": {
+    "title": "เพิ่มสินทรัพย์",
+    "asset": "สินทรัพย์",
+    "assetPlaceholder": "เลือกสินทรัพย์...",
+    "assetLoading": "กำลังโหลดสินทรัพย์...",
+    "fromLocation": "สถานที่ต้นทาง",
+    "fromLocationPlaceholder": "เช่น อาคาร A ชั้น 2",
+    "toLocation": "สถานที่ปลายทาง",
+    "toLocationPlaceholder": "เช่น อาคาร B ชั้น 1",
+    "notes": "หมายเหตุ",
+    "optional": "ไม่บังคับ",
+    "notesPlaceholder": "เหตุผลในการย้ายสินทรัพย์...",
+    "cancel": "ยกเลิก",
+    "submit": "เพิ่มสินทรัพย์",
+    "submitting": "กำลังบันทึก...",
+    "toast": {
+      "noAsset": "กรุณาเลือกสินทรัพย์ก่อน",
+      "noLocation": "กรุณาระบุสถานที่ต้นทางและปลายทาง",
+      "success": "เพิ่มสินทรัพย์สำเร็จแล้ว",
+      "error": "ไม่สามารถเพิ่มสินทรัพย์ได้"
+    }
+  },
+  "approvalStatus": {
+    "title": "สถานะการอนุมัติ",
+    "completed": "เสร็จสิ้น",
+    "noData": "ยังไม่มีข้อมูลการอนุมัติ",
+    "step": "ขั้นตอน",
+    "by": "โดย",
+    "badge": {
+      "approved": "อนุมัติแล้ว",
+      "rejected": "ปฏิเสธแล้ว",
+      "pending": "รอดำเนินการ"
+    }
+  },
+  "submitMutationModal": {
+    "title": "ส่งธุรกรรม",
+    "warningMessage": "ธุรกรรมที่ส่งแล้วไม่สามารถแก้ไขได้อีก กรุณาตรวจสอบสินทรัพย์ทั้งหมดให้ถูกต้องก่อนดำเนินการ",
+    "notes": "หมายเหตุ",
+    "optional": "ไม่บังคับ",
+    "notesPlaceholder": "เช่น กรุณาดำเนินการโดยเร็ว",
+    "cancel": "ยกเลิก",
+    "submit": "ส่ง",
+    "saving": "กำลังบันทึก...",
+    "processing": "กำลังดำเนินการ...",
+    "toast": {
+      "success": "ส่งธุรกรรมสำเร็จแล้ว",
+      "errorSubmit": "ไม่สามารถส่งธุรกรรมได้",
+      "errorInitiate": "ไม่สามารถเริ่มต้นการอนุมัติได้"
+    }
+  },
+  "mutationDetail": {
+  "transactionNumber": "หมายเลขธุรกรรม",
+  "transactionType": "ประเภทธุรกรรม",
+  "date": "วันที่",
+  "category": "หมวดหมู่",
+  "targetBranch": "สาขาปลายทาง",
+  "createdBy": "สร้างโดย",
+  "createdAt": "สร้างเมื่อ",
+  "updatedAt": "อัปเดตเมื่อ",
+  "notes": "หมายเหตุ",
+  "assetList": "รายการสินทรัพย์",
+  "assets": "สินทรัพย์",
+  "addAsset": "เพิ่มสินทรัพย์",
+  "noAssets": "ยังไม่มีสินทรัพย์ที่เพิ่ม",
+  "category2": "หมวดหมู่",
+  "documentNumber": "หมายเลขเอกสาร",
+  "fromBranch": "จากสาขา",
+  "toBranch": "ไปยังสาขา",
+  "stageHistory": "ประวัติขั้นตอน",
+  "by": "โดย",
+  "submitTransaction": "ส่งธุรกรรม",
+  "approve": "อนุมัติ",
+  "confirmReceiving": "ยืนยันการรับ",
+  "executeTransaction": "ดำเนินการโอนย้าย"
+},
+"menuTable": {
+  "search": "ค้นหาเมนู...",
+  "assign": "มอบหมาย",
+  "create": "สร้าง",
+  "loading": "กำลังโหลดข้อมูล...",
+  "noData": "ไม่มีข้อมูล",
+  "show": "แสดง",
+  "until": "ถึง",
+  "from": "จาก",
+  "data": "ข้อมูล",
+  "page": "หน้า",
+  "of": "จาก",
+  "columns": {
+    "no": "ลำดับ",
+    "id": "ID",
+    "parentId": "ID หลัก",
+    "menuName": "ชื่อเมนู",
+    "path": "เส้นทาง",
+    "status": "สถานะ",
+    "action": "การดำเนินการ"
+  },
+  "status": {
+    "active": "ใช้งาน",
+    "inactive": "ไม่ใช้งาน"
+  },
+  "actions": {
+    "detail": "รายละเอียด",
+    "edit": "แก้ไข",
+    "delete": "ลบ"
+  },
+  "deleteModal": {
+    "title": "ลบเมนู",
+    "description": "คุณแน่ใจหรือไม่ว่าต้องการลบ",
+    "warning": "การดำเนินการนี้ไม่สามารถยกเลิกได้",
+    "cancel": "ยกเลิก",
+    "confirm": "ลบ",
+    "deleting": "กำลังลบ..."
   }
+},
+"attachment": {
+  "modal": {
+    "title": "เพิ่มเอกสารแนบ",
+    "desc": "อัปโหลดเอกสารที่จำเป็นสำหรับธุรกรรมนี้",
+    "cancel": "ยกเลิก",
+    "submit": "อัปโหลด",
+    "uploading": "กำลังอัปโหลด...",
+    "empty": "ไม่มีเอกสารแนบสำหรับขั้นตอนนี้"
+  },
+  "uploadSuccess": "อัปโหลดเอกสารแนบสำเร็จ",
+  "uploadError": "อัปโหลดเอกสารแนบไม่สำเร็จ"
+}
 }

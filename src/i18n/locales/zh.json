@@ -8,6 +8,47 @@
       "totalBookVal": "总账面价值",
       "totalDepreVal": "折旧率",
       "vsLastMonth": "与上月相比"
+    },
+    "loginPage": {
+      "systemName": "资产管理系统",
+      "heroTitle": "在一个平台中跟踪、管理并优化您公司的所有资产。",
+      "heroDescription": "从采购到处置 —— 轻松全面掌控组织资产。",
+      "featureTracking": "资产追踪",
+      "featureMaintenance": "维护日志",
+      "featureApproval": "审批流程",
+      "featureBranch": "分支管理",
+      "signIn": "登录",
+      "signInDesc": "登录您的账户以管理和监控资产。",
+      "usernameLabel": "用户名或邮箱",
+      "usernamePlaceholder": "请输入用户名或邮箱",
+      "passwordLabel": "密码",
+      "passwordPlaceholder": "请输入密码",
+      "submitButton": "登录到仪表板",
+      "restrictedAccess": "仅限授权人员访问。",
+      "contactAdmin": "如需访问权限，请联系系统管理员。",
+      "successLogin": "登录成功",
+      "invalidCredential": "用户名或密码错误"
+    },
+     "mutation": {
+      "searchPlaceholder": "按交易编号、类型或创建者搜索...",
+      "create": "创建",
+      "noData": "暂无数据",
+      "showing": "显示",
+      "of": "共",
+      "entries": "条数据",
+      "page": "页",
+      "detail": "详情",
+      "no": "序号",
+      "transactionNumber": "交易编号",
+      "type": "类型",
+      "date": "日期",
+      "status": "状态",
+      "createdBy": "创建者",
+      "createdAt": "创建时间",
+      "action": "操作",
+      "approved": "已批准",
+      "rejected": "已拒绝",
+      "pending": "待处理"
     }
   },
   "transaksiHeader": {
@@ -134,6 +175,14 @@
       "processBudget": "处理预算",
       "executeAsset": "执行资产",
       "goodsReceipt": "收货"
+    },
+    "assetModal": {
+      "title": "资产列表",
+      "totalAssets": "资产总数",
+      "unit": "项",
+      "showAll": "查看全部（{{count}}）",
+      "close": "关闭",
+      "downloadExcel": "下载 Excel"
     }
   },
   "createTransaction": {
@@ -242,6 +291,7 @@
     "title": "批准交易",
     "confirmationTitle": "审批确认",
     "confirmationDescription": "请在继续审批前确认所有交易数据无误。",
+    "confirmationDescriptions": "此操作将批准调拨交易且无法撤销。请确保数据正确后再继续操作。",
     "notes": "备注",
     "optional": "可选",
     "notesPlaceholder": "已批准...",
@@ -276,47 +326,217 @@
     "error": "资产执行失败"
   },
   "goodsReceipt": {
-      "title": "收货单",
-      "mode": {
-        "label": "收货模式",
-        "single": "单个资产",
-        "bulkItem": "按项目",
-        "bulkAll": "全部"
-      },
-      "progress": {
-        "label": "收货进度",
-        "done": "已完成",
-        "pending": "待处理",
-        "total": "总计",
-        "processing": "正在处理收货..."
-      },
-      "selectItem": {
-        "label": "选择项目",
-        "placeholder": "-- 请选择项目 --",
-        "assetPending": "个待处理资产",
-        "noAsset": "该项目没有待处理的资产"
-      },
-      "selectAsset": {
-        "label": "资产编号",
-        "placeholder": "-- 请选择资产编号 --"
-      },
-      "bulkAll": {
-        "label": "所有待处理资产",
-        "empty": "没有待处理的资产"
-      },
-      "notes": {
-        "label": "备注",
-        "optional": "可选",
-        "placeholder": "货物已完好无损地收到..."
-      },
-      "cancel": "取消",
-      "submit": "提交收货",
-      "submitBulkItem": "批量收货 - 当前项目 ({{count}} 个)",
-      "submitBulkAll": "全部收货 ({{count}} 个资产)",
-      "processing": "正在处理 {{done}}/{{total}}...",
-      "success": "全部 {{count}} 个资产收货成功",
-      "successPartial": "成功 {{success}} 个，失败 {{fail}} 个",
-      "error": "收货提交失败",
-      "noPending": "没有待处理的资产"
+    "title": "收货单",
+    "mode": {
+      "label": "收货模式",
+      "single": "单个资产",
+      "bulkItem": "按项目",
+      "bulkAll": "全部"
+    },
+    "progress": {
+      "label": "收货进度",
+      "done": "已完成",
+      "pending": "待处理",
+      "total": "总计",
+      "processing": "正在处理收货..."
+    },
+    "selectItem": {
+      "label": "选择项目",
+      "placeholder": "-- 请选择项目 --",
+      "assetPending": "个待处理资产",
+      "noAsset": "该项目没有待处理的资产"
+    },
+    "selectAsset": {
+      "label": "资产编号",
+      "placeholder": "-- 请选择资产编号 --"
+    },
+    "bulkAll": {
+      "label": "所有待处理资产",
+      "empty": "没有待处理的资产"
+    },
+    "notes": {
+      "label": "备注",
+      "optional": "可选",
+      "placeholder": "货物已完好无损地收到..."
+    },
+    "cancel": "取消",
+    "submit": "提交收货",
+    "submitBulkItem": "批量收货 - 当前项目 ({{count}} 个)",
+    "submitBulkAll": "全部收货 ({{count}} 个资产)",
+    "processing": "正在处理 {{done}}/{{total}}...",
+    "success": "全部 {{count}} 个资产收货成功",
+    "successPartial": "成功 {{success}} 个，失败 {{fail}} 个",
+    "error": "收货提交失败",
+    "noPending": "没有待处理的资产"
+  },
+  "submitDisposalModal": {
+    "title": "提交交易",
+    "infoMessage": "交易将被发送以进行审批流程。请确保所有数据均已正确无误。",
+    "notes": "备注",
+    "optional": "可选",
+    "notesPlaceholder": "为审批流程添加备注...",
+    "cancel": "取消",
+    "submit": "提交",
+    "submitting": "提交中...",
+    "toast": {
+      "success": "处置提交成功",
+      "error": "提交处置失败"
     }
+  },
+  "removeAssetModal": {
+    "title": "移除资产",
+    "confirmationMessage": "您确定要移除此资产吗？",
+    "warningMessage": "已移除的资产无法自动恢复到此交易中。",
+    "cancel": "取消",
+    "confirm": "移除资产",
+    "removing": "移除中...",
+    "toast": {
+      "success": "资产已成功从处置中移除",
+      "error": "从处置中移除资产失败"
+    }
+  },
+  "addAssetModal": {
+    "title": "添加处置资产",
+    "asset": "资产",
+    "assetPlaceholder": "选择资产...",
+    "assetLoading": "加载资产中...",
+    "disposalReason": "处置原因",
+    "disposalReasonPlaceholder": "例如：已损坏且无法修复",
+    "notes": "备注",
+    "optional": "可选",
+    "notesPlaceholder": "例如：状态已不适合使用",
+    "cancel": "取消",
+    "submit": "添加资产",
+    "submitting": "保存中...",
+    "toast": {
+      "noAsset": "请先选择一个资产",
+      "noReason": "处置原因为必填项"
+    }
+  },
+  "addAssetMutationModal": {
+    "title": "添加资产",
+    "asset": "资产",
+    "assetPlaceholder": "选择资产...",
+    "assetLoading": "加载资产中...",
+    "fromLocation": "起始位置",
+    "fromLocationPlaceholder": "例如：A栋2楼",
+    "toLocation": "目标位置",
+    "toLocationPlaceholder": "例如：B栋1楼",
+    "notes": "备注",
+    "optional": "可选",
+    "notesPlaceholder": "资产转移原因...",
+    "cancel": "取消",
+    "submit": "添加资产",
+    "submitting": "保存中...",
+    "toast": {
+      "noAsset": "请先选择一个资产",
+      "noLocation": "起始位置和目标位置为必填项",
+      "success": "资产添加成功",
+      "error": "添加资产失败"
+    }
+  },
+  "approvalStatus": {
+    "title": "审批状态",
+    "completed": "已完成",
+    "noData": "暂无审批数据",
+    "step": "步骤",
+    "by": "由",
+    "badge": {
+      "approved": "已批准",
+      "rejected": "已拒绝",
+      "pending": "待审批"
+    }
+  },
+  "submitMutationModal": {
+  "title": "提交交易",
+  "warningMessage": "已提交的交易无法再次编辑。请确保所有资产正确后再继续操作。",
+  "notes": "备注",
+  "optional": "可选",
+  "notesPlaceholder": "例如：请尽快处理",
+  "cancel": "取消",
+  "submit": "提交",
+  "saving": "保存中...",
+  "processing": "处理中...",
+  "toast": {
+    "success": "交易提交成功",
+    "errorSubmit": "提交交易失败",
+    "errorInitiate": "启动审批失败"
+  }
+},
+"mutationDetail": {
+  "transactionNumber": "交易编号",
+  "transactionType": "交易类型",
+  "date": "日期",
+  "category": "类别",
+  "targetBranch": "目标分支",
+  "createdBy": "创建人",
+  "createdAt": "创建时间",
+  "updatedAt": "更新时间",
+  "notes": "备注",
+  "assetList": "资产列表",
+  "assets": "资产",
+  "addAsset": "添加资产",
+  "noAssets": "暂无资产",
+  "category2": "类别",
+  "documentNumber": "文件编号",
+  "fromBranch": "来源分支",
+  "toBranch": "目标分支",
+  "stageHistory": "阶段历史",
+  "by": "由",
+  "submitTransaction": "提交交易",
+  "approve": "批准",
+  "confirmReceiving": "确认接收",
+  "executeTransaction": "执行调拨"
+},
+"menuTable": {
+  "search": "搜索菜单...",
+  "assign": "分配",
+  "create": "创建",
+  "loading": "加载数据中...",
+  "noData": "暂无数据",
+  "show": "显示",
+  "until": "至",
+  "from": "共",
+  "data": "条数据",
+  "page": "第",
+  "of": "页，共",
+  "columns": {
+    "no": "序号",
+    "id": "ID",
+    "parentId": "父级ID",
+    "menuName": "菜单名称",
+    "path": "路径",
+    "status": "状态",
+    "action": "操作"
+  },
+  "status": {
+    "active": "启用",
+    "inactive": "禁用"
+  },
+  "actions": {
+    "detail": "详情",
+    "edit": "编辑",
+    "delete": "删除"
+  },
+  "deleteModal": {
+    "title": "删除菜单",
+    "description": "您确定要删除",
+    "warning": "此操作无法撤销。",
+    "cancel": "取消",
+    "confirm": "删除",
+    "deleting": "删除中..."
+  }
+},
+"attachment": {
+  "modal": {
+    "title": "添加附件",
+    "desc": "请上传此交易所需的文件。",
+    "cancel": "取消",
+    "submit": "上传",
+    "uploading": "上传中...",
+    "empty": "此阶段没有可用的附件。"
+  },
+  "uploadSuccess": "附件上传成功。",
+  "uploadError": "附件上传失败。"
+}
 }
