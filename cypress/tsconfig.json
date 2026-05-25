@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2015",
+    "lib": ["ES2015", "dom"],
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "noEmit": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "types": [],
+    "typeRoots": ["../node_modules/@types"]
+  },
+  "files": [
+    "../node_modules/cypress/types/index.d.ts"
+  ],
+  "include": ["**/*.ts"]
+}
