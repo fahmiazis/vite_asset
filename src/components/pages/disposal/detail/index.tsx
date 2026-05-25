@@ -125,7 +125,7 @@ export default function DisposalDetailPage() {
           transactionNumber={transaction.transaction_number}
           transactionDisposalAssetId={String(assetsAttachID)}
           transactionType="disposal"
-          stage={"currentStage"}
+          stage={"DRAFT"}
           onConfirm={() => setShowAddAttachment(false)}
           onCancel={() => setShowAddAttachment(false)}
         />
@@ -244,7 +244,7 @@ export default function DisposalDetailPage() {
                         <button
                           onClick={() => {
                             setShowAddAttachment(true)
-                            setAssetAttachID(asset.asset_id)
+                            setAssetAttachID(asset.id)
                           }}
                           // disabled={isSubmitting}
                           className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors disabled:opacity-50"

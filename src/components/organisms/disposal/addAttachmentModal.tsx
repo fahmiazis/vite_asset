@@ -36,7 +36,7 @@ export default function AddAttachmentModal({
     const queryClient = useQueryClient()
     const [attachments, setAttachments] = useState<AttachmentFileState[]>([])
 
-    const { data: attachSetting, isLoading } = useAttachmentSettingList("disposal")
+    const { data: attachSetting, isLoading } = useAttachmentSettingList("disposal", "DRAFT")
     const { mutateAsync: uploadAttachment, isPending: isUploading } = useUploadDisposalAttachment()
 
     useEffect(() => {
