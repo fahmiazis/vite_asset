@@ -7,6 +7,9 @@ import { SubmitDisposalModal } from "../../../organisms/disposal/submitDraftModa
 import AddAttachmentModal from "../../../organisms/disposal/addAttachmentModal"
 import { useTranslation } from "react-i18next"
 import { menuListToSelectOptionsWithPath } from "../../../../utils/menu"
+import { useDisposalAttachmentStatus } from "../../../../hooks/query/disposal/attchmentStatus"
+import { ReviewDisposalAttachmentModal } from "../../../organisms/disposal/reviewAttachmentModal"
+import Buttons from "../../../atoms/buttons"
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString("id-ID", {
@@ -83,7 +86,11 @@ export default function DisposalDetailPage() {
   const [assetToRemove, setAssetToRemove] = useState<{ id: number; name: string } | null>(null)
   const [showSubmit, setShowSubmit] = useState(false)
   const [showAddAttachment, setShowAddAttachment] = useState(false)
+  const [reviewAttachment, setReviewAttachment] = useState(false)
   const [assetsAttachID, setAssetAttachID] = useState("")
+
+  const { data: attachStatus } = useDisposalAttachmentStatus(id || "")
+  console.log(attachStatus)
 
   if (isLoading) {
     return (
@@ -130,6 +137,11 @@ export default function DisposalDetailPage() {
           onCancel={() => setShowAddAttachment(false)}
         />
       )}
+      {reviewAttachment && (
+        <ReviewDisposalAttachmentModal
+          transactionId={id || ""} onClose={() => setReviewAttachment(false)} />
+      )
+      }
 
       {/* Header */}
       <div className="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-xl p-5">
@@ -240,23 +252,24 @@ export default function DisposalDetailPage() {
                         </svg>
                       </button>
                     )}
-                     {transaction.status.toLowerCase() === "draft" && (
-                        <button
-                          onClick={() => {
-                            setShowAddAttachment(true)
-                            setAssetAttachID(asset.id)
-                          }}
-                          // disabled={isSubmitting}
-                          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors disabled:opacity-50"
-                        >
-                          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                          </svg>
-                          Attach Document
-                          {/* {t("detailTransaction.header.submitting")} */}
-                          {/* {isSubmitting ? t("detailTransaction.header.submitting") : t("detailTransaction.header.submitForVerification")} */}
-                        </button>
-                      )}
+                    {transaction.status.toLowerCase() === "draft" && (
+                      <button
+                        onClick={() => {
+                          setShowAddAttachment(true)
+                          setAssetAttachID(asset.id)
+                        }}
+                        // disabled={isSubmitting}
+                        className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors disabled:opacity-50"
+                      >
+                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Attach Document
+                        {/* {t("detailTransaction.header.submitting")} */}
+                        {/* {isSubmitting ? t("detailTransaction.header.submitting") : t("detailTransaction.header.submitForVerification")} */}
+                      </button>
+                    )}
+                    <Buttons label="sini" onClick={() => setReviewAttachment(true)} />
                   </div>
                 </div>
 
