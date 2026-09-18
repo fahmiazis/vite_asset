@@ -29,7 +29,7 @@
       "successLogin": "登录成功",
       "invalidCredential": "用户名或密码错误"
     },
-     "mutation": {
+    "mutation": {
       "searchPlaceholder": "按交易编号、类型或创建者搜索...",
       "create": "创建",
       "noData": "暂无数据",
@@ -448,95 +448,264 @@
     }
   },
   "submitMutationModal": {
-  "title": "提交交易",
-  "warningMessage": "已提交的交易无法再次编辑。请确保所有资产正确后再继续操作。",
-  "notes": "备注",
-  "optional": "可选",
-  "notesPlaceholder": "例如：请尽快处理",
-  "cancel": "取消",
-  "submit": "提交",
-  "saving": "保存中...",
-  "processing": "处理中...",
-  "toast": {
-    "success": "交易提交成功",
-    "errorSubmit": "提交交易失败",
-    "errorInitiate": "启动审批失败"
-  }
-},
-"mutationDetail": {
-  "transactionNumber": "交易编号",
-  "transactionType": "交易类型",
-  "date": "日期",
-  "category": "类别",
-  "targetBranch": "目标分支",
-  "createdBy": "创建人",
-  "createdAt": "创建时间",
-  "updatedAt": "更新时间",
-  "notes": "备注",
-  "assetList": "资产列表",
-  "assets": "资产",
-  "addAsset": "添加资产",
-  "noAssets": "暂无资产",
-  "category2": "类别",
-  "documentNumber": "文件编号",
-  "fromBranch": "来源分支",
-  "toBranch": "目标分支",
-  "stageHistory": "阶段历史",
-  "by": "由",
-  "submitTransaction": "提交交易",
-  "approve": "批准",
-  "confirmReceiving": "确认接收",
-  "executeTransaction": "执行调拨"
-},
-"menuTable": {
-  "search": "搜索菜单...",
-  "assign": "分配",
-  "create": "创建",
-  "loading": "加载数据中...",
-  "noData": "暂无数据",
-  "show": "显示",
-  "until": "至",
-  "from": "共",
-  "data": "条数据",
-  "page": "第",
-  "of": "页，共",
-  "columns": {
-    "no": "序号",
-    "id": "ID",
-    "parentId": "父级ID",
-    "menuName": "菜单名称",
-    "path": "路径",
-    "status": "状态",
-    "action": "操作"
-  },
-  "status": {
-    "active": "启用",
-    "inactive": "禁用"
-  },
-  "actions": {
-    "detail": "详情",
-    "edit": "编辑",
-    "delete": "删除"
-  },
-  "deleteModal": {
-    "title": "删除菜单",
-    "description": "您确定要删除",
-    "warning": "此操作无法撤销。",
+    "title": "提交交易",
+    "warningMessage": "已提交的交易无法再次编辑。请确保所有资产正确后再继续操作。",
+    "notes": "备注",
+    "optional": "可选",
+    "notesPlaceholder": "例如：请尽快处理",
     "cancel": "取消",
-    "confirm": "删除",
-    "deleting": "删除中..."
-  }
-},
-"attachment": {
-  "modal": {
-    "title": "添加附件",
-    "desc": "请上传此交易所需的文件。",
-    "cancel": "取消",
-    "submit": "上传",
-    "uploading": "上传中...",
-    "empty": "此阶段没有可用的附件。"
+    "submit": "提交",
+    "saving": "保存中...",
+    "processing": "处理中...",
+    "toast": {
+      "success": "交易提交成功",
+      "errorSubmit": "提交交易失败",
+      "errorInitiate": "启动审批失败"
+    }
   },
-  "uploadSuccess": "附件上传成功。",
-  "uploadError": "附件上传失败。"
-}
+  "mutationDetail": {
+    "transactionNumber": "交易编号",
+    "transactionType": "交易类型",
+    "date": "日期",
+    "category": "类别",
+    "targetBranch": "目标分支",
+    "createdBy": "创建人",
+    "createdAt": "创建时间",
+    "updatedAt": "更新时间",
+    "notes": "备注",
+    "assetList": "资产列表",
+    "assets": "资产",
+    "addAsset": "添加资产",
+    "noAssets": "暂无资产",
+    "category2": "类别",
+    "documentNumber": "文件编号",
+    "fromBranch": "来源分支",
+    "toBranch": "目标分支",
+    "stageHistory": "阶段历史",
+    "by": "由",
+    "submitTransaction": "提交交易",
+    "approve": "批准",
+    "confirmReceiving": "确认接收",
+    "executeTransaction": "执行调拨"
+  },
+  "menuTable": {
+    "search": "搜索菜单...",
+    "assign": "分配",
+    "create": "创建",
+    "loading": "加载数据中...",
+    "noData": "暂无数据",
+    "show": "显示",
+    "until": "至",
+    "from": "共",
+    "data": "条数据",
+    "page": "第",
+    "of": "页，共",
+    "columns": {
+      "no": "序号",
+      "id": "ID",
+      "parentId": "父级ID",
+      "menuName": "菜单名称",
+      "path": "路径",
+      "status": "状态",
+      "action": "操作"
+    },
+    "status": {
+      "active": "启用",
+      "inactive": "禁用"
+    },
+    "actions": {
+      "detail": "详情",
+      "edit": "编辑",
+      "delete": "删除"
+    },
+    "deleteModal": {
+      "title": "删除菜单",
+      "description": "您确定要删除",
+      "warning": "此操作无法撤销。",
+      "cancel": "取消",
+      "confirm": "删除",
+      "deleting": "删除中..."
+    }
+  },
+  "attachment": {
+    "modal": {
+      "title": "添加附件",
+      "desc": "请上传此交易所需的文件。",
+      "cancel": "取消",
+      "submit": "上传",
+      "uploading": "上传中...",
+      "empty": "此阶段没有可用的附件。"
+    },
+    "uploadSuccess": "附件上传成功。",
+    "uploadError": "附件上传失败。"
+  },
+  "stockOpnamePage": {
+    "title": "库存盘点",
+    "createButton": "+ 新建库存盘点"
+  },
+  "createStockOpnamePage": {
+    "title": "新建库存盘点",
+    "subtitle": "创建库存盘点草稿，草稿保存后再添加资产",
+    "dateLabel": "盘点日期",
+    "notesLabel": "备注",
+    "notesPlaceholder": "例如：Bandung Barat 仓库第三季度例行盘点",
+    "cancel": "取消",
+    "submit": "保存草稿",
+    "submitting": "保存中..."
+  },
+  "stockOpnameStepper": {
+    "submit": "提交",
+    "approval": "审批",
+    "execute": "执行",
+    "done": "完成"
+  },
+  "stockOpnameDetail": {
+    "transactionNumber": "交易编号",
+    "opnameDate": "盘点日期",
+    "createdBy": "创建人",
+    "createdAt": "创建时间",
+    "updatedAt": "更新时间",
+    "notes": "备注",
+    "assetList": "资产清单",
+    "assets": "项资产",
+    "addAsset": "添加资产",
+    "noAssets": "尚未添加资产",
+    "systemData": "系统数据",
+    "foundResult": "盘点结果",
+    "condition": "状态",
+    "physicalStatus": "实物状态",
+    "assetStatus": "资产状态",
+    "fillFinding": "填写盘点结果",
+    "editFinding": "编辑盘点结果",
+    "removeAsset": "移除资产",
+    "approvalNotInitiated": "此交易尚未提交审批。",
+    "initiateApproval": "提交审批",
+    "initiating": "提交中...",
+    "toastInitiateSuccess": "审批提交成功",
+    "toastInitiateError": "提交审批失败",
+    "stageHistory": "阶段记录",
+    "noStageHistory": "暂无阶段记录",
+    "by": "由",
+    "submitStockOpname": "提交库存盘点",
+    "approve": "批准",
+    "execute": "执行库存盘点",
+    "reject": "拒绝"
+  },
+  "addAssetStockOpnameModal": {
+    "title": "添加资产到库存盘点",
+    "asset": "资产",
+    "assetPlaceholder": "选择资产",
+    "assetLoading": "加载资产中...",
+    "cancel": "取消",
+    "submit": "添加",
+    "submitting": "添加中...",
+    "toast": {
+      "noAsset": "请先选择一个资产"
+    }
+  },
+  "removeAssetStockOpnameModal": {
+    "title": "移除资产",
+    "confirmationMessage": "此资产将从库存盘点草稿中移除",
+    "warningMessage": "此操作无法撤销。",
+    "cancel": "取消",
+    "confirm": "是的，移除",
+    "removing": "移除中..."
+  },
+  "stockOpnameFindingModal": {
+    "title": "填写盘点结果",
+    "physicalStatus": "实物状态",
+    "physicalStatusPlaceholder": "选择实物状态",
+    "physicalStatusOptions": {
+      "exists": "存在 / 相符",
+      "missing": "遗失",
+      "damaged": "损坏",
+      "obsolete": "老旧 / 未使用"
+    },
+    "condition": "状态",
+    "conditionPlaceholder": "选择状态",
+    "conditionOptions": {
+      "good": "良好",
+      "fair": "尚可",
+      "poor": "较差",
+      "broken": "严重损坏"
+    },
+    "assetStatus": "资产状态",
+    "assetStatusHint": "（可选，如有变更请填写）",
+    "assetStatusOptions": {
+      "unchanged": "不变更",
+      "active": "启用",
+      "inactive": "停用",
+      "maintenance": "维护中",
+      "retired": "已报废"
+    },
+    "notes": "备注",
+    "optional": "可选",
+    "notesPlaceholder": "例如：设备外壳发现刮痕",
+    "cancel": "取消",
+    "submit": "保存结果",
+    "submitting": "保存中...",
+    "toast": {
+      "required": "实物状态和状态为必填项"
+    }
+  },
+  "submitStockOpnameModal": {
+    "title": "提交库存盘点",
+    "warningMessage": "提交后草稿将无法再编辑，并会立即提交审批。",
+    "notes": "备注",
+    "optional": "可选",
+    "notesPlaceholder": "例如：仓库所有设备已检查完毕",
+    "cancel": "取消",
+    "submit": "提交",
+    "saving": "保存中...",
+    "initiating": "提交审批中...",
+    "toast": {
+      "success": "库存盘点提交并已发起审批",
+      "errorSubmit": "提交库存盘点失败",
+      "errorInitiate": "提交成功，但发起审批失败"
+    }
+  },
+  "approveStockOpnameModal": {
+    "title": "批准库存盘点",
+    "confirmationTitle": "审批确认",
+    "confirmationDescription": "所有步骤批准后，库存盘点将自动进入执行阶段。",
+    "notes": "备注",
+    "optional": "可选",
+    "notesPlaceholder": "审批备注...",
+    "cancel": "取消",
+    "approve": "批准",
+    "approving": "审批中...",
+    "toast": {
+      "success": "审批成功",
+      "error": "审批失败"
+    },
+    "stepFallback": "审批步骤"
+  },
+  "executeStockOpnameModal": {
+    "title": "执行库存盘点",
+    "infoMessage": "盘点结果将写入资产数据（状态、实物状态、资产状态），且无法再更改。",
+    "notes": "备注",
+    "optional": "可选",
+    "notesPlaceholder": "执行备注...",
+    "cancel": "取消",
+    "submit": "执行",
+    "submitting": "执行中...",
+    "toast": {
+      "success": "库存盘点执行成功",
+      "error": "执行库存盘点失败"
+    }
+  },
+  "rejectStockOpnameModal": {
+    "title": "拒绝库存盘点",
+    "warningMessage": "库存盘点将被拒绝且无法继续。",
+    "reasonLabel": "拒绝原因",
+    "reasonPlaceholder": "请说明拒绝原因（至少10个字符）",
+    "reasonTooShort": "原因至少需要 {{min}} 个字符（{{current}}/{{min}}）",
+    "cancel": "取消",
+    "confirm": "是的，拒绝",
+    "rejecting": "拒绝中...",
+    "toast": {
+      "success": "库存盘点已拒绝",
+      "error": "拒绝库存盘点失败"
+    }
+  }
 }

@@ -464,79 +464,248 @@
     }
   },
   "mutationDetail": {
-  "transactionNumber": "หมายเลขธุรกรรม",
-  "transactionType": "ประเภทธุรกรรม",
-  "date": "วันที่",
-  "category": "หมวดหมู่",
-  "targetBranch": "สาขาปลายทาง",
-  "createdBy": "สร้างโดย",
-  "createdAt": "สร้างเมื่อ",
-  "updatedAt": "อัปเดตเมื่อ",
-  "notes": "หมายเหตุ",
-  "assetList": "รายการสินทรัพย์",
-  "assets": "สินทรัพย์",
-  "addAsset": "เพิ่มสินทรัพย์",
-  "noAssets": "ยังไม่มีสินทรัพย์ที่เพิ่ม",
-  "category2": "หมวดหมู่",
-  "documentNumber": "หมายเลขเอกสาร",
-  "fromBranch": "จากสาขา",
-  "toBranch": "ไปยังสาขา",
-  "stageHistory": "ประวัติขั้นตอน",
-  "by": "โดย",
-  "submitTransaction": "ส่งธุรกรรม",
-  "approve": "อนุมัติ",
-  "confirmReceiving": "ยืนยันการรับ",
-  "executeTransaction": "ดำเนินการโอนย้าย"
-},
-"menuTable": {
-  "search": "ค้นหาเมนู...",
-  "assign": "มอบหมาย",
-  "create": "สร้าง",
-  "loading": "กำลังโหลดข้อมูล...",
-  "noData": "ไม่มีข้อมูล",
-  "show": "แสดง",
-  "until": "ถึง",
-  "from": "จาก",
-  "data": "ข้อมูล",
-  "page": "หน้า",
-  "of": "จาก",
-  "columns": {
-    "no": "ลำดับ",
-    "id": "ID",
-    "parentId": "ID หลัก",
-    "menuName": "ชื่อเมนู",
-    "path": "เส้นทาง",
-    "status": "สถานะ",
-    "action": "การดำเนินการ"
+    "transactionNumber": "หมายเลขธุรกรรม",
+    "transactionType": "ประเภทธุรกรรม",
+    "date": "วันที่",
+    "category": "หมวดหมู่",
+    "targetBranch": "สาขาปลายทาง",
+    "createdBy": "สร้างโดย",
+    "createdAt": "สร้างเมื่อ",
+    "updatedAt": "อัปเดตเมื่อ",
+    "notes": "หมายเหตุ",
+    "assetList": "รายการสินทรัพย์",
+    "assets": "สินทรัพย์",
+    "addAsset": "เพิ่มสินทรัพย์",
+    "noAssets": "ยังไม่มีสินทรัพย์ที่เพิ่ม",
+    "category2": "หมวดหมู่",
+    "documentNumber": "หมายเลขเอกสาร",
+    "fromBranch": "จากสาขา",
+    "toBranch": "ไปยังสาขา",
+    "stageHistory": "ประวัติขั้นตอน",
+    "by": "โดย",
+    "submitTransaction": "ส่งธุรกรรม",
+    "approve": "อนุมัติ",
+    "confirmReceiving": "ยืนยันการรับ",
+    "executeTransaction": "ดำเนินการโอนย้าย"
   },
-  "status": {
-    "active": "ใช้งาน",
-    "inactive": "ไม่ใช้งาน"
+  "menuTable": {
+    "search": "ค้นหาเมนู...",
+    "assign": "มอบหมาย",
+    "create": "สร้าง",
+    "loading": "กำลังโหลดข้อมูล...",
+    "noData": "ไม่มีข้อมูล",
+    "show": "แสดง",
+    "until": "ถึง",
+    "from": "จาก",
+    "data": "ข้อมูล",
+    "page": "หน้า",
+    "of": "จาก",
+    "columns": {
+      "no": "ลำดับ",
+      "id": "ID",
+      "parentId": "ID หลัก",
+      "menuName": "ชื่อเมนู",
+      "path": "เส้นทาง",
+      "status": "สถานะ",
+      "action": "การดำเนินการ"
+    },
+    "status": {
+      "active": "ใช้งาน",
+      "inactive": "ไม่ใช้งาน"
+    },
+    "actions": {
+      "detail": "รายละเอียด",
+      "edit": "แก้ไข",
+      "delete": "ลบ"
+    },
+    "deleteModal": {
+      "title": "ลบเมนู",
+      "description": "คุณแน่ใจหรือไม่ว่าต้องการลบ",
+      "warning": "การดำเนินการนี้ไม่สามารถยกเลิกได้",
+      "cancel": "ยกเลิก",
+      "confirm": "ลบ",
+      "deleting": "กำลังลบ..."
+    }
   },
-  "actions": {
-    "detail": "รายละเอียด",
-    "edit": "แก้ไข",
-    "delete": "ลบ"
+  "attachment": {
+    "modal": {
+      "title": "เพิ่มเอกสารแนบ",
+      "desc": "อัปโหลดเอกสารที่จำเป็นสำหรับธุรกรรมนี้",
+      "cancel": "ยกเลิก",
+      "submit": "อัปโหลด",
+      "uploading": "กำลังอัปโหลด...",
+      "empty": "ไม่มีเอกสารแนบสำหรับขั้นตอนนี้"
+    },
+    "uploadSuccess": "อัปโหลดเอกสารแนบสำเร็จ",
+    "uploadError": "อัปโหลดเอกสารแนบไม่สำเร็จ"
   },
-  "deleteModal": {
-    "title": "ลบเมนู",
-    "description": "คุณแน่ใจหรือไม่ว่าต้องการลบ",
-    "warning": "การดำเนินการนี้ไม่สามารถยกเลิกได้",
+  "stockOpnamePage": {
+    "title": "ตรวจนับสินทรัพย์",
+    "createButton": "+ สร้างการตรวจนับสินทรัพย์"
+  },
+  "createStockOpnamePage": {
+    "title": "สร้างการตรวจนับสินทรัพย์",
+    "subtitle": "สร้างแบบร่างการตรวจนับสินทรัพย์ก่อน แล้วค่อยเพิ่มสินทรัพย์หลังบันทึกแบบร่าง",
+    "dateLabel": "วันที่ตรวจนับ",
+    "notesLabel": "หมายเหตุ",
+    "notesPlaceholder": "เช่น การตรวจนับประจำไตรมาส 3 คลังสินค้า Bandung Barat",
     "cancel": "ยกเลิก",
-    "confirm": "ลบ",
-    "deleting": "กำลังลบ..."
+    "submit": "บันทึกแบบร่าง",
+    "submitting": "กำลังบันทึก..."
+  },
+  "stockOpnameStepper": {
+    "submit": "ส่ง",
+    "approval": "อนุมัติ",
+    "execute": "ดำเนินการ",
+    "done": "เสร็จสิ้น"
+  },
+  "stockOpnameDetail": {
+    "transactionNumber": "หมายเลขธุรกรรม",
+    "opnameDate": "วันที่ตรวจนับ",
+    "createdBy": "สร้างโดย",
+    "createdAt": "สร้างเมื่อ",
+    "updatedAt": "อัปเดตเมื่อ",
+    "notes": "หมายเหตุ",
+    "assetList": "รายการสินทรัพย์",
+    "assets": "รายการ",
+    "addAsset": "เพิ่มสินทรัพย์",
+    "noAssets": "ยังไม่มีสินทรัพย์ที่เพิ่ม",
+    "systemData": "ข้อมูลระบบ",
+    "foundResult": "ผลการตรวจพบ",
+    "condition": "สภาพ",
+    "physicalStatus": "สถานะทางกายภาพ",
+    "assetStatus": "สถานะสินทรัพย์",
+    "fillFinding": "กรอกผลตรวจพบ",
+    "editFinding": "แก้ไขผลตรวจพบ",
+    "removeAsset": "ลบสินทรัพย์",
+    "approvalNotInitiated": "ยังไม่ได้ส่งคำขออนุมัติสำหรับธุรกรรมนี้",
+    "initiateApproval": "ส่งขออนุมัติ",
+    "initiating": "กำลังส่งคำขอ...",
+    "toastInitiateSuccess": "ส่งคำขออนุมัติสำเร็จแล้ว",
+    "toastInitiateError": "ไม่สามารถส่งคำขออนุมัติได้",
+    "stageHistory": "ประวัติขั้นตอน",
+    "noStageHistory": "ยังไม่มีประวัติขั้นตอน",
+    "by": "โดย",
+    "submitStockOpname": "ส่งการตรวจนับสินทรัพย์",
+    "approve": "อนุมัติ",
+    "execute": "ดำเนินการตรวจนับสินทรัพย์",
+    "reject": "ปฏิเสธ"
+  },
+  "addAssetStockOpnameModal": {
+    "title": "เพิ่มสินทรัพย์ในการตรวจนับ",
+    "asset": "สินทรัพย์",
+    "assetPlaceholder": "เลือกสินทรัพย์",
+    "assetLoading": "กำลังโหลดสินทรัพย์...",
+    "cancel": "ยกเลิก",
+    "submit": "เพิ่ม",
+    "submitting": "กำลังเพิ่ม...",
+    "toast": {
+      "noAsset": "กรุณาเลือกสินทรัพย์ก่อน"
+    }
+  },
+  "removeAssetStockOpnameModal": {
+    "title": "ลบสินทรัพย์",
+    "confirmationMessage": "สินทรัพย์นี้จะถูกลบออกจากแบบร่างการตรวจนับ",
+    "warningMessage": "การดำเนินการนี้ไม่สามารถยกเลิกได้",
+    "cancel": "ยกเลิก",
+    "confirm": "ใช่ ลบ",
+    "removing": "กำลังลบ..."
+  },
+  "stockOpnameFindingModal": {
+    "title": "กรอกผลตรวจสภาพจริง",
+    "physicalStatus": "สถานะทางกายภาพ",
+    "physicalStatusPlaceholder": "เลือกสถานะทางกายภาพ",
+    "physicalStatusOptions": {
+      "exists": "มีอยู่ / ตรงกัน",
+      "missing": "สูญหาย",
+      "damaged": "ชำรุด",
+      "obsolete": "ล้าสมัย / ไม่ได้ใช้งาน"
+    },
+    "condition": "สภาพ",
+    "conditionPlaceholder": "เลือกสภาพ",
+    "conditionOptions": {
+      "good": "ดี",
+      "fair": "พอใช้",
+      "poor": "ไม่ดี",
+      "broken": "ชำรุดหนัก"
+    },
+    "assetStatus": "สถานะสินทรัพย์",
+    "assetStatusHint": "(ไม่บังคับ กรอกหากมีการเปลี่ยนแปลง)",
+    "assetStatusOptions": {
+      "unchanged": "ไม่เปลี่ยนแปลง",
+      "active": "ใช้งาน",
+      "inactive": "ไม่ใช้งาน",
+      "maintenance": "ซ่อมบำรุง",
+      "retired": "ปลดระวาง"
+    },
+    "notes": "หมายเหตุ",
+    "optional": "ไม่บังคับ",
+    "notesPlaceholder": "เช่น พบรอยขีดข่วนที่ตัวเครื่อง",
+    "cancel": "ยกเลิก",
+    "submit": "บันทึกผลตรวจ",
+    "submitting": "กำลังบันทึก...",
+    "toast": {
+      "required": "กรุณากรอกสถานะทางกายภาพและสภาพ"
+    }
+  },
+  "submitStockOpnameModal": {
+    "title": "ส่งการตรวจนับสินทรัพย์",
+    "warningMessage": "เมื่อส่งแล้ว แบบร่างจะไม่สามารถแก้ไขได้อีก และจะถูกส่งขออนุมัติทันที",
+    "notes": "หมายเหตุ",
+    "optional": "ไม่บังคับ",
+    "notesPlaceholder": "เช่น ตรวจสอบอุปกรณ์ทั้งหมดในคลังแล้ว",
+    "cancel": "ยกเลิก",
+    "submit": "ส่ง",
+    "saving": "กำลังบันทึก...",
+    "initiating": "กำลังส่งขออนุมัติ...",
+    "toast": {
+      "success": "ส่งการตรวจนับและขออนุมัติสำเร็จแล้ว",
+      "errorSubmit": "ไม่สามารถส่งการตรวจนับสินทรัพย์ได้",
+      "errorInitiate": "ส่งสำเร็จ แต่ไม่สามารถส่งขออนุมัติได้"
+    }
+  },
+  "approveStockOpnameModal": {
+    "title": "อนุมัติการตรวจนับสินทรัพย์",
+    "confirmationTitle": "ยืนยันการอนุมัติ",
+    "confirmationDescription": "เมื่ออนุมัติครบทุกขั้นตอนแล้ว การตรวจนับสินทรัพย์จะเข้าสู่ขั้นตอนดำเนินการโดยอัตโนมัติ",
+    "notes": "หมายเหตุ",
+    "optional": "ไม่บังคับ",
+    "notesPlaceholder": "หมายเหตุการอนุมัติ...",
+    "cancel": "ยกเลิก",
+    "approve": "อนุมัติ",
+    "approving": "กำลังอนุมัติ...",
+    "toast": {
+      "success": "อนุมัติสำเร็จ",
+      "error": "ไม่สามารถอนุมัติได้"
+    },
+    "stepFallback": "ขั้นตอนอนุมัติ"
+  },
+  "executeStockOpnameModal": {
+    "title": "ดำเนินการตรวจนับสินทรัพย์",
+    "infoMessage": "ผลตรวจพบจะถูกบันทึกลงในข้อมูลสินทรัพย์ (สภาพ สถานะทางกายภาพ สถานะสินทรัพย์) และไม่สามารถแก้ไขได้อีก",
+    "notes": "หมายเหตุ",
+    "optional": "ไม่บังคับ",
+    "notesPlaceholder": "หมายเหตุการดำเนินการ...",
+    "cancel": "ยกเลิก",
+    "submit": "ดำเนินการ",
+    "submitting": "กำลังดำเนินการ...",
+    "toast": {
+      "success": "ดำเนินการตรวจนับสำเร็จแล้ว",
+      "error": "ไม่สามารถดำเนินการตรวจนับได้"
+    }
+  },
+  "rejectStockOpnameModal": {
+    "title": "ปฏิเสธการตรวจนับสินทรัพย์",
+    "warningMessage": "การตรวจนับสินทรัพย์จะถูกปฏิเสธและไม่สามารถดำเนินการต่อได้",
+    "reasonLabel": "เหตุผลการปฏิเสธ",
+    "reasonPlaceholder": "ระบุเหตุผลการปฏิเสธ (อย่างน้อย 10 ตัวอักษร)",
+    "reasonTooShort": "เหตุผลต้องมีอย่างน้อย {{min}} ตัวอักษร ({{current}}/{{min}})",
+    "cancel": "ยกเลิก",
+    "confirm": "ใช่ ปฏิเสธ",
+    "rejecting": "กำลังปฏิเสธ...",
+    "toast": {
+      "success": "ปฏิเสธการตรวจนับสำเร็จแล้ว",
+      "error": "ไม่สามารถปฏิเสธการตรวจนับได้"
+    }
   }
-},
-"attachment": {
-  "modal": {
-    "title": "เพิ่มเอกสารแนบ",
-    "desc": "อัปโหลดเอกสารที่จำเป็นสำหรับธุรกรรมนี้",
-    "cancel": "ยกเลิก",
-    "submit": "อัปโหลด",
-    "uploading": "กำลังอัปโหลด...",
-    "empty": "ไม่มีเอกสารแนบสำหรับขั้นตอนนี้"
-  },
-  "uploadSuccess": "อัปโหลดเอกสารแนบสำเร็จ",
-  "uploadError": "อัปโหลดเอกสารแนบไม่สำเร็จ"
-}
 }

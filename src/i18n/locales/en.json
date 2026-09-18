@@ -464,79 +464,248 @@
     }
   },
   "mutationDetail": {
-  "transactionNumber": "Transaction Number",
-  "transactionType": "Transaction Type",
-  "date": "Date",
-  "category": "Category",
-  "targetBranch": "Target Branch",
-  "createdBy": "Created By",
-  "createdAt": "Created At",
-  "updatedAt": "Updated At",
-  "notes": "Notes",
-  "assetList": "Asset List",
-  "assets": "assets",
-  "addAsset": "Add Asset",
-  "noAssets": "No assets added yet",
-  "category2": "Category",
-  "documentNumber": "Document Number",
-  "fromBranch": "From Branch",
-  "toBranch": "To Branch",
-  "stageHistory": "Stage History",
-  "by": "by",
-  "submitTransaction": "Submit Transaction",
-  "approve": "Approve",
-  "confirmReceiving": "Confirm Receiving",
-  "executeTransaction": "Execute Mutation"
-},
-"menuTable": {
-  "search": "Search menu...",
-  "assign": "Assign",
-  "create": "Create",
-  "loading": "Loading data...",
-  "noData": "No data available",
-  "show": "Show",
-  "until": "until",
-  "from": "from",
-  "data": "data",
-  "page": "Page",
-  "of": "of",
-  "columns": {
-    "no": "No",
-    "id": "ID",
-    "parentId": "Parent ID",
-    "menuName": "Menu Name",
-    "path": "Path",
-    "status": "Status",
-    "action": "Action"
+    "transactionNumber": "Transaction Number",
+    "transactionType": "Transaction Type",
+    "date": "Date",
+    "category": "Category",
+    "targetBranch": "Target Branch",
+    "createdBy": "Created By",
+    "createdAt": "Created At",
+    "updatedAt": "Updated At",
+    "notes": "Notes",
+    "assetList": "Asset List",
+    "assets": "assets",
+    "addAsset": "Add Asset",
+    "noAssets": "No assets added yet",
+    "category2": "Category",
+    "documentNumber": "Document Number",
+    "fromBranch": "From Branch",
+    "toBranch": "To Branch",
+    "stageHistory": "Stage History",
+    "by": "by",
+    "submitTransaction": "Submit Transaction",
+    "approve": "Approve",
+    "confirmReceiving": "Confirm Receiving",
+    "executeTransaction": "Execute Mutation"
   },
-  "status": {
-    "active": "Active",
-    "inactive": "Inactive"
+  "menuTable": {
+    "search": "Search menu...",
+    "assign": "Assign",
+    "create": "Create",
+    "loading": "Loading data...",
+    "noData": "No data available",
+    "show": "Show",
+    "until": "until",
+    "from": "from",
+    "data": "data",
+    "page": "Page",
+    "of": "of",
+    "columns": {
+      "no": "No",
+      "id": "ID",
+      "parentId": "Parent ID",
+      "menuName": "Menu Name",
+      "path": "Path",
+      "status": "Status",
+      "action": "Action"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "actions": {
+      "detail": "Detail",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "deleteModal": {
+      "title": "Delete Menu",
+      "description": "Are you sure you want to delete",
+      "warning": "This action cannot be undone.",
+      "cancel": "Cancel",
+      "confirm": "Delete",
+      "deleting": "Deleting..."
+    }
   },
-  "actions": {
-    "detail": "Detail",
-    "edit": "Edit",
-    "delete": "Delete"
+  "attachment": {
+    "modal": {
+      "title": "Add Attachment",
+      "desc": "Upload the required documents for this transaction.",
+      "cancel": "Cancel",
+      "submit": "Upload",
+      "uploading": "Uploading...",
+      "empty": "No attachments available for this stage."
+    },
+    "uploadSuccess": "Attachments uploaded successfully.",
+    "uploadError": "Failed to upload attachments."
   },
-  "deleteModal": {
-    "title": "Delete Menu",
-    "description": "Are you sure you want to delete",
-    "warning": "This action cannot be undone.",
+  "stockOpnamePage": {
+    "title": "Stock Opname",
+    "createButton": "+ Create Stock Opname"
+  },
+  "createStockOpnamePage": {
+    "title": "Create Stock Opname",
+    "subtitle": "Create a stock opname draft, assets are added after the draft is saved",
+    "dateLabel": "Opname Date",
+    "notesLabel": "Notes",
+    "notesPlaceholder": "e.g. Routine Q3 opname for Bandung Barat warehouse",
     "cancel": "Cancel",
-    "confirm": "Delete",
-    "deleting": "Deleting..."
+    "submit": "Save Draft",
+    "submitting": "Saving..."
+  },
+  "stockOpnameStepper": {
+    "submit": "Submit",
+    "approval": "Approval",
+    "execute": "Execute",
+    "done": "Done"
+  },
+  "stockOpnameDetail": {
+    "transactionNumber": "Transaction Number",
+    "opnameDate": "Opname Date",
+    "createdBy": "Created By",
+    "createdAt": "Created At",
+    "updatedAt": "Updated At",
+    "notes": "Notes",
+    "assetList": "Asset List",
+    "assets": "assets",
+    "addAsset": "Add asset",
+    "noAssets": "No assets added yet",
+    "systemData": "System Data",
+    "foundResult": "Found Result",
+    "condition": "Condition",
+    "physicalStatus": "Physical Status",
+    "assetStatus": "Asset Status",
+    "fillFinding": "Fill Finding",
+    "editFinding": "Edit Finding",
+    "removeAsset": "Remove asset",
+    "approvalNotInitiated": "Approval has not been submitted for this transaction.",
+    "initiateApproval": "Submit for Approval",
+    "initiating": "Submitting...",
+    "toastInitiateSuccess": "Approval submitted successfully",
+    "toastInitiateError": "Failed to submit approval",
+    "stageHistory": "Stage History",
+    "noStageHistory": "No stage history yet",
+    "by": "by",
+    "submitStockOpname": "Submit Stock Opname",
+    "approve": "Approve",
+    "execute": "Execute Stock Opname",
+    "reject": "Reject"
+  },
+  "addAssetStockOpnameModal": {
+    "title": "Add Asset to Stock Opname",
+    "asset": "Asset",
+    "assetPlaceholder": "Select asset",
+    "assetLoading": "Loading assets...",
+    "cancel": "Cancel",
+    "submit": "Add",
+    "submitting": "Adding...",
+    "toast": {
+      "noAsset": "Please select an asset first"
+    }
+  },
+  "removeAssetStockOpnameModal": {
+    "title": "Remove Asset",
+    "confirmationMessage": "This asset will be removed from the stock opname draft",
+    "warningMessage": "This action cannot be undone.",
+    "cancel": "Cancel",
+    "confirm": "Yes, Remove",
+    "removing": "Removing..."
+  },
+  "stockOpnameFindingModal": {
+    "title": "Fill Physical Finding",
+    "physicalStatus": "Physical Status",
+    "physicalStatusPlaceholder": "Select physical status",
+    "physicalStatusOptions": {
+      "exists": "Exists / Matches",
+      "missing": "Missing",
+      "damaged": "Damaged",
+      "obsolete": "Obsolete / Unused"
+    },
+    "condition": "Condition",
+    "conditionPlaceholder": "Select condition",
+    "conditionOptions": {
+      "good": "Good",
+      "fair": "Fair",
+      "poor": "Poor",
+      "broken": "Badly Broken"
+    },
+    "assetStatus": "Asset Status",
+    "assetStatusHint": "(optional, fill in if changed)",
+    "assetStatusOptions": {
+      "unchanged": "No change",
+      "active": "Active",
+      "inactive": "Inactive",
+      "maintenance": "Maintenance",
+      "retired": "Retired"
+    },
+    "notes": "Notes",
+    "optional": "optional",
+    "notesPlaceholder": "e.g. Scratches found on the unit body",
+    "cancel": "Cancel",
+    "submit": "Save Finding",
+    "submitting": "Saving...",
+    "toast": {
+      "required": "Physical status and condition are required"
+    }
+  },
+  "submitStockOpnameModal": {
+    "title": "Submit Stock Opname",
+    "warningMessage": "Once submitted, the draft can no longer be edited and will be immediately sent for approval.",
+    "notes": "Notes",
+    "optional": "optional",
+    "notesPlaceholder": "e.g. All units in the warehouse have been checked",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "saving": "Saving...",
+    "initiating": "Submitting for approval...",
+    "toast": {
+      "success": "Stock opname submitted and sent for approval successfully",
+      "errorSubmit": "Failed to submit stock opname",
+      "errorInitiate": "Submit succeeded, but failed to submit for approval"
+    }
+  },
+  "approveStockOpnameModal": {
+    "title": "Approve Stock Opname",
+    "confirmationTitle": "Approval Confirmation",
+    "confirmationDescription": "Once all steps are approved, the stock opname will automatically move to the execution stage.",
+    "notes": "Notes",
+    "optional": "optional",
+    "notesPlaceholder": "Approval notes...",
+    "cancel": "Cancel",
+    "approve": "Approve",
+    "approving": "Approving...",
+    "toast": {
+      "success": "Approval approved successfully",
+      "error": "Failed to approve"
+    },
+    "stepFallback": "Approval step"
+  },
+  "executeStockOpnameModal": {
+    "title": "Execute Stock Opname",
+    "infoMessage": "The findings will be written to the asset data (condition, physical status, asset status) and can no longer be changed.",
+    "notes": "Notes",
+    "optional": "optional",
+    "notesPlaceholder": "Execution notes...",
+    "cancel": "Cancel",
+    "submit": "Execute",
+    "submitting": "Executing...",
+    "toast": {
+      "success": "Stock opname executed successfully",
+      "error": "Failed to execute stock opname"
+    }
+  },
+  "rejectStockOpnameModal": {
+    "title": "Reject Stock Opname",
+    "warningMessage": "The stock opname will be rejected and can no longer proceed.",
+    "reasonLabel": "Rejection Reason",
+    "reasonPlaceholder": "Explain the reason for rejection (minimum 10 characters)",
+    "reasonTooShort": "Reason must be at least {{min}} characters ({{current}}/{{min}})",
+    "cancel": "Cancel",
+    "confirm": "Yes, Reject",
+    "rejecting": "Rejecting...",
+    "toast": {
+      "success": "Stock opname rejected successfully",
+      "error": "Failed to reject stock opname"
+    }
   }
-},
-"attachment": {
-  "modal": {
-    "title": "Add Attachment",
-    "desc": "Upload the required documents for this transaction.",
-    "cancel": "Cancel",
-    "submit": "Upload",
-    "uploading": "Uploading...",
-    "empty": "No attachments available for this stage."
-  },
-  "uploadSuccess": "Attachments uploaded successfully.",
-  "uploadError": "Failed to upload attachments."
-}
 }

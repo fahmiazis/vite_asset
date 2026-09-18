@@ -1,5 +1,6 @@
 import { useState } from "react"
 import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
 import { useQueryClient } from "@tanstack/react-query"
 import { useApproveStockOpname } from "../../../hooks/mutation/stockOpname/approve"
 import { useStockOpnameApprovalStatus } from "../../../hooks/query/stockOpname/approvalStatus"
@@ -15,6 +16,7 @@ export function ApproveStockOpnameModal({
   onClose,
   onSuccess,
 }: ApproveModalProps) {
+  const { t } = useTranslation()
   const [notes, setNotes] = useState("")
   const queryClient = useQueryClient()
 
@@ -32,7 +34,7 @@ export function ApproveStockOpnameModal({
       { transaction_approval_id: targetApprovalId, notes },
       {
         onSuccess: () => {
-          toast.success("Approval berhasil disetujui")
+          toast.success(t("approveStockOpnameModal.toast.success"))
 
           queryClient.invalidateQueries({ queryKey: ["stock-opname-approval-status", transactionNumber] })
 
@@ -40,7 +42,7 @@ export function ApproveStockOpnameModal({
           onClose()
         },
         onError: () => {
-          toast.error("Gagal menyetujui approval")
+          toast.error(t("approveStockOpnameModal.toast.error"))
         },
       }
     )
@@ -60,14 +62,14 @@ export function ApproveStockOpnameModal({
             </div>
             <div>
               <h3 className="text-base font-semibold text-gray-900 dark:text-white">
-                Approve Stock Opname
+                {t("approveStockOpnameModal.title")}
               </h3>
               <p className="text-xs text-gray-400 font-mono mt-1">
                 {transactionNumber}
               </p>
               {pendingApproval && (
                 <p className="text-xs text-gray-400 mt-1">
-                  {pendingApproval.flow_step?.step_name ?? "Step approval"} · {pendingApproval.approver_role_name}
+                  {pendingApproval.flow_step?.step_name ?? t("approveStockOpnameModal.stepFallback")} · {pendingApproval.approver_role_name}
                 </p>
               )}
             </div>
@@ -94,10 +96,10 @@ export function ApproveStockOpnameModal({
               </svg>
               <div>
                 <p className="text-xs font-medium text-indigo-800 dark:text-indigo-300">
-                  Konfirmasi Persetujuan
+                  {t("approveStockOpnameModal.confirmationTitle")}
                 </p>
                 <p className="text-xs text-indigo-700 dark:text-indigo-400 mt-1 leading-relaxed">
-                  Setelah semua step disetujui, stock opname akan otomatis pindah ke tahap eksekusi.
+                  {t("approveStockOpnameModal.confirmationDescription")}
                 </p>
               </div>
             </div>
@@ -105,14 +107,14 @@ export function ApproveStockOpnameModal({
 
           <div>
             <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-              Catatan{" "}
-              <span className="text-gray-400 font-normal">(opsional)</span>
+              {t("approveStockOpnameModal.notes")}{" "}
+              <span className="text-gray-400 font-normal">({t("approveStockOpnameModal.optional")})</span>
             </label>
             <textarea
               rows={4}
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              placeholder="Catatan approval..."
+              placeholder={t("approveStockOpnameModal.notesPlaceholder")}
               disabled={isPending}
               className="w-full px-3 py-2.5 text-sm border border-gray-300 dark:border-gray-600 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 placeholder:text-gray-400 resize-none transition-all disabled:opacity-50"
             />
@@ -126,7 +128,7 @@ export function ApproveStockOpnameModal({
             disabled={isPending}
             className="flex-1 px-4 py-2.5 text-sm border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-all disabled:opacity-50"
           >
-            Batal
+            {t("approveStockOpnameModal.cancel")}
           </button>
 
           <button
@@ -140,7 +142,7 @@ export function ApproveStockOpnameModal({
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
               </svg>
             )}
-            {isPending ? "Menyetujui..." : "Approve"}
+            {isPending ? t("approveStockOpnameModal.approving") : t("approveStockOpnameModal.approve")}
           </button>
         </div>
 

@@ -1,5 +1,6 @@
 import { useState } from "react"
 import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
 import { useAssetList } from "../../../hooks/query/asset/list"
 import { useAddAssetToStockOpname } from "../../../hooks/mutation/stockOpname/addAsset"
 
@@ -14,6 +15,7 @@ export function AddAssetToStockOpnameModal({
   onClose,
   onSuccess,
 }: AddAssetToStockOpnameModalProps) {
+  const { t } = useTranslation()
   const [selectedAssetId, setSelectedAssetId] = useState<number | null>(null)
 
   const { data: assetData, isLoading: isLoadingAssets } = useAssetList({ page: 1, limit: 100 })
@@ -24,7 +26,7 @@ export function AddAssetToStockOpnameModal({
 
   const handleSubmit = () => {
     if (!selectedAsset) {
-      toast.error("Pilih aset terlebih dahulu")
+      toast.error(t("addAssetStockOpnameModal.toast.noAsset"))
       return
     }
 
@@ -50,7 +52,7 @@ export function AddAssetToStockOpnameModal({
         <div className="flex items-start justify-between px-5 py-4 border-b border-gray-100 dark:border-gray-800">
           <div className="min-w-0">
             <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
-              Tambah Aset ke Stock Opname
+              {t("addAssetStockOpnameModal.title")}
             </h3>
             <p className="text-xs text-gray-400 font-mono mt-1 truncate">
               {transactionNumber}
@@ -73,7 +75,7 @@ export function AddAssetToStockOpnameModal({
           {/* Select Aset */}
           <div className="space-y-1.5">
             <label className="block text-xs font-medium text-gray-700 dark:text-gray-300">
-              Aset <span className="text-red-500">*</span>
+              {t("addAssetStockOpnameModal.asset")} <span className="text-red-500">*</span>
             </label>
             <select
               value={selectedAssetId ?? ""}
@@ -82,7 +84,7 @@ export function AddAssetToStockOpnameModal({
               className="w-full px-3 py-2.5 text-sm border border-gray-300 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
             >
               <option value="">
-                {isLoadingAssets ? "Memuat aset..." : "Pilih aset"}
+                {isLoadingAssets ? t("addAssetStockOpnameModal.assetLoading") : t("addAssetStockOpnameModal.assetPlaceholder")}
               </option>
               {assets.map((asset) => (
                 <option key={asset.id} value={asset.id}>
@@ -117,14 +119,14 @@ export function AddAssetToStockOpnameModal({
             disabled={isPending}
             className="flex-1 px-4 py-2 text-sm font-medium border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors disabled:opacity-50"
           >
-            Batal
+            {t("addAssetStockOpnameModal.cancel")}
           </button>
           <button
             onClick={handleSubmit}
             disabled={isPending || isLoadingAssets || !selectedAssetId}
             className="flex-1 px-4 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isPending ? "Menambahkan..." : "Tambah"}
+            {isPending ? t("addAssetStockOpnameModal.submitting") : t("addAssetStockOpnameModal.submit")}
           </button>
         </div>
 

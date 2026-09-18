@@ -1,4 +1,6 @@
 import type { ReactNode } from "react"
+import { useTranslation } from "react-i18next"
+import type { TFunction } from "i18next"
 import type { StockOpnameStage } from "../../../models/stockOpname/detail"
 
 function formatDateTime(dateStr: string) {
@@ -8,12 +10,14 @@ function formatDateTime(dateStr: string) {
   })
 }
 
-const STEPPER_STAGES = [
-  { key: "DRAFT", label: "Submit" },
-  { key: "APPROVAL", label: "Approval" },
-  { key: "EXECUTE_STOCK_OPNAME", label: "Eksekusi" },
-  { key: "FINISHED", label: "Selesai" },
-]
+function getStepperStages(t: TFunction) {
+  return [
+    { key: "DRAFT", label: t("stockOpnameStepper.submit") },
+    { key: "APPROVAL", label: t("stockOpnameStepper.approval") },
+    { key: "EXECUTE_STOCK_OPNAME", label: t("stockOpnameStepper.execute") },
+    { key: "FINISHED", label: t("stockOpnameStepper.done") },
+  ]
+}
 
 const STEPPER_ICONS: Record<string, ReactNode> = {
   DRAFT: (
@@ -40,16 +44,18 @@ const STEPPER_ICONS: Record<string, ReactNode> = {
 
 /** Stepper ringkas: Submit -> Approval -> Eksekusi -> Selesai */
 export function StockOpnameStepper({ currentStage }: { currentStage: string }) {
+  const { t } = useTranslation()
+  const stepperStages = getStepperStages(t)
   const isRejected = currentStage === "REJECTED"
-  const activeIndex = STEPPER_STAGES.findIndex((s) => s.key === currentStage)
-  const currentIndex = isRejected ? STEPPER_STAGES.length : activeIndex
+  const activeIndex = stepperStages.findIndex((s) => s.key === currentStage)
+  const currentIndex = isRejected ? stepperStages.length : activeIndex
 
   return (
     <div className="flex items-center">
-      {STEPPER_STAGES.map((stage, index) => {
+      {stepperStages.map((stage, index) => {
         const isDone = !isRejected && index < currentIndex
         const isCurrent = !isRejected && index === currentIndex
-        const isLast = index === STEPPER_STAGES.length - 1
+        const isLast = index === stepperStages.length - 1
 
         const circleClass = isRejected
           ? "bg-red-100 border-red-300 text-red-500 dark:bg-red-900/30 dark:border-red-700"
@@ -85,10 +91,12 @@ export function StockOpnameStepper({ currentStage }: { currentStage: string }) {
 
 /** Riwayat perpindahan stage, satu baris per transisi (from_stage -> to_stage) */
 export function StockOpnameStageHistory({ stages }: { stages: StockOpnameStage[] }) {
+  const { t } = useTranslation()
+
   if (stages.length === 0) {
     return (
       <div className="text-center py-8 text-sm text-gray-400">
-        Belum ada riwayat stage
+        {t("stockOpnameDetail.noStageHistory")}
       </div>
     )
   }
@@ -130,7 +138,7 @@ export function StockOpnameStageHistory({ stages }: { stages: StockOpnameStage[]
                   <p className="text-xs text-gray-400 mt-0.5">
                     {stage.action}
                     {stage.actor_name && (
-                      <span className="ml-1">· oleh {stage.actor_name}</span>
+                      <span className="ml-1">· {t("stockOpnameDetail.by")} {stage.actor_name}</span>
                     )}
                   </p>
                 </div>

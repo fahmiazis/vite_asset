@@ -1,5 +1,7 @@
 import { useState } from "react"
 import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
+import type { TFunction } from "i18next"
 import { useUpdateStockOpnameFinding } from "../../../hooks/mutation/stockOpname/updateFinding"
 import type { StockOpnameItem } from "../../../models/stockOpname/detail"
 
@@ -10,27 +12,33 @@ type UpdateStockOpnameFindingModalProps = {
   onSuccess?: () => void
 }
 
-const PHYSICAL_STATUS_OPTIONS = [
-  { value: "EXISTS", label: "Ada / Sesuai" },
-  { value: "MISSING", label: "Hilang" },
-  { value: "DAMAGED", label: "Rusak" },
-  { value: "OBSOLETE", label: "Usang / Tidak Terpakai" },
-]
+function getPhysicalStatusOptions(t: TFunction) {
+  return [
+    { value: "EXISTS", label: t("stockOpnameFindingModal.physicalStatusOptions.exists") },
+    { value: "MISSING", label: t("stockOpnameFindingModal.physicalStatusOptions.missing") },
+    { value: "DAMAGED", label: t("stockOpnameFindingModal.physicalStatusOptions.damaged") },
+    { value: "OBSOLETE", label: t("stockOpnameFindingModal.physicalStatusOptions.obsolete") },
+  ]
+}
 
-const CONDITION_OPTIONS = [
-  { value: "GOOD", label: "Baik" },
-  { value: "FAIR", label: "Cukup" },
-  { value: "POOR", label: "Kurang" },
-  { value: "BROKEN", label: "Rusak Berat" },
-]
+function getConditionOptions(t: TFunction) {
+  return [
+    { value: "GOOD", label: t("stockOpnameFindingModal.conditionOptions.good") },
+    { value: "FAIR", label: t("stockOpnameFindingModal.conditionOptions.fair") },
+    { value: "POOR", label: t("stockOpnameFindingModal.conditionOptions.poor") },
+    { value: "BROKEN", label: t("stockOpnameFindingModal.conditionOptions.broken") },
+  ]
+}
 
-const ASSET_STATUS_OPTIONS = [
-  { value: "", label: "Tidak diubah" },
-  { value: "ACTIVE", label: "Aktif" },
-  { value: "INACTIVE", label: "Tidak Aktif" },
-  { value: "MAINTENANCE", label: "Maintenance" },
-  { value: "RETIRED", label: "Retired" },
-]
+function getAssetStatusOptions(t: TFunction) {
+  return [
+    { value: "", label: t("stockOpnameFindingModal.assetStatusOptions.unchanged") },
+    { value: "ACTIVE", label: t("stockOpnameFindingModal.assetStatusOptions.active") },
+    { value: "INACTIVE", label: t("stockOpnameFindingModal.assetStatusOptions.inactive") },
+    { value: "MAINTENANCE", label: t("stockOpnameFindingModal.assetStatusOptions.maintenance") },
+    { value: "RETIRED", label: t("stockOpnameFindingModal.assetStatusOptions.retired") },
+  ]
+}
 
 export function UpdateStockOpnameFindingModal({
   transactionNumber,
@@ -38,6 +46,7 @@ export function UpdateStockOpnameFindingModal({
   onClose,
   onSuccess,
 }: UpdateStockOpnameFindingModalProps) {
+  const { t } = useTranslation()
   const [physicalStatus, setPhysicalStatus] = useState(item.found_physical_status ?? "")
   const [condition, setCondition] = useState(item.found_condition ?? "")
   const [assetStatus, setAssetStatus] = useState(item.found_asset_status ?? "")
@@ -45,9 +54,13 @@ export function UpdateStockOpnameFindingModal({
 
   const { mutate: updateFinding, isPending } = useUpdateStockOpnameFinding({ transactionNumber })
 
+  const physicalStatusOptions = getPhysicalStatusOptions(t)
+  const conditionOptions = getConditionOptions(t)
+  const assetStatusOptions = getAssetStatusOptions(t)
+
   const handleSubmit = () => {
     if (!physicalStatus || !condition) {
-      toast.error("Status fisik dan kondisi wajib diisi")
+      toast.error(t("stockOpnameFindingModal.toast.required"))
       return
     }
 
@@ -76,7 +89,7 @@ export function UpdateStockOpnameFindingModal({
         <div className="flex items-start justify-between px-5 py-4 border-b border-gray-100 dark:border-gray-800">
           <div className="min-w-0">
             <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
-              Isi Temuan Fisik
+              {t("stockOpnameFindingModal.title")}
             </h3>
             <p className="text-xs text-gray-400 font-mono mt-1 truncate">
               {item.asset_number} — {item.asset_name}
@@ -98,7 +111,7 @@ export function UpdateStockOpnameFindingModal({
 
           <div className="space-y-1.5">
             <label className="block text-xs font-medium text-gray-700 dark:text-gray-300">
-              Status Fisik <span className="text-red-500">*</span>
+              {t("stockOpnameFindingModal.physicalStatus")} <span className="text-red-500">*</span>
             </label>
             <select
               value={physicalStatus}
@@ -106,8 +119,8 @@ export function UpdateStockOpnameFindingModal({
               disabled={isPending}
               className="w-full px-3 py-2.5 text-sm border border-gray-300 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
             >
-              <option value="">Pilih status fisik</option>
-              {PHYSICAL_STATUS_OPTIONS.map((opt) => (
+              <option value="">{t("stockOpnameFindingModal.physicalStatusPlaceholder")}</option>
+              {physicalStatusOptions.map((opt) => (
                 <option key={opt.value} value={opt.value}>{opt.label}</option>
               ))}
             </select>
@@ -115,7 +128,7 @@ export function UpdateStockOpnameFindingModal({
 
           <div className="space-y-1.5">
             <label className="block text-xs font-medium text-gray-700 dark:text-gray-300">
-              Kondisi <span className="text-red-500">*</span>
+              {t("stockOpnameFindingModal.condition")} <span className="text-red-500">*</span>
             </label>
             <select
               value={condition}
@@ -123,8 +136,8 @@ export function UpdateStockOpnameFindingModal({
               disabled={isPending}
               className="w-full px-3 py-2.5 text-sm border border-gray-300 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
             >
-              <option value="">Pilih kondisi</option>
-              {CONDITION_OPTIONS.map((opt) => (
+              <option value="">{t("stockOpnameFindingModal.conditionPlaceholder")}</option>
+              {conditionOptions.map((opt) => (
                 <option key={opt.value} value={opt.value}>{opt.label}</option>
               ))}
             </select>
@@ -132,8 +145,8 @@ export function UpdateStockOpnameFindingModal({
 
           <div className="space-y-1.5">
             <label className="block text-xs font-medium text-gray-700 dark:text-gray-300">
-              Status Aset{" "}
-              <span className="text-gray-400 font-normal">(opsional, isi jika berubah)</span>
+              {t("stockOpnameFindingModal.assetStatus")}{" "}
+              <span className="text-gray-400 font-normal">{t("stockOpnameFindingModal.assetStatusHint")}</span>
             </label>
             <select
               value={assetStatus}
@@ -141,7 +154,7 @@ export function UpdateStockOpnameFindingModal({
               disabled={isPending}
               className="w-full px-3 py-2.5 text-sm border border-gray-300 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
             >
-              {ASSET_STATUS_OPTIONS.map((opt) => (
+              {assetStatusOptions.map((opt) => (
                 <option key={opt.value} value={opt.value}>{opt.label}</option>
               ))}
             </select>
@@ -149,14 +162,14 @@ export function UpdateStockOpnameFindingModal({
 
           <div className="space-y-1.5">
             <label className="block text-xs font-medium text-gray-700 dark:text-gray-300">
-              Catatan{" "}
-              <span className="text-gray-400 font-normal">(opsional)</span>
+              {t("stockOpnameFindingModal.notes")}{" "}
+              <span className="text-gray-400 font-normal">({t("stockOpnameFindingModal.optional")})</span>
             </label>
             <textarea
               rows={3}
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              placeholder="Contoh: Ditemukan lecet pada bodi unit"
+              placeholder={t("stockOpnameFindingModal.notesPlaceholder")}
               disabled={isPending}
               className="w-full px-3 py-2.5 text-sm border border-gray-300 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none disabled:opacity-50"
             />
@@ -170,14 +183,14 @@ export function UpdateStockOpnameFindingModal({
             disabled={isPending}
             className="flex-1 px-4 py-2 text-sm font-medium border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors disabled:opacity-50"
           >
-            Batal
+            {t("stockOpnameFindingModal.cancel")}
           </button>
           <button
             onClick={handleSubmit}
             disabled={isPending || !physicalStatus || !condition}
             className="flex-1 px-4 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isPending ? "Menyimpan..." : "Simpan Temuan"}
+            {isPending ? t("stockOpnameFindingModal.submitting") : t("stockOpnameFindingModal.submit")}
           </button>
         </div>
 

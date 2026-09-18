@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { useTranslation } from "react-i18next"
 import { useStockOpnameList } from "../../../hooks/query/stockOpname/list"
 import { StockOpnameTable } from "../../organisms/stockOpname/table"
 
@@ -7,6 +8,7 @@ const PAGE_SIZE = 10
 
 export default function StockOpnamePage() {
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const [page, setPage] = useState(1)
 
   const { data, isLoading } = useStockOpnameList({ page, limit: PAGE_SIZE })
@@ -14,12 +16,12 @@ export default function StockOpnamePage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <h6 className="text-3xl font-bold">Stock Opname</h6>
+        <h6 className="text-3xl font-bold">{t("stockOpnamePage.title")}</h6>
         <button
           onClick={() => navigate("/dashboard/stock-opname/create")}
           className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition-colors"
         >
-          + Buat Stock Opname
+          {t("stockOpnamePage.createButton")}
         </button>
       </div>
 

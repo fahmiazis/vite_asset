@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useTranslation } from "react-i18next"
 import { useRejectStockOpname } from "../../../hooks/mutation/stockOpname/reject"
 
 type RejectStockOpnameModalProps = {
@@ -14,6 +15,7 @@ export function RejectStockOpnameModal({
   onClose,
   onSuccess,
 }: RejectStockOpnameModalProps) {
+  const { t } = useTranslation()
   const [reason, setReason] = useState("")
 
   const { mutate: rejectStockOpname, isPending } = useRejectStockOpname({ transactionNumber })
@@ -42,7 +44,7 @@ export function RejectStockOpnameModal({
         <div className="flex items-start justify-between px-5 py-4 border-b border-gray-100 dark:border-gray-800">
           <div className="min-w-0">
             <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
-              Tolak Stock Opname
+              {t("rejectStockOpnameModal.title")}
             </h3>
             <p className="text-xs text-gray-400 mt-1 truncate">
               {transactionNumber}
@@ -69,25 +71,28 @@ export function RejectStockOpnameModal({
               </svg>
             </div>
             <p className="text-xs font-medium text-red-700 dark:text-red-400">
-              Stock opname akan ditolak dan tidak bisa dilanjutkan lagi.
+              {t("rejectStockOpnameModal.warningMessage")}
             </p>
           </div>
 
           <div className="space-y-1.5">
             <label className="block text-xs font-medium text-gray-700 dark:text-gray-300">
-              Alasan Penolakan <span className="text-red-500">*</span>
+              {t("rejectStockOpnameModal.reasonLabel")} <span className="text-red-500">*</span>
             </label>
             <textarea
               rows={4}
               value={reason}
               onChange={(e) => setReason(e.target.value)}
-              placeholder="Jelaskan alasan penolakan (minimal 10 karakter)"
+              placeholder={t("rejectStockOpnameModal.reasonPlaceholder")}
               disabled={isPending}
               className="w-full px-3 py-2.5 text-sm border border-gray-300 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 resize-none transition-all disabled:opacity-50"
             />
             {reason.length > 0 && !isReasonValid && (
               <p className="text-xs text-red-500">
-                Alasan minimal {MIN_REASON_LENGTH} karakter ({reason.trim().length}/{MIN_REASON_LENGTH})
+                {t("rejectStockOpnameModal.reasonTooShort", {
+                  min: MIN_REASON_LENGTH,
+                  current: reason.trim().length,
+                })}
               </p>
             )}
           </div>
@@ -100,7 +105,7 @@ export function RejectStockOpnameModal({
             disabled={isPending}
             className="flex-1 px-4 py-2 text-sm font-medium border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors disabled:opacity-50"
           >
-            Batal
+            {t("rejectStockOpnameModal.cancel")}
           </button>
 
           <button
@@ -108,7 +113,7 @@ export function RejectStockOpnameModal({
             disabled={isPending || !isReasonValid}
             className="flex-1 px-4 py-2 text-sm font-medium bg-red-600 hover:bg-red-700 text-white rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isPending ? "Menolak..." : "Ya, Tolak"}
+            {isPending ? t("rejectStockOpnameModal.rejecting") : t("rejectStockOpnameModal.confirm")}
           </button>
         </div>
       </div>

@@ -448,95 +448,264 @@
     }
   },
   "submitMutationModal": {
-  "title": "Submit Transaksi",
-  "warningMessage": "Transaksi yang sudah disubmit tidak dapat diedit kembali. Pastikan semua aset sudah benar sebelum melanjutkan.",
-  "notes": "Catatan",
-  "optional": "opsional",
-  "notesPlaceholder": "cth. Mohon segera diproses",
-  "cancel": "Batal",
-  "submit": "Submit",
-  "saving": "Menyimpan...",
-  "processing": "Memproses...",
-  "toast": {
-    "success": "Transaksi berhasil disubmit",
-    "errorSubmit": "Gagal submit transaksi",
-    "errorInitiate": "Gagal inisiasi approval"
-  }
-},
-"mutationDetail": {
-  "transactionNumber": "Nomor Transaksi",
-  "transactionType": "Tipe Transaksi",
-  "date": "Tanggal",
-  "category": "Kategori",
-  "targetBranch": "Tujuan Cabang",
-  "createdBy": "Dibuat Oleh",
-  "createdAt": "Dibuat Pada",
-  "updatedAt": "Diupdate Pada",
-  "notes": "Catatan",
-  "assetList": "Daftar Aset",
-  "assets": "aset",
-  "addAsset": "Tambah Aset",
-  "noAssets": "Belum ada aset yang ditambahkan",
-  "category2": "Kategori",
-  "documentNumber": "No. Dokumen",
-  "fromBranch": "Dari Cabang",
-  "toBranch": "Ke Cabang",
-  "stageHistory": "Riwayat Stage",
-  "by": "oleh",
-  "submitTransaction": "Submit Transaksi",
-  "approve": "Approve",
-  "confirmReceiving": "Konfirmasi Terima",
-  "executeTransaction": "Eksekusi Mutasi"
-},
-"menuTable": {
-  "search": "Cari menu...",
-  "assign": "Tetapkan",
-  "create": "Buat",
-  "loading": "Memuat data...",
-  "noData": "Tidak ada data",
-  "show": "Menampilkan",
-  "until": "hingga",
-  "from": "dari",
-  "data": "data",
-  "page": "Halaman",
-  "of": "dari",
-  "columns": {
-    "no": "No",
-    "id": "ID",
-    "parentId": "ID Parent",
-    "menuName": "Nama Menu",
-    "path": "Path",
-    "status": "Status",
-    "action": "Aksi"
-  },
-  "status": {
-    "active": "Aktif",
-    "inactive": "Tidak Aktif"
-  },
-  "actions": {
-    "detail": "Detail",
-    "edit": "Edit",
-    "delete": "Hapus"
-  },
-  "deleteModal": {
-    "title": "Hapus Menu",
-    "description": "Apakah Anda yakin ingin menghapus",
-    "warning": "Tindakan ini tidak dapat dibatalkan.",
+    "title": "Submit Transaksi",
+    "warningMessage": "Transaksi yang sudah disubmit tidak dapat diedit kembali. Pastikan semua aset sudah benar sebelum melanjutkan.",
+    "notes": "Catatan",
+    "optional": "opsional",
+    "notesPlaceholder": "cth. Mohon segera diproses",
     "cancel": "Batal",
-    "confirm": "Hapus",
-    "deleting": "Menghapus..."
-  }
-},
-"attachment": {
-  "modal": {
-    "title": "Tambah Lampiran",
-    "desc": "Unggah dokumen yang diperlukan untuk transaksi ini.",
-    "cancel": "Batal",
-    "submit": "Unggah",
-    "uploading": "Mengunggah...",
-    "empty": "Tidak ada lampiran tersedia untuk tahap ini."
+    "submit": "Submit",
+    "saving": "Menyimpan...",
+    "processing": "Memproses...",
+    "toast": {
+      "success": "Transaksi berhasil disubmit",
+      "errorSubmit": "Gagal submit transaksi",
+      "errorInitiate": "Gagal inisiasi approval"
+    }
   },
-  "uploadSuccess": "Lampiran berhasil diunggah.",
-  "uploadError": "Gagal mengunggah lampiran."
-}
+  "mutationDetail": {
+    "transactionNumber": "Nomor Transaksi",
+    "transactionType": "Tipe Transaksi",
+    "date": "Tanggal",
+    "category": "Kategori",
+    "targetBranch": "Tujuan Cabang",
+    "createdBy": "Dibuat Oleh",
+    "createdAt": "Dibuat Pada",
+    "updatedAt": "Diupdate Pada",
+    "notes": "Catatan",
+    "assetList": "Daftar Aset",
+    "assets": "aset",
+    "addAsset": "Tambah Aset",
+    "noAssets": "Belum ada aset yang ditambahkan",
+    "category2": "Kategori",
+    "documentNumber": "No. Dokumen",
+    "fromBranch": "Dari Cabang",
+    "toBranch": "Ke Cabang",
+    "stageHistory": "Riwayat Stage",
+    "by": "oleh",
+    "submitTransaction": "Submit Transaksi",
+    "approve": "Approve",
+    "confirmReceiving": "Konfirmasi Terima",
+    "executeTransaction": "Eksekusi Mutasi"
+  },
+  "menuTable": {
+    "search": "Cari menu...",
+    "assign": "Tetapkan",
+    "create": "Buat",
+    "loading": "Memuat data...",
+    "noData": "Tidak ada data",
+    "show": "Menampilkan",
+    "until": "hingga",
+    "from": "dari",
+    "data": "data",
+    "page": "Halaman",
+    "of": "dari",
+    "columns": {
+      "no": "No",
+      "id": "ID",
+      "parentId": "ID Parent",
+      "menuName": "Nama Menu",
+      "path": "Path",
+      "status": "Status",
+      "action": "Aksi"
+    },
+    "status": {
+      "active": "Aktif",
+      "inactive": "Tidak Aktif"
+    },
+    "actions": {
+      "detail": "Detail",
+      "edit": "Edit",
+      "delete": "Hapus"
+    },
+    "deleteModal": {
+      "title": "Hapus Menu",
+      "description": "Apakah Anda yakin ingin menghapus",
+      "warning": "Tindakan ini tidak dapat dibatalkan.",
+      "cancel": "Batal",
+      "confirm": "Hapus",
+      "deleting": "Menghapus..."
+    }
+  },
+  "attachment": {
+    "modal": {
+      "title": "Tambah Lampiran",
+      "desc": "Unggah dokumen yang diperlukan untuk transaksi ini.",
+      "cancel": "Batal",
+      "submit": "Unggah",
+      "uploading": "Mengunggah...",
+      "empty": "Tidak ada lampiran tersedia untuk tahap ini."
+    },
+    "uploadSuccess": "Lampiran berhasil diunggah.",
+    "uploadError": "Gagal mengunggah lampiran."
+  },
+  "stockOpnamePage": {
+    "title": "Stock Opname",
+    "createButton": "+ Buat Stock Opname"
+  },
+  "createStockOpnamePage": {
+    "title": "Buat Stock Opname",
+    "subtitle": "Buat draft stock opname, aset akan ditambahkan setelah draft tersimpan",
+    "dateLabel": "Tanggal Opname",
+    "notesLabel": "Catatan",
+    "notesPlaceholder": "Contoh: Opname rutin Q3 gudang Bandung Barat",
+    "cancel": "Batal",
+    "submit": "Simpan Draft",
+    "submitting": "Menyimpan..."
+  },
+  "stockOpnameStepper": {
+    "submit": "Submit",
+    "approval": "Approval",
+    "execute": "Eksekusi",
+    "done": "Selesai"
+  },
+  "stockOpnameDetail": {
+    "transactionNumber": "Nomor Transaksi",
+    "opnameDate": "Tanggal Opname",
+    "createdBy": "Dibuat Oleh",
+    "createdAt": "Dibuat Pada",
+    "updatedAt": "Diupdate Pada",
+    "notes": "Catatan",
+    "assetList": "Daftar Aset",
+    "assets": "aset",
+    "addAsset": "Tambah aset",
+    "noAssets": "Belum ada aset yang ditambahkan",
+    "systemData": "Data Sistem",
+    "foundResult": "Hasil Temuan",
+    "condition": "Kondisi",
+    "physicalStatus": "Status Fisik",
+    "assetStatus": "Status Aset",
+    "fillFinding": "Isi Temuan",
+    "editFinding": "Edit Temuan",
+    "removeAsset": "Hapus aset",
+    "approvalNotInitiated": "Approval belum diajukan untuk transaksi ini.",
+    "initiateApproval": "Ajukan Approval",
+    "initiating": "Mengajukan...",
+    "toastInitiateSuccess": "Approval berhasil diajukan",
+    "toastInitiateError": "Gagal mengajukan approval",
+    "stageHistory": "Riwayat Stage",
+    "noStageHistory": "Belum ada riwayat stage",
+    "by": "oleh",
+    "submitStockOpname": "Submit Stock Opname",
+    "approve": "Approve",
+    "execute": "Eksekusi Stock Opname",
+    "reject": "Tolak"
+  },
+  "addAssetStockOpnameModal": {
+    "title": "Tambah Aset ke Stock Opname",
+    "asset": "Aset",
+    "assetPlaceholder": "Pilih aset",
+    "assetLoading": "Memuat aset...",
+    "cancel": "Batal",
+    "submit": "Tambah",
+    "submitting": "Menambahkan...",
+    "toast": {
+      "noAsset": "Pilih aset terlebih dahulu"
+    }
+  },
+  "removeAssetStockOpnameModal": {
+    "title": "Hapus Aset",
+    "confirmationMessage": "Aset ini akan dihapus dari draft stock opname",
+    "warningMessage": "Tindakan ini tidak dapat dibatalkan.",
+    "cancel": "Batal",
+    "confirm": "Ya, Hapus",
+    "removing": "Menghapus..."
+  },
+  "stockOpnameFindingModal": {
+    "title": "Isi Temuan Fisik",
+    "physicalStatus": "Status Fisik",
+    "physicalStatusPlaceholder": "Pilih status fisik",
+    "physicalStatusOptions": {
+      "exists": "Ada / Sesuai",
+      "missing": "Hilang",
+      "damaged": "Rusak",
+      "obsolete": "Usang / Tidak Terpakai"
+    },
+    "condition": "Kondisi",
+    "conditionPlaceholder": "Pilih kondisi",
+    "conditionOptions": {
+      "good": "Baik",
+      "fair": "Cukup",
+      "poor": "Kurang",
+      "broken": "Rusak Berat"
+    },
+    "assetStatus": "Status Aset",
+    "assetStatusHint": "(opsional, isi jika berubah)",
+    "assetStatusOptions": {
+      "unchanged": "Tidak diubah",
+      "active": "Aktif",
+      "inactive": "Tidak Aktif",
+      "maintenance": "Maintenance",
+      "retired": "Retired"
+    },
+    "notes": "Catatan",
+    "optional": "opsional",
+    "notesPlaceholder": "Contoh: Ditemukan lecet pada bodi unit",
+    "cancel": "Batal",
+    "submit": "Simpan Temuan",
+    "submitting": "Menyimpan...",
+    "toast": {
+      "required": "Status fisik dan kondisi wajib diisi"
+    }
+  },
+  "submitStockOpnameModal": {
+    "title": "Submit Stock Opname",
+    "warningMessage": "Setelah disubmit, draft tidak bisa diubah lagi dan akan langsung diajukan untuk approval.",
+    "notes": "Catatan",
+    "optional": "opsional",
+    "notesPlaceholder": "Contoh: Sudah dicek semua unit di gudang",
+    "cancel": "Batal",
+    "submit": "Submit",
+    "saving": "Menyimpan...",
+    "initiating": "Mengajukan approval...",
+    "toast": {
+      "success": "Stock opname berhasil disubmit dan diajukan untuk approval",
+      "errorSubmit": "Gagal mensubmit stock opname",
+      "errorInitiate": "Submit berhasil, tapi gagal mengajukan approval"
+    }
+  },
+  "approveStockOpnameModal": {
+    "title": "Approve Stock Opname",
+    "confirmationTitle": "Konfirmasi Persetujuan",
+    "confirmationDescription": "Setelah semua step disetujui, stock opname akan otomatis pindah ke tahap eksekusi.",
+    "notes": "Catatan",
+    "optional": "opsional",
+    "notesPlaceholder": "Catatan approval...",
+    "cancel": "Batal",
+    "approve": "Approve",
+    "approving": "Menyetujui...",
+    "toast": {
+      "success": "Approval berhasil disetujui",
+      "error": "Gagal menyetujui approval"
+    },
+    "stepFallback": "Step approval"
+  },
+  "executeStockOpnameModal": {
+    "title": "Eksekusi Stock Opname",
+    "infoMessage": "Hasil temuan akan ditulis ke data aset (kondisi, status fisik, status aset) dan tidak bisa diubah lagi.",
+    "notes": "Catatan",
+    "optional": "opsional",
+    "notesPlaceholder": "Catatan eksekusi...",
+    "cancel": "Batal",
+    "submit": "Eksekusi",
+    "submitting": "Mengeksekusi...",
+    "toast": {
+      "success": "Stock opname berhasil dieksekusi",
+      "error": "Gagal mengeksekusi stock opname"
+    }
+  },
+  "rejectStockOpnameModal": {
+    "title": "Tolak Stock Opname",
+    "warningMessage": "Stock opname akan ditolak dan tidak bisa dilanjutkan lagi.",
+    "reasonLabel": "Alasan Penolakan",
+    "reasonPlaceholder": "Jelaskan alasan penolakan (minimal 10 karakter)",
+    "reasonTooShort": "Alasan minimal {{min}} karakter ({{current}}/{{min}})",
+    "cancel": "Batal",
+    "confirm": "Ya, Tolak",
+    "rejecting": "Menolak...",
+    "toast": {
+      "success": "Stock opname berhasil ditolak",
+      "error": "Gagal menolak stock opname"
+    }
+  }
 }

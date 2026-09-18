@@ -2,12 +2,14 @@
 
 import { useNavigate } from "react-router-dom"
 import { useForm, Controller } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import { Textareas } from "../../../molecules/input/textAreas"
 import type { CreateStockOpnameDraftRequest } from "../../../../models/stockOpname/create"
 import { useCreateStockOpnameDraft } from "../../../../hooks/mutation/stockOpname/create"
 
 export default function CreateStockOpnamePage() {
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   const today = new Date().toISOString().split("T")[0]
 
@@ -35,9 +37,9 @@ export default function CreateStockOpnamePage() {
 
       {/* Header */}
       <div>
-        <h2 className="text-xl font-semibold">Buat Stock Opname</h2>
+        <h2 className="text-xl font-semibold">{t("createStockOpnamePage.title")}</h2>
         <p className="text-sm text-gray-500">
-          Buat draft stock opname, aset akan ditambahkan setelah draft tersimpan
+          {t("createStockOpnamePage.subtitle")}
         </p>
       </div>
 
@@ -47,7 +49,7 @@ export default function CreateStockOpnamePage() {
         {/* Transaction Date */}
         <div className="flex flex-col gap-1">
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-            Tanggal Opname
+            {t("createStockOpnamePage.dateLabel")}
           </label>
           <input
             type="date"
@@ -62,10 +64,10 @@ export default function CreateStockOpnamePage() {
           name="notes"
           render={({ field }) => (
             <Textareas
-              label="Catatan"
+              label={t("createStockOpnamePage.notesLabel")}
               value={field.value ?? ""}
               onChange={field.onChange}
-              placeholder="Contoh: Opname rutin Q3 gudang Bandung Barat"
+              placeholder={t("createStockOpnamePage.notesPlaceholder")}
             />
           )}
         />
@@ -79,7 +81,7 @@ export default function CreateStockOpnamePage() {
           disabled={isPending}
           className="flex-1 border px-4 py-2 rounded-lg text-sm hover:bg-gray-50 disabled:opacity-50"
         >
-          Batal
+          {t("createStockOpnamePage.cancel")}
         </button>
         <button
           type="button"
@@ -87,7 +89,7 @@ export default function CreateStockOpnamePage() {
           disabled={!isValid || isPending}
           className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isPending ? "Menyimpan..." : "Simpan Draft"}
+          {isPending ? t("createStockOpnamePage.submitting") : t("createStockOpnamePage.submit")}
         </button>
       </div>
     </div>

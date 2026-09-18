@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next"
 import { useRemoveAssetFromStockOpname } from "../../../hooks/mutation/stockOpname/removeAsset"
 
 type RemoveAssetModalProps = {
@@ -15,6 +16,7 @@ export function RemoveAssetFromStockOpnameModal({
   onClose,
   onSuccess,
 }: RemoveAssetModalProps) {
+  const { t } = useTranslation()
   const { mutate: removeAsset, isPending } = useRemoveAssetFromStockOpname({
     transactionNumber,
   })
@@ -39,7 +41,7 @@ export function RemoveAssetFromStockOpnameModal({
         <div className="flex items-start justify-between px-5 py-4 border-b border-gray-100 dark:border-gray-800">
           <div className="min-w-0">
             <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
-              Hapus Aset
+              {t("removeAssetStockOpnameModal.title")}
             </h3>
             <p className="text-xs text-gray-400 mt-1 truncate">
               {transactionNumber}
@@ -67,7 +69,7 @@ export function RemoveAssetFromStockOpnameModal({
             </div>
             <div>
               <p className="text-xs font-medium text-red-700 dark:text-red-400">
-                Aset ini akan dihapus dari draft stock opname
+                {t("removeAssetStockOpnameModal.confirmationMessage")}
               </p>
               {assetName && (
                 <p className="text-xs text-red-500 dark:text-red-500 mt-0.5 font-mono">
@@ -77,7 +79,7 @@ export function RemoveAssetFromStockOpnameModal({
             </div>
           </div>
           <p className="text-xs text-gray-400 mt-3">
-            Tindakan ini tidak dapat dibatalkan.
+            {t("removeAssetStockOpnameModal.warningMessage")}
           </p>
         </div>
 
@@ -88,7 +90,7 @@ export function RemoveAssetFromStockOpnameModal({
             disabled={isPending}
             className="flex-1 px-4 py-2 text-sm font-medium border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors disabled:opacity-50"
           >
-            Batal
+            {t("removeAssetStockOpnameModal.cancel")}
           </button>
 
           <button
@@ -96,7 +98,7 @@ export function RemoveAssetFromStockOpnameModal({
             disabled={isPending}
             className="flex-1 px-4 py-2 text-sm font-medium bg-red-600 hover:bg-red-700 text-white rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isPending ? "Menghapus..." : "Ya, Hapus"}
+            {isPending ? t("removeAssetStockOpnameModal.removing") : t("removeAssetStockOpnameModal.confirm")}
           </button>
         </div>
       </div>

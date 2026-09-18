@@ -448,95 +448,264 @@
     }
   },
   "submitMutationModal": {
-  "title": "Gửi Giao Dịch",
-  "warningMessage": "Giao dịch đã gửi không thể chỉnh sửa lại. Hãy đảm bảo tất cả tài sản đã chính xác trước khi tiếp tục.",
-  "notes": "Ghi Chú",
-  "optional": "tùy chọn",
-  "notesPlaceholder": "vd. Vui lòng xử lý ngay",
-  "cancel": "Hủy",
-  "submit": "Gửi",
-  "saving": "Đang lưu...",
-  "processing": "Đang xử lý...",
-  "toast": {
-    "success": "Gửi giao dịch thành công",
-    "errorSubmit": "Không thể gửi giao dịch",
-    "errorInitiate": "Không thể khởi tạo phê duyệt"
-  }
-},
-"mutationDetail": {
-  "transactionNumber": "Số Giao Dịch",
-  "transactionType": "Loại Giao Dịch",
-  "date": "Ngày",
-  "category": "Danh Mục",
-  "targetBranch": "Chi Nhánh Đích",
-  "createdBy": "Tạo Bởi",
-  "createdAt": "Tạo Lúc",
-  "updatedAt": "Cập Nhật Lúc",
-  "notes": "Ghi Chú",
-  "assetList": "Danh Sách Tài Sản",
-  "assets": "tài sản",
-  "addAsset": "Thêm Tài Sản",
-  "noAssets": "Chưa có tài sản nào được thêm",
-  "category2": "Danh Mục",
-  "documentNumber": "Số Tài Liệu",
-  "fromBranch": "Từ Chi Nhánh",
-  "toBranch": "Đến Chi Nhánh",
-  "stageHistory": "Lịch Sử Giai Đoạn",
-  "by": "bởi",
-  "submitTransaction": "Gửi Giao Dịch",
-  "approve": "Phê Duyệt",
-  "confirmReceiving": "Xác Nhận Nhận Hàng",
-  "executeTransaction": "Thực Thi Chuyển Nhượng"
-},
-"menuTable": {
-  "search": "Tìm kiếm menu...",
-  "assign": "Phân công",
-  "create": "Tạo mới",
-  "loading": "Đang tải dữ liệu...",
-  "noData": "Không có dữ liệu",
-  "show": "Hiển thị",
-  "until": "đến",
-  "from": "từ",
-  "data": "dữ liệu",
-  "page": "Trang",
-  "of": "của",
-  "columns": {
-    "no": "STT",
-    "id": "ID",
-    "parentId": "ID Cha",
-    "menuName": "Tên Menu",
-    "path": "Đường Dẫn",
-    "status": "Trạng Thái",
-    "action": "Hành Động"
-  },
-  "status": {
-    "active": "Hoạt động",
-    "inactive": "Không hoạt động"
-  },
-  "actions": {
-    "detail": "Chi tiết",
-    "edit": "Chỉnh sửa",
-    "delete": "Xóa"
-  },
-  "deleteModal": {
-    "title": "Xóa Menu",
-    "description": "Bạn có chắc chắn muốn xóa",
-    "warning": "Hành động này không thể hoàn tác.",
+    "title": "Gửi Giao Dịch",
+    "warningMessage": "Giao dịch đã gửi không thể chỉnh sửa lại. Hãy đảm bảo tất cả tài sản đã chính xác trước khi tiếp tục.",
+    "notes": "Ghi Chú",
+    "optional": "tùy chọn",
+    "notesPlaceholder": "vd. Vui lòng xử lý ngay",
     "cancel": "Hủy",
-    "confirm": "Xóa",
-    "deleting": "Đang xóa..."
-  }
-},
-"attachment": {
-  "modal": {
-    "title": "Thêm Tệp Đính Kèm",
-    "desc": "Tải lên các tài liệu cần thiết cho giao dịch này.",
-    "cancel": "Hủy",
-    "submit": "Tải lên",
-    "uploading": "Đang tải lên...",
-    "empty": "Không có tệp đính kèm nào cho giai đoạn này."
+    "submit": "Gửi",
+    "saving": "Đang lưu...",
+    "processing": "Đang xử lý...",
+    "toast": {
+      "success": "Gửi giao dịch thành công",
+      "errorSubmit": "Không thể gửi giao dịch",
+      "errorInitiate": "Không thể khởi tạo phê duyệt"
+    }
   },
-  "uploadSuccess": "Tải lên tệp đính kèm thành công.",
-  "uploadError": "Tải lên tệp đính kèm thất bại."
-}
+  "mutationDetail": {
+    "transactionNumber": "Số Giao Dịch",
+    "transactionType": "Loại Giao Dịch",
+    "date": "Ngày",
+    "category": "Danh Mục",
+    "targetBranch": "Chi Nhánh Đích",
+    "createdBy": "Tạo Bởi",
+    "createdAt": "Tạo Lúc",
+    "updatedAt": "Cập Nhật Lúc",
+    "notes": "Ghi Chú",
+    "assetList": "Danh Sách Tài Sản",
+    "assets": "tài sản",
+    "addAsset": "Thêm Tài Sản",
+    "noAssets": "Chưa có tài sản nào được thêm",
+    "category2": "Danh Mục",
+    "documentNumber": "Số Tài Liệu",
+    "fromBranch": "Từ Chi Nhánh",
+    "toBranch": "Đến Chi Nhánh",
+    "stageHistory": "Lịch Sử Giai Đoạn",
+    "by": "bởi",
+    "submitTransaction": "Gửi Giao Dịch",
+    "approve": "Phê Duyệt",
+    "confirmReceiving": "Xác Nhận Nhận Hàng",
+    "executeTransaction": "Thực Thi Chuyển Nhượng"
+  },
+  "menuTable": {
+    "search": "Tìm kiếm menu...",
+    "assign": "Phân công",
+    "create": "Tạo mới",
+    "loading": "Đang tải dữ liệu...",
+    "noData": "Không có dữ liệu",
+    "show": "Hiển thị",
+    "until": "đến",
+    "from": "từ",
+    "data": "dữ liệu",
+    "page": "Trang",
+    "of": "của",
+    "columns": {
+      "no": "STT",
+      "id": "ID",
+      "parentId": "ID Cha",
+      "menuName": "Tên Menu",
+      "path": "Đường Dẫn",
+      "status": "Trạng Thái",
+      "action": "Hành Động"
+    },
+    "status": {
+      "active": "Hoạt động",
+      "inactive": "Không hoạt động"
+    },
+    "actions": {
+      "detail": "Chi tiết",
+      "edit": "Chỉnh sửa",
+      "delete": "Xóa"
+    },
+    "deleteModal": {
+      "title": "Xóa Menu",
+      "description": "Bạn có chắc chắn muốn xóa",
+      "warning": "Hành động này không thể hoàn tác.",
+      "cancel": "Hủy",
+      "confirm": "Xóa",
+      "deleting": "Đang xóa..."
+    }
+  },
+  "attachment": {
+    "modal": {
+      "title": "Thêm Tệp Đính Kèm",
+      "desc": "Tải lên các tài liệu cần thiết cho giao dịch này.",
+      "cancel": "Hủy",
+      "submit": "Tải lên",
+      "uploading": "Đang tải lên...",
+      "empty": "Không có tệp đính kèm nào cho giai đoạn này."
+    },
+    "uploadSuccess": "Tải lên tệp đính kèm thành công.",
+    "uploadError": "Tải lên tệp đính kèm thất bại."
+  },
+  "stockOpnamePage": {
+    "title": "Kiểm Kê Tài Sản",
+    "createButton": "+ Tạo Kiểm Kê Tài Sản"
+  },
+  "createStockOpnamePage": {
+    "title": "Tạo Kiểm Kê Tài Sản",
+    "subtitle": "Tạo bản nháp kiểm kê tài sản, tài sản sẽ được thêm sau khi lưu bản nháp",
+    "dateLabel": "Ngày Kiểm Kê",
+    "notesLabel": "Ghi Chú",
+    "notesPlaceholder": "vd. Kiểm kê định kỳ Q3 kho Bandung Barat",
+    "cancel": "Hủy",
+    "submit": "Lưu Bản Nháp",
+    "submitting": "Đang lưu..."
+  },
+  "stockOpnameStepper": {
+    "submit": "Gửi",
+    "approval": "Phê Duyệt",
+    "execute": "Thực Thi",
+    "done": "Hoàn Tất"
+  },
+  "stockOpnameDetail": {
+    "transactionNumber": "Số Giao Dịch",
+    "opnameDate": "Ngày Kiểm Kê",
+    "createdBy": "Người Tạo",
+    "createdAt": "Ngày Tạo",
+    "updatedAt": "Cập Nhật Lúc",
+    "notes": "Ghi Chú",
+    "assetList": "Danh Sách Tài Sản",
+    "assets": "tài sản",
+    "addAsset": "Thêm tài sản",
+    "noAssets": "Chưa có tài sản nào được thêm",
+    "systemData": "Dữ Liệu Hệ Thống",
+    "foundResult": "Kết Quả Kiểm Kê",
+    "condition": "Tình Trạng",
+    "physicalStatus": "Trạng Thái Vật Lý",
+    "assetStatus": "Trạng Thái Tài Sản",
+    "fillFinding": "Nhập Kết Quả",
+    "editFinding": "Sửa Kết Quả",
+    "removeAsset": "Xóa tài sản",
+    "approvalNotInitiated": "Chưa gửi phê duyệt cho giao dịch này.",
+    "initiateApproval": "Gửi Phê Duyệt",
+    "initiating": "Đang gửi...",
+    "toastInitiateSuccess": "Gửi phê duyệt thành công",
+    "toastInitiateError": "Không thể gửi phê duyệt",
+    "stageHistory": "Lịch Sử Giai Đoạn",
+    "noStageHistory": "Chưa có lịch sử giai đoạn",
+    "by": "bởi",
+    "submitStockOpname": "Gửi Kiểm Kê Tài Sản",
+    "approve": "Phê Duyệt",
+    "execute": "Thực Thi Kiểm Kê",
+    "reject": "Từ Chối"
+  },
+  "addAssetStockOpnameModal": {
+    "title": "Thêm Tài Sản Vào Kiểm Kê",
+    "asset": "Tài Sản",
+    "assetPlaceholder": "Chọn tài sản",
+    "assetLoading": "Đang tải tài sản...",
+    "cancel": "Hủy",
+    "submit": "Thêm",
+    "submitting": "Đang thêm...",
+    "toast": {
+      "noAsset": "Vui lòng chọn tài sản trước"
+    }
+  },
+  "removeAssetStockOpnameModal": {
+    "title": "Xóa Tài Sản",
+    "confirmationMessage": "Tài sản này sẽ bị xóa khỏi bản nháp kiểm kê",
+    "warningMessage": "Hành động này không thể hoàn tác.",
+    "cancel": "Hủy",
+    "confirm": "Có, Xóa",
+    "removing": "Đang xóa..."
+  },
+  "stockOpnameFindingModal": {
+    "title": "Nhập Kết Quả Kiểm Tra Thực Tế",
+    "physicalStatus": "Trạng Thái Vật Lý",
+    "physicalStatusPlaceholder": "Chọn trạng thái vật lý",
+    "physicalStatusOptions": {
+      "exists": "Còn / Khớp",
+      "missing": "Mất",
+      "damaged": "Hư Hỏng",
+      "obsolete": "Lỗi Thời / Không Sử Dụng"
+    },
+    "condition": "Tình Trạng",
+    "conditionPlaceholder": "Chọn tình trạng",
+    "conditionOptions": {
+      "good": "Tốt",
+      "fair": "Khá",
+      "poor": "Kém",
+      "broken": "Hư Hỏng Nặng"
+    },
+    "assetStatus": "Trạng Thái Tài Sản",
+    "assetStatusHint": "(tùy chọn, điền nếu có thay đổi)",
+    "assetStatusOptions": {
+      "unchanged": "Không thay đổi",
+      "active": "Đang Hoạt Động",
+      "inactive": "Ngừng Hoạt Động",
+      "maintenance": "Bảo Trì",
+      "retired": "Ngừng Sử Dụng"
+    },
+    "notes": "Ghi Chú",
+    "optional": "tùy chọn",
+    "notesPlaceholder": "vd. Phát hiện trầy xước trên thân thiết bị",
+    "cancel": "Hủy",
+    "submit": "Lưu Kết Quả",
+    "submitting": "Đang lưu...",
+    "toast": {
+      "required": "Trạng thái vật lý và tình trạng là bắt buộc"
+    }
+  },
+  "submitStockOpnameModal": {
+    "title": "Gửi Kiểm Kê Tài Sản",
+    "warningMessage": "Sau khi gửi, bản nháp không thể chỉnh sửa và sẽ được gửi phê duyệt ngay lập tức.",
+    "notes": "Ghi Chú",
+    "optional": "tùy chọn",
+    "notesPlaceholder": "vd. Đã kiểm tra tất cả thiết bị trong kho",
+    "cancel": "Hủy",
+    "submit": "Gửi",
+    "saving": "Đang lưu...",
+    "initiating": "Đang gửi phê duyệt...",
+    "toast": {
+      "success": "Gửi kiểm kê và phê duyệt thành công",
+      "errorSubmit": "Không thể gửi kiểm kê tài sản",
+      "errorInitiate": "Gửi thành công, nhưng không thể gửi phê duyệt"
+    }
+  },
+  "approveStockOpnameModal": {
+    "title": "Phê Duyệt Kiểm Kê Tài Sản",
+    "confirmationTitle": "Xác Nhận Phê Duyệt",
+    "confirmationDescription": "Sau khi tất cả các bước được phê duyệt, kiểm kê tài sản sẽ tự động chuyển sang giai đoạn thực thi.",
+    "notes": "Ghi Chú",
+    "optional": "tùy chọn",
+    "notesPlaceholder": "Ghi chú phê duyệt...",
+    "cancel": "Hủy",
+    "approve": "Phê Duyệt",
+    "approving": "Đang phê duyệt...",
+    "toast": {
+      "success": "Phê duyệt thành công",
+      "error": "Không thể phê duyệt"
+    },
+    "stepFallback": "Bước phê duyệt"
+  },
+  "executeStockOpnameModal": {
+    "title": "Thực Thi Kiểm Kê Tài Sản",
+    "infoMessage": "Kết quả kiểm kê sẽ được ghi vào dữ liệu tài sản (tình trạng, trạng thái vật lý, trạng thái tài sản) và không thể thay đổi được nữa.",
+    "notes": "Ghi Chú",
+    "optional": "tùy chọn",
+    "notesPlaceholder": "Ghi chú thực thi...",
+    "cancel": "Hủy",
+    "submit": "Thực Thi",
+    "submitting": "Đang thực thi...",
+    "toast": {
+      "success": "Thực thi kiểm kê tài sản thành công",
+      "error": "Không thể thực thi kiểm kê tài sản"
+    }
+  },
+  "rejectStockOpnameModal": {
+    "title": "Từ Chối Kiểm Kê Tài Sản",
+    "warningMessage": "Kiểm kê tài sản sẽ bị từ chối và không thể tiếp tục.",
+    "reasonLabel": "Lý Do Từ Chối",
+    "reasonPlaceholder": "Giải thích lý do từ chối (tối thiểu 10 ký tự)",
+    "reasonTooShort": "Lý do phải có ít nhất {{min}} ký tự ({{current}}/{{min}})",
+    "cancel": "Hủy",
+    "confirm": "Có, Từ Chối",
+    "rejecting": "Đang từ chối...",
+    "toast": {
+      "success": "Từ chối kiểm kê tài sản thành công",
+      "error": "Không thể từ chối kiểm kê tài sản"
+    }
+  }
 }

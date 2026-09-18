@@ -1,5 +1,6 @@
 import { useState } from "react"
 import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
 import { useQueryClient } from "@tanstack/react-query"
 import { useSubmitStockOpname } from "../../../hooks/mutation/stockOpname/submitDraft"
 import { useInitiateApprovalStockOpname } from "../../../hooks/mutation/stockOpname/initiateApproval"
@@ -15,6 +16,7 @@ export function SubmitStockOpnameModal({
   onClose,
   onSuccess,
 }: SubmitStockOpnameModalProps) {
+  const { t } = useTranslation()
   const [notes, setNotes] = useState("")
   const queryClient = useQueryClient()
 
@@ -30,7 +32,7 @@ export function SubmitStockOpnameModal({
         onSuccess: () => {
           initiateApproval(undefined, {
             onSuccess: () => {
-              toast.success("Stock opname berhasil disubmit dan diajukan untuk approval")
+              toast.success(t("submitStockOpnameModal.toast.success"))
 
               queryClient.invalidateQueries({ queryKey: ["stock-opname-detail", transactionNumber] })
 
@@ -38,12 +40,12 @@ export function SubmitStockOpnameModal({
               onClose()
             },
             onError: () => {
-              toast.error("Submit berhasil, tapi gagal mengajukan approval")
+              toast.error(t("submitStockOpnameModal.toast.errorInitiate"))
             },
           })
         },
         onError: () => {
-          toast.error("Gagal mensubmit stock opname")
+          toast.error(t("submitStockOpnameModal.toast.errorSubmit"))
         },
       }
     )
@@ -57,7 +59,7 @@ export function SubmitStockOpnameModal({
         <div className="flex items-start justify-between px-5 py-4 border-b border-gray-100 dark:border-gray-800">
           <div className="min-w-0">
             <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
-              Submit Stock Opname
+              {t("submitStockOpnameModal.title")}
             </h3>
             <p className="text-xs text-gray-400 mt-1 truncate">
               {transactionNumber}
@@ -82,20 +84,20 @@ export function SubmitStockOpnameModal({
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
             </svg>
             <p className="text-xs text-amber-700 dark:text-amber-400 leading-relaxed">
-              Setelah disubmit, draft tidak bisa diubah lagi dan akan langsung diajukan untuk approval.
+              {t("submitStockOpnameModal.warningMessage")}
             </p>
           </div>
 
           <div className="space-y-1.5">
             <label className="block text-xs font-medium text-gray-700 dark:text-gray-300">
-              Catatan{" "}
-              <span className="text-gray-400 font-normal">(opsional)</span>
+              {t("submitStockOpnameModal.notes")}{" "}
+              <span className="text-gray-400 font-normal">({t("submitStockOpnameModal.optional")})</span>
             </label>
             <textarea
               rows={4}
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              placeholder="Contoh: Sudah dicek semua unit di gudang"
+              placeholder={t("submitStockOpnameModal.notesPlaceholder")}
               disabled={isPending}
               className="w-full px-3 py-2.5 text-sm border border-gray-300 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none transition-all disabled:opacity-50"
             />
@@ -109,7 +111,7 @@ export function SubmitStockOpnameModal({
             disabled={isPending}
             className="flex-1 px-4 py-2 text-sm font-medium border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors disabled:opacity-50"
           >
-            Batal
+            {t("submitStockOpnameModal.cancel")}
           </button>
 
           <button
@@ -118,10 +120,10 @@ export function SubmitStockOpnameModal({
             className="flex-1 px-4 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isSubmitting
-              ? "Menyimpan..."
+              ? t("submitStockOpnameModal.saving")
               : isInitiating
-              ? "Mengajukan approval..."
-              : "Submit"}
+              ? t("submitStockOpnameModal.initiating")
+              : t("submitStockOpnameModal.submit")}
           </button>
         </div>
       </div>

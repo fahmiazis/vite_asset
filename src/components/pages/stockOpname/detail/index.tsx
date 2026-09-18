@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom"
 import { useState } from "react"
+import { useTranslation } from "react-i18next"
 import { useStockOpnameDetail } from "../../../../hooks/query/stockOpname/detail"
 import { useStockOpnameApprovalStatus } from "../../../../hooks/query/stockOpname/approvalStatus"
 import { useInitiateApprovalStockOpname } from "../../../../hooks/mutation/stockOpname/initiateApproval"
@@ -47,6 +48,7 @@ function AssetStatusBadge({ status }: { status?: string | null }) {
 
 export default function StockOpnameDetailPage() {
   const { "*": id } = useParams()
+  const { t } = useTranslation()
   const { data, isLoading } = useStockOpnameDetail(id ?? "")
 
   const [showAddAsset, setShowAddAsset] = useState(false)
@@ -131,7 +133,7 @@ export default function StockOpnameDetailPage() {
       <div className="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-xl p-5">
         <div className="flex items-start justify-between mb-4 flex-wrap gap-3">
           <div>
-            <p className="text-xs text-gray-400 mb-1">Nomor transaksi</p>
+            <p className="text-xs text-gray-400 mb-1">{t("stockOpnameDetail.transactionNumber")}</p>
             <p className="text-base font-semibold text-gray-800 dark:text-gray-200 font-mono">
               {transaction.transaction_number}
             </p>
@@ -151,10 +153,10 @@ export default function StockOpnameDetailPage() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-3">
           {[
-            { label: "Tanggal Opname", value: formatDate(transaction.transaction_date) },
-            { label: "Dibuat oleh", value: transaction.created_by },
-            { label: "Dibuat pada", value: formatDateTime(transaction.created_at) },
-            { label: "Diupdate pada", value: formatDateTime(transaction.updated_at) },
+            { label: t("stockOpnameDetail.opnameDate"), value: formatDate(transaction.transaction_date) },
+            { label: t("stockOpnameDetail.createdBy"), value: transaction.created_by },
+            { label: t("stockOpnameDetail.createdAt"), value: formatDateTime(transaction.created_at) },
+            { label: t("stockOpnameDetail.updatedAt"), value: formatDateTime(transaction.updated_at) },
           ].map((item) => (
             <div key={item.label} className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
               <p className="text-xs text-gray-400 mb-1">{item.label}</p>
@@ -165,7 +167,7 @@ export default function StockOpnameDetailPage() {
 
         {transaction.notes && (
           <div className="mt-3 pt-3 border-t border-gray-100 dark:border-gray-700">
-            <p className="text-xs text-gray-400 mb-1">Catatan</p>
+            <p className="text-xs text-gray-400 mb-1">{t("stockOpnameDetail.notes")}</p>
             <p className="text-sm text-gray-700 dark:text-gray-300">{transaction.notes}</p>
           </div>
         )}
@@ -174,10 +176,10 @@ export default function StockOpnameDetailPage() {
       {/* Items */}
       <div className="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-xl p-5">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200">Daftar Aset</h3>
+          <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200">{t("stockOpnameDetail.assetList")}</h3>
           <div className="flex items-center gap-2">
             <span className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-500 px-2 py-0.5 rounded-full">
-              {items.length} aset
+              {items.length} {t("stockOpnameDetail.assets")}
             </span>
             {isDraft && (
               <button
@@ -187,7 +189,7 @@ export default function StockOpnameDetailPage() {
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                 </svg>
-                Tambah aset
+                {t("stockOpnameDetail.addAsset")}
               </button>
             )}
           </div>
@@ -195,7 +197,7 @@ export default function StockOpnameDetailPage() {
 
         {items.length === 0 ? (
           <div className="text-center py-10 text-sm text-gray-400">
-            Belum ada aset yang ditambahkan
+            {t("stockOpnameDetail.noAssets")}
           </div>
         ) : (
           <div className="space-y-3">
@@ -221,12 +223,12 @@ export default function StockOpnameDetailPage() {
                         <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                         </svg>
-                        {item.found_physical_status ? "Edit Temuan" : "Isi Temuan"}
+                        {item.found_physical_status ? t("stockOpnameDetail.editFinding") : t("stockOpnameDetail.fillFinding")}
                       </button>
                       <button
                         onClick={() => setAssetToRemove({ id: item.asset_id, name: item.asset_name ?? item.asset_number })}
                         className="flex items-center justify-center w-7 h-7 rounded-lg text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors"
-                        title="Hapus aset"
+                        title={t("stockOpnameDetail.removeAsset")}
                       >
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -239,35 +241,35 @@ export default function StockOpnameDetailPage() {
                 {/* Item Body — Found vs System */}
                 <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <p className="text-[11px] font-semibold text-gray-400 uppercase tracking-wide mb-2">Data Sistem</p>
+                    <p className="text-[11px] font-semibold text-gray-400 uppercase tracking-wide mb-2">{t("stockOpnameDetail.systemData")}</p>
                     <div className="space-y-1.5">
                       <div className="flex items-center justify-between text-xs">
-                        <span className="text-gray-500">Kondisi</span>
+                        <span className="text-gray-500">{t("stockOpnameDetail.condition")}</span>
                         <span className="font-medium text-gray-700 dark:text-gray-300">{item.system_condition ?? "-"}</span>
                       </div>
                       <div className="flex items-center justify-between text-xs">
-                        <span className="text-gray-500">Status Fisik</span>
+                        <span className="text-gray-500">{t("stockOpnameDetail.physicalStatus")}</span>
                         <span className="font-medium text-gray-700 dark:text-gray-300">{item.system_physical_status ?? "-"}</span>
                       </div>
                       <div className="flex items-center justify-between text-xs">
-                        <span className="text-gray-500">Status Aset</span>
+                        <span className="text-gray-500">{t("stockOpnameDetail.assetStatus")}</span>
                         <AssetStatusBadge status={item.system_asset_status} />
                       </div>
                     </div>
                   </div>
                   <div>
-                    <p className="text-[11px] font-semibold text-indigo-500 uppercase tracking-wide mb-2">Hasil Temuan</p>
+                    <p className="text-[11px] font-semibold text-indigo-500 uppercase tracking-wide mb-2">{t("stockOpnameDetail.foundResult")}</p>
                     <div className="space-y-1.5">
                       <div className="flex items-center justify-between text-xs">
-                        <span className="text-gray-500">Kondisi</span>
+                        <span className="text-gray-500">{t("stockOpnameDetail.condition")}</span>
                         <span className="font-medium text-gray-700 dark:text-gray-300">{item.found_condition ?? "-"}</span>
                       </div>
                       <div className="flex items-center justify-between text-xs">
-                        <span className="text-gray-500">Status Fisik</span>
+                        <span className="text-gray-500">{t("stockOpnameDetail.physicalStatus")}</span>
                         <span className="font-medium text-gray-700 dark:text-gray-300">{item.found_physical_status ?? "-"}</span>
                       </div>
                       <div className="flex items-center justify-between text-xs">
-                        <span className="text-gray-500">Status Aset</span>
+                        <span className="text-gray-500">{t("stockOpnameDetail.assetStatus")}</span>
                         <AssetStatusBadge status={item.found_asset_status} />
                       </div>
                     </div>
@@ -287,7 +289,7 @@ export default function StockOpnameDetailPage() {
       {/* Approval status */}
       {approvalData?.data && (
         <div className="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-xl p-5">
-          <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-4">Status Approval</h3>
+          <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-4">{t("approvalStatus.title")}</h3>
           <div className="space-y-2">
             {approvalData.data.approvals.map((approval) => {
               const status = approval.status?.toLowerCase()
@@ -295,16 +297,20 @@ export default function StockOpnameDetailPage() {
                 status === "approved" ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400"
                 : status === "rejected" ? "bg-red-50 text-red-600 dark:bg-red-900/30 dark:text-red-400"
                 : "bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
+              const badgeLabel =
+                status === "approved" ? t("approvalStatus.badge.approved")
+                : status === "rejected" ? t("approvalStatus.badge.rejected")
+                : t("approvalStatus.badge.pending")
               return (
                 <div key={approval.id} className="flex items-center justify-between px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-900/40">
                   <div>
                     <p className="text-xs font-medium text-gray-800 dark:text-gray-200">
-                      {approval.flow_step?.step_name ?? "Step approval"}
+                      {approval.flow_step?.step_name ?? t("approveStockOpnameModal.stepFallback")}
                     </p>
                     <p className="text-xs text-gray-400">{approval.approver_role_name}</p>
                   </div>
-                  <span className={`text-xs px-2 py-0.5 rounded-full font-medium capitalize ${badge}`}>
-                    {approval.status}
+                  <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${badge}`}>
+                    {badgeLabel}
                   </span>
                 </div>
               )
@@ -316,26 +322,26 @@ export default function StockOpnameDetailPage() {
       {approvalNotYetInitiated && (
         <div className="bg-white dark:bg-gray-950 border border-amber-200 dark:border-amber-800 rounded-xl p-5 flex items-center justify-between gap-3 flex-wrap">
           <p className="text-xs text-amber-700 dark:text-amber-400">
-            Approval belum diajukan untuk transaksi ini.
+            {t("stockOpnameDetail.approvalNotInitiated")}
           </p>
           <button
             onClick={() =>
               retryInitiateApproval(undefined, {
-                onSuccess: () => toast.success("Approval berhasil diajukan"),
-                onError: () => toast.error("Gagal mengajukan approval"),
+                onSuccess: () => toast.success(t("stockOpnameDetail.toastInitiateSuccess")),
+                onError: () => toast.error(t("stockOpnameDetail.toastInitiateError")),
               })
             }
             disabled={isRetryingInitiate}
             className="px-4 py-2 text-xs font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors disabled:opacity-50"
           >
-            {isRetryingInitiate ? "Mengajukan..." : "Ajukan Approval"}
+            {isRetryingInitiate ? t("stockOpnameDetail.initiating") : t("stockOpnameDetail.initiateApproval")}
           </button>
         </div>
       )}
 
       {/* Stage History */}
       <div className="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-xl p-5">
-        <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-4">Riwayat Stage</h3>
+        <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-4">{t("stockOpnameDetail.stageHistory")}</h3>
         <StockOpnameStageHistory stages={stages} />
       </div>
 
@@ -350,7 +356,7 @@ export default function StockOpnameDetailPage() {
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
             </svg>
-            Submit Stock Opname
+            {t("stockOpnameDetail.submitStockOpname")}
           </button>
         )}
 
@@ -362,7 +368,7 @@ export default function StockOpnameDetailPage() {
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
-            Approve
+            {t("stockOpnameDetail.approve")}
           </button>
         )}
 
@@ -374,7 +380,7 @@ export default function StockOpnameDetailPage() {
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
-            Eksekusi Stock Opname
+            {t("stockOpnameDetail.execute")}
           </button>
         )}
 
@@ -386,7 +392,7 @@ export default function StockOpnameDetailPage() {
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
-            Tolak
+            {t("stockOpnameDetail.reject")}
           </button>
         )}
       </div>
