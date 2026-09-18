@@ -17,12 +17,20 @@ export default function StockOpnamePage() {
     <div>
       <div className="flex items-center justify-between mb-4">
         <h6 className="text-3xl font-bold">{t("stockOpnamePage.title")}</h6>
-        <button
-          onClick={() => navigate("/dashboard/stock-opname/create")}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition-colors"
-        >
-          {t("stockOpnamePage.createButton")}
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => navigate("/dashboard/stock-opname/report")}
+            className="px-4 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          >
+            {t("stockOpnamePage.reportButton", "Report")}
+          </button>
+          <button
+            onClick={() => navigate("/dashboard/stock-opname/create")}
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition-colors"
+          >
+            {t("stockOpnamePage.createButton")}
+          </button>
+        </div>
       </div>
 
       <StockOpnameTable
