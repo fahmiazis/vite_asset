@@ -114,11 +114,12 @@ export default function StockOpnameReportPage() {
 }
 
 function LoadingState() {
+  const { t } = useTranslation()
   return (
     <div className="flex items-center justify-center h-64">
       <div className="text-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 dark:border-white mx-auto" />
-        <p className="mt-4 text-sm text-gray1">Memuat laporan...</p>
+        <p className="mt-4 text-sm text-gray1">{t("stockOpnameReportPage.loading", "Memuat laporan...")}</p>
       </div>
     </div>
   )

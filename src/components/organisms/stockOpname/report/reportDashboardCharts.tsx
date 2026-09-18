@@ -39,10 +39,24 @@ function ChartCard({ title, children }: { title: string; children: React.ReactNo
 
 // ---------- Status per grouping (stacked bar) ----------
 
+function useStatusLabels() {
+  const { t } = useTranslation()
+  return {
+    finish: t("stockOpnameReportPage.stats.finish", "Finish"),
+    in_progress: t("stockOpnameReportPage.stats.inProgress", "In Progress"),
+    belum_submit: t("stockOpnameReportPage.stats.belumSubmit", "Belum Submit"),
+    rejected: t("stockOpnameReportPage.stats.rejected", "Rejected"),
+    revisi: t("stockOpnameReportPage.stats.revisi", "Revisi"),
+    disposal: t("stockOpnameReportPage.stats.disposal", "Disposal"),
+  }
+}
+
 function StatusPerGroupingChart({ data }: { data: StockOpnameGroupingStatus[] }) {
   const { t } = useTranslation()
+  const labels = useStatusLabels()
+  const ungroupedLabel = t("stockOpnameReportPage.charts.ungrouped", "Belum Dikelompokkan")
   const chartData = data.map((g) => ({
-    grouping: g.grouping,
+    grouping: g.grouping || ungroupedLabel,
     finish: g.status.finish,
     in_progress: g.status.in_progress,
     belum_submit: g.status.belum_submit,
@@ -59,11 +73,11 @@ function StatusPerGroupingChart({ data }: { data: StockOpnameGroupingStatus[] })
           <YAxis tick={{ fontSize: 11 }} />
           <Tooltip />
           <Legend wrapperStyle={{ fontSize: 11 }} />
-          <Bar dataKey="finish" stackId="a" fill={STATUS_COLORS.finish} name="Finish" />
-          <Bar dataKey="in_progress" stackId="a" fill={STATUS_COLORS.in_progress} name="In Progress" />
-          <Bar dataKey="belum_submit" stackId="a" fill={STATUS_COLORS.belum_submit} name="Belum submit" />
-          <Bar dataKey="rejected" stackId="a" fill={STATUS_COLORS.rejected} name="Rejected" />
-          <Bar dataKey="disposal" stackId="a" fill={STATUS_COLORS.disposal} name="Disposal" />
+          <Bar dataKey="finish" stackId="a" fill={STATUS_COLORS.finish} name={labels.finish} />
+          <Bar dataKey="in_progress" stackId="a" fill={STATUS_COLORS.in_progress} name={labels.in_progress} />
+          <Bar dataKey="belum_submit" stackId="a" fill={STATUS_COLORS.belum_submit} name={labels.belum_submit} />
+          <Bar dataKey="rejected" stackId="a" fill={STATUS_COLORS.rejected} name={labels.rejected} />
+          <Bar dataKey="disposal" stackId="a" fill={STATUS_COLORS.disposal} name={labels.disposal} />
         </BarChart>
       </ResponsiveContainer>
     </ChartCard>
@@ -99,9 +113,14 @@ function PhysicalVsSystemChart({ data }: { data: StockOpnamePhysicalVsSystem }) 
 // ---------- Donut helpers ----------
 
 function DonutChart({ segments }: { segments: { name: string; value: number; color: string }[] }) {
+  const { t } = useTranslation()
   const nonZero = segments.filter((s) => s.value > 0)
   if (nonZero.length === 0) {
-    return <div className="h-[240px] flex items-center justify-center text-xs text-gray1">Tidak ada data</div>
+    return (
+      <div className="h-[240px] flex items-center justify-center text-xs text-gray1">
+        {t("stockOpnameReportPage.rekap.noData", "Tidak ada data")}
+      </div>
+    )
   }
   return (
     <ResponsiveContainer width="100%" height={240}>
@@ -136,16 +155,17 @@ function ConditionSummaryChart({ data }: { data: StockOpnameConditionSummary }) 
 
 function StatusSubmitChart({ data }: { data: StockOpnameStatusBreakdown }) {
   const { t } = useTranslation()
+  const labels = useStatusLabels()
   return (
     <ChartCard title={t("stockOpnameReportPage.charts.statusSubmit", "Status submit")}>
       <DonutChart
         segments={[
-          { name: `Finish (${data.finish})`, value: data.finish, color: STATUS_COLORS.finish },
-          { name: `In Progress (${data.in_progress})`, value: data.in_progress, color: STATUS_COLORS.in_progress },
-          { name: `Belum submit (${data.belum_submit})`, value: data.belum_submit, color: STATUS_COLORS.belum_submit },
-          { name: `Rejected (${data.rejected})`, value: data.rejected, color: STATUS_COLORS.rejected },
-          { name: `Revisi (${data.revisi})`, value: data.revisi, color: STATUS_COLORS.revisi },
-          { name: `Disposal (${data.disposal})`, value: data.disposal, color: STATUS_COLORS.disposal },
+          { name: `${labels.finish} (${data.finish})`, value: data.finish, color: STATUS_COLORS.finish },
+          { name: `${labels.in_progress} (${data.in_progress})`, value: data.in_progress, color: STATUS_COLORS.in_progress },
+          { name: `${labels.belum_submit} (${data.belum_submit})`, value: data.belum_submit, color: STATUS_COLORS.belum_submit },
+          { name: `${labels.rejected} (${data.rejected})`, value: data.rejected, color: STATUS_COLORS.rejected },
+          { name: `${labels.revisi} (${data.revisi})`, value: data.revisi, color: STATUS_COLORS.revisi },
+          { name: `${labels.disposal} (${data.disposal})`, value: data.disposal, color: STATUS_COLORS.disposal },
         ]}
       />
     </ChartCard>

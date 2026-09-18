@@ -57,7 +57,10 @@ export function ReportRekapTable({ rekap, areaSummary, note }: ReportRekapTableP
                   <ValueCell value={row.accumulated_depreciation} />
                   <ValueCell value={row.book_value} />
                   <td className="px-4 py-2.5 text-right text-xs text-gray1 whitespace-nowrap">
-                    {row.extra_info ?? (row.unit_count > 0 ? `${formatNumber(row.unit_count)} unit` : "-")}
+                    {row.extra_info ??
+                      (row.unit_count > 0
+                        ? `${formatNumber(row.unit_count)} ${t("stockOpnameReportPage.rekap.unit", "unit")}`
+                        : "-")}
                   </td>
                 </tr>
               )

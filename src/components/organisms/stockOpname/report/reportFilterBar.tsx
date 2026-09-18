@@ -1,10 +1,19 @@
 import { useTranslation } from "react-i18next"
 import { useBranchList } from "../../../../hooks/query/branch/list"
 
-const MONTH_NAMES = [
-  "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-  "Juli", "Agustus", "September", "Oktober", "November", "Desember",
-]
+const INTL_LOCALE_MAP: Record<string, string> = {
+  id: "id-ID",
+  en: "en-US",
+  zh: "zh-CN",
+  vn: "vi-VN",
+  th: "th-TH",
+}
+
+function getMonthNames(language: string): string[] {
+  const locale = INTL_LOCALE_MAP[language] ?? "id-ID"
+  const formatter = new Intl.DateTimeFormat(locale, { month: "long" })
+  return Array.from({ length: 12 }, (_, i) => formatter.format(new Date(2000, i, 1)))
+}
 
 export type ReportView = "dashboard" | "detail"
 
@@ -42,11 +51,12 @@ export function ReportFilterBar({
   periodLabel,
   totalAsset,
 }: ReportFilterBarProps) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { data: branchData } = useBranchList()
 
   const currentYear = new Date().getFullYear()
   const years = Array.from({ length: 5 }, (_, i) => currentYear - 3 + i)
+  const monthNames = getMonthNames(i18n.language)
 
   return (
     <div className="bg-white dark:bg-gray-950 rounded-2xl border border-gray-100 dark:border-zinc-800 p-4 mb-6">
@@ -85,7 +95,7 @@ export function ReportFilterBar({
           onChange={(e) => onDraftMonthChange(Number(e.target.value))}
           className="text-xs border border-gray-200 dark:border-gray-700 bg-transparent rounded-lg px-2.5 py-1.5 outline-none"
         >
-          {MONTH_NAMES.map((m, i) => (
+          {monthNames.map((m, i) => (
             <option key={m} value={i + 1}>{m}</option>
           ))}
         </select>

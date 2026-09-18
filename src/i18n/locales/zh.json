@@ -541,7 +541,8 @@
   },
   "stockOpnamePage": {
     "title": "库存盘点",
-    "createButton": "+ 新建库存盘点"
+    "createButton": "+ 新建库存盘点",
+    "reportButton": "报表"
   },
   "createStockOpnamePage": {
     "title": "新建库存盘点",
@@ -706,6 +707,58 @@
     "toast": {
       "success": "库存盘点已拒绝",
       "error": "拒绝库存盘点失败"
+    }
+  },
+  "stockOpnameReportPage": {
+    "title": "库存盘点报表",
+    "backToList": "返回列表",
+    "view": "视图",
+    "dashboard": "仪表盘",
+    "detailReport": "详细报表",
+    "period": "期间",
+    "go": "查询",
+    "plant": "厂区",
+    "allPlant": "全部",
+    "assetUnit": "项资产",
+    "downloading": "下载中...",
+    "downloadReport": "下载报表",
+    "loading": "报表加载中...",
+    "stats": {
+      "totalAsset": "资产总数",
+      "finish": "已完成",
+      "done": "已完成",
+      "inProgress": "进行中",
+      "belumSubmit": "未提交",
+      "rejected": "已驳回",
+      "revisi": "待修订",
+      "disposal": "已处置",
+      "acquisVal": "购置价值",
+      "bookVal": "账面价值"
+    },
+    "charts": {
+      "statusPerGrouping": "按分组统计状态",
+      "physicalVsSystem": "实物与系统对比",
+      "statusFisik": "实物状态",
+      "statusSap": "系统状态",
+      "ada": "存在",
+      "tidakAda": "不存在",
+      "conditionSummary": "资产状况",
+      "baik": "良好",
+      "rusak": "损坏",
+      "belumIsi": "未填写",
+      "statusSubmit": "提交状态",
+      "ungrouped": "未分组"
+    },
+    "rekap": {
+      "label": "汇总",
+      "unitInfo": "数量 / 说明",
+      "unsupported": "暂不支持",
+      "unit": "项",
+      "areaClear": "已核对区域",
+      "areaNotClear": "未核对区域",
+      "totalArea": "全国区域总数",
+      "costCenterTitle": "各成本中心资产价值（前10名）",
+      "noData": "暂无数据"
     }
   }
 }

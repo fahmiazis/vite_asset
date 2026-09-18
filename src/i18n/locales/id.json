@@ -541,7 +541,8 @@
   },
   "stockOpnamePage": {
     "title": "Stock Opname",
-    "createButton": "+ Buat Stock Opname"
+    "createButton": "+ Buat Stock Opname",
+    "reportButton": "Report"
   },
   "createStockOpnamePage": {
     "title": "Buat Stock Opname",
@@ -706,6 +707,58 @@
     "toast": {
       "success": "Stock opname berhasil ditolak",
       "error": "Gagal menolak stock opname"
+    }
+  },
+  "stockOpnameReportPage": {
+    "title": "Report Stock Opname",
+    "backToList": "Kembali ke daftar",
+    "view": "Tampilan",
+    "dashboard": "Dashboard",
+    "detailReport": "Detail Report",
+    "period": "Periode",
+    "go": "Go",
+    "plant": "Plant",
+    "allPlant": "Semua",
+    "assetUnit": "aset",
+    "downloading": "Mengunduh...",
+    "downloadReport": "Download Report",
+    "loading": "Memuat laporan...",
+    "stats": {
+      "totalAsset": "Total Aset",
+      "finish": "Finish",
+      "done": "selesai",
+      "inProgress": "In Progress",
+      "belumSubmit": "Belum Submit",
+      "rejected": "Rejected",
+      "revisi": "Revisi",
+      "disposal": "Disposal",
+      "acquisVal": "Acquis Val",
+      "bookVal": "Book Val"
+    },
+    "charts": {
+      "statusPerGrouping": "Status per grouping",
+      "physicalVsSystem": "Status fisik vs SAP",
+      "statusFisik": "Status Fisik",
+      "statusSap": "Status SAP",
+      "ada": "Ada",
+      "tidakAda": "Tidak Ada",
+      "conditionSummary": "Kondisi aset",
+      "baik": "Baik",
+      "rusak": "Rusak",
+      "belumIsi": "Belum Isi",
+      "statusSubmit": "Status submit",
+      "ungrouped": "Belum Dikelompokkan"
+    },
+    "rekap": {
+      "label": "Rekapitulasi",
+      "unitInfo": "Unit / Info",
+      "unsupported": "belum didukung",
+      "unit": "unit",
+      "areaClear": "Area Clear",
+      "areaNotClear": "Area Tidak Clear",
+      "totalArea": "Total Area Nasional",
+      "costCenterTitle": "Nilai aset per cost center (top 10)",
+      "noData": "Tidak ada data"
     }
   }
 }

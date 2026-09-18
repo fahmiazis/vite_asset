@@ -541,7 +541,8 @@
   },
   "stockOpnamePage": {
     "title": "ตรวจนับสินทรัพย์",
-    "createButton": "+ สร้างการตรวจนับสินทรัพย์"
+    "createButton": "+ สร้างการตรวจนับสินทรัพย์",
+    "reportButton": "รายงาน"
   },
   "createStockOpnamePage": {
     "title": "สร้างการตรวจนับสินทรัพย์",
@@ -706,6 +707,58 @@
     "toast": {
       "success": "ปฏิเสธการตรวจนับสำเร็จแล้ว",
       "error": "ไม่สามารถปฏิเสธการตรวจนับได้"
+    }
+  },
+  "stockOpnameReportPage": {
+    "title": "รายงานตรวจนับสินทรัพย์",
+    "backToList": "กลับไปที่รายการ",
+    "view": "มุมมอง",
+    "dashboard": "แดชบอร์ด",
+    "detailReport": "รายงานรายละเอียด",
+    "period": "ช่วงเวลา",
+    "go": "ไป",
+    "plant": "สาขา",
+    "allPlant": "ทั้งหมด",
+    "assetUnit": "รายการสินทรัพย์",
+    "downloading": "กำลังดาวน์โหลด...",
+    "downloadReport": "ดาวน์โหลดรายงาน",
+    "loading": "กำลังโหลดรายงาน...",
+    "stats": {
+      "totalAsset": "สินทรัพย์ทั้งหมด",
+      "finish": "เสร็จสิ้น",
+      "done": "เสร็จสิ้น",
+      "inProgress": "กำลังดำเนินการ",
+      "belumSubmit": "ยังไม่ส่ง",
+      "rejected": "ถูกปฏิเสธ",
+      "revisi": "ต้องแก้ไข",
+      "disposal": "จำหน่ายแล้ว",
+      "acquisVal": "มูลค่าจัดซื้อ",
+      "bookVal": "มูลค่าทางบัญชี"
+    },
+    "charts": {
+      "statusPerGrouping": "สถานะตามกลุ่ม",
+      "physicalVsSystem": "สภาพจริงเทียบกับระบบ",
+      "statusFisik": "สถานะทางกายภาพ",
+      "statusSap": "สถานะในระบบ",
+      "ada": "มี",
+      "tidakAda": "ไม่มี",
+      "conditionSummary": "สภาพสินทรัพย์",
+      "baik": "ดี",
+      "rusak": "ชำรุด",
+      "belumIsi": "ยังไม่กรอก",
+      "statusSubmit": "สถานะการส่ง",
+      "ungrouped": "ยังไม่จัดกลุ่ม"
+    },
+    "rekap": {
+      "label": "สรุปข้อมูล",
+      "unitInfo": "จำนวน / ข้อมูล",
+      "unsupported": "ยังไม่รองรับ",
+      "unit": "รายการ",
+      "areaClear": "พื้นที่ตรวจสอบครบ",
+      "areaNotClear": "พื้นที่ยังไม่ครบ",
+      "totalArea": "จำนวนพื้นที่ทั้งประเทศ",
+      "costCenterTitle": "มูลค่าสินทรัพย์ตามศูนย์ต้นทุน (10 อันดับแรก)",
+      "noData": "ไม่มีข้อมูล"
     }
   }
 }

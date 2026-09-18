@@ -541,7 +541,8 @@
   },
   "stockOpnamePage": {
     "title": "Stock Opname",
-    "createButton": "+ Create Stock Opname"
+    "createButton": "+ Create Stock Opname",
+    "reportButton": "Report"
   },
   "createStockOpnamePage": {
     "title": "Create Stock Opname",
@@ -706,6 +707,58 @@
     "toast": {
       "success": "Stock opname rejected successfully",
       "error": "Failed to reject stock opname"
+    }
+  },
+  "stockOpnameReportPage": {
+    "title": "Stock Opname Report",
+    "backToList": "Back to list",
+    "view": "View",
+    "dashboard": "Dashboard",
+    "detailReport": "Detail Report",
+    "period": "Period",
+    "go": "Go",
+    "plant": "Plant",
+    "allPlant": "All",
+    "assetUnit": "assets",
+    "downloading": "Downloading...",
+    "downloadReport": "Download Report",
+    "loading": "Loading report...",
+    "stats": {
+      "totalAsset": "Total Assets",
+      "finish": "Finish",
+      "done": "done",
+      "inProgress": "In Progress",
+      "belumSubmit": "Not Submitted",
+      "rejected": "Rejected",
+      "revisi": "Revision",
+      "disposal": "Disposal",
+      "acquisVal": "Acquis Val",
+      "bookVal": "Book Val"
+    },
+    "charts": {
+      "statusPerGrouping": "Status per grouping",
+      "physicalVsSystem": "Physical vs SAP status",
+      "statusFisik": "Physical Status",
+      "statusSap": "SAP Status",
+      "ada": "Present",
+      "tidakAda": "Not Present",
+      "conditionSummary": "Asset condition",
+      "baik": "Good",
+      "rusak": "Damaged",
+      "belumIsi": "Not Filled",
+      "statusSubmit": "Submission status",
+      "ungrouped": "Ungrouped"
+    },
+    "rekap": {
+      "label": "Recapitulation",
+      "unitInfo": "Unit / Info",
+      "unsupported": "not supported",
+      "unit": "units",
+      "areaClear": "Area Clear",
+      "areaNotClear": "Area Not Clear",
+      "totalArea": "Total National Area",
+      "costCenterTitle": "Asset value per cost center (top 10)",
+      "noData": "No data"
     }
   }
 }

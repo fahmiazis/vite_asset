@@ -541,7 +541,8 @@
   },
   "stockOpnamePage": {
     "title": "Kiểm Kê Tài Sản",
-    "createButton": "+ Tạo Kiểm Kê Tài Sản"
+    "createButton": "+ Tạo Kiểm Kê Tài Sản",
+    "reportButton": "Báo cáo"
   },
   "createStockOpnamePage": {
     "title": "Tạo Kiểm Kê Tài Sản",
@@ -706,6 +707,58 @@
     "toast": {
       "success": "Từ chối kiểm kê tài sản thành công",
       "error": "Không thể từ chối kiểm kê tài sản"
+    }
+  },
+  "stockOpnameReportPage": {
+    "title": "Báo Cáo Kiểm Kê Tài Sản",
+    "backToList": "Quay lại danh sách",
+    "view": "Chế độ xem",
+    "dashboard": "Tổng quan",
+    "detailReport": "Báo cáo chi tiết",
+    "period": "Kỳ báo cáo",
+    "go": "Xem",
+    "plant": "Chi nhánh",
+    "allPlant": "Tất cả",
+    "assetUnit": "tài sản",
+    "downloading": "Đang tải xuống...",
+    "downloadReport": "Tải báo cáo",
+    "loading": "Đang tải báo cáo...",
+    "stats": {
+      "totalAsset": "Tổng tài sản",
+      "finish": "Hoàn tất",
+      "done": "hoàn tất",
+      "inProgress": "Đang xử lý",
+      "belumSubmit": "Chưa nộp",
+      "rejected": "Bị từ chối",
+      "revisi": "Cần chỉnh sửa",
+      "disposal": "Đã thanh lý",
+      "acquisVal": "Giá trị mua sắm",
+      "bookVal": "Giá trị sổ sách"
+    },
+    "charts": {
+      "statusPerGrouping": "Trạng thái theo nhóm",
+      "physicalVsSystem": "Thực tế so với hệ thống",
+      "statusFisik": "Trạng thái thực tế",
+      "statusSap": "Trạng thái hệ thống",
+      "ada": "Có",
+      "tidakAda": "Không có",
+      "conditionSummary": "Tình trạng tài sản",
+      "baik": "Tốt",
+      "rusak": "Hư hỏng",
+      "belumIsi": "Chưa nhập",
+      "statusSubmit": "Trạng thái nộp",
+      "ungrouped": "Chưa phân nhóm"
+    },
+    "rekap": {
+      "label": "Bảng tổng hợp",
+      "unitInfo": "Số lượng / Thông tin",
+      "unsupported": "chưa hỗ trợ",
+      "unit": "đơn vị",
+      "areaClear": "Khu vực đã khớp",
+      "areaNotClear": "Khu vực chưa khớp",
+      "totalArea": "Tổng số khu vực toàn quốc",
+      "costCenterTitle": "Giá trị tài sản theo trung tâm chi phí (top 10)",
+      "noData": "Không có dữ liệu"
     }
   }
 }
