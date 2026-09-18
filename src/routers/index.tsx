@@ -50,6 +50,9 @@ import MutationDetailPage from '../components/pages/mutation/detail'
 import DisposalFormPage from '../components/pages/disposal/create'
 import DisposalPage from '../components/pages/disposal'
 import DisposalDetailPage from '../components/pages/disposal/detail'
+import StockOpnamePage from '../components/pages/stockOpname'
+import CreateStockOpnamePage from '../components/pages/stockOpname/create'
+import StockOpnameDetailPage from '../components/pages/stockOpname/detail'
 
 export const router = createBrowserRouter([
   // {
@@ -137,6 +140,18 @@ export const router = createBrowserRouter([
           {
             path: 'disposal/*',
             element: <DisposalDetailPage />,
+          },
+          {
+            path: 'stock-opname',
+            element: <StockOpnamePage />,
+          },
+          {
+            path: 'stock-opname/create',
+            element: <CreateStockOpnamePage />,
+          },
+          {
+            path: 'stock-opname/*',
+            element: <StockOpnameDetailPage />,
           },
           {
             path: 'setting-attachment',
