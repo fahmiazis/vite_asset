@@ -789,6 +789,8 @@
     "columnNotes": "Ghi Chú",
     "selectPlaceholder": "-",
     "notesPlaceholder": "Ghi chú...",
-    "unsavedBadge": "chưa lưu"
+    "unsavedBadge": "chưa lưu",
+    "searchPlaceholder": "Tìm tên hoặc số tài sản... (Ctrl+F)",
+    "searchNoResults": "Không tìm thấy tài sản phù hợp"
   }
 }

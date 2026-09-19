@@ -789,6 +789,8 @@
     "columnNotes": "Catatan",
     "selectPlaceholder": "-",
     "notesPlaceholder": "Catatan...",
-    "unsavedBadge": "belum tersimpan"
+    "unsavedBadge": "belum tersimpan",
+    "searchPlaceholder": "Cari nama atau nomor asset... (Ctrl+F)",
+    "searchNoResults": "Gak ada asset yang cocok"
   }
 }

@@ -27,14 +27,41 @@ export default function StockOpnameFillPage() {
   const [rowErrors, setRowErrors] = useState<Record<number, string>>({})
   const [saveStatus, setSaveStatus] = useState<SaveStatus>("idle")
   const [lastSavedAt, setLastSavedAt] = useState<Date | null>(null)
+  const [searchQuery, setSearchQuery] = useState("")
 
   const pendingRef = useRef<Record<number, Partial<BulkUpdateStockOpnameFindingItem>>>({})
   const initializedRef = useRef(false)
   const flushingRef = useRef(false)
+  const searchInputRef = useRef<HTMLInputElement>(null)
 
   const items = useMemo(() => data?.data?.items ?? [], [data])
   const transaction = data?.data?.transaction
   const isDraft = transaction?.current_stage === "DRAFT"
+
+  // Ctrl/Cmd+F fokus ke search box di halaman ini alih-alih native
+  // find-in-page browser — lebih kepake karena beneran filter baris grid,
+  // bukan cuma highlight teks. Esc di dalam search box buat clear + blur.
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "f") {
+        e.preventDefault()
+        searchInputRef.current?.focus()
+        searchInputRef.current?.select()
+      }
+    }
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [])
+
+  const filteredItems = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase()
+    if (!query) return items
+    return items.filter(
+      (item) =>
+        item.asset_number.toLowerCase().includes(query) ||
+        (item.asset_name ?? "").toLowerCase().includes(query)
+    )
+  }, [items, searchQuery])
 
   const assetNumberToId = useMemo(() => {
     const map: Record<string, number> = {}
@@ -167,6 +194,46 @@ export default function StockOpnameFillPage() {
           </div>
         </div>
 
+        <div className="flex items-center gap-2 min-w-0 flex-1 max-w-sm">
+          <div className="relative flex-1">
+            <svg
+              className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400 pointer-events-none"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" />
+            </svg>
+            <input
+              ref={searchInputRef}
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Escape") {
+                  setSearchQuery("")
+                  searchInputRef.current?.blur()
+                }
+              }}
+              placeholder={t("stockOpnameFillPage.searchPlaceholder")}
+              className="w-full pl-8 pr-7 py-1.5 text-xs border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white dark:focus:bg-gray-950"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery("")}
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+              >
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            )}
+          </div>
+          {searchQuery && (
+            <span className="text-[11px] text-gray-400 whitespace-nowrap flex-shrink-0">
+              {filteredItems.length} / {items.length}
+            </span>
+          )}
+        </div>
+
         <div className="flex items-center gap-3">
           <SaveStatusBadge status={saveStatus} errorCount={errorCount} lastSavedAt={lastSavedAt} hasPending={hasPending} t={t} />
           <button
@@ -186,6 +253,10 @@ export default function StockOpnameFillPage() {
       ) : items.length === 0 ? (
         <div className="flex-1 flex items-center justify-center px-4">
           <p className="text-sm text-gray-400">{t("stockOpnameDetail.noAssets")}</p>
+        </div>
+      ) : filteredItems.length === 0 ? (
+        <div className="flex-1 flex items-center justify-center px-4">
+          <p className="text-sm text-gray-400">{t("stockOpnameFillPage.searchNoResults")}</p>
         </div>
       ) : (
         <div className="flex-1 overflow-auto">
@@ -212,7 +283,7 @@ export default function StockOpnameFillPage() {
               </tr>
             </thead>
             <tbody>
-              {items.map((item, index) => (
+              {filteredItems.map((item, index) => (
                 <StockOpnameFillGridRow
                   key={item.asset_id}
                   index={index}

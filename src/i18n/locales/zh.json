@@ -789,6 +789,8 @@
     "columnNotes": "备注",
     "selectPlaceholder": "-",
     "notesPlaceholder": "备注...",
-    "unsavedBadge": "未保存"
+    "unsavedBadge": "未保存",
+    "searchPlaceholder": "搜索资产名称或编号...(Ctrl+F)",
+    "searchNoResults": "没有匹配的资产"
   }
 }

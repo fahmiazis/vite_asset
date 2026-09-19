@@ -789,6 +789,8 @@
     "columnNotes": "หมายเหตุ",
     "selectPlaceholder": "-",
     "notesPlaceholder": "หมายเหตุ...",
-    "unsavedBadge": "ยังไม่บันทึก"
+    "unsavedBadge": "ยังไม่บันทึก",
+    "searchPlaceholder": "ค้นหาชื่อหรือหมายเลขสินทรัพย์... (Ctrl+F)",
+    "searchNoResults": "ไม่พบสินทรัพย์ที่ตรงกัน"
   }
 }

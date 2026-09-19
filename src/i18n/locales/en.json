@@ -789,6 +789,8 @@
     "columnNotes": "Notes",
     "selectPlaceholder": "-",
     "notesPlaceholder": "Notes...",
-    "unsavedBadge": "unsaved"
+    "unsavedBadge": "unsaved",
+    "searchPlaceholder": "Search asset name or number... (Ctrl+F)",
+    "searchNoResults": "No matching assets"
   }
 }
