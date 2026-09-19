@@ -904,5 +904,13 @@
         ]
       }
     }
+  },
+  "stockOpnamePhoto": {
+    "label": "Foto Bukti Fisik",
+    "uploadCta": "Upload Foto",
+    "hint": "JPEG, maks 2MB, foto asli kamera (bukan hasil forward chat), diambil maks 10 hari lalu",
+    "capturedOn": "Diambil",
+    "clickToReplace": "klik buat ganti",
+    "uploadTooltip": "Belum ada foto — klik buat upload"
   }
 }

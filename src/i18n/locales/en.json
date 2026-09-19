@@ -904,5 +904,13 @@
         ]
       }
     }
+  },
+  "stockOpnamePhoto": {
+    "label": "Physical Proof Photo",
+    "uploadCta": "Upload Photo",
+    "hint": "JPEG, max 2MB, original camera photo (not forwarded via chat), taken within the last 10 days",
+    "capturedOn": "Captured",
+    "clickToReplace": "click to replace",
+    "uploadTooltip": "No photo yet — click to upload"
   }
 }

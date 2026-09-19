@@ -265,6 +265,7 @@ export default function StockOpnameFillPage() {
               <tr>
                 {[
                   t("stockOpnameFillPage.columnNo"),
+                  t("stockOpnamePhoto.label"),
                   t("stockOpnameFillPage.columnAsset"),
                   t("stockOpnameFillPage.columnCategory"),
                   t("stockOpnameFillPage.columnPhysicalStatus"),
@@ -287,6 +288,7 @@ export default function StockOpnameFillPage() {
                 <StockOpnameFillGridRow
                   key={item.asset_id}
                   index={index}
+                  transactionNumber={transactionNumber}
                   item={item}
                   state={rows[item.asset_id] ?? emptyRowState()}
                   error={rowErrors[item.asset_id]}

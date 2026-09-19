@@ -1,6 +1,7 @@
 import { memo } from "react"
 import type { TFunction } from "i18next"
 import { getPhysicalStatusOptions, getConditionOptions, getAssetStatusOptions } from "./findingOptions"
+import { PhotoUploadField } from "./photoUploadField"
 import type { StockOpnameItem } from "../../../models/stockOpname/detail"
 
 export interface FillRowState {
@@ -14,6 +15,7 @@ export type FillFieldName = "physical_status" | "condition" | "asset_status" | "
 
 interface StockOpnameFillGridRowProps {
   index: number
+  transactionNumber: string
   item: StockOpnameItem
   state: FillRowState
   error?: string
@@ -25,7 +27,15 @@ const cellClass = "border border-gray-200 dark:border-gray-800 px-2 py-1 align-t
 const inputClass =
   "w-full bg-transparent text-xs text-gray-800 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-indigo-500 rounded-sm px-1 py-0.5"
 
-function StockOpnameFillGridRowInner({ index, item, state, error, t, onFieldChange }: StockOpnameFillGridRowProps) {
+function StockOpnameFillGridRowInner({
+  index,
+  transactionNumber,
+  item,
+  state,
+  error,
+  t,
+  onFieldChange,
+}: StockOpnameFillGridRowProps) {
   const isMissing = state.physical_status === "MISSING"
   const conditionOptions = getConditionOptions(t).filter((opt) => isMissing || opt.value !== "NOT_APPLICABLE")
 
@@ -40,6 +50,15 @@ function StockOpnameFillGridRowInner({ index, item, state, error, t, onFieldChan
       }
     >
       <td className={`${cellClass} text-center text-[11px] text-gray-400 w-10`}>{index + 1}</td>
+      <td className={`${cellClass} w-14`}>
+        <PhotoUploadField
+          transactionNumber={transactionNumber}
+          assetId={item.asset_id}
+          photoUrl={item.photo_url}
+          capturedAt={item.photo_captured_at}
+          variant="grid"
+        />
+      </td>
       <td className={`${cellClass} min-w-[170px]`}>
         <p className="text-xs font-medium text-gray-800 dark:text-gray-200 truncate">{item.asset_name ?? "-"}</p>
         <p className="text-[10px] text-gray-400 font-mono">{item.asset_number}</p>

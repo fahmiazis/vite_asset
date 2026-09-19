@@ -29,6 +29,9 @@ export interface StockOpnameItem {
   system_physical_status?: string | null
   system_condition?: string | null
   system_asset_status?: string
+  photo_id?: number | null
+  photo_url?: string | null
+  photo_captured_at?: string | null
   created_at: string
   updated_at: string
 }

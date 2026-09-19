@@ -904,5 +904,13 @@
         ]
       }
     }
+  },
+  "stockOpnamePhoto": {
+    "label": "实物证明照片",
+    "uploadCta": "上传照片",
+    "hint": "JPEG格式，最大2MB，相机原图（非聊天转发压缩图），10天内拍摄",
+    "capturedOn": "拍摄于",
+    "clickToReplace": "点击更换",
+    "uploadTooltip": "尚无照片 — 点击上传"
   }
 }

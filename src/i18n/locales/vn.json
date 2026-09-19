@@ -904,5 +904,13 @@
         ]
       }
     }
+  },
+  "stockOpnamePhoto": {
+    "label": "Ảnh Bằng Chứng Thực Tế",
+    "uploadCta": "Tải Ảnh Lên",
+    "hint": "JPEG, tối đa 2MB, ảnh gốc từ máy ảnh (không phải chuyển tiếp qua chat), chụp trong 10 ngày gần đây",
+    "capturedOn": "Chụp lúc",
+    "clickToReplace": "bấm để thay",
+    "uploadTooltip": "Chưa có ảnh — bấm để tải lên"
   }
 }

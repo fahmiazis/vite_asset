@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next"
 import { useUpdateStockOpnameFinding } from "../../../hooks/mutation/stockOpname/updateFinding"
 import type { StockOpnameItem } from "../../../models/stockOpname/detail"
 import { getPhysicalStatusOptions, getConditionOptions, getAssetStatusOptions } from "./findingOptions"
+import { PhotoUploadField } from "./photoUploadField"
 
 type UpdateStockOpnameFindingModalProps = {
   transactionNumber: string
@@ -96,6 +97,13 @@ export function UpdateStockOpnameFindingModal({
 
         {/* Body */}
         <div className="px-5 py-4 space-y-4">
+
+          <PhotoUploadField
+            transactionNumber={transactionNumber}
+            assetId={item.asset_id}
+            photoUrl={item.photo_url}
+            capturedAt={item.photo_captured_at}
+          />
 
           <div className="space-y-1.5">
             <label className="block text-xs font-medium text-gray-700 dark:text-gray-300">
