@@ -598,7 +598,8 @@
     "tableAction": "การดำเนินการ",
     "tableShowing": "แสดง",
     "tableOf": "จาก",
-    "tablePageSize": "แถวต่อหน้า:"
+    "tablePageSize": "แถวต่อหน้า:",
+    "fillDataButton": "กรอกข้อมูลให้ครบ"
   },
   "stockOpnameFindingModal": {
     "title": "กรอกผลตรวจสภาพจริง",
@@ -765,5 +766,29 @@
     "errorsTitle": "รายละเอียดข้อผิดพลาด",
     "errorRow": "แถว",
     "close": "ปิด"
+  },
+  "stockOpnameFillPage": {
+    "title": "กรอกข้อมูลให้ครบ",
+    "subtitle": "กรอกผลตรวจสภาพในตารางได้เลย บันทึกอัตโนมัติทุกสองสามวินาที",
+    "back": "ย้อนกลับ",
+    "notDraft": "กรอกข้อมูลได้เฉพาะตอนที่ stock opname ยังเป็นแบบร่างเท่านั้น",
+    "saveNow": "บันทึกทันที",
+    "statusSaving": "กำลังบันทึก...",
+    "statusSaved": "บันทึกแล้ว",
+    "statusErrorSuffix": "สินทรัพย์บันทึกไม่สำเร็จ",
+    "statusIdle": "ยังไม่มีการเปลี่ยนแปลง",
+    "lastSaved": "บันทึกล่าสุด",
+    "secondsAgo": "วินาทีที่แล้ว",
+    "justNow": "เมื่อสักครู่",
+    "columnNo": "ลำดับ",
+    "columnAsset": "สินทรัพย์",
+    "columnCategory": "หมวดหมู่",
+    "columnPhysicalStatus": "สถานะทางกายภาพ",
+    "columnCondition": "สภาพ",
+    "columnAssetStatus": "สถานะสินทรัพย์",
+    "columnNotes": "หมายเหตุ",
+    "selectPlaceholder": "-",
+    "notesPlaceholder": "หมายเหตุ...",
+    "unsavedBadge": "ยังไม่บันทึก"
   }
 }

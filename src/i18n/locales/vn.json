@@ -598,7 +598,8 @@
     "tableAction": "Hành Động",
     "tableShowing": "Hiển thị",
     "tableOf": "trong số",
-    "tablePageSize": "Số dòng/trang:"
+    "tablePageSize": "Số dòng/trang:",
+    "fillDataButton": "Hoàn Thiện Dữ Liệu"
   },
   "stockOpnameFindingModal": {
     "title": "Nhập Kết Quả Kiểm Tra Thực Tế",
@@ -765,5 +766,29 @@
     "errorsTitle": "Chi Tiết Lỗi",
     "errorRow": "Dòng",
     "close": "Đóng"
+  },
+  "stockOpnameFillPage": {
+    "title": "Hoàn Thiện Dữ Liệu",
+    "subtitle": "Điền kết quả kiểm tra trực tiếp trên bảng, tự động lưu mỗi vài giây",
+    "back": "Quay Lại",
+    "notDraft": "Chỉ có thể hoàn thiện dữ liệu khi stock opname còn ở trạng thái nháp",
+    "saveNow": "Lưu Ngay",
+    "statusSaving": "Đang lưu...",
+    "statusSaved": "Đã lưu",
+    "statusErrorSuffix": "tài sản lưu thất bại",
+    "statusIdle": "Chưa có thay đổi",
+    "lastSaved": "Lần lưu cuối",
+    "secondsAgo": "giây trước",
+    "justNow": "vừa xong",
+    "columnNo": "STT",
+    "columnAsset": "Tài Sản",
+    "columnCategory": "Danh Mục",
+    "columnPhysicalStatus": "Trạng Thái Vật Lý",
+    "columnCondition": "Tình Trạng",
+    "columnAssetStatus": "Trạng Thái Tài Sản",
+    "columnNotes": "Ghi Chú",
+    "selectPlaceholder": "-",
+    "notesPlaceholder": "Ghi chú...",
+    "unsavedBadge": "chưa lưu"
   }
 }

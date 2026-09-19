@@ -598,7 +598,8 @@
     "tableAction": "操作",
     "tableShowing": "显示",
     "tableOf": "共",
-    "tablePageSize": "每页行数:"
+    "tablePageSize": "每页行数:",
+    "fillDataButton": "完善数据"
   },
   "stockOpnameFindingModal": {
     "title": "填写盘点结果",
@@ -765,5 +766,29 @@
     "errorsTitle": "错误详情",
     "errorRow": "行",
     "close": "关闭"
+  },
+  "stockOpnameFillPage": {
+    "title": "完善数据",
+    "subtitle": "直接在表格中填写盘点结果，每隔几秒自动保存",
+    "back": "返回",
+    "notDraft": "只有在草稿状态下才能完善数据",
+    "saveNow": "立即保存",
+    "statusSaving": "保存中...",
+    "statusSaved": "已保存",
+    "statusErrorSuffix": "项资产保存失败",
+    "statusIdle": "尚无更改",
+    "lastSaved": "最后保存于",
+    "secondsAgo": "秒前",
+    "justNow": "刚刚",
+    "columnNo": "序号",
+    "columnAsset": "资产",
+    "columnCategory": "类别",
+    "columnPhysicalStatus": "实物状态",
+    "columnCondition": "状态",
+    "columnAssetStatus": "资产状态",
+    "columnNotes": "备注",
+    "selectPlaceholder": "-",
+    "notesPlaceholder": "备注...",
+    "unsavedBadge": "未保存"
   }
 }

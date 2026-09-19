@@ -598,7 +598,8 @@
     "tableAction": "Action",
     "tableShowing": "Showing",
     "tableOf": "of",
-    "tablePageSize": "Rows/page:"
+    "tablePageSize": "Rows/page:",
+    "fillDataButton": "Complete Data"
   },
   "stockOpnameFindingModal": {
     "title": "Fill Physical Finding",
@@ -765,5 +766,29 @@
     "errorsTitle": "Error Details",
     "errorRow": "Row",
     "close": "Close"
+  },
+  "stockOpnameFillPage": {
+    "title": "Complete Data",
+    "subtitle": "Fill in findings directly in the table, autosaved every few seconds",
+    "back": "Back",
+    "notDraft": "Completing data is only available while the stock opname is still a draft",
+    "saveNow": "Save Now",
+    "statusSaving": "Saving...",
+    "statusSaved": "Saved",
+    "statusErrorSuffix": "asset(s) failed to save",
+    "statusIdle": "No changes yet",
+    "lastSaved": "Last saved",
+    "secondsAgo": "seconds ago",
+    "justNow": "just now",
+    "columnNo": "No",
+    "columnAsset": "Asset",
+    "columnCategory": "Category",
+    "columnPhysicalStatus": "Physical Status",
+    "columnCondition": "Condition",
+    "columnAssetStatus": "Asset Status",
+    "columnNotes": "Notes",
+    "selectPlaceholder": "-",
+    "notesPlaceholder": "Notes...",
+    "unsavedBadge": "unsaved"
   }
 }

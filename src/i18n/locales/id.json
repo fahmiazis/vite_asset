@@ -598,7 +598,8 @@
     "tableAction": "Aksi",
     "tableShowing": "Menampilkan",
     "tableOf": "dari",
-    "tablePageSize": "Baris/hal:"
+    "tablePageSize": "Baris/hal:",
+    "fillDataButton": "Lengkapi Data"
   },
   "stockOpnameFindingModal": {
     "title": "Isi Temuan Fisik",
@@ -765,5 +766,29 @@
     "errorsTitle": "Detail Error",
     "errorRow": "Baris",
     "close": "Tutup"
+  },
+  "stockOpnameFillPage": {
+    "title": "Lengkapi Data",
+    "subtitle": "Isi data temuan langsung di tabel, tersimpan otomatis tiap beberapa detik",
+    "back": "Kembali",
+    "notDraft": "Lengkapi data cuma bisa dilakukan selama stock opname masih berstatus draft",
+    "saveNow": "Simpan Sekarang",
+    "statusSaving": "Menyimpan...",
+    "statusSaved": "Tersimpan",
+    "statusErrorSuffix": "asset gagal disimpan",
+    "statusIdle": "Belum ada perubahan",
+    "lastSaved": "Terakhir tersimpan",
+    "secondsAgo": "detik lalu",
+    "justNow": "baru saja",
+    "columnNo": "No",
+    "columnAsset": "Aset",
+    "columnCategory": "Kategori",
+    "columnPhysicalStatus": "Status Fisik",
+    "columnCondition": "Kondisi",
+    "columnAssetStatus": "Status Aset",
+    "columnNotes": "Catatan",
+    "selectPlaceholder": "-",
+    "notesPlaceholder": "Catatan...",
+    "unsavedBadge": "belum tersimpan"
   }
 }

@@ -54,6 +54,7 @@ import StockOpnamePage from '../components/pages/stockOpname'
 import CreateStockOpnamePage from '../components/pages/stockOpname/create'
 import StockOpnameDetailPage from '../components/pages/stockOpname/detail'
 import StockOpnameReportPage from '../components/pages/stockOpname/report'
+import StockOpnameFillPage from '../components/pages/stockOpname/fill'
 
 export const router = createBrowserRouter([
   // {
@@ -75,6 +76,12 @@ export const router = createBrowserRouter([
     path: '/dashboard',
     element: <ProtectedRoute />,
     children: [
+      {
+        // Full-screen, sengaja di luar MainLayout (no sidebar/navbar) biar
+        // grid "Lengkapi Data" dapet ruang layar penuh kayak excel.
+        path: 'stock-opname/fill/*',
+        element: <StockOpnameFillPage />,
+      },
       {
         element: <MainLayout />,
         children: [

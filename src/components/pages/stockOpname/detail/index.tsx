@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { useStockOpnameDetail } from "../../../../hooks/query/stockOpname/detail"
@@ -32,6 +32,7 @@ function formatDateTime(dateStr: string) {
 
 export default function StockOpnameDetailPage() {
   const { "*": id } = useParams()
+  const navigate = useNavigate()
   const { t } = useTranslation()
   const { data, isLoading } = useStockOpnameDetail(id ?? "")
 
@@ -159,6 +160,15 @@ export default function StockOpnameDetailPage() {
             </span>
             {isDraft && (
               <>
+                <button
+                  onClick={() => navigate(`/dashboard/stock-opname/fill/${transaction.transaction_number}`)}
+                  className="flex items-center gap-1.5 text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700 px-2.5 py-1 rounded-lg transition-colors"
+                >
+                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 13h6m-6 4h6m2 5H7a2 2 0 01-2-2V4a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V20a2 2 0 01-2 2z" />
+                  </svg>
+                  {t("stockOpnameDetail.fillDataButton")}
+                </button>
                 <button
                   onClick={() => downloadTemplate(transaction.transaction_number)}
                   disabled={isDownloadingTemplate}
