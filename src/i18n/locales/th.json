@@ -569,7 +569,6 @@
     "notes": "หมายเหตุ",
     "assetList": "รายการสินทรัพย์",
     "assets": "รายการ",
-    "addAsset": "เพิ่มสินทรัพย์",
     "noAssets": "ยังไม่มีสินทรัพย์ที่เพิ่ม",
     "systemData": "ข้อมูลระบบ",
     "foundResult": "ผลการตรวจพบ",
@@ -578,7 +577,6 @@
     "assetStatus": "สถานะสินทรัพย์",
     "fillFinding": "กรอกผลตรวจพบ",
     "editFinding": "แก้ไขผลตรวจพบ",
-    "removeAsset": "ลบสินทรัพย์",
     "approvalNotInitiated": "ยังไม่ได้ส่งคำขออนุมัติสำหรับธุรกรรมนี้",
     "initiateApproval": "ส่งขออนุมัติ",
     "initiating": "กำลังส่งคำขอ...",
@@ -590,37 +588,25 @@
     "submitStockOpname": "ส่งการตรวจนับสินทรัพย์",
     "approve": "อนุมัติ",
     "execute": "ดำเนินการตรวจนับสินทรัพย์",
-    "reject": "ปฏิเสธ"
-  },
-  "addAssetStockOpnameModal": {
-    "title": "เพิ่มสินทรัพย์ในการตรวจนับ",
-    "asset": "สินทรัพย์",
-    "assetPlaceholder": "เลือกสินทรัพย์",
-    "assetLoading": "กำลังโหลดสินทรัพย์...",
-    "cancel": "ยกเลิก",
-    "submit": "เพิ่ม",
-    "submitting": "กำลังเพิ่ม...",
-    "toast": {
-      "noAsset": "กรุณาเลือกสินทรัพย์ก่อน"
-    }
-  },
-  "removeAssetStockOpnameModal": {
-    "title": "ลบสินทรัพย์",
-    "confirmationMessage": "สินทรัพย์นี้จะถูกลบออกจากแบบร่างการตรวจนับ",
-    "warningMessage": "การดำเนินการนี้ไม่สามารถยกเลิกได้",
-    "cancel": "ยกเลิก",
-    "confirm": "ใช่ ลบ",
-    "removing": "กำลังลบ..."
+    "reject": "ปฏิเสธ",
+    "downloadTemplate": "ดาวน์โหลดเทมเพลต Excel",
+    "uploadTemplate": "อัปโหลดผล Excel",
+    "tableNo": "ลำดับ",
+    "tableAsset": "สินทรัพย์",
+    "tableCategory": "หมวดหมู่",
+    "tableNotes": "หมายเหตุ",
+    "tableAction": "การดำเนินการ",
+    "tableShowing": "แสดง",
+    "tableOf": "จาก",
+    "tablePageSize": "แถวต่อหน้า:"
   },
   "stockOpnameFindingModal": {
     "title": "กรอกผลตรวจสภาพจริง",
     "physicalStatus": "สถานะทางกายภาพ",
     "physicalStatusPlaceholder": "เลือกสถานะทางกายภาพ",
     "physicalStatusOptions": {
-      "exists": "มีอยู่ / ตรงกัน",
-      "missing": "สูญหาย",
-      "damaged": "ชำรุด",
-      "obsolete": "ล้าสมัย / ไม่ได้ใช้งาน"
+      "exists": "มีอยู่",
+      "missing": "สูญหาย"
     },
     "condition": "สภาพ",
     "conditionPlaceholder": "เลือกสภาพ",
@@ -628,7 +614,8 @@
       "good": "ดี",
       "fair": "พอใช้",
       "poor": "ไม่ดี",
-      "broken": "ชำรุดหนัก"
+      "broken": "ชำรุดหนัก",
+      "na": "ไม่เกี่ยวข้อง"
     },
     "assetStatus": "สถานะสินทรัพย์",
     "assetStatusHint": "(ไม่บังคับ กรอกหากมีการเปลี่ยนแปลง)",
@@ -760,5 +747,23 @@
       "costCenterTitle": "มูลค่าสินทรัพย์ตามศูนย์ต้นทุน (10 อันดับแรก)",
       "noData": "ไม่มีข้อมูล"
     }
+  },
+  "stockOpnameTemplateModal": {
+    "title": "อัปโหลดผลตรวจสภาพ (Excel)",
+    "description": "อัปโหลดไฟล์ excel ที่กรอกแล้วเพื่ออัปเดตผลตรวจสภาพสินทรัพย์ทั้งหมดพร้อมกัน",
+    "fileLabel": "ไฟล์ Excel",
+    "chooseFile": "เลือกไฟล์",
+    "noFileChosen": "ยังไม่ได้เลือกไฟล์",
+    "cancel": "ยกเลิก",
+    "submit": "อัปโหลดและประมวลผล",
+    "uploading": "กำลังประมวลผล...",
+    "toastDownloadError": "ดาวน์โหลดเทมเพลตไม่สำเร็จ",
+    "toastUploadRequireFile": "กรุณาเลือกไฟล์ excel ก่อน",
+    "resultTitle": "ผลการอัปโหลด",
+    "updatedCount": "อัปเดตสำเร็จ",
+    "failedCount": "ล้มเหลว",
+    "errorsTitle": "รายละเอียดข้อผิดพลาด",
+    "errorRow": "แถว",
+    "close": "ปิด"
   }
 }

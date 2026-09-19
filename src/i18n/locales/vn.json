@@ -569,7 +569,6 @@
     "notes": "Ghi Chú",
     "assetList": "Danh Sách Tài Sản",
     "assets": "tài sản",
-    "addAsset": "Thêm tài sản",
     "noAssets": "Chưa có tài sản nào được thêm",
     "systemData": "Dữ Liệu Hệ Thống",
     "foundResult": "Kết Quả Kiểm Kê",
@@ -578,7 +577,6 @@
     "assetStatus": "Trạng Thái Tài Sản",
     "fillFinding": "Nhập Kết Quả",
     "editFinding": "Sửa Kết Quả",
-    "removeAsset": "Xóa tài sản",
     "approvalNotInitiated": "Chưa gửi phê duyệt cho giao dịch này.",
     "initiateApproval": "Gửi Phê Duyệt",
     "initiating": "Đang gửi...",
@@ -590,37 +588,25 @@
     "submitStockOpname": "Gửi Kiểm Kê Tài Sản",
     "approve": "Phê Duyệt",
     "execute": "Thực Thi Kiểm Kê",
-    "reject": "Từ Chối"
-  },
-  "addAssetStockOpnameModal": {
-    "title": "Thêm Tài Sản Vào Kiểm Kê",
-    "asset": "Tài Sản",
-    "assetPlaceholder": "Chọn tài sản",
-    "assetLoading": "Đang tải tài sản...",
-    "cancel": "Hủy",
-    "submit": "Thêm",
-    "submitting": "Đang thêm...",
-    "toast": {
-      "noAsset": "Vui lòng chọn tài sản trước"
-    }
-  },
-  "removeAssetStockOpnameModal": {
-    "title": "Xóa Tài Sản",
-    "confirmationMessage": "Tài sản này sẽ bị xóa khỏi bản nháp kiểm kê",
-    "warningMessage": "Hành động này không thể hoàn tác.",
-    "cancel": "Hủy",
-    "confirm": "Có, Xóa",
-    "removing": "Đang xóa..."
+    "reject": "Từ Chối",
+    "downloadTemplate": "Tải Mẫu Excel",
+    "uploadTemplate": "Tải Lên Kết Quả Excel",
+    "tableNo": "STT",
+    "tableAsset": "Tài Sản",
+    "tableCategory": "Danh Mục",
+    "tableNotes": "Ghi Chú",
+    "tableAction": "Hành Động",
+    "tableShowing": "Hiển thị",
+    "tableOf": "trong số",
+    "tablePageSize": "Số dòng/trang:"
   },
   "stockOpnameFindingModal": {
     "title": "Nhập Kết Quả Kiểm Tra Thực Tế",
     "physicalStatus": "Trạng Thái Vật Lý",
     "physicalStatusPlaceholder": "Chọn trạng thái vật lý",
     "physicalStatusOptions": {
-      "exists": "Còn / Khớp",
-      "missing": "Mất",
-      "damaged": "Hư Hỏng",
-      "obsolete": "Lỗi Thời / Không Sử Dụng"
+      "exists": "Còn",
+      "missing": "Mất"
     },
     "condition": "Tình Trạng",
     "conditionPlaceholder": "Chọn tình trạng",
@@ -628,7 +614,8 @@
       "good": "Tốt",
       "fair": "Khá",
       "poor": "Kém",
-      "broken": "Hư Hỏng Nặng"
+      "broken": "Hư Hỏng Nặng",
+      "na": "Không Áp Dụng"
     },
     "assetStatus": "Trạng Thái Tài Sản",
     "assetStatusHint": "(tùy chọn, điền nếu có thay đổi)",
@@ -760,5 +747,23 @@
       "costCenterTitle": "Giá trị tài sản theo trung tâm chi phí (top 10)",
       "noData": "Không có dữ liệu"
     }
+  },
+  "stockOpnameTemplateModal": {
+    "title": "Tải Lên Kết Quả Kiểm Tra (Excel)",
+    "description": "Tải lên file excel đã điền để cập nhật tất cả kết quả kiểm tra tài sản cùng lúc.",
+    "fileLabel": "File Excel",
+    "chooseFile": "Chọn file",
+    "noFileChosen": "Chưa chọn file",
+    "cancel": "Hủy",
+    "submit": "Tải Lên & Xử Lý",
+    "uploading": "Đang xử lý...",
+    "toastDownloadError": "Tải mẫu thất bại",
+    "toastUploadRequireFile": "Vui lòng chọn file excel trước",
+    "resultTitle": "Kết Quả Tải Lên",
+    "updatedCount": "Đã cập nhật",
+    "failedCount": "Thất bại",
+    "errorsTitle": "Chi Tiết Lỗi",
+    "errorRow": "Dòng",
+    "close": "Đóng"
   }
 }

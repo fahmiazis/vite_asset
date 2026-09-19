@@ -569,7 +569,6 @@
     "notes": "Notes",
     "assetList": "Asset List",
     "assets": "assets",
-    "addAsset": "Add asset",
     "noAssets": "No assets added yet",
     "systemData": "System Data",
     "foundResult": "Found Result",
@@ -578,7 +577,6 @@
     "assetStatus": "Asset Status",
     "fillFinding": "Fill Finding",
     "editFinding": "Edit Finding",
-    "removeAsset": "Remove asset",
     "approvalNotInitiated": "Approval has not been submitted for this transaction.",
     "initiateApproval": "Submit for Approval",
     "initiating": "Submitting...",
@@ -590,37 +588,25 @@
     "submitStockOpname": "Submit Stock Opname",
     "approve": "Approve",
     "execute": "Execute Stock Opname",
-    "reject": "Reject"
-  },
-  "addAssetStockOpnameModal": {
-    "title": "Add Asset to Stock Opname",
-    "asset": "Asset",
-    "assetPlaceholder": "Select asset",
-    "assetLoading": "Loading assets...",
-    "cancel": "Cancel",
-    "submit": "Add",
-    "submitting": "Adding...",
-    "toast": {
-      "noAsset": "Please select an asset first"
-    }
-  },
-  "removeAssetStockOpnameModal": {
-    "title": "Remove Asset",
-    "confirmationMessage": "This asset will be removed from the stock opname draft",
-    "warningMessage": "This action cannot be undone.",
-    "cancel": "Cancel",
-    "confirm": "Yes, Remove",
-    "removing": "Removing..."
+    "reject": "Reject",
+    "downloadTemplate": "Download Excel Template",
+    "uploadTemplate": "Upload Excel Result",
+    "tableNo": "No",
+    "tableAsset": "Asset",
+    "tableCategory": "Category",
+    "tableNotes": "Notes",
+    "tableAction": "Action",
+    "tableShowing": "Showing",
+    "tableOf": "of",
+    "tablePageSize": "Rows/page:"
   },
   "stockOpnameFindingModal": {
     "title": "Fill Physical Finding",
     "physicalStatus": "Physical Status",
     "physicalStatusPlaceholder": "Select physical status",
     "physicalStatusOptions": {
-      "exists": "Exists / Matches",
-      "missing": "Missing",
-      "damaged": "Damaged",
-      "obsolete": "Obsolete / Unused"
+      "exists": "Exists",
+      "missing": "Missing"
     },
     "condition": "Condition",
     "conditionPlaceholder": "Select condition",
@@ -628,7 +614,8 @@
       "good": "Good",
       "fair": "Fair",
       "poor": "Poor",
-      "broken": "Badly Broken"
+      "broken": "Badly Broken",
+      "na": "Not Applicable"
     },
     "assetStatus": "Asset Status",
     "assetStatusHint": "(optional, fill in if changed)",
@@ -760,5 +747,23 @@
       "costCenterTitle": "Asset value per cost center (top 10)",
       "noData": "No data"
     }
+  },
+  "stockOpnameTemplateModal": {
+    "title": "Upload Finding Result (Excel)",
+    "description": "Upload the filled-in excel file to update all asset findings at once.",
+    "fileLabel": "Excel File",
+    "chooseFile": "Choose file",
+    "noFileChosen": "No file chosen",
+    "cancel": "Cancel",
+    "submit": "Upload & Process",
+    "uploading": "Processing...",
+    "toastDownloadError": "Failed to download template",
+    "toastUploadRequireFile": "Please select an excel file first",
+    "resultTitle": "Upload Result",
+    "updatedCount": "Updated",
+    "failedCount": "Failed",
+    "errorsTitle": "Error Details",
+    "errorRow": "Row",
+    "close": "Close"
   }
 }

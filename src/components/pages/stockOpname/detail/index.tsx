@@ -4,8 +4,8 @@ import { useTranslation } from "react-i18next"
 import { useStockOpnameDetail } from "../../../../hooks/query/stockOpname/detail"
 import { useStockOpnameApprovalStatus } from "../../../../hooks/query/stockOpname/approvalStatus"
 import { useInitiateApprovalStockOpname } from "../../../../hooks/mutation/stockOpname/initiateApproval"
-import { AddAssetToStockOpnameModal } from "../../../organisms/stockOpname/addAssetModal"
-import { RemoveAssetFromStockOpnameModal } from "../../../organisms/stockOpname/deleteAssetModal"
+import { useDownloadStockOpnameTemplate } from "../../../../hooks/mutation/stockOpname/downloadTemplate"
+import { UploadStockOpnameTemplateModal } from "../../../organisms/stockOpname/uploadTemplateModal"
 import { UpdateStockOpnameFindingModal } from "../../../organisms/stockOpname/updateFindingModal"
 import { SubmitStockOpnameModal } from "../../../organisms/stockOpname/submitDraftModal"
 import { ApproveStockOpnameModal } from "../../../organisms/stockOpname/approveModal"
@@ -13,6 +13,7 @@ import { ExecuteStockOpnameModal } from "../../../organisms/stockOpname/executeM
 import { RejectStockOpnameModal } from "../../../organisms/stockOpname/rejectModal"
 import { StockOpnameStepper, StockOpnameStageHistory } from "../../../organisms/stockOpname/stageTimeline"
 import { StatusBadge } from "../../../organisms/stockOpname/column"
+import { StockOpnameItemsTable } from "../../../organisms/stockOpname/itemsTable"
 import type { StockOpnameItem } from "../../../../models/stockOpname/detail"
 import toast from "react-hot-toast"
 
@@ -29,30 +30,12 @@ function formatDateTime(dateStr: string) {
   })
 }
 
-function AssetStatusBadge({ status }: { status?: string | null }) {
-  const map: Record<string, string> = {
-    ACTIVE: "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-700",
-    AVAILABLE: "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-700",
-    INACTIVE: "bg-gray-100 text-gray-600 border-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700",
-    MAINTENANCE: "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-700",
-    RETIRED: "bg-red-50 text-red-600 border-red-200 dark:bg-red-900/30 dark:text-red-400 dark:border-red-700",
-    DISPOSED: "bg-red-50 text-red-600 border-red-200 dark:bg-red-900/30 dark:text-red-400 dark:border-red-700",
-  }
-  const key = status?.toUpperCase() ?? "INACTIVE"
-  return (
-    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border ${map[key] ?? map["INACTIVE"]}`}>
-      {status ?? "-"}
-    </span>
-  )
-}
-
 export default function StockOpnameDetailPage() {
   const { "*": id } = useParams()
   const { t } = useTranslation()
   const { data, isLoading } = useStockOpnameDetail(id ?? "")
 
-  const [showAddAsset, setShowAddAsset] = useState(false)
-  const [assetToRemove, setAssetToRemove] = useState<{ id: number; name: string } | null>(null)
+  const [showUploadTemplate, setShowUploadTemplate] = useState(false)
   const [findingItem, setFindingItem] = useState<StockOpnameItem | null>(null)
   const [showSubmit, setShowSubmit] = useState(false)
   const [showApprove, setShowApprove] = useState(false)
@@ -61,6 +44,7 @@ export default function StockOpnameDetailPage() {
 
   const { data: approvalData, error: approvalError } = useStockOpnameApprovalStatus(id ?? "")
   const { mutate: retryInitiateApproval, isPending: isRetryingInitiate } = useInitiateApprovalStockOpname(id ?? "")
+  const { mutate: downloadTemplate, isPending: isDownloadingTemplate } = useDownloadStockOpnameTemplate()
 
   if (isLoading) {
     return (
@@ -83,18 +67,10 @@ export default function StockOpnameDetailPage() {
   return (
     <section className="space-y-4 mt-4">
 
-      {showAddAsset && (
-        <AddAssetToStockOpnameModal
+      {showUploadTemplate && (
+        <UploadStockOpnameTemplateModal
           transactionNumber={transaction.transaction_number}
-          onClose={() => setShowAddAsset(false)}
-        />
-      )}
-      {assetToRemove && (
-        <RemoveAssetFromStockOpnameModal
-          transactionNumber={transaction.transaction_number}
-          assetId={assetToRemove.id}
-          assetName={assetToRemove.name}
-          onClose={() => setAssetToRemove(null)}
+          onClose={() => setShowUploadTemplate(false)}
         />
       )}
       {findingItem && (
@@ -182,108 +158,32 @@ export default function StockOpnameDetailPage() {
               {items.length} {t("stockOpnameDetail.assets")}
             </span>
             {isDraft && (
-              <button
-                onClick={() => setShowAddAsset(true)}
-                className="flex items-center gap-1.5 text-xs font-medium text-indigo-600 hover:text-indigo-700 bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-900/30 dark:hover:bg-indigo-900/50 px-2.5 py-1 rounded-lg transition-colors"
-              >
-                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                </svg>
-                {t("stockOpnameDetail.addAsset")}
-              </button>
+              <>
+                <button
+                  onClick={() => downloadTemplate(transaction.transaction_number)}
+                  disabled={isDownloadingTemplate}
+                  className="flex items-center gap-1.5 text-xs font-medium text-gray-600 hover:text-gray-700 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-gray-300 px-2.5 py-1 rounded-lg transition-colors disabled:opacity-50"
+                >
+                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
+                  </svg>
+                  {t("stockOpnameDetail.downloadTemplate")}
+                </button>
+                <button
+                  onClick={() => setShowUploadTemplate(true)}
+                  className="flex items-center gap-1.5 text-xs font-medium text-indigo-600 hover:text-indigo-700 bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-900/30 dark:hover:bg-indigo-900/50 px-2.5 py-1 rounded-lg transition-colors"
+                >
+                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M17 8l-5-5-5 5M12 3v12" />
+                  </svg>
+                  {t("stockOpnameDetail.uploadTemplate")}
+                </button>
+              </>
             )}
           </div>
         </div>
 
-        {items.length === 0 ? (
-          <div className="text-center py-10 text-sm text-gray-400">
-            {t("stockOpnameDetail.noAssets")}
-          </div>
-        ) : (
-          <div className="space-y-3">
-            {items.map((item, index) => (
-              <div key={item.id} className="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
-                {/* Item Header */}
-                <div className="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-800/60 border-b border-gray-200 dark:border-gray-700">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-indigo-600 text-white text-xs font-medium flex items-center justify-center flex-shrink-0">
-                      {index + 1}
-                    </span>
-                    <div>
-                      <p className="text-sm font-medium text-gray-800 dark:text-gray-200">{item.asset_name ?? "-"}</p>
-                      <p className="text-xs text-gray-400 font-mono mt-0.5">{item.asset_number}</p>
-                    </div>
-                  </div>
-                  {isDraft && (
-                    <div className="flex items-center gap-2">
-                      <button
-                        onClick={() => setFindingItem(item)}
-                        className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors"
-                      >
-                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                        </svg>
-                        {item.found_physical_status ? t("stockOpnameDetail.editFinding") : t("stockOpnameDetail.fillFinding")}
-                      </button>
-                      <button
-                        onClick={() => setAssetToRemove({ id: item.asset_id, name: item.asset_name ?? item.asset_number })}
-                        className="flex items-center justify-center w-7 h-7 rounded-lg text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors"
-                        title={t("stockOpnameDetail.removeAsset")}
-                      >
-                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                        </svg>
-                      </button>
-                    </div>
-                  )}
-                </div>
-
-                {/* Item Body — Found vs System */}
-                <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-[11px] font-semibold text-gray-400 uppercase tracking-wide mb-2">{t("stockOpnameDetail.systemData")}</p>
-                    <div className="space-y-1.5">
-                      <div className="flex items-center justify-between text-xs">
-                        <span className="text-gray-500">{t("stockOpnameDetail.condition")}</span>
-                        <span className="font-medium text-gray-700 dark:text-gray-300">{item.system_condition ?? "-"}</span>
-                      </div>
-                      <div className="flex items-center justify-between text-xs">
-                        <span className="text-gray-500">{t("stockOpnameDetail.physicalStatus")}</span>
-                        <span className="font-medium text-gray-700 dark:text-gray-300">{item.system_physical_status ?? "-"}</span>
-                      </div>
-                      <div className="flex items-center justify-between text-xs">
-                        <span className="text-gray-500">{t("stockOpnameDetail.assetStatus")}</span>
-                        <AssetStatusBadge status={item.system_asset_status} />
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <p className="text-[11px] font-semibold text-indigo-500 uppercase tracking-wide mb-2">{t("stockOpnameDetail.foundResult")}</p>
-                    <div className="space-y-1.5">
-                      <div className="flex items-center justify-between text-xs">
-                        <span className="text-gray-500">{t("stockOpnameDetail.condition")}</span>
-                        <span className="font-medium text-gray-700 dark:text-gray-300">{item.found_condition ?? "-"}</span>
-                      </div>
-                      <div className="flex items-center justify-between text-xs">
-                        <span className="text-gray-500">{t("stockOpnameDetail.physicalStatus")}</span>
-                        <span className="font-medium text-gray-700 dark:text-gray-300">{item.found_physical_status ?? "-"}</span>
-                      </div>
-                      <div className="flex items-center justify-between text-xs">
-                        <span className="text-gray-500">{t("stockOpnameDetail.assetStatus")}</span>
-                        <AssetStatusBadge status={item.found_asset_status} />
-                      </div>
-                    </div>
-                  </div>
-                  {item.notes && (
-                    <p className="md:col-span-2 text-xs text-gray-500 dark:text-gray-400 italic">
-                      "{item.notes}"
-                    </p>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+        <StockOpnameItemsTable items={items} isDraft={isDraft} onFillFinding={setFindingItem} />
       </div>
 
       {/* Approval status */}

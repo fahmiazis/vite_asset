@@ -11,17 +11,19 @@ export default function CreateStockOpnamePage() {
   const navigate = useNavigate()
   const { t } = useTranslation()
 
-  const today = new Date().toISOString().split("T")[0]
+  const todayLabel = new Date().toLocaleDateString("id-ID", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  })
 
   const {
     control,
     handleSubmit,
-    register,
     formState: { isValid },
   } = useForm<CreateStockOpnameDraftRequest>({
     mode: "onChange",
     defaultValues: {
-      transaction_date: today,
       notes: "",
     },
   })
@@ -46,16 +48,14 @@ export default function CreateStockOpnamePage() {
       {/* Form Card */}
       <div className="bg-white border rounded-xl p-6 space-y-5">
 
-        {/* Transaction Date */}
+        {/* Transaction Date — otomatis tanggal hari ini, gak bisa diubah */}
         <div className="flex flex-col gap-1">
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
             {t("createStockOpnamePage.dateLabel")}
           </label>
-          <input
-            type="date"
-            {...register("transaction_date", { required: true })}
-            className="border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+          <div className="border rounded-lg px-3 py-2 text-sm bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300">
+            {todayLabel}
+          </div>
         </div>
 
         {/* Notes */}

@@ -569,7 +569,6 @@
     "notes": "备注",
     "assetList": "资产清单",
     "assets": "项资产",
-    "addAsset": "添加资产",
     "noAssets": "尚未添加资产",
     "systemData": "系统数据",
     "foundResult": "盘点结果",
@@ -578,7 +577,6 @@
     "assetStatus": "资产状态",
     "fillFinding": "填写盘点结果",
     "editFinding": "编辑盘点结果",
-    "removeAsset": "移除资产",
     "approvalNotInitiated": "此交易尚未提交审批。",
     "initiateApproval": "提交审批",
     "initiating": "提交中...",
@@ -590,37 +588,25 @@
     "submitStockOpname": "提交库存盘点",
     "approve": "批准",
     "execute": "执行库存盘点",
-    "reject": "拒绝"
-  },
-  "addAssetStockOpnameModal": {
-    "title": "添加资产到库存盘点",
-    "asset": "资产",
-    "assetPlaceholder": "选择资产",
-    "assetLoading": "加载资产中...",
-    "cancel": "取消",
-    "submit": "添加",
-    "submitting": "添加中...",
-    "toast": {
-      "noAsset": "请先选择一个资产"
-    }
-  },
-  "removeAssetStockOpnameModal": {
-    "title": "移除资产",
-    "confirmationMessage": "此资产将从库存盘点草稿中移除",
-    "warningMessage": "此操作无法撤销。",
-    "cancel": "取消",
-    "confirm": "是的，移除",
-    "removing": "移除中..."
+    "reject": "拒绝",
+    "downloadTemplate": "下载Excel模板",
+    "uploadTemplate": "上传Excel结果",
+    "tableNo": "序号",
+    "tableAsset": "资产",
+    "tableCategory": "类别",
+    "tableNotes": "备注",
+    "tableAction": "操作",
+    "tableShowing": "显示",
+    "tableOf": "共",
+    "tablePageSize": "每页行数:"
   },
   "stockOpnameFindingModal": {
     "title": "填写盘点结果",
     "physicalStatus": "实物状态",
     "physicalStatusPlaceholder": "选择实物状态",
     "physicalStatusOptions": {
-      "exists": "存在 / 相符",
-      "missing": "遗失",
-      "damaged": "损坏",
-      "obsolete": "老旧 / 未使用"
+      "exists": "存在",
+      "missing": "遗失"
     },
     "condition": "状态",
     "conditionPlaceholder": "选择状态",
@@ -628,7 +614,8 @@
       "good": "良好",
       "fair": "尚可",
       "poor": "较差",
-      "broken": "严重损坏"
+      "broken": "严重损坏",
+      "na": "不适用"
     },
     "assetStatus": "资产状态",
     "assetStatusHint": "（可选，如有变更请填写）",
@@ -760,5 +747,23 @@
       "costCenterTitle": "各成本中心资产价值（前10名）",
       "noData": "暂无数据"
     }
+  },
+  "stockOpnameTemplateModal": {
+    "title": "上传盘点结果（Excel）",
+    "description": "上传已填写的excel文件以批量更新所有资产的盘点结果。",
+    "fileLabel": "Excel 文件",
+    "chooseFile": "选择文件",
+    "noFileChosen": "未选择文件",
+    "cancel": "取消",
+    "submit": "上传并处理",
+    "uploading": "处理中...",
+    "toastDownloadError": "模板下载失败",
+    "toastUploadRequireFile": "请先选择excel文件",
+    "resultTitle": "上传结果",
+    "updatedCount": "已更新",
+    "failedCount": "失败",
+    "errorsTitle": "错误详情",
+    "errorRow": "行",
+    "close": "关闭"
   }
 }

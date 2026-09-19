@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 import type { TFunction } from "i18next"
@@ -16,8 +16,6 @@ function getPhysicalStatusOptions(t: TFunction) {
   return [
     { value: "EXISTS", label: t("stockOpnameFindingModal.physicalStatusOptions.exists") },
     { value: "MISSING", label: t("stockOpnameFindingModal.physicalStatusOptions.missing") },
-    { value: "DAMAGED", label: t("stockOpnameFindingModal.physicalStatusOptions.damaged") },
-    { value: "OBSOLETE", label: t("stockOpnameFindingModal.physicalStatusOptions.obsolete") },
   ]
 }
 
@@ -27,6 +25,7 @@ function getConditionOptions(t: TFunction) {
     { value: "FAIR", label: t("stockOpnameFindingModal.conditionOptions.fair") },
     { value: "POOR", label: t("stockOpnameFindingModal.conditionOptions.poor") },
     { value: "BROKEN", label: t("stockOpnameFindingModal.conditionOptions.broken") },
+    { value: "NOT_APPLICABLE", label: t("stockOpnameFindingModal.conditionOptions.na") },
   ]
 }
 
@@ -54,8 +53,24 @@ export function UpdateStockOpnameFindingModal({
 
   const { mutate: updateFinding, isPending } = useUpdateStockOpnameFinding({ transactionNumber })
 
+  const isMissing = physicalStatus === "MISSING"
+
+  // Fisik "Tidak Ada" -> Kondisi otomatis "Tidak Ada" dan terkunci, karena
+  // kondisi gak relevan buat dinilai kalau barangnya gak ada. Balik ke
+  // "Ada" -> kondisi direset supaya user pilih ulang yang sesuai.
+  useEffect(() => {
+    if (isMissing) {
+      setCondition("NOT_APPLICABLE")
+    } else {
+      setCondition((prev) => (prev === "NOT_APPLICABLE" ? "" : prev))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMissing])
+
   const physicalStatusOptions = getPhysicalStatusOptions(t)
-  const conditionOptions = getConditionOptions(t)
+  const conditionOptions = getConditionOptions(t).filter(
+    (opt) => isMissing || opt.value !== "NOT_APPLICABLE"
+  )
   const assetStatusOptions = getAssetStatusOptions(t)
 
   const handleSubmit = () => {
@@ -133,7 +148,7 @@ export function UpdateStockOpnameFindingModal({
             <select
               value={condition}
               onChange={(e) => setCondition(e.target.value)}
-              disabled={isPending}
+              disabled={isPending || isMissing}
               className="w-full px-3 py-2.5 text-sm border border-gray-300 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
             >
               <option value="">{t("stockOpnameFindingModal.conditionPlaceholder")}</option>

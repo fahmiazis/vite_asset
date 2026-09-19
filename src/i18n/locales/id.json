@@ -569,7 +569,6 @@
     "notes": "Catatan",
     "assetList": "Daftar Aset",
     "assets": "aset",
-    "addAsset": "Tambah aset",
     "noAssets": "Belum ada aset yang ditambahkan",
     "systemData": "Data Sistem",
     "foundResult": "Hasil Temuan",
@@ -578,7 +577,6 @@
     "assetStatus": "Status Aset",
     "fillFinding": "Isi Temuan",
     "editFinding": "Edit Temuan",
-    "removeAsset": "Hapus aset",
     "approvalNotInitiated": "Approval belum diajukan untuk transaksi ini.",
     "initiateApproval": "Ajukan Approval",
     "initiating": "Mengajukan...",
@@ -590,37 +588,25 @@
     "submitStockOpname": "Submit Stock Opname",
     "approve": "Approve",
     "execute": "Eksekusi Stock Opname",
-    "reject": "Tolak"
-  },
-  "addAssetStockOpnameModal": {
-    "title": "Tambah Aset ke Stock Opname",
-    "asset": "Aset",
-    "assetPlaceholder": "Pilih aset",
-    "assetLoading": "Memuat aset...",
-    "cancel": "Batal",
-    "submit": "Tambah",
-    "submitting": "Menambahkan...",
-    "toast": {
-      "noAsset": "Pilih aset terlebih dahulu"
-    }
-  },
-  "removeAssetStockOpnameModal": {
-    "title": "Hapus Aset",
-    "confirmationMessage": "Aset ini akan dihapus dari draft stock opname",
-    "warningMessage": "Tindakan ini tidak dapat dibatalkan.",
-    "cancel": "Batal",
-    "confirm": "Ya, Hapus",
-    "removing": "Menghapus..."
+    "reject": "Tolak",
+    "downloadTemplate": "Download Template Excel",
+    "uploadTemplate": "Upload Hasil Excel",
+    "tableNo": "No",
+    "tableAsset": "Aset",
+    "tableCategory": "Kategori",
+    "tableNotes": "Catatan",
+    "tableAction": "Aksi",
+    "tableShowing": "Menampilkan",
+    "tableOf": "dari",
+    "tablePageSize": "Baris/hal:"
   },
   "stockOpnameFindingModal": {
     "title": "Isi Temuan Fisik",
     "physicalStatus": "Status Fisik",
     "physicalStatusPlaceholder": "Pilih status fisik",
     "physicalStatusOptions": {
-      "exists": "Ada / Sesuai",
-      "missing": "Hilang",
-      "damaged": "Rusak",
-      "obsolete": "Usang / Tidak Terpakai"
+      "exists": "Ada",
+      "missing": "Tidak Ada"
     },
     "condition": "Kondisi",
     "conditionPlaceholder": "Pilih kondisi",
@@ -628,7 +614,8 @@
       "good": "Baik",
       "fair": "Cukup",
       "poor": "Kurang",
-      "broken": "Rusak Berat"
+      "broken": "Rusak Berat",
+      "na": "Tidak Ada"
     },
     "assetStatus": "Status Aset",
     "assetStatusHint": "(opsional, isi jika berubah)",
@@ -760,5 +747,23 @@
       "costCenterTitle": "Nilai aset per cost center (top 10)",
       "noData": "Tidak ada data"
     }
+  },
+  "stockOpnameTemplateModal": {
+    "title": "Upload Hasil Temuan (Excel)",
+    "description": "Upload file excel yang sudah diisi untuk update temuan semua aset sekaligus.",
+    "fileLabel": "File Excel",
+    "chooseFile": "Pilih file",
+    "noFileChosen": "Belum ada file dipilih",
+    "cancel": "Batal",
+    "submit": "Upload & Proses",
+    "uploading": "Memproses...",
+    "toastDownloadError": "Gagal mengunduh template",
+    "toastUploadRequireFile": "Pilih file excel terlebih dahulu",
+    "resultTitle": "Hasil Upload",
+    "updatedCount": "Berhasil diupdate",
+    "failedCount": "Gagal",
+    "errorsTitle": "Detail Error",
+    "errorRow": "Baris",
+    "close": "Tutup"
   }
 }
