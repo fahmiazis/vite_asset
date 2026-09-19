@@ -55,6 +55,8 @@ import CreateStockOpnamePage from '../components/pages/stockOpname/create'
 import StockOpnameDetailPage from '../components/pages/stockOpname/detail'
 import StockOpnameReportPage from '../components/pages/stockOpname/report'
 import StockOpnameFillPage from '../components/pages/stockOpname/fill'
+import GuidePage from '../components/pages/guide'
+import StockOpnameGuidePage from '../components/pages/guide/stockOpname'
 
 export const router = createBrowserRouter([
   // {
@@ -148,6 +150,14 @@ export const router = createBrowserRouter([
           {
             path: 'disposal/*',
             element: <DisposalDetailPage />,
+          },
+          {
+            path: 'guide',
+            element: <GuidePage />,
+          },
+          {
+            path: 'guide/stock-opname',
+            element: <StockOpnameGuidePage />,
           },
           {
             path: 'stock-opname',

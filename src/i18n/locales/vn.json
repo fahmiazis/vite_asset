@@ -792,5 +792,117 @@
     "unsavedBadge": "chưa lưu",
     "searchPlaceholder": "Tìm tên hoặc số tài sản... (Ctrl+F)",
     "searchNoResults": "Không tìm thấy tài sản phù hợp"
+  },
+  "guidePage": {
+    "title": "Hướng Dẫn Sử Dụng",
+    "subtitle": "Chọn module bạn muốn tìm hiểu cách dùng",
+    "modules": {
+      "stockOpname": {
+        "title": "Stock Opname",
+        "description": "Cách tạo, điền, gửi duyệt, phê duyệt và thực thi stock opname"
+      }
+    }
+  },
+  "guideStockOpname": {
+    "back": "Quay Lại",
+    "title": "Hướng Dẫn Stock Opname",
+    "subtitle": "Mọi thứ bạn cần biết để dùng Stock Opname, từ tạo nháp đến báo cáo",
+    "toc": "Mục Lục",
+    "sections": {
+      "overview": {
+        "title": "Quy Trình Stock Opname",
+        "summary": "Stock opname là kiểm tra thực tế tài sản tại chi nhánh, so với dữ liệu hệ thống. Quy trình gồm:",
+        "steps": [
+          "Nháp — tài sản tự động thêm hết, bạn điền kết quả kiểm tra",
+          "Phê duyệt — chờ duyệt theo quy trình của chi nhánh",
+          "Thực thi — kết quả được áp dụng vào dữ liệu tài sản",
+          "Hoàn tất — dữ liệu tài sản đã cập nhật, không thể sửa nữa"
+        ],
+        "tip": "Stock opname có thể bị từ chối ở bước Phê duyệt hoặc Thực thi nếu có vấn đề."
+      },
+      "createDraft": {
+        "title": "1. Tạo Stock Opname Mới",
+        "summary": "Mở menu Stock Opname, bấm \"Tạo Stock Opname\".",
+        "steps": [
+          "Ngày kiểm tra luôn là hôm nay — không thể sửa thủ công",
+          "Điền ghi chú nếu cần (không bắt buộc), rồi lưu",
+          "Sau khi lưu, TẤT CẢ tài sản ở chi nhánh của bạn tự động thêm vào — không cần thêm từng cái"
+        ],
+        "tip": "Nếu tất cả tài sản ở chi nhánh đang thuộc stock opname khác chưa xong, hệ thống sẽ từ chối tạo mới và báo stock opname nào đang chặn. Hãy hoàn tất hoặc từ chối cái đó trước."
+      },
+      "fillSingle": {
+        "title": "2. Điền Kết Quả — Từng Cái Một",
+        "summary": "Phù hợp khi chỉ cần cập nhật vài tài sản.",
+        "steps": [
+          "Ở trang chi tiết, tìm tài sản cần kiểm tra",
+          "Bấm \"Điền Kết Quả\" (hoặc \"Sửa Kết Quả\" nếu đã điền rồi)",
+          "Chọn Trạng Thái Vật Lý: Còn / Mất",
+          "Chọn Tình Trạng — nếu Trạng Thái Vật Lý là \"Mất\", Tình Trạng tự khóa thành \"Không Áp Dụng\"",
+          "Điền Trạng Thái Tài Sản nếu có thay đổi, và Ghi Chú nếu cần",
+          "Bấm \"Lưu Kết Quả\""
+        ]
+      },
+      "fillGrid": {
+        "title": "3. Điền Kết Quả — Hoàn Thiện Dữ Liệu (nhiều tài sản cùng lúc)",
+        "summary": "Phù hợp khi cần kiểm tra nhiều tài sản liên tục mà không mở/đóng popup.",
+        "steps": [
+          "Ở trang chi tiết, bấm \"Hoàn Thiện Dữ Liệu\"",
+          "Mở ra bảng toàn màn hình giống excel — mỗi dòng một tài sản, sửa trực tiếp trong ô",
+          "Chỉ cần gõ — không cần bấm lưu mỗi lần, tự động lưu mỗi 8 giây",
+          "Xem chỉ báo nhỏ góc trên phải để biết trạng thái lưu (Đang lưu... / Đã lưu)",
+          "Không muốn chờ? Bấm \"Lưu Ngay\"",
+          "Nhiều tài sản quá? Bấm Ctrl+F (Cmd+F trên Mac) để tìm theo tên hoặc số tài sản"
+        ],
+        "tip": "Dòng nào lưu thất bại (vd. cặp Trạng Thái Vật Lý/Tình Trạng không hợp lệ) sẽ có chấm đỏ nhỏ — di chuột vào để xem lý do."
+      },
+      "fillExcel": {
+        "title": "4. Điền Kết Quả — Qua Excel",
+        "summary": "Phù hợp làm việc offline, hoặc gửi cho người khác kiểm tra tại hiện trường.",
+        "steps": [
+          "Bấm \"Tải Mẫu\" — nhận file excel chứa mọi tài sản trong stock opname này",
+          "Điền cột Trạng Thái Vật Lý, Tình Trạng, Trạng Thái Tài Sản, Ghi Chú",
+          "Lưu file, rồi bấm \"Tải Lên Kết Quả\" và chọn file đã điền",
+          "Hệ thống xử lý từng dòng — dòng đúng lưu ngay, dòng sai được báo dòng nào và lý do"
+        ]
+      },
+      "submitApproval": {
+        "title": "5. Gửi Duyệt & Phê Duyệt",
+        "summary": "Khi mọi tài sản đã có kết quả, đến lúc gửi duyệt.",
+        "steps": [
+          "Bấm \"Gửi Duyệt Stock Opname\" ở trang chi tiết",
+          "Stock opname vào giai đoạn Phê duyệt, theo quy trình của chi nhánh bạn",
+          "Theo dõi tiến độ ở \"Trạng Thái Phê Duyệt\" — xem ai cần duyệt và cái nào xong/chưa"
+        ],
+        "tip": "Gửi duyệt sẽ bị từ chối nếu còn tài sản chưa điền Trạng Thái Vật Lý hoặc Tình Trạng."
+      },
+      "execute": {
+        "title": "6. Thực Thi",
+        "summary": "Sau khi mọi bước phê duyệt xong, stock opname vào giai đoạn Thực thi.",
+        "steps": [
+          "Vai trò có quyền (vd. PIC Tài Sản) bấm \"Thực Thi Stock Opname\"",
+          "Hệ thống áp dụng mọi kết quả vào dữ liệu tài sản (tình trạng, trạng thái vật lý, trạng thái tài sản)",
+          "Sau bước này stock opname \"Hoàn Tất\" và dữ liệu không thể sửa nữa"
+        ]
+      },
+      "reject": {
+        "title": "7. Từ Chối",
+        "summary": "Nếu có vấn đề khi Phê duyệt hoặc Thực thi, stock opname có thể bị từ chối.",
+        "steps": [
+          "Bấm \"Từ Chối\" ở trang chi tiết",
+          "Nhập lý do từ chối (bắt buộc, tối thiểu 10 ký tự)",
+          "Stock opname đã từ chối không thể tiếp tục — tạo nháp mới nếu vẫn cần"
+        ]
+      },
+      "report": {
+        "title": "8. Báo Cáo",
+        "summary": "Xem tổng hợp kết quả stock opname theo kỳ và chi nhánh.",
+        "steps": [
+          "Mở Stock Opname → Báo Cáo",
+          "Chọn tháng, năm, và chi nhánh (hoặc tất cả)",
+          "Xem tóm tắt trên dashboard, hoặc mở \"Chi Tiết\" để xem bảng tổng hợp đầy đủ",
+          "Bấm \"Xuất\" để tải báo cáo dạng excel"
+        ]
+      }
+    }
   }
 }

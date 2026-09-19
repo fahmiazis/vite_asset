@@ -792,5 +792,117 @@
     "unsavedBadge": "unsaved",
     "searchPlaceholder": "Search asset name or number... (Ctrl+F)",
     "searchNoResults": "No matching assets"
+  },
+  "guidePage": {
+    "title": "User Guide",
+    "subtitle": "Pick a module to learn how to use it",
+    "modules": {
+      "stockOpname": {
+        "title": "Stock Opname",
+        "description": "How to create, fill, submit, approve, and execute a stock opname"
+      }
+    }
+  },
+  "guideStockOpname": {
+    "back": "Back",
+    "title": "Stock Opname Guide",
+    "subtitle": "Everything you need to know to use Stock Opname, from creating a draft to reports",
+    "toc": "Contents",
+    "sections": {
+      "overview": {
+        "title": "Stock Opname Flow",
+        "summary": "Stock opname is a physical asset audit for your branch, compared against what the system has on record. The flow goes:",
+        "steps": [
+          "Draft — all assets are added automatically, you fill in the check results",
+          "Approval — waits for approval following your branch's approval flow",
+          "Execute — findings are applied to the asset data",
+          "Finished — asset data is updated and can no longer be changed"
+        ],
+        "tip": "A stock opname can be rejected during the Approval or Execute stage if something's wrong."
+      },
+      "createDraft": {
+        "title": "1. Create a New Stock Opname",
+        "summary": "Open the Stock Opname menu, then click \"Create Stock Opname\".",
+        "steps": [
+          "The opname date is always today — it can't be changed manually",
+          "Add notes if needed (optional), then save",
+          "Once saved, ALL assets in your homebase branch are added automatically — no need to add them one by one"
+        ],
+        "tip": "If every asset in your branch is already tied up in another stock opname that's still in progress, creation is rejected and you're told which one is blocking it. Finish or reject that one first."
+      },
+      "fillSingle": {
+        "title": "2. Fill Findings — One at a Time",
+        "summary": "Best when you only need to update a few assets.",
+        "steps": [
+          "On the detail page, find the asset you want to check",
+          "Click \"Fill Finding\" (or \"Edit Finding\" if it's already filled)",
+          "Choose Physical Status: Exists / Missing",
+          "Choose Condition — if Physical Status is \"Missing\", Condition auto-locks to \"Not Applicable\"",
+          "Fill in Asset Status if it changed, and Notes if needed",
+          "Click \"Save Finding\""
+        ]
+      },
+      "fillGrid": {
+        "title": "3. Fill Findings — Complete Data (many assets at once)",
+        "summary": "Best when checking many assets in a row without opening/closing popups.",
+        "steps": [
+          "On the detail page, click \"Complete Data\"",
+          "A full-screen spreadsheet-like view opens — one row per asset, edit cells directly",
+          "Just type — no need to click save each time, it autosaves every 8 seconds",
+          "Watch the small indicator top-right for save status (Saving... / Saved)",
+          "Don't want to wait? Click \"Save Now\"",
+          "Lots of assets? Press Ctrl+F (Cmd+F on Mac) to search by name or asset number"
+        ],
+        "tip": "A row that failed to save (e.g. an invalid Physical Status/Condition pair) shows a small red dot — hover it to see why."
+      },
+      "fillExcel": {
+        "title": "4. Fill Findings — Via Excel",
+        "summary": "Good for offline work, or sending to someone else checking assets on-site.",
+        "steps": [
+          "Click \"Download Template\" — get an excel file with every asset in this stock opname",
+          "Fill in Physical Status, Condition, Asset Status, and Notes columns",
+          "Save the file, then click \"Upload Result\" and pick the filled file",
+          "The system processes every row — valid ones are saved right away, invalid ones are reported with the row and reason"
+        ]
+      },
+      "submitApproval": {
+        "title": "5. Submit & Approval",
+        "summary": "Once every asset has a finding, it's time to submit.",
+        "steps": [
+          "Click \"Submit Stock Opname\" on the detail page",
+          "The stock opname enters the Approval stage, following your branch's approval flow",
+          "Track progress under \"Approval Status\" — see who needs to approve and what's pending"
+        ],
+        "tip": "Submit is rejected if any asset still has an empty Physical Status or Condition."
+      },
+      "execute": {
+        "title": "6. Execute",
+        "summary": "Once every approval step is done, the stock opname enters the Execute stage.",
+        "steps": [
+          "An authorized role (e.g. Asset PIC) clicks \"Execute Stock Opname\"",
+          "The system applies every finding to the asset data (condition, physical status, asset status)",
+          "After this the stock opname is \"Finished\" and its data can no longer be changed"
+        ]
+      },
+      "reject": {
+        "title": "7. Reject",
+        "summary": "If something's wrong during Approval or Execute, the stock opname can be rejected.",
+        "steps": [
+          "Click \"Reject\" on the detail page",
+          "Enter a reason (required, at least 10 characters)",
+          "A rejected stock opname can't be resumed — create a new draft if it's still needed"
+        ]
+      },
+      "report": {
+        "title": "8. Reports",
+        "summary": "See a recap of stock opname results per period and branch.",
+        "steps": [
+          "Open Stock Opname → Report",
+          "Pick month, year, and branch (or all branches)",
+          "View the summary on the dashboard, or open \"Detail\" for the full recap table",
+          "Click \"Export\" to download the report as excel"
+        ]
+      }
+    }
   }
 }

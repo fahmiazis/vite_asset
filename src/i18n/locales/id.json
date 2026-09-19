@@ -792,5 +792,117 @@
     "unsavedBadge": "belum tersimpan",
     "searchPlaceholder": "Cari nama atau nomor asset... (Ctrl+F)",
     "searchNoResults": "Gak ada asset yang cocok"
+  },
+  "guidePage": {
+    "title": "Panduan Penggunaan",
+    "subtitle": "Pilih modul yang mau dipelajari cara pakainya",
+    "modules": {
+      "stockOpname": {
+        "title": "Stock Opname",
+        "description": "Cara bikin, isi, submit, sampai approval & eksekusi stock opname"
+      }
+    }
+  },
+  "guideStockOpname": {
+    "back": "Kembali",
+    "title": "Panduan Stock Opname",
+    "subtitle": "Semua yang perlu kamu tau buat pakai fitur Stock Opname, dari bikin draft sampai laporan",
+    "toc": "Daftar Isi",
+    "sections": {
+      "overview": {
+        "title": "Alur Stock Opname",
+        "summary": "Stock opname itu proses ngecek kondisi fisik aset di branch kamu, dibandingin sama data yang tercatat di sistem. Alurnya urut kayak gini:",
+        "steps": [
+          "Draft — asset otomatis masuk semua, kamu isi hasil ceknya",
+          "Approval — nunggu disetujui sesuai alur approval branch kamu",
+          "Eksekusi — hasil temuan diterapkan ke data aset",
+          "Selesai — data aset udah keupdate, gak bisa diubah lagi"
+        ],
+        "tip": "Stock opname bisa ditolak (Reject) di tahap Approval atau Eksekusi kalau ada masalah."
+      },
+      "createDraft": {
+        "title": "1. Bikin Stock Opname Baru",
+        "summary": "Buka menu Stock Opname, lalu klik \"Buat Stock Opname\".",
+        "steps": [
+          "Tanggal opname otomatis diisi hari ini — gak perlu (dan gak bisa) diubah manual",
+          "Isi catatan kalau perlu (opsional), lalu simpan",
+          "Begitu tersimpan, SEMUA asset di branch homebase kamu otomatis masuk ke daftar — gak perlu nambahin satu-satu"
+        ],
+        "tip": "Kalau semua asset di branch kamu lagi \"dipegang\" stock opname lain yang belum selesai, sistem bakal nolak bikin draft baru dan kasih tau stock opname mana yang masih jalan. Selesaikan atau tolak itu dulu."
+      },
+      "fillSingle": {
+        "title": "2. Isi Hasil Cek — Satu Per Satu",
+        "summary": "Paling cocok kalau cuma mau update beberapa asset aja.",
+        "steps": [
+          "Di halaman detail stock opname, cari asset yang mau dicek",
+          "Klik tombol \"Isi Temuan\" (atau \"Edit Temuan\" kalau udah pernah diisi)",
+          "Pilih Status Fisik: Ada / Tidak Ada",
+          "Pilih Kondisi — kalau Status Fisik-nya \"Tidak Ada\", Kondisi otomatis kekunci ke \"Tidak Ada\" juga",
+          "Isi Status Aset kalau ada perubahan, dan Catatan kalau perlu",
+          "Klik \"Simpan Temuan\""
+        ]
+      },
+      "fillGrid": {
+        "title": "3. Isi Hasil Cek — Lengkapi Data (banyak asset sekaligus)",
+        "summary": "Paling cocok kalau mau ngecek banyak asset berturut-turut tanpa buka-tutup popup.",
+        "steps": [
+          "Di halaman detail, klik tombol \"Lengkapi Data\"",
+          "Kebuka tampilan layar penuh mirip excel — tiap baris satu asset, kolomnya bisa diisi langsung",
+          "Ketik aja, gak perlu klik simpan tiap kali — otomatis tersimpan sendiri tiap 8 detik",
+          "Lihat indikator kecil di pojok kanan atas buat tau status simpannya (Menyimpan... / Tersimpan)",
+          "Kalau gak mau nunggu, klik \"Simpan Sekarang\"",
+          "Asset-nya banyak? Tekan Ctrl+F (Cmd+F di Mac) buat cari cepat berdasarkan nama atau nomor asset"
+        ],
+        "tip": "Kalau ada baris yang gagal tersimpan (misal kombinasi Status Fisik/Kondisi gak valid), bakal ada titik merah kecil di baris itu — arahkan kursor buat lihat kenapa."
+      },
+      "fillExcel": {
+        "title": "4. Isi Hasil Cek — Lewat Excel",
+        "summary": "Cocok buat kerja offline, atau kirim ke orang lain yang bantu ngecek di lapangan.",
+        "steps": [
+          "Klik \"Download Template\" — dapet file excel isinya semua asset di stock opname ini",
+          "Isi kolom Status Fisik, Kondisi, Status Aset, dan Catatan sesuai hasil cek",
+          "Simpan filenya, lalu klik \"Upload Hasil\" dan pilih file yang udah diisi",
+          "Sistem bakal proses semua baris — yang bener langsung kesimpen, yang salah dikasih tau baris mana & kenapa"
+        ]
+      },
+      "submitApproval": {
+        "title": "5. Submit & Approval",
+        "summary": "Kalau semua asset udah ada hasil temuannya, saatnya submit.",
+        "steps": [
+          "Klik \"Submit Stock Opname\" di halaman detail",
+          "Stock opname masuk tahap Approval, jalan sesuai alur persetujuan yang diatur buat branch kamu",
+          "Cek progress-nya di bagian \"Status Approval\" — kelihatan siapa aja yang harus approve dan mana yang udah/belum"
+        ],
+        "tip": "Submit bakal ditolak kalau masih ada asset yang belum diisi Status Fisik atau Kondisi-nya."
+      },
+      "execute": {
+        "title": "6. Eksekusi",
+        "summary": "Setelah semua approval selesai, stock opname masuk tahap Eksekusi.",
+        "steps": [
+          "Role yang berwenang (misal PIC Asset) klik \"Eksekusi Stock Opname\"",
+          "Sistem nerapin semua hasil temuan ke data asset (kondisi, status fisik, status asset)",
+          "Setelah ini stock opname-nya \"Selesai\" dan datanya udah gak bisa diubah lagi"
+        ]
+      },
+      "reject": {
+        "title": "7. Tolak (Reject)",
+        "summary": "Kalau ada masalah pas Approval atau Eksekusi, stock opname bisa ditolak.",
+        "steps": [
+          "Klik \"Tolak\" di halaman detail",
+          "Isi alasan penolakan (wajib, minimal 10 karakter)",
+          "Stock opname yang udah ditolak gak bisa dilanjutin lagi — kalau masih perlu, bikin draft baru"
+        ]
+      },
+      "report": {
+        "title": "8. Laporan",
+        "summary": "Buat lihat rekap hasil stock opname per periode dan branch.",
+        "steps": [
+          "Buka menu Stock Opname → Laporan",
+          "Pilih bulan, tahun, dan branch (atau semua branch)",
+          "Lihat ringkasan di dashboard, atau buka \"Detail\" buat tabel rekap lengkap",
+          "Klik \"Export\" buat download laporan dalam bentuk excel"
+        ]
+      }
+    }
   }
 }
