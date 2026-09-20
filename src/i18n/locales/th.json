@@ -371,7 +371,7 @@
   },
   "submitDisposalModal": {
     "title": "ส่งธุรกรรม",
-    "infoMessage": "ธุรกรรมจะถูกส่งเพื่อขออนุมัติ กรุณาตรวจสอบข้อมูลให้ถูกต้องก่อนดำเนินการ",
+    "infoMessage": "ธุรกรรมจะถูกส่งและระบบจะสร้างคำขออนุมัติทันที กรุณาตรวจสอบข้อมูลให้ถูกต้อง",
     "notes": "หมายเหตุ",
     "optional": "ไม่บังคับ",
     "notesPlaceholder": "เพิ่มหมายเหตุสำหรับกระบวนการอนุมัติ...",
@@ -464,79 +464,359 @@
     }
   },
   "mutationDetail": {
-  "transactionNumber": "หมายเลขธุรกรรม",
-  "transactionType": "ประเภทธุรกรรม",
-  "date": "วันที่",
-  "category": "หมวดหมู่",
-  "targetBranch": "สาขาปลายทาง",
-  "createdBy": "สร้างโดย",
-  "createdAt": "สร้างเมื่อ",
-  "updatedAt": "อัปเดตเมื่อ",
-  "notes": "หมายเหตุ",
-  "assetList": "รายการสินทรัพย์",
-  "assets": "สินทรัพย์",
-  "addAsset": "เพิ่มสินทรัพย์",
-  "noAssets": "ยังไม่มีสินทรัพย์ที่เพิ่ม",
-  "category2": "หมวดหมู่",
-  "documentNumber": "หมายเลขเอกสาร",
-  "fromBranch": "จากสาขา",
-  "toBranch": "ไปยังสาขา",
-  "stageHistory": "ประวัติขั้นตอน",
-  "by": "โดย",
-  "submitTransaction": "ส่งธุรกรรม",
-  "approve": "อนุมัติ",
-  "confirmReceiving": "ยืนยันการรับ",
-  "executeTransaction": "ดำเนินการโอนย้าย"
-},
-"menuTable": {
-  "search": "ค้นหาเมนู...",
-  "assign": "มอบหมาย",
-  "create": "สร้าง",
-  "loading": "กำลังโหลดข้อมูล...",
-  "noData": "ไม่มีข้อมูล",
-  "show": "แสดง",
-  "until": "ถึง",
-  "from": "จาก",
-  "data": "ข้อมูล",
-  "page": "หน้า",
-  "of": "จาก",
-  "columns": {
+    "transactionNumber": "หมายเลขธุรกรรม",
+    "transactionType": "ประเภทธุรกรรม",
+    "date": "วันที่",
+    "category": "หมวดหมู่",
+    "targetBranch": "สาขาปลายทาง",
+    "createdBy": "สร้างโดย",
+    "createdAt": "สร้างเมื่อ",
+    "updatedAt": "อัปเดตเมื่อ",
+    "notes": "หมายเหตุ",
+    "assetList": "รายการสินทรัพย์",
+    "assets": "สินทรัพย์",
+    "addAsset": "เพิ่มสินทรัพย์",
+    "noAssets": "ยังไม่มีสินทรัพย์ที่เพิ่ม",
+    "category2": "หมวดหมู่",
+    "documentNumber": "หมายเลขเอกสาร",
+    "fromBranch": "จากสาขา",
+    "toBranch": "ไปยังสาขา",
+    "stageHistory": "ประวัติขั้นตอน",
+    "by": "โดย",
+    "submitTransaction": "ส่งธุรกรรม",
+    "approve": "อนุมัติ",
+    "confirmReceiving": "ยืนยันการรับ",
+    "executeTransaction": "ดำเนินการโอนย้าย"
+  },
+  "menuTable": {
+    "search": "ค้นหาเมนู...",
+    "assign": "มอบหมาย",
+    "create": "สร้าง",
+    "loading": "กำลังโหลดข้อมูล...",
+    "noData": "ไม่มีข้อมูล",
+    "show": "แสดง",
+    "until": "ถึง",
+    "from": "จาก",
+    "data": "ข้อมูล",
+    "page": "หน้า",
+    "of": "จาก",
+    "columns": {
+      "no": "ลำดับ",
+      "id": "ID",
+      "parentId": "ID หลัก",
+      "menuName": "ชื่อเมนู",
+      "path": "เส้นทาง",
+      "status": "สถานะ",
+      "action": "การดำเนินการ"
+    },
+    "status": {
+      "active": "ใช้งาน",
+      "inactive": "ไม่ใช้งาน"
+    },
+    "actions": {
+      "detail": "รายละเอียด",
+      "edit": "แก้ไข",
+      "delete": "ลบ"
+    },
+    "deleteModal": {
+      "title": "ลบเมนู",
+      "description": "คุณแน่ใจหรือไม่ว่าต้องการลบ",
+      "warning": "การดำเนินการนี้ไม่สามารถยกเลิกได้",
+      "cancel": "ยกเลิก",
+      "confirm": "ลบ",
+      "deleting": "กำลังลบ..."
+    }
+  },
+  "attachment": {
+    "modal": {
+      "title": "เพิ่มเอกสารแนบ",
+      "desc": "อัปโหลดเอกสารที่จำเป็นสำหรับธุรกรรมนี้",
+      "cancel": "ยกเลิก",
+      "submit": "อัปโหลด",
+      "uploading": "กำลังอัปโหลด...",
+      "empty": "ไม่มีเอกสารแนบสำหรับขั้นตอนนี้"
+    },
+    "uploadSuccess": "อัปโหลดเอกสารแนบสำเร็จ",
+    "uploadError": "อัปโหลดเอกสารแนบไม่สำเร็จ"
+  },
+  "disposalStage": {
+    "sectionTitle": "ความคืบหน้าขั้นตอน",
+    "rejected": "ถูกปฏิเสธ",
+    "stage": {
+      "DRAFT": "Draft",
+      "PURCHASING": "Purchasing",
+      "APPROVAL_REQUEST": "Approval Request",
+      "APPROVAL_AGREEMENT": "Approval Agreement",
+      "EXECUTE": "Execute",
+      "FINANCE": "Finance",
+      "TAX": "Tax",
+      "ASSET_DELETION": "Asset Deletion",
+      "FINISHED": "Finished",
+      "REJECTED": "Rejected"
+    },
+    "type": {
+      "DISPOSE": "Dispose",
+      "SELL": "Sell"
+    },
+    "openDetail": "เปิดสถานะ {{stage}}"
+  },
+  "approvalDetail": {
+    "title": "รายละเอียดสายอนุมัติ",
+    "loading": "กำลังโหลดข้อมูล...",
+    "yes": "ใช่",
+    "no": "ไม่",
+    "info": {
+      "flowCode": "รหัสสายงาน",
+      "approvalWay": "วิธีอนุมัติ",
+      "assignmentType": "ประเภทการมอบหมาย",
+      "stepCount": "จำนวนขั้นตอน",
+      "status": "สถานะ",
+      "active": "ใช้งาน",
+      "inactive": "ไม่ใช้งาน",
+      "customizable": "ปรับแต่งได้",
+      "description": "คำอธิบาย"
+    },
+    "step": {
+      "no": "ลำดับ",
+      "order": "ลำดับขั้นตอน",
+      "name": "ชื่อขั้นตอน",
+      "role": "บทบาทขั้นตอน",
+      "roleName": "ชื่อบทบาท",
+      "type": "ประเภท",
+      "category": "หมวดหมู่",
+      "approvalWay": "วิธีอนุมัติ",
+      "structure": "โครงสร้าง",
+      "isRequired": "จำเป็น",
+      "canSkip": "ข้ามได้",
+      "isVisible": "แสดง",
+      "action": "การดำเนินการ",
+      "update": "แก้ไข",
+      "delete": "ลบ",
+      "create": "เพิ่มขั้นตอน",
+      "reorder": "จัดลำดับ",
+      "search": "ค้นหาขั้นตอน...",
+      "empty": "ไม่มีข้อมูลขั้นตอน"
+    },
+    "editModal": {
+      "title": "แก้ไขขั้นตอนอนุมัติ",
+      "subtitle": "กำลังแก้ไขขั้นตอน: {{name}}",
+      "save": "บันทึกการแก้ไข",
+      "saving": "กำลังบันทึก...",
+      "cancel": "ยกเลิก"
+    },
+    "deleteModal": {
+      "title": "ลบขั้นตอน",
+      "desc": "ขั้นตอน \"{{name}}\" จะถูกลบออกจากสายงานนี้ ดำเนินการต่อหรือไม่?",
+      "confirm": "ใช่ ลบเลย",
+      "deleting": "กำลังลบ...",
+      "cancel": "ยกเลิก"
+    },
+    "reorderModal": {
+      "title": "ขั้นตอนอนุมัติ",
+      "subtitle": "ลากเพื่อจัดลำดับขั้นตอนอนุมัติ",
+      "save": "บันทึก",
+      "saving": "กำลังบันทึก...",
+      "stepBadge": "ขั้นตอน {{order}}"
+    },
+    "pagination": {
+      "show": "แสดง",
+      "until": "ถึง",
+      "from": "จาก",
+      "data": "รายการ",
+      "page": "หน้า",
+      "of": "จาก"
+    },
+    "toast": {
+      "updateSuccess": "แก้ไขขั้นตอนอนุมัติสำเร็จ",
+      "updateError": "ไม่สามารถแก้ไขขั้นตอนอนุมัติได้",
+      "deleteSuccess": "ลบขั้นตอนอนุมัติสำเร็จ",
+      "deleteError": "ไม่สามารถลบขั้นตอนอนุมัติได้"
+    },
+    "createStep": {
+      "title": "เพิ่มขั้นตอน",
+      "submit": "บันทึกขั้นตอน",
+      "creating": "กำลังบันทึก..."
+    }
+  },
+  "approvalList": {
+    "title": "สายอนุมัติ",
+    "loading": "กำลังโหลดข้อมูล...",
+    "search": "ค้นหาสายอนุมัติ...",
+    "create": "เพิ่ม",
+    "empty": "ไม่มีข้อมูล",
+    "viewDetail": "ดูรายละเอียด",
     "no": "ลำดับ",
-    "id": "ID",
-    "parentId": "ID หลัก",
-    "menuName": "ชื่อเมนู",
-    "path": "เส้นทาง",
+    "flowCode": "รหัสสายงาน",
+    "flowName": "ชื่อสายงาน",
+    "assignmentType": "ประเภทการมอบหมาย",
+    "assignedUser": "ผู้รับมอบหมาย",
     "status": "สถานะ",
-    "action": "การดำเนินการ"
-  },
-  "status": {
+    "createdAt": "สร้างเมื่อ",
+    "action": "การดำเนินการ",
     "active": "ใช้งาน",
-    "inactive": "ไม่ใช้งาน"
-  },
-  "actions": {
-    "detail": "รายละเอียด",
+    "inactive": "ไม่ใช้งาน",
+    "pagination": {
+      "showing": "แสดง",
+      "to": "ถึง",
+      "of": "จาก",
+      "entries": "รายการ",
+      "page": "หน้า",
+      "ofPage": "จาก"
+    },
+    "deleteModal": {
+      "title": "ลบสายอนุมัติ",
+      "desc": "สายงาน \"{{name}}\" ({{code}}) จะถูกลบ ดำเนินการต่อหรือไม่?",
+      "warning": "ธุรกรรมที่กำลังอยู่ในขั้นอนุมัติของสายงานนี้ยังคงอ้างอิงอยู่ หากสร้างรหัสเดิมอีกครั้ง สายงานนี้พร้อมขั้นตอนจะถูกกู้คืน",
+      "confirm": "ใช่ ลบเลย",
+      "deleting": "กำลังลบ...",
+      "cancel": "ยกเลิก",
+      "success": "ลบสายอนุมัติสำเร็จ",
+      "error": "ไม่สามารถลบสายอนุมัติได้"
+    },
     "edit": "แก้ไข",
     "delete": "ลบ"
   },
-  "deleteModal": {
-    "title": "ลบเมนู",
-    "description": "คุณแน่ใจหรือไม่ว่าต้องการลบ",
-    "warning": "การดำเนินการนี้ไม่สามารถยกเลิกได้",
+  "approvalCreate": {
+    "title": "สร้างสายอนุมัติ",
+    "flowCode": "รหัสสายงาน",
+    "flowCodePlaceholder": "เลือกรหัสสายงาน...",
+    "flowCodeHelper": "ระบบหลังบ้านใช้รหัสนี้ค้นหาสายงานอัตโนมัติ — เลือกให้ตรงกับโมดูล",
+    "flowCodeUsed": "ถูกใช้แล้ว",
+    "flowName": "ชื่อสายงาน",
+    "approvalWay": "วิธีอนุมัติ",
+    "assignmentType": "ประเภทการมอบหมาย",
+    "assignedUser": "ผู้รับมอบหมาย",
+    "assignedUserPlaceholder": "เลือกผู้ใช้...",
+    "assignedUserHelper": "ใช้เฉพาะเมื่อประเภทการมอบหมายเป็น User Specific",
+    "creatorRoles": "บทบาทที่สร้างได้",
+    "creatorRolesPlaceholder": "เลือกบทบาท...",
+    "description": "คำอธิบาย",
+    "descriptionPlaceholder": "กรอกคำอธิบาย...",
+    "descriptionHelper": "ไม่เกิน 500 ตัวอักษร",
+    "note": "หมายเหตุ:",
+    "noteDesc": "ค่าต่อไปนี้ถูกกำหนดอัตโนมัติ:",
+    "submit": "สร้างสายอนุมัติ",
+    "creating": "กำลังสร้าง...",
     "cancel": "ยกเลิก",
-    "confirm": "ลบ",
-    "deleting": "กำลังลบ..."
-  }
-},
-"attachment": {
-  "modal": {
-    "title": "เพิ่มเอกสารแนบ",
-    "desc": "อัปโหลดเอกสารที่จำเป็นสำหรับธุรกรรมนี้",
-    "cancel": "ยกเลิก",
-    "submit": "อัปโหลด",
-    "uploading": "กำลังอัปโหลด...",
-    "empty": "ไม่มีเอกสารแนบสำหรับขั้นตอนนี้"
+    "validation": {
+      "flowCode": "กรุณาเลือกรหัสสายงาน",
+      "flowCodeDuplicate": "รหัสสายงานนี้มีอยู่แล้วสำหรับสาขา ALL",
+      "flowName": "กรุณากรอกชื่อสายงาน",
+      "approvalWay": "กรุณาเลือกวิธีอนุมัติ",
+      "assignmentType": "กรุณาเลือกประเภทการมอบหมาย",
+      "assignedUser": "ต้องระบุผู้รับมอบหมายสำหรับ User Specific",
+      "creatorRoles": "กรุณาเลือกอย่างน้อยหนึ่งบทบาท",
+      "description": "กรุณากรอกคำอธิบาย"
+    }
   },
-  "uploadSuccess": "อัปโหลดเอกสารแนบสำเร็จ",
-  "uploadError": "อัปโหลดเอกสารแนบไม่สำเร็จ"
-}
+  "approvalEdit": {
+    "title": "แก้ไขสายอนุมัติ",
+    "submit": "บันทึกการแก้ไข",
+    "saving": "กำลังบันทึก...",
+    "flowCodeLocked": "ไม่สามารถแก้ไขรหัสสายงานได้ — ระบบหลังบ้านใช้รหัสนี้ค้นหาสายงานอัตโนมัติ",
+    "descriptionHelper": "ไม่เกิน 500 ตัวอักษร และไม่สามารถเว้นว่างได้ — ระบบหลังบ้านถือว่าค่าว่างคือ \"ไม่เปลี่ยนแปลง\"",
+    "isActive": "ใช้งาน",
+    "isCustomizable": "ปรับแต่งได้",
+    "inactiveWarning": "สายงานที่ปิดใช้งานจะถูกปฏิเสธเมื่อมีธุรกรรมเริ่มขออนุมัติ",
+    "noChanges": "ยังไม่มีการเปลี่ยนแปลง",
+    "toast": {
+      "success": "แก้ไขสายอนุมัติสำเร็จ",
+      "error": "ไม่สามารถแก้ไขสายอนุมัติได้"
+    }
+  },
+  "disposalAction": {
+    "submitLabel": "ส่งคำขอ",
+    "confirmLabel": "ยืนยัน",
+    "terminal": "ธุรกรรมอยู่ในสถานะ {{stage}} แล้ว — ไม่มีขั้นตอนต่อไป",
+    "waitingApproval": "ส่งขออนุมัติแล้ว — รอผู้อนุมัติ ({{done}}/{{total}} ขั้นตอน)",
+    "submit": {
+      "button": "ส่งธุรกรรม"
+    },
+    "saleValues": {
+      "button": "กรอกมูลค่าขาย"
+    },
+    "approvalRequest": {
+      "button": "ส่งคำขออนุมัติ",
+      "title": "ส่งคำขออนุมัติ",
+      "info": "ปกติคำขออนุมัติจะถูกสร้างอัตโนมัติเมื่อส่งร่าง ใช้ปุ่มนี้เฉพาะกรณีที่ธุรกรรมนี้ยังไม่มีรายการอนุมัติ ระบบจะใช้สายงาน DISPOSAL_APPROVAL_REQUEST"
+    },
+    "approvalAgreement": {
+      "button": "ส่งคำขอข้อตกลง",
+      "title": "ส่งคำขอข้อตกลง",
+      "info": "ระบบจะใช้สายงาน DISPOSAL_APPROVAL_AGREEMENT เมื่ออนุมัติแล้วธุรกรรมจะไปยังขั้นตอน Execute"
+    },
+    "execute": {
+      "button": "ดำเนินการจำหน่าย",
+      "title": "ดำเนินการจำหน่าย",
+      "confirm": "ดำเนินการ",
+      "info": "กรุณาตรวจสอบว่าอัปโหลดเอกสารการจำหน่าย/ผลการขายในขั้นตอน Execute แล้วก่อนดำเนินการต่อ",
+      "notesLabel": "หมายเหตุการดำเนินการ",
+      "notesPlaceholder": "หมายเหตุการดำเนินการจำหน่าย"
+    },
+    "finance": {
+      "button": "ยืนยันฝ่ายการเงิน",
+      "title": "ยืนยันฝ่ายการเงิน",
+      "info": "เมื่อยืนยันแล้ว ธุรกรรมจะไปยังขั้นตอน Tax",
+      "notesLabel": "หมายเหตุการเงิน"
+    },
+    "tax": {
+      "button": "ยืนยันภาษี",
+      "title": "ยืนยันภาษี",
+      "info": "เมื่อยืนยันแล้ว ธุรกรรมจะไปยังขั้นตอน Asset Deletion",
+      "notesLabel": "หมายเหตุภาษี"
+    },
+    "assetDeletion": {
+      "button": "ยืนยันการลบสินทรัพย์",
+      "title": "ยืนยันการลบสินทรัพย์",
+      "confirm": "ลบและเสร็จสิ้น",
+      "info": "สินทรัพย์จะถูกนำออกจากรายการที่ใช้งาน และระบบจะสร้างเลขที่เอกสารการลบ การดำเนินการนี้จะปิดธุรกรรม",
+      "notesLabel": "หมายเหตุการลบ"
+    },
+    "reject": {
+      "button": "ปฏิเสธ",
+      "title": "ปฏิเสธการจำหน่าย",
+      "info": "ธุรกรรมจะเข้าสู่สถานะ Rejected และสินทรัพย์จะกลับสู่สถานะเดิม ไม่สามารถยกเลิกได้",
+      "notesLabel": "เหตุผลการปฏิเสธ",
+      "notesPlaceholder": "ระบุเหตุผลในการปฏิเสธ"
+    }
+  },
+  "disposalStagePanel": {
+    "showing": "กำลังแสดงสถานะของขั้นตอน: {{stage}}",
+    "currentStage": "ขั้นตอนปัจจุบัน",
+    "approvalTitle": "สถานะการอนุมัติ",
+    "stepsDone": "เสร็จแล้ว {{done}}/{{total}} ขั้นตอน",
+    "notInitiated": "ยังไม่ได้เริ่มสายอนุมัติ",
+    "initiate": "ส่งขออนุมัติ",
+    "initiating": "กำลังส่ง...",
+    "noSteps": "ยังไม่มีขั้นตอนอนุมัติ",
+    "documentsTitle": "เอกสาร — {{stage}}",
+    "documentsHint": "ความครบถ้วนของเอกสารเป็นตัวกำหนดว่าธุรกรรมจะไปยังขั้นตอนถัดไปได้หรือไม่",
+    "allComplete": "สินทรัพย์ครบทุกรายการ",
+    "someIncomplete": "มีสินทรัพย์ที่ยังไม่ครบ",
+    "noDocuments": "ไม่มีข้อมูลเอกสารสำหรับขั้นตอนนี้",
+    "historyTitle": "เข้าสู่ขั้นตอนนี้เมื่อ",
+    "approvalStatus": {
+      "APPROVED": "อนุมัติแล้ว",
+      "PENDING": "รอดำเนินการ",
+      "REJECTED": "ถูกปฏิเสธ",
+      "SKIPPED": "ข้าม"
+    },
+    "attachmentStatus": {
+      "APPROVED": "อนุมัติแล้ว",
+      "PENDING": "รอตรวจสอบ",
+      "REJECTED": "ถูกปฏิเสธ"
+    },
+    "card": {
+      "approvedOf": "อนุมัติแล้ว {{done}}/{{total}}",
+      "pending": "รอ {{count}} รายการ",
+      "rejected": "ถูกปฏิเสธ {{count}} รายการ",
+      "missing": "ยังไม่อัปโหลด {{count}} รายการ",
+      "complete": "ครบถ้วน",
+      "incomplete": "ยังไม่ครบ",
+      "upload": "อัปโหลด",
+      "noUploads": "ยังไม่มีเอกสารที่อัปโหลด",
+      "rejectionReason": "เหตุผลที่ปฏิเสธ",
+      "review": "ตรวจสอบ"
+    }
+  }
 }

@@ -8,6 +8,7 @@ import MainPage from '../components/pages/dashboard'
 import CreateUsers from '../components/pages/user/create'
 import RolePage from '../components/pages/role'
 import CreateRole from '../components/pages/role/create'
+import RoleDetailPage from '../components/pages/role/detail'
 import NotFound from '../components/pages/notFound'
 import Forbidden from '../components/pages/forbidden'
 import BranchPage from '../components/pages/branch'
@@ -22,6 +23,7 @@ import CreateApproval from '../components/pages/approval/create'
 import ApprovalPage from '../components/pages/approval'
 import ApprovalFlowDetail from '../components/pages/approval/detail'
 import CreateStepApproval from '../components/pages/approval/detail/createStep'
+import EditApprovalFlow from '../components/pages/approval/edit'
 import UpdateMenuPage from '../components/pages/menu/update'
 import AssetsCategoryPage from '../components/pages/assetsCategory'
 import CreateAssetsCategory from '../components/pages/assetsCategory/create'
@@ -39,8 +41,6 @@ import EditTransactionPage from '../components/pages/transaction/update'
 import CreateDepre from '../components/pages/depretiation/create'
 import DetailDeprePage from '../components/pages/depretiation/detail'
 import UpdateDepreciationPage from '../components/pages/depretiation/update'
-import HomebasePage from '../components/pages/homebase'
-import CreateHomeBasePage from '../components/pages/homebase/create'
 import AttachmentSettingPage from '../components/pages/settingAttachment'
 import DetailAttachmentSettingPage from '../components/pages/settingAttachment/detail'
 import CreateAttachmentSettingPage from '../components/pages/settingAttachment/create'
@@ -117,14 +117,6 @@ export const router = createBrowserRouter([
           {
             path: 'asset/:id',
             element: <DetailAssetsPage />,
-          },
-          {
-            path: 'homebase',
-            element: <HomebasePage />,
-          },
-          {
-            path: 'homebase/create',
-            element: <CreateHomeBasePage />,
           },
           {
             path: 'disposal',
@@ -211,6 +203,10 @@ export const router = createBrowserRouter([
             element: <CreateRole />,
           },
           {
+            path: 'role/:id',
+            element: <RoleDetailPage />,
+          },
+          {
             path: 'user',
             element: <UserPage />,
           },
@@ -237,6 +233,10 @@ export const router = createBrowserRouter([
           {
             path: 'approval/:id',
             element: <ApprovalFlowDetail />,
+          },
+          {
+            path: 'approval/:id/edit',
+            element: <EditApprovalFlow />,
           },
           {
             path: 'approval/:id/create-step',

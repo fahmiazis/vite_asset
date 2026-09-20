@@ -371,7 +371,7 @@
   },
   "submitDisposalModal": {
     "title": "Submit Transaction",
-    "infoMessage": "Transaction will be sent for approval process. Make sure all data is correct.",
+    "infoMessage": "The transaction will be submitted and the approval request is created right away. Make sure all data is correct.",
     "notes": "Notes",
     "optional": "optional",
     "notesPlaceholder": "Add notes for the approval process...",
@@ -464,79 +464,359 @@
     }
   },
   "mutationDetail": {
-  "transactionNumber": "Transaction Number",
-  "transactionType": "Transaction Type",
-  "date": "Date",
-  "category": "Category",
-  "targetBranch": "Target Branch",
-  "createdBy": "Created By",
-  "createdAt": "Created At",
-  "updatedAt": "Updated At",
-  "notes": "Notes",
-  "assetList": "Asset List",
-  "assets": "assets",
-  "addAsset": "Add Asset",
-  "noAssets": "No assets added yet",
-  "category2": "Category",
-  "documentNumber": "Document Number",
-  "fromBranch": "From Branch",
-  "toBranch": "To Branch",
-  "stageHistory": "Stage History",
-  "by": "by",
-  "submitTransaction": "Submit Transaction",
-  "approve": "Approve",
-  "confirmReceiving": "Confirm Receiving",
-  "executeTransaction": "Execute Mutation"
-},
-"menuTable": {
-  "search": "Search menu...",
-  "assign": "Assign",
-  "create": "Create",
-  "loading": "Loading data...",
-  "noData": "No data available",
-  "show": "Show",
-  "until": "until",
-  "from": "from",
-  "data": "data",
-  "page": "Page",
-  "of": "of",
-  "columns": {
+    "transactionNumber": "Transaction Number",
+    "transactionType": "Transaction Type",
+    "date": "Date",
+    "category": "Category",
+    "targetBranch": "Target Branch",
+    "createdBy": "Created By",
+    "createdAt": "Created At",
+    "updatedAt": "Updated At",
+    "notes": "Notes",
+    "assetList": "Asset List",
+    "assets": "assets",
+    "addAsset": "Add Asset",
+    "noAssets": "No assets added yet",
+    "category2": "Category",
+    "documentNumber": "Document Number",
+    "fromBranch": "From Branch",
+    "toBranch": "To Branch",
+    "stageHistory": "Stage History",
+    "by": "by",
+    "submitTransaction": "Submit Transaction",
+    "approve": "Approve",
+    "confirmReceiving": "Confirm Receiving",
+    "executeTransaction": "Execute Mutation"
+  },
+  "menuTable": {
+    "search": "Search menu...",
+    "assign": "Assign",
+    "create": "Create",
+    "loading": "Loading data...",
+    "noData": "No data available",
+    "show": "Show",
+    "until": "until",
+    "from": "from",
+    "data": "data",
+    "page": "Page",
+    "of": "of",
+    "columns": {
+      "no": "No",
+      "id": "ID",
+      "parentId": "Parent ID",
+      "menuName": "Menu Name",
+      "path": "Path",
+      "status": "Status",
+      "action": "Action"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "actions": {
+      "detail": "Detail",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "deleteModal": {
+      "title": "Delete Menu",
+      "description": "Are you sure you want to delete",
+      "warning": "This action cannot be undone.",
+      "cancel": "Cancel",
+      "confirm": "Delete",
+      "deleting": "Deleting..."
+    }
+  },
+  "attachment": {
+    "modal": {
+      "title": "Add Attachment",
+      "desc": "Upload the required documents for this transaction.",
+      "cancel": "Cancel",
+      "submit": "Upload",
+      "uploading": "Uploading...",
+      "empty": "No attachments available for this stage."
+    },
+    "uploadSuccess": "Attachments uploaded successfully.",
+    "uploadError": "Failed to upload attachments."
+  },
+  "disposalStage": {
+    "sectionTitle": "Stage Progress",
+    "rejected": "Rejected",
+    "stage": {
+      "DRAFT": "Draft",
+      "PURCHASING": "Purchasing",
+      "APPROVAL_REQUEST": "Approval Request",
+      "APPROVAL_AGREEMENT": "Approval Agreement",
+      "EXECUTE": "Execute",
+      "FINANCE": "Finance",
+      "TAX": "Tax",
+      "ASSET_DELETION": "Asset Deletion",
+      "FINISHED": "Finished",
+      "REJECTED": "Rejected"
+    },
+    "type": {
+      "DISPOSE": "Dispose",
+      "SELL": "Sell"
+    },
+    "openDetail": "Open {{stage}} status"
+  },
+  "approvalDetail": {
+    "title": "Approval Flow Detail",
+    "loading": "Loading data...",
+    "yes": "Yes",
     "no": "No",
-    "id": "ID",
-    "parentId": "Parent ID",
-    "menuName": "Menu Name",
-    "path": "Path",
+    "info": {
+      "flowCode": "Flow Code",
+      "approvalWay": "Approval Way",
+      "assignmentType": "Assignment Type",
+      "stepCount": "Total Steps",
+      "status": "Status",
+      "active": "Active",
+      "inactive": "Inactive",
+      "customizable": "Customizable",
+      "description": "Description"
+    },
+    "step": {
+      "no": "No",
+      "order": "Step Order",
+      "name": "Step Name",
+      "role": "Step Role",
+      "roleName": "Role Name",
+      "type": "Type",
+      "category": "Category",
+      "approvalWay": "Approval Way",
+      "structure": "Structure",
+      "isRequired": "Required",
+      "canSkip": "Can Skip",
+      "isVisible": "Visible",
+      "action": "Action",
+      "update": "Update",
+      "delete": "Delete",
+      "create": "Create Step",
+      "reorder": "Reorder",
+      "search": "Search Flow Step...",
+      "empty": "No flow step data"
+    },
+    "editModal": {
+      "title": "Edit Approval Step",
+      "subtitle": "Changing step: {{name}}",
+      "save": "Save Changes",
+      "saving": "Saving...",
+      "cancel": "Cancel"
+    },
+    "deleteModal": {
+      "title": "Delete Step",
+      "desc": "Step \"{{name}}\" will be removed from this flow. Continue?",
+      "confirm": "Yes, Delete",
+      "deleting": "Deleting...",
+      "cancel": "Cancel"
+    },
+    "reorderModal": {
+      "title": "Approval Step",
+      "subtitle": "Drag to reorder the approval steps",
+      "save": "Save",
+      "saving": "Saving...",
+      "stepBadge": "Step {{order}}"
+    },
+    "pagination": {
+      "show": "Show",
+      "until": "Until",
+      "from": "From",
+      "data": "data",
+      "page": "Page",
+      "of": "From"
+    },
+    "toast": {
+      "updateSuccess": "Approval step updated",
+      "updateError": "Failed to update approval step",
+      "deleteSuccess": "Approval step deleted",
+      "deleteError": "Failed to delete approval step"
+    },
+    "createStep": {
+      "title": "Create Step",
+      "submit": "Create Step",
+      "creating": "Creating..."
+    }
+  },
+  "approvalList": {
+    "title": "Approval Flow",
+    "loading": "Loading data...",
+    "search": "Search approval flow...",
+    "create": "Create",
+    "empty": "No data available",
+    "viewDetail": "View Details",
+    "no": "No",
+    "flowCode": "Flow Code",
+    "flowName": "Flow Name",
+    "assignmentType": "Assignment Type",
+    "assignedUser": "Assigned User",
     "status": "Status",
-    "action": "Action"
-  },
-  "status": {
+    "createdAt": "Created At",
+    "action": "Action",
     "active": "Active",
-    "inactive": "Inactive"
-  },
-  "actions": {
-    "detail": "Detail",
+    "inactive": "Inactive",
+    "pagination": {
+      "showing": "Showing",
+      "to": "to",
+      "of": "of",
+      "entries": "entries",
+      "page": "Page",
+      "ofPage": "of"
+    },
+    "deleteModal": {
+      "title": "Delete Approval Flow",
+      "desc": "Flow \"{{name}}\" ({{code}}) will be deleted. Continue?",
+      "warning": "Transactions that are mid-approval on this flow keep referencing it. Creating the same code again later restores this flow along with its steps.",
+      "confirm": "Yes, Delete",
+      "deleting": "Deleting...",
+      "cancel": "Cancel",
+      "success": "Approval flow deleted",
+      "error": "Failed to delete approval flow"
+    },
     "edit": "Edit",
     "delete": "Delete"
   },
-  "deleteModal": {
-    "title": "Delete Menu",
-    "description": "Are you sure you want to delete",
-    "warning": "This action cannot be undone.",
+  "approvalCreate": {
+    "title": "Create Approval Flow",
+    "flowCode": "Flow Code",
+    "flowCodePlaceholder": "Select flow code...",
+    "flowCodeHelper": "The code is read by the backend to find the flow automatically — pick the one matching the module.",
+    "flowCodeUsed": "already used",
+    "flowName": "Flow Name",
+    "approvalWay": "Approval Way",
+    "assignmentType": "Assignment Type",
+    "assignedUser": "Assigned User",
+    "assignedUserPlaceholder": "Select user...",
+    "assignedUserHelper": "Only used when assignment type is User Specific.",
+    "creatorRoles": "Allowed Creator Roles",
+    "creatorRolesPlaceholder": "Select roles...",
+    "description": "Description",
+    "descriptionPlaceholder": "Enter description...",
+    "descriptionHelper": "Maximum 500 characters",
+    "note": "Note:",
+    "noteDesc": "The following values are set automatically:",
+    "submit": "Create Approval Flow",
+    "creating": "Creating...",
     "cancel": "Cancel",
-    "confirm": "Delete",
-    "deleting": "Deleting..."
-  }
-},
-"attachment": {
-  "modal": {
-    "title": "Add Attachment",
-    "desc": "Upload the required documents for this transaction.",
-    "cancel": "Cancel",
-    "submit": "Upload",
-    "uploading": "Uploading...",
-    "empty": "No attachments available for this stage."
+    "validation": {
+      "flowCode": "Flow Code is required",
+      "flowCodeDuplicate": "This flow code already exists for branch ALL",
+      "flowName": "Flow Name is required",
+      "approvalWay": "Approval Way is required",
+      "assignmentType": "Assignment Type is required",
+      "assignedUser": "Assigned User is required for User Specific",
+      "creatorRoles": "At least one Allowed Creator Role is required",
+      "description": "Description is required"
+    }
   },
-  "uploadSuccess": "Attachments uploaded successfully.",
-  "uploadError": "Failed to upload attachments."
-}
+  "approvalEdit": {
+    "title": "Edit Approval Flow",
+    "submit": "Save Changes",
+    "saving": "Saving...",
+    "flowCodeLocked": "Flow code cannot be changed — the backend uses it to find this flow automatically.",
+    "descriptionHelper": "Maximum 500 characters. Cannot be emptied — the backend treats a blank value as \"no change\".",
+    "isActive": "Active",
+    "isCustomizable": "Customizable",
+    "inactiveWarning": "An inactive flow is rejected when a transaction tries to start its approval.",
+    "noChanges": "Nothing changed yet",
+    "toast": {
+      "success": "Approval flow updated",
+      "error": "Failed to update approval flow"
+    }
+  },
+  "disposalAction": {
+    "submitLabel": "Submit",
+    "confirmLabel": "Confirm",
+    "terminal": "Transaction is already {{stage}} — no further action.",
+    "waitingApproval": "Approval already initiated — waiting for approvers ({{done}}/{{total}} steps done).",
+    "submit": {
+      "button": "Submit Transaction"
+    },
+    "saleValues": {
+      "button": "Enter Sale Value"
+    },
+    "approvalRequest": {
+      "button": "Submit Approval Request",
+      "title": "Submit Approval Request",
+      "info": "Normally the approval request is created automatically when the draft is submitted. Use this only if this transaction has no approval records yet. The DISPOSAL_APPROVAL_REQUEST flow will be applied."
+    },
+    "approvalAgreement": {
+      "button": "Submit Approval Agreement",
+      "title": "Submit Approval Agreement",
+      "info": "The DISPOSAL_APPROVAL_AGREEMENT flow will be applied. Once approved, the transaction moves to the Execute stage."
+    },
+    "execute": {
+      "button": "Execute Disposal",
+      "title": "Execute Disposal",
+      "confirm": "Execute",
+      "info": "Make sure the disposal / sale documents are uploaded at the Execute stage before continuing.",
+      "notesLabel": "Execution notes",
+      "notesPlaceholder": "Notes on carrying out the disposal"
+    },
+    "finance": {
+      "button": "Confirm Finance",
+      "title": "Confirm Finance",
+      "info": "Once confirmed, the transaction moves to the Tax stage.",
+      "notesLabel": "Finance notes"
+    },
+    "tax": {
+      "button": "Confirm Tax",
+      "title": "Confirm Tax",
+      "info": "Once confirmed, the transaction moves to the Asset Deletion stage.",
+      "notesLabel": "Tax notes"
+    },
+    "assetDeletion": {
+      "button": "Confirm Asset Deletion",
+      "title": "Confirm Asset Deletion",
+      "confirm": "Delete & Finish",
+      "info": "The assets will be removed from the active list and a deletion document number will be generated. This finishes the transaction.",
+      "notesLabel": "Deletion notes"
+    },
+    "reject": {
+      "button": "Reject",
+      "title": "Reject Disposal",
+      "info": "The transaction moves to the Rejected stage and the assets return to their previous status. This cannot be undone.",
+      "notesLabel": "Rejection reason",
+      "notesPlaceholder": "Explain the reason for rejection"
+    }
+  },
+  "disposalStagePanel": {
+    "showing": "Showing status for stage: {{stage}}",
+    "currentStage": "Current stage",
+    "approvalTitle": "Approval Status",
+    "stepsDone": "{{done}}/{{total}} steps done",
+    "notInitiated": "Approval flow has not been initiated",
+    "initiate": "Submit for Approval",
+    "initiating": "Submitting...",
+    "noSteps": "No approval steps yet",
+    "documentsTitle": "Documents — {{stage}}",
+    "documentsHint": "Document completeness decides whether the transaction can move to the next stage",
+    "allComplete": "All assets complete",
+    "someIncomplete": "Some assets incomplete",
+    "noDocuments": "No document data for this stage",
+    "historyTitle": "Entered this stage",
+    "approvalStatus": {
+      "APPROVED": "Approved",
+      "PENDING": "Pending",
+      "REJECTED": "Rejected",
+      "SKIPPED": "Skipped"
+    },
+    "attachmentStatus": {
+      "APPROVED": "Approved",
+      "PENDING": "Awaiting review",
+      "REJECTED": "Rejected"
+    },
+    "card": {
+      "approvedOf": "{{done}}/{{total}} approved",
+      "pending": "{{count}} awaiting",
+      "rejected": "{{count}} rejected",
+      "missing": "{{count}} not uploaded",
+      "complete": "Complete",
+      "incomplete": "Incomplete",
+      "upload": "Upload",
+      "noUploads": "No documents uploaded yet",
+      "rejectionReason": "Rejection reason",
+      "review": "Review"
+    }
+  }
 }

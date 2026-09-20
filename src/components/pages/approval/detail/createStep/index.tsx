@@ -1,16 +1,23 @@
 import { useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import Buttons from "../../../../atoms/buttons";
 import Head from "../../../../molecules/head";
 import { useCreateFlowStep } from "../../../../../hooks/mutation/approval/useCreateApprovalStep";
-import { useState } from "react";
 import { Inputs } from "../../../../molecules/input/inputs";
 import { Selects } from "../../../../molecules/input/selects";
-import { stepRole } from "../../../../../constans/approval";
+import {
+    stepRole,
+    stepType,
+    stepCategory,
+    stepApprovalWay,
+} from "../../../../../constans/approval";
 import { useRoleList } from "../../../../../hooks/query/role/list";
 import { roleListToSelectOptions } from "../../../../../utils/role";
 
 export default function CreateStepApproval() {
     const navigate = useNavigate()
+    const { t } = useTranslation()
 
     const { id } = useParams()
     const createFlowStep = useCreateFlowStep()
@@ -23,6 +30,13 @@ export default function CreateStepApproval() {
         step_role: '',
         role_id: '',
         structure: '',
+        // default sama dengan default kolom di DB
+        type: 'all',
+        category: 'all',
+        approval_way: 'web',
+        is_required: true,
+        can_skip: false,
+        is_visible: true,
     })
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -40,13 +54,13 @@ export default function CreateStepApproval() {
             step_role: formData.step_role,
             role_id: formData.role_id,
             structure: formData.structure,
-
-            // Static hardcoded values
-            isRequired: true,
-            is_visible: true,
-            type: 'all',
-            category: 'all',
-            approval_way: 'web',
+            type: formData.type,
+            category: formData.category,
+            approval_way: formData.approval_way,
+            // FIX: backend membaca `is_required` (snake_case), bukan `isRequired`
+            is_required: formData.is_required,
+            can_skip: formData.can_skip,
+            is_visible: formData.is_visible,
         }
 
         createFlowStep.mutate(payload, {
@@ -57,62 +71,90 @@ export default function CreateStepApproval() {
         })
     }
 
+    const toggles: Array<{ key: 'is_required' | 'can_skip' | 'is_visible'; label: string }> = [
+        { key: 'is_required', label: t('approvalDetail.step.isRequired') },
+        { key: 'can_skip', label: t('approvalDetail.step.canSkip') },
+        { key: 'is_visible', label: t('approvalDetail.step.isVisible') },
+    ]
+
     return (
         <div>
-            <Head label="Create Step" className="mb-4" />
+            <Head label={t('approvalDetail.createStep.title')} className="mb-4" />
 
             <form onSubmit={handleSubmit}>
-                <section className="flex gap-4 mt-4">
-                    <div className="w-1/2 flex flex-col gap-4">
-                        <Inputs
-                            label="Step Order"
-                            numberOnly
-                            value={`${formData.step_order}`}
-                            onChange={(value) => setFormData((prev) => ({ ...prev, step_order: Number(value) }))}
-                            placeholder="e.g., 27"
-                            required
-                        />
-                        <Inputs
-                            label="Step Name"
-                            value={formData.step_name}
-                            onChange={(value) => setFormData((prev) => ({ ...prev, step_name: value }))}
-                            placeholder="e.g., Approval"
-                            required
-                        />
-                    </div>
-
-                    <div className="w-1/2 flex flex-col gap-4">
+                <section className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                    <Inputs
+                        label={t('approvalDetail.step.order')}
+                        numberOnly
+                        value={`${formData.step_order}`}
+                        onChange={(value) => setFormData((prev) => ({ ...prev, step_order: Number(value) }))}
+                        placeholder="e.g., 1"
+                        required
+                    />
+                    <Inputs
+                        label={t('approvalDetail.step.name')}
+                        value={formData.step_name}
+                        onChange={(value) => setFormData((prev) => ({ ...prev, step_name: value }))}
+                        placeholder="e.g., approval manager"
+                        required
+                    />
+                    <Selects
+                        label={t('approvalDetail.step.role')}
+                        value={formData.step_role}
+                        onChange={(value) => setFormData((prev) => ({ ...prev, step_role: value }))}
+                        required
+                        options={stepRole} />
+                    {roleList && (
                         <Selects
-                            label="Step Role"
-                            value={formData.step_role}
-                            onChange={(value) => setFormData((prev) => ({ ...prev, step_role: value }))}
+                            label={t('approvalDetail.step.roleName')}
+                            value={formData.role_id}
+                            onChange={(value) => setFormData((prev) => ({ ...prev, role_id: value }))}
                             required
-                            options={stepRole} />
-                        {roleList && (
-                            <Selects
-                                label="Role ID"
-                                value={formData.role_id}
-                                onChange={(value) => setFormData((prev) => ({ ...prev, role_id: value }))}
-                                required
-                                options={roleListToSelectOptions(roleList?.data)} />
-                        )}
-
-                    </div>
+                            options={roleListToSelectOptions(roleList?.data)} />
+                    )}
+                    <Selects
+                        label={t('approvalDetail.step.type')}
+                        value={formData.type}
+                        onChange={(value) => setFormData((prev) => ({ ...prev, type: value }))}
+                        options={stepType} />
+                    <Selects
+                        label={t('approvalDetail.step.category')}
+                        value={formData.category}
+                        onChange={(value) => setFormData((prev) => ({ ...prev, category: value }))}
+                        options={stepCategory} />
+                    <Selects
+                        label={t('approvalDetail.step.approvalWay')}
+                        value={formData.approval_way}
+                        onChange={(value) => setFormData((prev) => ({ ...prev, approval_way: value }))}
+                        options={stepApprovalWay} />
+                    <Inputs
+                        label={t('approvalDetail.step.structure')}
+                        value={formData.structure}
+                        onChange={(value) => setFormData((prev) => ({ ...prev, structure: value }))}
+                        placeholder="e.g., sender_manager"
+                    />
                 </section>
 
-                <Inputs
-                    label="Strukture"
-                    containerClassName="mt-4"
-                    value={formData.structure}
-                    onChange={(value) => setFormData((prev) => ({ ...prev, structure: value }))}
-                    placeholder="e.g., structure"
-                    required
-                />
+                <div className="flex flex-wrap gap-5 mt-4">
+                    {toggles.map((item) => (
+                        <label key={item.key} className="flex items-center gap-2 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                checked={formData[item.key]}
+                                onChange={(e) => setFormData((prev) => ({ ...prev, [item.key]: e.target.checked }))}
+                                className="w-4 h-4 accent-blue-600"
+                            />
+                            <span className="text-sm text-gray-700 dark:text-gray-300">{item.label}</span>
+                        </label>
+                    ))}
+                </div>
 
                 {/* Buttons */}
                 <div className="mt-6 flex gap-2">
                     <Buttons
-                        label={createFlowStep.isPending ? 'Creating...' : 'Create Approval Flow'}
+                        label={createFlowStep.isPending
+                            ? t('approvalDetail.createStep.creating')
+                            : t('approvalDetail.createStep.submit')}
                         disable={createFlowStep.isPending}
                         onClick={handleSubmit}
                     />

@@ -29,7 +29,7 @@
       "successLogin": "登录成功",
       "invalidCredential": "用户名或密码错误"
     },
-     "mutation": {
+    "mutation": {
       "searchPlaceholder": "按交易编号、类型或创建者搜索...",
       "create": "创建",
       "noData": "暂无数据",
@@ -371,7 +371,7 @@
   },
   "submitDisposalModal": {
     "title": "提交交易",
-    "infoMessage": "交易将被发送以进行审批流程。请确保所有数据均已正确无误。",
+    "infoMessage": "交易将被提交，并立即创建审批申请。请确保所有数据准确无误。",
     "notes": "备注",
     "optional": "可选",
     "notesPlaceholder": "为审批流程添加备注...",
@@ -448,95 +448,375 @@
     }
   },
   "submitMutationModal": {
-  "title": "提交交易",
-  "warningMessage": "已提交的交易无法再次编辑。请确保所有资产正确后再继续操作。",
-  "notes": "备注",
-  "optional": "可选",
-  "notesPlaceholder": "例如：请尽快处理",
-  "cancel": "取消",
-  "submit": "提交",
-  "saving": "保存中...",
-  "processing": "处理中...",
-  "toast": {
-    "success": "交易提交成功",
-    "errorSubmit": "提交交易失败",
-    "errorInitiate": "启动审批失败"
-  }
-},
-"mutationDetail": {
-  "transactionNumber": "交易编号",
-  "transactionType": "交易类型",
-  "date": "日期",
-  "category": "类别",
-  "targetBranch": "目标分支",
-  "createdBy": "创建人",
-  "createdAt": "创建时间",
-  "updatedAt": "更新时间",
-  "notes": "备注",
-  "assetList": "资产列表",
-  "assets": "资产",
-  "addAsset": "添加资产",
-  "noAssets": "暂无资产",
-  "category2": "类别",
-  "documentNumber": "文件编号",
-  "fromBranch": "来源分支",
-  "toBranch": "目标分支",
-  "stageHistory": "阶段历史",
-  "by": "由",
-  "submitTransaction": "提交交易",
-  "approve": "批准",
-  "confirmReceiving": "确认接收",
-  "executeTransaction": "执行调拨"
-},
-"menuTable": {
-  "search": "搜索菜单...",
-  "assign": "分配",
-  "create": "创建",
-  "loading": "加载数据中...",
-  "noData": "暂无数据",
-  "show": "显示",
-  "until": "至",
-  "from": "共",
-  "data": "条数据",
-  "page": "第",
-  "of": "页，共",
-  "columns": {
+    "title": "提交交易",
+    "warningMessage": "已提交的交易无法再次编辑。请确保所有资产正确后再继续操作。",
+    "notes": "备注",
+    "optional": "可选",
+    "notesPlaceholder": "例如：请尽快处理",
+    "cancel": "取消",
+    "submit": "提交",
+    "saving": "保存中...",
+    "processing": "处理中...",
+    "toast": {
+      "success": "交易提交成功",
+      "errorSubmit": "提交交易失败",
+      "errorInitiate": "启动审批失败"
+    }
+  },
+  "mutationDetail": {
+    "transactionNumber": "交易编号",
+    "transactionType": "交易类型",
+    "date": "日期",
+    "category": "类别",
+    "targetBranch": "目标分支",
+    "createdBy": "创建人",
+    "createdAt": "创建时间",
+    "updatedAt": "更新时间",
+    "notes": "备注",
+    "assetList": "资产列表",
+    "assets": "资产",
+    "addAsset": "添加资产",
+    "noAssets": "暂无资产",
+    "category2": "类别",
+    "documentNumber": "文件编号",
+    "fromBranch": "来源分支",
+    "toBranch": "目标分支",
+    "stageHistory": "阶段历史",
+    "by": "由",
+    "submitTransaction": "提交交易",
+    "approve": "批准",
+    "confirmReceiving": "确认接收",
+    "executeTransaction": "执行调拨"
+  },
+  "menuTable": {
+    "search": "搜索菜单...",
+    "assign": "分配",
+    "create": "创建",
+    "loading": "加载数据中...",
+    "noData": "暂无数据",
+    "show": "显示",
+    "until": "至",
+    "from": "共",
+    "data": "条数据",
+    "page": "第",
+    "of": "页，共",
+    "columns": {
+      "no": "序号",
+      "id": "ID",
+      "parentId": "父级ID",
+      "menuName": "菜单名称",
+      "path": "路径",
+      "status": "状态",
+      "action": "操作"
+    },
+    "status": {
+      "active": "启用",
+      "inactive": "禁用"
+    },
+    "actions": {
+      "detail": "详情",
+      "edit": "编辑",
+      "delete": "删除"
+    },
+    "deleteModal": {
+      "title": "删除菜单",
+      "description": "您确定要删除",
+      "warning": "此操作无法撤销。",
+      "cancel": "取消",
+      "confirm": "删除",
+      "deleting": "删除中..."
+    }
+  },
+  "attachment": {
+    "modal": {
+      "title": "添加附件",
+      "desc": "请上传此交易所需的文件。",
+      "cancel": "取消",
+      "submit": "上传",
+      "uploading": "上传中...",
+      "empty": "此阶段没有可用的附件。"
+    },
+    "uploadSuccess": "附件上传成功。",
+    "uploadError": "附件上传失败。"
+  },
+  "disposalStage": {
+    "sectionTitle": "阶段进度",
+    "rejected": "已拒绝",
+    "stage": {
+      "DRAFT": "Draft",
+      "PURCHASING": "Purchasing",
+      "APPROVAL_REQUEST": "Approval Request",
+      "APPROVAL_AGREEMENT": "Approval Agreement",
+      "EXECUTE": "Execute",
+      "FINANCE": "Finance",
+      "TAX": "Tax",
+      "ASSET_DELETION": "Asset Deletion",
+      "FINISHED": "Finished",
+      "REJECTED": "Rejected"
+    },
+    "type": {
+      "DISPOSE": "Dispose",
+      "SELL": "Sell"
+    },
+    "openDetail": "查看 {{stage}} 状态"
+  },
+  "approvalDetail": {
+    "title": "审批流程详情",
+    "loading": "加载数据中...",
+    "yes": "是",
+    "no": "否",
+    "info": {
+      "flowCode": "流程代码",
+      "approvalWay": "审批方式",
+      "assignmentType": "分配类型",
+      "stepCount": "步骤总数",
+      "status": "状态",
+      "active": "启用",
+      "inactive": "停用",
+      "customizable": "可自定义",
+      "description": "描述"
+    },
+    "step": {
+      "no": "序号",
+      "order": "步骤顺序",
+      "name": "步骤名称",
+      "role": "步骤角色",
+      "roleName": "角色名称",
+      "type": "类型",
+      "category": "类别",
+      "approvalWay": "审批方式",
+      "structure": "结构",
+      "isRequired": "必填",
+      "canSkip": "可跳过",
+      "isVisible": "可见",
+      "action": "操作",
+      "update": "修改",
+      "delete": "删除",
+      "create": "新增步骤",
+      "reorder": "调整顺序",
+      "search": "搜索流程步骤...",
+      "empty": "暂无流程步骤数据"
+    },
+    "editModal": {
+      "title": "编辑审批步骤",
+      "subtitle": "正在编辑步骤：{{name}}",
+      "save": "保存更改",
+      "saving": "保存中...",
+      "cancel": "取消"
+    },
+    "deleteModal": {
+      "title": "删除步骤",
+      "desc": "步骤“{{name}}”将从此流程中移除。是否继续？",
+      "confirm": "确认删除",
+      "deleting": "删除中...",
+      "cancel": "取消"
+    },
+    "reorderModal": {
+      "title": "审批步骤",
+      "subtitle": "拖动以重新排列审批步骤",
+      "save": "保存",
+      "saving": "保存中...",
+      "stepBadge": "步骤 {{order}}"
+    },
+    "pagination": {
+      "show": "显示",
+      "until": "至",
+      "from": "共",
+      "data": "条数据",
+      "page": "第",
+      "of": "页，共"
+    },
+    "toast": {
+      "updateSuccess": "审批步骤更新成功",
+      "updateError": "审批步骤更新失败",
+      "deleteSuccess": "审批步骤删除成功",
+      "deleteError": "审批步骤删除失败"
+    },
+    "createStep": {
+      "title": "新增步骤",
+      "submit": "保存步骤",
+      "creating": "保存中..."
+    }
+  },
+  "approvalList": {
+    "title": "审批流程",
+    "loading": "加载数据中...",
+    "search": "搜索审批流程...",
+    "create": "新增",
+    "empty": "暂无数据",
+    "viewDetail": "查看详情",
     "no": "序号",
-    "id": "ID",
-    "parentId": "父级ID",
-    "menuName": "菜单名称",
-    "path": "路径",
+    "flowCode": "流程代码",
+    "flowName": "流程名称",
+    "assignmentType": "分配类型",
+    "assignedUser": "指派用户",
     "status": "状态",
-    "action": "操作"
-  },
-  "status": {
+    "createdAt": "创建时间",
+    "action": "操作",
     "active": "启用",
-    "inactive": "禁用"
-  },
-  "actions": {
-    "detail": "详情",
+    "inactive": "停用",
+    "pagination": {
+      "showing": "显示",
+      "to": "至",
+      "of": "共",
+      "entries": "条数据",
+      "page": "第",
+      "ofPage": "页，共"
+    },
+    "deleteModal": {
+      "title": "删除审批流程",
+      "desc": "流程“{{name}}”（{{code}}）将被删除。是否继续？",
+      "warning": "正在该流程中审批的交易仍会引用它。若之后再次创建相同代码，该流程及其步骤会被恢复。",
+      "confirm": "确认删除",
+      "deleting": "删除中...",
+      "cancel": "取消",
+      "success": "审批流程删除成功",
+      "error": "审批流程删除失败"
+    },
     "edit": "编辑",
     "delete": "删除"
   },
-  "deleteModal": {
-    "title": "删除菜单",
-    "description": "您确定要删除",
-    "warning": "此操作无法撤销。",
+  "approvalCreate": {
+    "title": "新增审批流程",
+    "flowCode": "流程代码",
+    "flowCodePlaceholder": "选择流程代码...",
+    "flowCodeHelper": "后端依据此代码自动查找流程——请选择与模块对应的代码。",
+    "flowCodeUsed": "已被使用",
+    "flowName": "流程名称",
+    "approvalWay": "审批方式",
+    "assignmentType": "分配类型",
+    "assignedUser": "指派用户",
+    "assignedUserPlaceholder": "选择用户...",
+    "assignedUserHelper": "仅当分配类型为 User Specific 时使用。",
+    "creatorRoles": "允许创建的角色",
+    "creatorRolesPlaceholder": "选择角色...",
+    "description": "描述",
+    "descriptionPlaceholder": "请输入描述...",
+    "descriptionHelper": "最多 500 个字符",
+    "note": "注意：",
+    "noteDesc": "以下值将自动设置：",
+    "submit": "创建审批流程",
+    "creating": "创建中...",
     "cancel": "取消",
-    "confirm": "删除",
-    "deleting": "删除中..."
-  }
-},
-"attachment": {
-  "modal": {
-    "title": "添加附件",
-    "desc": "请上传此交易所需的文件。",
-    "cancel": "取消",
-    "submit": "上传",
-    "uploading": "上传中...",
-    "empty": "此阶段没有可用的附件。"
+    "validation": {
+      "flowCode": "请选择流程代码",
+      "flowCodeDuplicate": "该流程代码在 ALL 分支下已存在",
+      "flowName": "请输入流程名称",
+      "approvalWay": "请选择审批方式",
+      "assignmentType": "请选择分配类型",
+      "assignedUser": "User Specific 必须指派用户",
+      "creatorRoles": "请至少选择一个角色",
+      "description": "请输入描述"
+    }
   },
-  "uploadSuccess": "附件上传成功。",
-  "uploadError": "附件上传失败。"
-}
+  "approvalEdit": {
+    "title": "编辑审批流程",
+    "submit": "保存更改",
+    "saving": "保存中...",
+    "flowCodeLocked": "流程代码不可修改——后端依据它自动查找该流程。",
+    "descriptionHelper": "最多 500 个字符。不能清空——后端将空值视为“不修改”。",
+    "isActive": "启用",
+    "isCustomizable": "可自定义",
+    "inactiveWarning": "流程停用后，交易发起审批时会被拒绝。",
+    "noChanges": "尚未有任何更改",
+    "toast": {
+      "success": "审批流程更新成功",
+      "error": "审批流程更新失败"
+    }
+  },
+  "disposalAction": {
+    "submitLabel": "提交",
+    "confirmLabel": "确认",
+    "terminal": "交易已{{stage}}——无后续操作。",
+    "waitingApproval": "已发起审批——等待审批人处理（已完成 {{done}}/{{total}} 步）。",
+    "submit": {
+      "button": "提交交易"
+    },
+    "saleValues": {
+      "button": "录入销售价值"
+    },
+    "approvalRequest": {
+      "button": "发起审批申请",
+      "title": "发起审批申请",
+      "info": "通常提交草稿时会自动创建审批申请。仅当该交易尚无审批记录时才使用此按钮。将应用 DISPOSAL_APPROVAL_REQUEST 流程。"
+    },
+    "approvalAgreement": {
+      "button": "发起审批协议",
+      "title": "发起审批协议",
+      "info": "将应用 DISPOSAL_APPROVAL_AGREEMENT 流程。审批通过后，交易进入 Execute 阶段。"
+    },
+    "execute": {
+      "button": "执行处置",
+      "title": "执行处置",
+      "confirm": "执行",
+      "info": "继续前请确认已在 Execute 阶段上传处置／销售结果文件。",
+      "notesLabel": "执行备注",
+      "notesPlaceholder": "处置执行备注"
+    },
+    "finance": {
+      "button": "财务确认",
+      "title": "财务确认",
+      "info": "确认后，交易进入 Tax 阶段。",
+      "notesLabel": "财务备注"
+    },
+    "tax": {
+      "button": "税务确认",
+      "title": "税务确认",
+      "info": "确认后，交易进入 Asset Deletion 阶段。",
+      "notesLabel": "税务备注"
+    },
+    "assetDeletion": {
+      "button": "确认资产删除",
+      "title": "确认资产删除",
+      "confirm": "删除并完成",
+      "info": "资产将从活动清单中移除，并生成删除单据编号。此操作将结束该交易。",
+      "notesLabel": "删除备注"
+    },
+    "reject": {
+      "button": "拒绝",
+      "title": "拒绝处置",
+      "info": "交易将进入 Rejected 状态，资产恢复为原状态。此操作不可撤销。",
+      "notesLabel": "拒绝原因",
+      "notesPlaceholder": "请说明拒绝原因"
+    }
+  },
+  "disposalStagePanel": {
+    "showing": "正在显示阶段状态：{{stage}}",
+    "currentStage": "当前阶段",
+    "approvalTitle": "审批状态",
+    "stepsDone": "已完成 {{done}}/{{total}} 步",
+    "notInitiated": "审批流程尚未发起",
+    "initiate": "发起审批",
+    "initiating": "提交中...",
+    "noSteps": "暂无审批步骤",
+    "documentsTitle": "文件 — {{stage}}",
+    "documentsHint": "文件是否齐全决定交易能否进入下一阶段",
+    "allComplete": "所有资产齐全",
+    "someIncomplete": "部分资产不齐全",
+    "noDocuments": "该阶段暂无文件数据",
+    "historyTitle": "进入该阶段",
+    "approvalStatus": {
+      "APPROVED": "已批准",
+      "PENDING": "待处理",
+      "REJECTED": "已拒绝",
+      "SKIPPED": "已跳过"
+    },
+    "attachmentStatus": {
+      "APPROVED": "已批准",
+      "PENDING": "待审核",
+      "REJECTED": "已拒绝"
+    },
+    "card": {
+      "approvedOf": "已批准 {{done}}/{{total}}",
+      "pending": "{{count}} 待处理",
+      "rejected": "{{count}} 已拒绝",
+      "missing": "{{count}} 未上传",
+      "complete": "齐全",
+      "incomplete": "不齐全",
+      "upload": "上传",
+      "noUploads": "尚未上传任何文件",
+      "rejectionReason": "拒绝原因",
+      "review": "审核"
+    }
+  }
 }

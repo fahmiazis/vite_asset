@@ -1,28 +1,22 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { switchStepApproval, type ChangeStepOrderPayload } from "../../../services/approval/switchStepApproval";
-interface MutationVariables {
-  stepId: string;
-  payload: ChangeStepOrderPayload;
-}
 
-export const useSwitchStepApproval = (id: string) => {
-    const queryClient = useQueryClient();
+/**
+ * Reorder step. Catatan penting: endpoint
+ * PUT /approval-flow-steps/step-order-change/:id memakai :id sebagai **flow_id**
+ * (lihat services.UpdateBulkStepOrderFlowStep — query-nya `flow_id = ?`),
+ * bukan id step. Urutan baru diambil dari posisi di `list_ids`.
+ */
+export const useSwitchStepApproval = (flowId: string) => {
+  const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({
-      stepId,
-      payload,
-    }: {
-      stepId: string;
-      payload: { list_ids: string[] };
-    }) => switchStepApproval(stepId, payload),
+    mutationFn: (payload: ChangeStepOrderPayload) => switchStepApproval(flowId, payload),
 
     onSuccess: async () => {
-      // refetch detail
       await queryClient.invalidateQueries({
-        queryKey: ["approval-flow-detail", id],
+        queryKey: ["approval-flow-detail", flowId],
       });
     },
   });
-
 };

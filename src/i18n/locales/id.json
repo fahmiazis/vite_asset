@@ -371,7 +371,7 @@
   },
   "submitDisposalModal": {
     "title": "Submit Transaksi",
-    "infoMessage": "Transaksi akan dikirim untuk proses approval. Pastikan semua data sudah benar.",
+    "infoMessage": "Transaksi akan disubmit dan permohonan approval langsung terbentuk. Pastikan semua data sudah benar.",
     "notes": "Catatan",
     "optional": "opsional",
     "notesPlaceholder": "Tambahkan catatan untuk proses approval...",
@@ -448,95 +448,375 @@
     }
   },
   "submitMutationModal": {
-  "title": "Submit Transaksi",
-  "warningMessage": "Transaksi yang sudah disubmit tidak dapat diedit kembali. Pastikan semua aset sudah benar sebelum melanjutkan.",
-  "notes": "Catatan",
-  "optional": "opsional",
-  "notesPlaceholder": "cth. Mohon segera diproses",
-  "cancel": "Batal",
-  "submit": "Submit",
-  "saving": "Menyimpan...",
-  "processing": "Memproses...",
-  "toast": {
-    "success": "Transaksi berhasil disubmit",
-    "errorSubmit": "Gagal submit transaksi",
-    "errorInitiate": "Gagal inisiasi approval"
-  }
-},
-"mutationDetail": {
-  "transactionNumber": "Nomor Transaksi",
-  "transactionType": "Tipe Transaksi",
-  "date": "Tanggal",
-  "category": "Kategori",
-  "targetBranch": "Tujuan Cabang",
-  "createdBy": "Dibuat Oleh",
-  "createdAt": "Dibuat Pada",
-  "updatedAt": "Diupdate Pada",
-  "notes": "Catatan",
-  "assetList": "Daftar Aset",
-  "assets": "aset",
-  "addAsset": "Tambah Aset",
-  "noAssets": "Belum ada aset yang ditambahkan",
-  "category2": "Kategori",
-  "documentNumber": "No. Dokumen",
-  "fromBranch": "Dari Cabang",
-  "toBranch": "Ke Cabang",
-  "stageHistory": "Riwayat Stage",
-  "by": "oleh",
-  "submitTransaction": "Submit Transaksi",
-  "approve": "Approve",
-  "confirmReceiving": "Konfirmasi Terima",
-  "executeTransaction": "Eksekusi Mutasi"
-},
-"menuTable": {
-  "search": "Cari menu...",
-  "assign": "Tetapkan",
-  "create": "Buat",
-  "loading": "Memuat data...",
-  "noData": "Tidak ada data",
-  "show": "Menampilkan",
-  "until": "hingga",
-  "from": "dari",
-  "data": "data",
-  "page": "Halaman",
-  "of": "dari",
-  "columns": {
+    "title": "Submit Transaksi",
+    "warningMessage": "Transaksi yang sudah disubmit tidak dapat diedit kembali. Pastikan semua aset sudah benar sebelum melanjutkan.",
+    "notes": "Catatan",
+    "optional": "opsional",
+    "notesPlaceholder": "cth. Mohon segera diproses",
+    "cancel": "Batal",
+    "submit": "Submit",
+    "saving": "Menyimpan...",
+    "processing": "Memproses...",
+    "toast": {
+      "success": "Transaksi berhasil disubmit",
+      "errorSubmit": "Gagal submit transaksi",
+      "errorInitiate": "Gagal inisiasi approval"
+    }
+  },
+  "mutationDetail": {
+    "transactionNumber": "Nomor Transaksi",
+    "transactionType": "Tipe Transaksi",
+    "date": "Tanggal",
+    "category": "Kategori",
+    "targetBranch": "Tujuan Cabang",
+    "createdBy": "Dibuat Oleh",
+    "createdAt": "Dibuat Pada",
+    "updatedAt": "Diupdate Pada",
+    "notes": "Catatan",
+    "assetList": "Daftar Aset",
+    "assets": "aset",
+    "addAsset": "Tambah Aset",
+    "noAssets": "Belum ada aset yang ditambahkan",
+    "category2": "Kategori",
+    "documentNumber": "No. Dokumen",
+    "fromBranch": "Dari Cabang",
+    "toBranch": "Ke Cabang",
+    "stageHistory": "Riwayat Stage",
+    "by": "oleh",
+    "submitTransaction": "Submit Transaksi",
+    "approve": "Approve",
+    "confirmReceiving": "Konfirmasi Terima",
+    "executeTransaction": "Eksekusi Mutasi"
+  },
+  "menuTable": {
+    "search": "Cari menu...",
+    "assign": "Tetapkan",
+    "create": "Buat",
+    "loading": "Memuat data...",
+    "noData": "Tidak ada data",
+    "show": "Menampilkan",
+    "until": "hingga",
+    "from": "dari",
+    "data": "data",
+    "page": "Halaman",
+    "of": "dari",
+    "columns": {
+      "no": "No",
+      "id": "ID",
+      "parentId": "ID Parent",
+      "menuName": "Nama Menu",
+      "path": "Path",
+      "status": "Status",
+      "action": "Aksi"
+    },
+    "status": {
+      "active": "Aktif",
+      "inactive": "Tidak Aktif"
+    },
+    "actions": {
+      "detail": "Detail",
+      "edit": "Edit",
+      "delete": "Hapus"
+    },
+    "deleteModal": {
+      "title": "Hapus Menu",
+      "description": "Apakah Anda yakin ingin menghapus",
+      "warning": "Tindakan ini tidak dapat dibatalkan.",
+      "cancel": "Batal",
+      "confirm": "Hapus",
+      "deleting": "Menghapus..."
+    }
+  },
+  "attachment": {
+    "modal": {
+      "title": "Tambah Lampiran",
+      "desc": "Unggah dokumen yang diperlukan untuk transaksi ini.",
+      "cancel": "Batal",
+      "submit": "Unggah",
+      "uploading": "Mengunggah...",
+      "empty": "Tidak ada lampiran tersedia untuk tahap ini."
+    },
+    "uploadSuccess": "Lampiran berhasil diunggah.",
+    "uploadError": "Gagal mengunggah lampiran."
+  },
+  "disposalStage": {
+    "sectionTitle": "Progres Stage",
+    "rejected": "Ditolak",
+    "stage": {
+      "DRAFT": "Draft",
+      "PURCHASING": "Purchasing",
+      "APPROVAL_REQUEST": "Approval Request",
+      "APPROVAL_AGREEMENT": "Approval Agreement",
+      "EXECUTE": "Execute",
+      "FINANCE": "Finance",
+      "TAX": "Tax",
+      "ASSET_DELETION": "Asset Deletion",
+      "FINISHED": "Finished",
+      "REJECTED": "Rejected"
+    },
+    "type": {
+      "DISPOSE": "Dispose",
+      "SELL": "Sell"
+    },
+    "openDetail": "Buka status {{stage}}"
+  },
+  "approvalDetail": {
+    "title": "Detail Approval Flow",
+    "loading": "Memuat data...",
+    "yes": "Ya",
+    "no": "Tidak",
+    "info": {
+      "flowCode": "Kode Flow",
+      "approvalWay": "Cara Approval",
+      "assignmentType": "Tipe Assignment",
+      "stepCount": "Jumlah Step",
+      "status": "Status",
+      "active": "Aktif",
+      "inactive": "Nonaktif",
+      "customizable": "Bisa Dikustom",
+      "description": "Deskripsi"
+    },
+    "step": {
+      "no": "No",
+      "order": "Urutan Step",
+      "name": "Nama Step",
+      "role": "Step Role",
+      "roleName": "Nama Role",
+      "type": "Tipe",
+      "category": "Kategori",
+      "approvalWay": "Cara Approval",
+      "structure": "Struktur",
+      "isRequired": "Wajib",
+      "canSkip": "Bisa Di-skip",
+      "isVisible": "Tampil",
+      "action": "Aksi",
+      "update": "Ubah",
+      "delete": "Hapus",
+      "create": "Tambah Step",
+      "reorder": "Atur Urutan",
+      "search": "Cari flow step...",
+      "empty": "Tidak ada data flow step"
+    },
+    "editModal": {
+      "title": "Ubah Approval Step",
+      "subtitle": "Mengubah step: {{name}}",
+      "save": "Simpan Perubahan",
+      "saving": "Menyimpan...",
+      "cancel": "Batal"
+    },
+    "deleteModal": {
+      "title": "Hapus Step",
+      "desc": "Step \"{{name}}\" akan dihapus dari flow ini. Lanjutkan?",
+      "confirm": "Ya, Hapus",
+      "deleting": "Menghapus...",
+      "cancel": "Batal"
+    },
+    "reorderModal": {
+      "title": "Approval Step",
+      "subtitle": "Seret untuk mengatur urutan step approval",
+      "save": "Simpan",
+      "saving": "Menyimpan...",
+      "stepBadge": "Step {{order}}"
+    },
+    "pagination": {
+      "show": "Menampilkan",
+      "until": "sampai",
+      "from": "dari",
+      "data": "data",
+      "page": "Halaman",
+      "of": "dari"
+    },
+    "toast": {
+      "updateSuccess": "Approval step berhasil diubah",
+      "updateError": "Gagal mengubah approval step",
+      "deleteSuccess": "Approval step berhasil dihapus",
+      "deleteError": "Gagal menghapus approval step"
+    },
+    "createStep": {
+      "title": "Tambah Step",
+      "submit": "Simpan Step",
+      "creating": "Menyimpan..."
+    }
+  },
+  "approvalList": {
+    "title": "Approval Flow",
+    "loading": "Memuat data...",
+    "search": "Cari approval flow...",
+    "create": "Tambah",
+    "empty": "Tidak ada data",
+    "viewDetail": "Lihat Detail",
     "no": "No",
-    "id": "ID",
-    "parentId": "ID Parent",
-    "menuName": "Nama Menu",
-    "path": "Path",
+    "flowCode": "Kode Flow",
+    "flowName": "Nama Flow",
+    "assignmentType": "Tipe Assignment",
+    "assignedUser": "User Ditugaskan",
     "status": "Status",
-    "action": "Aksi"
-  },
-  "status": {
+    "createdAt": "Dibuat Pada",
+    "action": "Aksi",
     "active": "Aktif",
-    "inactive": "Tidak Aktif"
-  },
-  "actions": {
-    "detail": "Detail",
-    "edit": "Edit",
+    "inactive": "Nonaktif",
+    "pagination": {
+      "showing": "Menampilkan",
+      "to": "sampai",
+      "of": "dari",
+      "entries": "data",
+      "page": "Halaman",
+      "ofPage": "dari"
+    },
+    "deleteModal": {
+      "title": "Hapus Approval Flow",
+      "desc": "Flow \"{{name}}\" ({{code}}) akan dihapus. Lanjutkan?",
+      "warning": "Transaksi yang lagi jalan approval-nya di flow ini tetap menunjuk ke sini. Kalau nanti kode yang sama dibuat lagi, flow ini beserta step-nya akan dipulihkan.",
+      "confirm": "Ya, Hapus",
+      "deleting": "Menghapus...",
+      "cancel": "Batal",
+      "success": "Approval flow berhasil dihapus",
+      "error": "Gagal menghapus approval flow"
+    },
+    "edit": "Ubah",
     "delete": "Hapus"
   },
-  "deleteModal": {
-    "title": "Hapus Menu",
-    "description": "Apakah Anda yakin ingin menghapus",
-    "warning": "Tindakan ini tidak dapat dibatalkan.",
+  "approvalCreate": {
+    "title": "Tambah Approval Flow",
+    "flowCode": "Kode Flow",
+    "flowCodePlaceholder": "Pilih kode flow...",
+    "flowCodeHelper": "Kode ini dipakai backend untuk mencari flow otomatis — pilih yang sesuai modulnya.",
+    "flowCodeUsed": "sudah dipakai",
+    "flowName": "Nama Flow",
+    "approvalWay": "Cara Approval",
+    "assignmentType": "Tipe Assignment",
+    "assignedUser": "User Ditugaskan",
+    "assignedUserPlaceholder": "Pilih user...",
+    "assignedUserHelper": "Cuma dipakai kalau tipe assignment-nya User Specific.",
+    "creatorRoles": "Role yang Boleh Membuat",
+    "creatorRolesPlaceholder": "Pilih role...",
+    "description": "Deskripsi",
+    "descriptionPlaceholder": "Isi deskripsi...",
+    "descriptionHelper": "Maksimal 500 karakter",
+    "note": "Catatan:",
+    "noteDesc": "Nilai berikut diisi otomatis:",
+    "submit": "Simpan Approval Flow",
+    "creating": "Menyimpan...",
     "cancel": "Batal",
-    "confirm": "Hapus",
-    "deleting": "Menghapus..."
-  }
-},
-"attachment": {
-  "modal": {
-    "title": "Tambah Lampiran",
-    "desc": "Unggah dokumen yang diperlukan untuk transaksi ini.",
-    "cancel": "Batal",
-    "submit": "Unggah",
-    "uploading": "Mengunggah...",
-    "empty": "Tidak ada lampiran tersedia untuk tahap ini."
+    "validation": {
+      "flowCode": "Kode Flow wajib diisi",
+      "flowCodeDuplicate": "Kode flow ini sudah ada untuk branch ALL",
+      "flowName": "Nama Flow wajib diisi",
+      "approvalWay": "Cara Approval wajib diisi",
+      "assignmentType": "Tipe Assignment wajib diisi",
+      "assignedUser": "User Ditugaskan wajib diisi untuk User Specific",
+      "creatorRoles": "Minimal pilih satu role yang boleh membuat",
+      "description": "Deskripsi wajib diisi"
+    }
   },
-  "uploadSuccess": "Lampiran berhasil diunggah.",
-  "uploadError": "Gagal mengunggah lampiran."
-}
+  "approvalEdit": {
+    "title": "Ubah Approval Flow",
+    "submit": "Simpan Perubahan",
+    "saving": "Menyimpan...",
+    "flowCodeLocked": "Kode flow tidak bisa diubah — backend memakainya untuk mencari flow ini otomatis.",
+    "descriptionHelper": "Maksimal 500 karakter. Tidak bisa dikosongkan — backend menganggap nilai kosong sebagai \"tidak diubah\".",
+    "isActive": "Aktif",
+    "isCustomizable": "Bisa Dikustom",
+    "inactiveWarning": "Flow nonaktif akan ditolak saat ada transaksi yang mau memulai approval.",
+    "noChanges": "Belum ada yang diubah",
+    "toast": {
+      "success": "Approval flow berhasil diubah",
+      "error": "Gagal mengubah approval flow"
+    }
+  },
+  "disposalAction": {
+    "submitLabel": "Ajukan",
+    "confirmLabel": "Konfirmasi",
+    "terminal": "Transaksi sudah {{stage}} — tidak ada aksi lanjutan.",
+    "waitingApproval": "Approval sudah diajukan — menunggu approver ({{done}}/{{total}} step selesai).",
+    "submit": {
+      "button": "Submit Transaksi"
+    },
+    "saleValues": {
+      "button": "Input Nilai Jual"
+    },
+    "approvalRequest": {
+      "button": "Ajukan Permohonan Persetujuan",
+      "title": "Ajukan Permohonan Persetujuan",
+      "info": "Normalnya permohonan persetujuan otomatis terbentuk saat draft disubmit. Pakai ini hanya kalau transaksi ini belum punya baris approval. Flow DISPOSAL_APPROVAL_REQUEST akan dijalankan."
+    },
+    "approvalAgreement": {
+      "button": "Ajukan Persetujuan Kesepakatan",
+      "title": "Ajukan Persetujuan Kesepakatan",
+      "info": "Flow DISPOSAL_APPROVAL_AGREEMENT akan dijalankan. Setelah disetujui, transaksi lanjut ke stage Execute."
+    },
+    "execute": {
+      "button": "Eksekusi Disposal",
+      "title": "Eksekusi Disposal",
+      "confirm": "Eksekusi",
+      "info": "Pastikan dokumen penghapusan / hasil jual sudah diupload pada stage Execute sebelum melanjutkan.",
+      "notesLabel": "Catatan eksekusi",
+      "notesPlaceholder": "Catatan pelaksanaan disposal"
+    },
+    "finance": {
+      "button": "Konfirmasi Finance",
+      "title": "Konfirmasi Finance",
+      "info": "Setelah dikonfirmasi, transaksi lanjut ke stage Tax.",
+      "notesLabel": "Catatan finance"
+    },
+    "tax": {
+      "button": "Konfirmasi Pajak",
+      "title": "Konfirmasi Pajak",
+      "info": "Setelah dikonfirmasi, transaksi lanjut ke stage Asset Deletion.",
+      "notesLabel": "Catatan pajak"
+    },
+    "assetDeletion": {
+      "button": "Konfirmasi Penghapusan Aset",
+      "title": "Konfirmasi Penghapusan Aset",
+      "confirm": "Hapus & Selesaikan",
+      "info": "Aset akan dihapus dari daftar aktif dan nomor dokumen penghapusan akan digenerate. Aksi ini menyelesaikan transaksi.",
+      "notesLabel": "Catatan penghapusan"
+    },
+    "reject": {
+      "button": "Tolak",
+      "title": "Tolak Disposal",
+      "info": "Transaksi akan masuk stage Rejected dan aset dikembalikan ke status semula. Aksi ini tidak bisa dibatalkan.",
+      "notesLabel": "Alasan penolakan",
+      "notesPlaceholder": "Jelaskan alasan penolakan"
+    }
+  },
+  "disposalStagePanel": {
+    "showing": "Menampilkan status stage: {{stage}}",
+    "currentStage": "Stage berjalan",
+    "approvalTitle": "Status Persetujuan",
+    "stepsDone": "{{done}}/{{total}} langkah selesai",
+    "notInitiated": "Flow approval belum diajukan",
+    "initiate": "Ajukan Persetujuan",
+    "initiating": "Mengajukan...",
+    "noSteps": "Belum ada langkah approval",
+    "documentsTitle": "Dokumen — {{stage}}",
+    "documentsHint": "Kelengkapan dokumen menentukan apakah transaksi bisa lanjut ke stage berikutnya",
+    "allComplete": "Semua aset lengkap",
+    "someIncomplete": "Ada aset belum lengkap",
+    "noDocuments": "Tidak ada data dokumen untuk stage ini",
+    "historyTitle": "Masuk ke stage ini",
+    "approvalStatus": {
+      "APPROVED": "Disetujui",
+      "PENDING": "Menunggu",
+      "REJECTED": "Ditolak",
+      "SKIPPED": "Dilewati"
+    },
+    "attachmentStatus": {
+      "APPROVED": "Disetujui",
+      "PENDING": "Menunggu review",
+      "REJECTED": "Ditolak"
+    },
+    "card": {
+      "approvedOf": "{{done}}/{{total}} disetujui",
+      "pending": "{{count}} menunggu",
+      "rejected": "{{count}} ditolak",
+      "missing": "{{count}} belum diupload",
+      "complete": "Lengkap",
+      "incomplete": "Belum lengkap",
+      "upload": "Upload",
+      "noUploads": "Belum ada dokumen diupload",
+      "rejectionReason": "Alasan ditolak",
+      "review": "Review"
+    }
+  }
 }

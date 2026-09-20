@@ -25,9 +25,10 @@ export function useCreateApprovalFlow({
     mutationFn: (payload: CreateApprovalFlowRequest) => createApprovalFlow(payload),
 
     onSuccess: (data) => {
-      // Invalidate approval list query
+      // FIX: query key-nya 'approval-flow-list' (lihat hooks/query/approval/list.ts),
+      // sebelumnya 'approval-list' sehingga daftar tidak pernah ikut refresh
       queryClient.invalidateQueries({
-        queryKey: ['approval-list'],
+        queryKey: ['approval-flow-list'],
       })
 
       // Show success notification

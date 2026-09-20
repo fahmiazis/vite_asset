@@ -20,15 +20,16 @@ import type { FlowStep } from '../../../models/approval/detail'
 import { Menu01Icon } from 'hugeicons-react'
 import { useSwitchStepApproval } from '../../../hooks/mutation/approval/useSwitchStepApproval'
 import { useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 interface ReorderStepModalProps {
   isOpen: boolean
   onClose: () => void
   flowSteps: FlowStep[]
-  onSave?: (reorderedIds: string[]) => void
 }
 
 function SortableStepItem({ step }: { step: FlowStep }) {
+  const { t } = useTranslation()
   const {
     attributes,
     listeners,
@@ -66,7 +67,7 @@ function SortableStepItem({ step }: { step: FlowStep }) {
         </p>
       </div>
       <span className="text-xs font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 px-2 py-1 rounded">
-        Step {step.step_order}
+        {t('approvalDetail.reorderModal.stepBadge', { order: step.step_order })}
       </span>
     </div>
   )
@@ -76,9 +77,9 @@ export default function ReorderStepModal({
   isOpen,
   onClose,
   flowSteps,
-  onSave,
 }: ReorderStepModalProps) {
   const { id } = useParams()
+  const { t } = useTranslation()
 
   const [steps, setSteps] = useState<FlowStep[]>(flowSteps)
 
@@ -111,44 +112,17 @@ export default function ReorderStepModal({
     }
   }
 
-  const { mutate, isPending, isSuccess, isError } =
-    useSwitchStepApproval(id || '');
+  const { mutate, isPending } = useSwitchStepApproval(id || '');
 
   const handleSubmit = () => {
     if (!id) return;
 
-    const reorderedIds = steps.map((step) => step.id);
-
+    // Urutan baru = posisi di list_ids; backend menulis step_order = index + 1
     mutate(
-      {
-        stepId: id,
-        payload: {
-          list_ids: reorderedIds,
-        },
-      },
-      {
-        onSuccess: () => {
-          onClose?.();
-        },
-        onError: (error) => {
-          console.error(error);
-        },
-      }
+      { list_ids: steps.map((step) => step.id) },
+      { onSuccess: () => onClose?.() }
     );
   };
-
-
-  const handleSave = () => {
-    const reorderedIds = steps.map((step) => step.id)
-    console.log('Reordered Step IDs:', reorderedIds)
-    console.log('Reordered Steps with new order:', steps)
-
-    if (onSave) {
-      onSave(reorderedIds)
-    }
-
-    onClose()
-  }
 
   const handleClose = () => {
     setSteps(flowSteps)
@@ -170,10 +144,10 @@ export default function ReorderStepModal({
         {/* Header */}
         <div className="text-center mb-6">
           <h2 className="text-2xl font-bold text-blue-900 dark:text-blue-100">
-            Approval Step
+            {t('approvalDetail.reorderModal.title')}
           </h2>
           <p className="text-xs text-blue-700 dark:text-blue-300 mt-1">
-            Drag to reorder the approval steps
+            {t('approvalDetail.reorderModal.subtitle')}
           </p>
         </div>
 
@@ -200,7 +174,9 @@ export default function ReorderStepModal({
           onClick={handleSubmit}
           className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-200 shadow-md hover:shadow-lg border-2 border-blue-700 dark:border-blue-500"
         >
-          {isPending ? 'Loading....' : 'Save'}
+          {isPending
+            ? t('approvalDetail.reorderModal.saving')
+            : t('approvalDetail.reorderModal.save')}
         </button>
       </div>
     </div>

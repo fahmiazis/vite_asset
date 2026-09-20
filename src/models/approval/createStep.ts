@@ -5,7 +5,8 @@ export interface CreateFlowStepRequest {
   step_role: string
   role_id: string
   structure: string
-  isRequired: boolean
+  is_required: boolean
+  can_skip: boolean
   is_visible: boolean
   type: string
   category: string

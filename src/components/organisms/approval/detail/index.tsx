@@ -8,9 +8,10 @@ import {
   type SortingState,
   type ColumnFiltersState,
 } from '@tanstack/react-table'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { flowStepColumns } from './column'
+import { useTranslation } from 'react-i18next'
+import { buildFlowStepColumns, type FlowStepColumnHandlers } from './column'
 import type { FlowStep } from '../../../../models/approval/detail'
 
 interface FlowStepTableProps {
@@ -18,10 +19,17 @@ interface FlowStepTableProps {
   isLoading?: boolean
   flowId?: string
   switchBtn?: () => void
+  handlers: FlowStepColumnHandlers
 }
 
-export function FlowStepTable({ data, isLoading, flowId, switchBtn }: FlowStepTableProps) {
+export function FlowStepTable({ data, isLoading, flowId, switchBtn, handlers }: FlowStepTableProps) {
   const navigate = useNavigate()
+  const { t } = useTranslation()
+
+  const flowStepColumns = useMemo(
+    () => buildFlowStepColumns(t, handlers),
+    [t, handlers]
+  )
 
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -54,7 +62,7 @@ export function FlowStepTable({ data, isLoading, flowId, switchBtn }: FlowStepTa
       <div className="flex items-center justify-center h-64">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading data...</p>
+          <p className="mt-4 text-gray-600">{t('approvalDetail.loading')}</p>
         </div>
       </div>
     )
@@ -67,7 +75,7 @@ export function FlowStepTable({ data, isLoading, flowId, switchBtn }: FlowStepTa
         <div className="flex items-center gap-4">
           <input
             type="text"
-            placeholder="Search Flow Step..."
+            placeholder={t('approvalDetail.step.search')}
             value={globalFilter ?? ''}
             onChange={(e) => setGlobalFilter(e.target.value)}
             className="px-4 py-2 border border-gray-900 dark:border-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-sm"
@@ -79,14 +87,14 @@ export function FlowStepTable({ data, isLoading, flowId, switchBtn }: FlowStepTa
               onClick={switchBtn}
               className="px-4 py-2 text-xs font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >
-              Switch
+              {t('approvalDetail.step.reorder')}
             </button>
           )}
           <button
             onClick={() => navigate(`/dashboard/approval/${flowId}/create-step`)}
             className="px-4 py-2 text-xs font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
-            Create Step
+            {t('approvalDetail.step.create')}
           </button>
         </section>
       </section>
@@ -136,7 +144,7 @@ export function FlowStepTable({ data, isLoading, flowId, switchBtn }: FlowStepTa
                   colSpan={flowStepColumns.length}
                   className="px-6 py-4 text-center"
                 >
-                  Tidak ada data flow step
+                  {t('approvalDetail.step.empty')}
                 </td>
               </tr>
             )}
@@ -147,13 +155,13 @@ export function FlowStepTable({ data, isLoading, flowId, switchBtn }: FlowStepTa
       {/* Pagination */}
       <div className="flex items-center justify-between">
         <div className="text-xs">
-          Show{' '}
+          {t('approvalDetail.pagination.show')}{' '}
           <span className="font-medium">
             {table.getState().pagination.pageIndex *
               table.getState().pagination.pageSize +
               1}
           </span>{' '}
-          Until{' '}
+          {t('approvalDetail.pagination.until')}{' '}
           <span className="font-medium">
             {Math.min(
               (table.getState().pagination.pageIndex + 1) *
@@ -161,11 +169,11 @@ export function FlowStepTable({ data, isLoading, flowId, switchBtn }: FlowStepTa
               table.getFilteredRowModel().rows.length
             )}
           </span>{' '}
-          From{' '}
+          {t('approvalDetail.pagination.from')}{' '}
           <span className="font-medium">
             {table.getFilteredRowModel().rows.length}
           </span>{' '}
-          data
+          {t('approvalDetail.pagination.data')}
         </div>
 
         <div className="flex items-center gap-2">
@@ -185,9 +193,9 @@ export function FlowStepTable({ data, isLoading, flowId, switchBtn }: FlowStepTa
           </button>
 
           <span className="text-xs">
-            Page{' '}
+            {t('approvalDetail.pagination.page')}{' '}
             <strong>
-              {table.getState().pagination.pageIndex + 1} From{' '}
+              {table.getState().pagination.pageIndex + 1} {t('approvalDetail.pagination.of')}{' '}
               {table.getPageCount()}
             </strong>
           </span>
