@@ -542,7 +542,22 @@
   "stockOpnamePage": {
     "title": "库存盘点",
     "createButton": "+ 新建库存盘点",
-    "reportButton": "报表"
+    "reportButton": "报表",
+    "configButton": "配置"
+  },
+  "stockOpnameConfigPage": {
+    "title": "库存盘点配置",
+    "subtitle": "设置每月库存盘点提交日期窗口",
+    "back": "返回",
+    "windowSectionTitle": "提交窗口",
+    "startDayLabel": "开始日期",
+    "endDayLabel": "结束日期",
+    "hint": "库存盘点仍可随时提交——此窗口仅用于标记提交是否按时（显示在详情页）。",
+    "wrapHint": "结束日期小于开始日期，此窗口会自动跨到下个月。",
+    "save": "保存",
+    "saving": "保存中...",
+    "lastUpdated": "最后更新",
+    "notYetUpdated": "尚未更新"
   },
   "createStockOpnamePage": {
     "title": "新建库存盘点",
@@ -566,6 +581,9 @@
     "createdBy": "创建人",
     "createdAt": "创建时间",
     "updatedAt": "更新时间",
+    "submissionStatus": "提交状态",
+    "onSchedule": "按时提交",
+    "lateSchedule": "逾期提交",
     "notes": "备注",
     "assetList": "资产清单",
     "assets": "项资产",

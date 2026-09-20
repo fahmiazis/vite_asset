@@ -542,7 +542,22 @@
   "stockOpnamePage": {
     "title": "Stock Opname",
     "createButton": "+ Buat Stock Opname",
-    "reportButton": "Report"
+    "reportButton": "Report",
+    "configButton": "Config"
+  },
+  "stockOpnameConfigPage": {
+    "title": "Config Stock Opname",
+    "subtitle": "Atur jendela tanggal submit stock opname tiap bulan",
+    "back": "Kembali",
+    "windowSectionTitle": "Jendela Submit",
+    "startDayLabel": "Tanggal Mulai",
+    "endDayLabel": "Tanggal Akhir",
+    "hint": "Stock opname tetap bisa disubmit kapan saja — jendela ini cuma dipakai buat menandai apakah submit-nya tepat jadwal atau enggak (tampil di halaman detail).",
+    "wrapHint": "Tanggal akhir lebih kecil dari tanggal mulai, jadi jendela ini otomatis nyambung ke bulan berikutnya.",
+    "save": "Simpan",
+    "saving": "Menyimpan...",
+    "lastUpdated": "Terakhir diubah",
+    "notYetUpdated": "Belum pernah diubah"
   },
   "createStockOpnamePage": {
     "title": "Buat Stock Opname",
@@ -566,6 +581,9 @@
     "createdBy": "Dibuat Oleh",
     "createdAt": "Dibuat Pada",
     "updatedAt": "Diupdate Pada",
+    "submissionStatus": "Status Submit",
+    "onSchedule": "Tepat Jadwal",
+    "lateSchedule": "Di Luar Jadwal",
     "notes": "Catatan",
     "assetList": "Daftar Aset",
     "assets": "aset",

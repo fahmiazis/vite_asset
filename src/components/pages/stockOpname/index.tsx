@@ -19,6 +19,12 @@ export default function StockOpnamePage() {
         <h6 className="text-3xl font-bold">{t("stockOpnamePage.title")}</h6>
         <div className="flex items-center gap-2">
           <button
+            onClick={() => navigate("/dashboard/stock-opname/config")}
+            className="px-4 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          >
+            {t("stockOpnamePage.configButton", "Config")}
+          </button>
+          <button
             onClick={() => navigate("/dashboard/stock-opname/report")}
             className="px-4 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
           >

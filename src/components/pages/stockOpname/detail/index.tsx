@@ -35,6 +35,7 @@ export default function StockOpnameDetailPage() {
   const navigate = useNavigate()
   const { t } = useTranslation()
   const { data, isLoading } = useStockOpnameDetail(id ?? "")
+  const isSubmissive = data?.data?.is_submissive ?? null
 
   const [showUploadTemplate, setShowUploadTemplate] = useState(false)
   const [findingItem, setFindingItem] = useState<StockOpnameItem | null>(null)
@@ -140,6 +141,14 @@ export default function StockOpnameDetailPage() {
               <p className="text-sm font-medium text-gray-800 dark:text-gray-200">{item.value}</p>
             </div>
           ))}
+          {isSubmissive !== null && (
+            <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
+              <p className="text-xs text-gray-400 mb-1">{t("stockOpnameDetail.submissionStatus")}</p>
+              <p className={`text-sm font-medium ${isSubmissive ? "text-emerald-600 dark:text-emerald-400" : "text-red-600 dark:text-red-400"}`}>
+                {isSubmissive ? t("stockOpnameDetail.onSchedule") : t("stockOpnameDetail.lateSchedule")}
+              </p>
+            </div>
+          )}
         </div>
 
         {transaction.notes && (

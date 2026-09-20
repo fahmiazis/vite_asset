@@ -542,7 +542,22 @@
   "stockOpnamePage": {
     "title": "Kiểm Kê Tài Sản",
     "createButton": "+ Tạo Kiểm Kê Tài Sản",
-    "reportButton": "Báo cáo"
+    "reportButton": "Báo cáo",
+    "configButton": "Cấu Hình"
+  },
+  "stockOpnameConfigPage": {
+    "title": "Cấu Hình Kiểm Kê Tài Sản",
+    "subtitle": "Thiết lập khung ngày nộp kiểm kê tài sản hàng tháng",
+    "back": "Quay Lại",
+    "windowSectionTitle": "Khung Thời Gian Nộp",
+    "startDayLabel": "Ngày Bắt Đầu",
+    "endDayLabel": "Ngày Kết Thúc",
+    "hint": "Kiểm kê tài sản vẫn có thể được nộp bất cứ lúc nào — khung thời gian này chỉ dùng để đánh dấu việc nộp có đúng hạn hay không (hiển thị ở trang chi tiết).",
+    "wrapHint": "Ngày kết thúc nhỏ hơn ngày bắt đầu, nên khung này tự động kéo dài sang tháng sau.",
+    "save": "Lưu",
+    "saving": "Đang lưu...",
+    "lastUpdated": "Cập nhật lần cuối",
+    "notYetUpdated": "Chưa từng cập nhật"
   },
   "createStockOpnamePage": {
     "title": "Tạo Kiểm Kê Tài Sản",
@@ -566,6 +581,9 @@
     "createdBy": "Người Tạo",
     "createdAt": "Ngày Tạo",
     "updatedAt": "Cập Nhật Lúc",
+    "submissionStatus": "Trạng Thái Nộp",
+    "onSchedule": "Đúng Hạn",
+    "lateSchedule": "Trễ Hạn",
     "notes": "Ghi Chú",
     "assetList": "Danh Sách Tài Sản",
     "assets": "tài sản",

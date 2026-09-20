@@ -542,7 +542,22 @@
   "stockOpnamePage": {
     "title": "Stock Opname",
     "createButton": "+ Create Stock Opname",
-    "reportButton": "Report"
+    "reportButton": "Report",
+    "configButton": "Config"
+  },
+  "stockOpnameConfigPage": {
+    "title": "Stock Opname Config",
+    "subtitle": "Set the monthly stock opname submission date window",
+    "back": "Back",
+    "windowSectionTitle": "Submission Window",
+    "startDayLabel": "Start Day",
+    "endDayLabel": "End Day",
+    "hint": "Stock opnames can still be submitted anytime — this window is only used to flag whether a submission was on schedule or not (shown on the detail page).",
+    "wrapHint": "The end day is smaller than the start day, so this window automatically wraps into the next month.",
+    "save": "Save",
+    "saving": "Saving...",
+    "lastUpdated": "Last updated",
+    "notYetUpdated": "Never updated"
   },
   "createStockOpnamePage": {
     "title": "Create Stock Opname",
@@ -566,6 +581,9 @@
     "createdBy": "Created By",
     "createdAt": "Created At",
     "updatedAt": "Updated At",
+    "submissionStatus": "Submission Status",
+    "onSchedule": "On Schedule",
+    "lateSchedule": "Off Schedule",
     "notes": "Notes",
     "assetList": "Asset List",
     "assets": "assets",

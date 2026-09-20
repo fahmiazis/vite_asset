@@ -56,6 +56,9 @@ export interface StockOpnameDetailState {
   transaction: StockOpnameTransaction
   items: StockOpnameItem[]
   stages: StockOpnameStage[]
+  // null = belum pernah disubmit. Diisi pas submit, bukan pas draft dibuat —
+  // nandain apakah submit-nya masuk jendela StockOpnameConfig atau enggak.
+  is_submissive: boolean | null
 }
 
 export interface stockOpnameDetailProps {
