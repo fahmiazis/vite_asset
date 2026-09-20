@@ -152,6 +152,21 @@ export default function StockOpnameFillPage() {
     }
   }, [bulkUpdate, assetNumberToId])
 
+  // Dokumen peminjaman kesimpen lewat endpoint upload terpisah (bukan lewat
+  // bulk-update-finding), tapi validasi "wajib ada dokumen" terjadi pas
+  // physical_status=BORROWED disimpan. Kalau user pilih "Dipinjam" duluan
+  // sebelum dokumennya keupload, autosave bakal gagal & pending fieldnya
+  // ke-drop (lihat flush) — begitu dokumen kelar diupload, re-queue &
+  // langsung coba simpan ulang biar gak nunggu interval berikutnya.
+  const handleBorrowDocumentUploaded = useCallback((assetId: number) => {
+    pendingRef.current[assetId] = {
+      ...pendingRef.current[assetId],
+      physical_status: "BORROWED",
+      condition: "NOT_APPLICABLE",
+    }
+    flush()
+  }, [flush])
+
   useEffect(() => {
     const interval = setInterval(flush, AUTOSAVE_INTERVAL_MS)
     return () => {
@@ -269,6 +284,7 @@ export default function StockOpnameFillPage() {
                   t("stockOpnameFillPage.columnAsset"),
                   t("stockOpnameFillPage.columnCategory"),
                   t("stockOpnameFillPage.columnPhysicalStatus"),
+                  t("stockOpnameFillPage.columnBorrowDocument"),
                   t("stockOpnameFillPage.columnCondition"),
                   t("stockOpnameFillPage.columnAssetStatus"),
                   t("stockOpnameFillPage.columnNotes"),
@@ -294,6 +310,7 @@ export default function StockOpnameFillPage() {
                   error={rowErrors[item.asset_id]}
                   t={t}
                   onFieldChange={handleFieldChange}
+                  onBorrowDocumentUploaded={handleBorrowDocumentUploaded}
                 />
               ))}
             </tbody>

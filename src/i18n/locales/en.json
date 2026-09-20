@@ -607,8 +607,13 @@
     "physicalStatusPlaceholder": "Select physical status",
     "physicalStatusOptions": {
       "exists": "Exists",
-      "missing": "Missing"
+      "missing": "Missing",
+      "borrowed": "Borrowed"
     },
+    "borrowDocument": "Loan Document",
+    "borrowDocumentHint": "PDF, required for assets currently on loan",
+    "borrowDocumentPlaceholder": "Choose PDF file",
+    "borrowDocumentUploading": "Uploading...",
     "condition": "Condition",
     "conditionPlaceholder": "Select condition",
     "conditionOptions": {
@@ -634,7 +639,8 @@
     "submit": "Save Finding",
     "submitting": "Saving...",
     "toast": {
-      "required": "Physical status and condition are required"
+      "required": "Physical status and condition are required",
+      "borrowDocumentRequired": "A loan document (PDF) is required for Borrowed status"
     }
   },
   "submitStockOpnameModal": {
@@ -787,6 +793,7 @@
     "columnCondition": "Condition",
     "columnAssetStatus": "Asset Status",
     "columnNotes": "Notes",
+    "columnBorrowDocument": "Loan Doc.",
     "selectPlaceholder": "-",
     "notesPlaceholder": "Notes...",
     "unsavedBadge": "unsaved",
@@ -912,5 +919,12 @@
     "capturedOn": "Captured",
     "clickToReplace": "click to replace",
     "uploadTooltip": "No photo yet — click to upload"
+  },
+  "stockOpnameBorrowDocument": {
+    "label": "Loan Document",
+    "uploadCta": "Upload Document",
+    "hint": "PDF, required for assets with Borrowed status",
+    "clickToReplace": "click to replace",
+    "uploadTooltip": "No document yet — click to upload"
   }
 }

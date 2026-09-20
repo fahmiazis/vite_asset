@@ -4,7 +4,14 @@ export function getPhysicalStatusOptions(t: TFunction) {
   return [
     { value: "EXISTS", label: t("stockOpnameFindingModal.physicalStatusOptions.exists") },
     { value: "MISSING", label: t("stockOpnameFindingModal.physicalStatusOptions.missing") },
+    { value: "BORROWED", label: t("stockOpnameFindingModal.physicalStatusOptions.borrowed") },
   ]
+}
+
+// Status fisik yang berarti asetnya gak ada di lokasi buat dicek -> kondisi
+// gak relevan dinilai, dipaksa NOT_APPLICABLE (dipakai modal & grid "Lengkapi Data").
+export function isPhysicalStatusAbsent(physicalStatus: string) {
+  return physicalStatus === "MISSING" || physicalStatus === "BORROWED"
 }
 
 export function getConditionOptions(t: TFunction) {

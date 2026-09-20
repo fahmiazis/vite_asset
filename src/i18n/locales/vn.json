@@ -607,8 +607,13 @@
     "physicalStatusPlaceholder": "Chọn trạng thái vật lý",
     "physicalStatusOptions": {
       "exists": "Còn",
-      "missing": "Mất"
+      "missing": "Mất",
+      "borrowed": "Đang mượn"
     },
+    "borrowDocument": "Tài liệu mượn",
+    "borrowDocumentHint": "PDF, bắt buộc đối với tài sản đang được mượn",
+    "borrowDocumentPlaceholder": "Chọn file PDF",
+    "borrowDocumentUploading": "Đang tải lên...",
     "condition": "Tình Trạng",
     "conditionPlaceholder": "Chọn tình trạng",
     "conditionOptions": {
@@ -634,7 +639,8 @@
     "submit": "Lưu Kết Quả",
     "submitting": "Đang lưu...",
     "toast": {
-      "required": "Trạng thái vật lý và tình trạng là bắt buộc"
+      "required": "Trạng thái vật lý và tình trạng là bắt buộc",
+      "borrowDocumentRequired": "Tài liệu mượn (PDF) là bắt buộc đối với trạng thái Đang mượn"
     }
   },
   "submitStockOpnameModal": {
@@ -787,6 +793,7 @@
     "columnCondition": "Tình Trạng",
     "columnAssetStatus": "Trạng Thái Tài Sản",
     "columnNotes": "Ghi Chú",
+    "columnBorrowDocument": "Tài Liệu Mượn",
     "selectPlaceholder": "-",
     "notesPlaceholder": "Ghi chú...",
     "unsavedBadge": "chưa lưu",
@@ -912,5 +919,12 @@
     "capturedOn": "Chụp lúc",
     "clickToReplace": "bấm để thay",
     "uploadTooltip": "Chưa có ảnh — bấm để tải lên"
+  },
+  "stockOpnameBorrowDocument": {
+    "label": "Tài Liệu Mượn",
+    "uploadCta": "Tải Tài Liệu Lên",
+    "hint": "PDF, bắt buộc đối với tài sản có trạng thái Đang mượn",
+    "clickToReplace": "bấm để thay",
+    "uploadTooltip": "Chưa có tài liệu — bấm để tải lên"
   }
 }

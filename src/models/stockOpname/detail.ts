@@ -32,6 +32,9 @@ export interface StockOpnameItem {
   photo_id?: number | null
   photo_url?: string | null
   photo_captured_at?: string | null
+  borrow_document_id?: number | null
+  borrow_document_url?: string | null
+  borrow_document_file_name?: string | null
   created_at: string
   updated_at: string
 }

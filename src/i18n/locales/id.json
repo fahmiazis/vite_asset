@@ -607,8 +607,13 @@
     "physicalStatusPlaceholder": "Pilih status fisik",
     "physicalStatusOptions": {
       "exists": "Ada",
-      "missing": "Tidak Ada"
+      "missing": "Tidak Ada",
+      "borrowed": "Dipinjam"
     },
+    "borrowDocument": "Dokumen Peminjaman",
+    "borrowDocumentHint": "PDF, wajib diisi untuk aset yang sedang dipinjam",
+    "borrowDocumentPlaceholder": "Pilih file PDF",
+    "borrowDocumentUploading": "Mengupload...",
     "condition": "Kondisi",
     "conditionPlaceholder": "Pilih kondisi",
     "conditionOptions": {
@@ -634,7 +639,8 @@
     "submit": "Simpan Temuan",
     "submitting": "Menyimpan...",
     "toast": {
-      "required": "Status fisik dan kondisi wajib diisi"
+      "required": "Status fisik dan kondisi wajib diisi",
+      "borrowDocumentRequired": "Dokumen peminjaman (PDF) wajib diupload untuk status Dipinjam"
     }
   },
   "submitStockOpnameModal": {
@@ -787,6 +793,7 @@
     "columnCondition": "Kondisi",
     "columnAssetStatus": "Status Aset",
     "columnNotes": "Catatan",
+    "columnBorrowDocument": "Dok. Peminjaman",
     "selectPlaceholder": "-",
     "notesPlaceholder": "Catatan...",
     "unsavedBadge": "belum tersimpan",
@@ -912,5 +919,12 @@
     "capturedOn": "Diambil",
     "clickToReplace": "klik buat ganti",
     "uploadTooltip": "Belum ada foto — klik buat upload"
+  },
+  "stockOpnameBorrowDocument": {
+    "label": "Dokumen Peminjaman",
+    "uploadCta": "Upload Dokumen",
+    "hint": "PDF, wajib untuk aset berstatus Dipinjam",
+    "clickToReplace": "klik buat ganti",
+    "uploadTooltip": "Belum ada dokumen — klik buat upload"
   }
 }

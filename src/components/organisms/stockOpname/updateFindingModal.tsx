@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, type ChangeEvent } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 import { useUpdateStockOpnameFinding } from "../../../hooks/mutation/stockOpname/updateFinding"
+import { useUploadStockOpnameBorrowDocument } from "../../../hooks/mutation/stockOpname/uploadBorrowDocument"
 import type { StockOpnameItem } from "../../../models/stockOpname/detail"
-import { getPhysicalStatusOptions, getConditionOptions, getAssetStatusOptions } from "./findingOptions"
+import { getPhysicalStatusOptions, getConditionOptions, getAssetStatusOptions, isPhysicalStatusAbsent } from "./findingOptions"
 import { PhotoUploadField } from "./photoUploadField"
 
 type UpdateStockOpnameFindingModalProps = {
@@ -24,32 +25,56 @@ export function UpdateStockOpnameFindingModal({
   const [condition, setCondition] = useState(item.found_condition ?? "")
   const [assetStatus, setAssetStatus] = useState(item.found_asset_status ?? "")
   const [notes, setNotes] = useState(item.notes ?? "")
+  // Nama file dokumen peminjaman yang sudah kesimpen di server — dipakai
+  // buat validasi "wajib ada" & ditampilin di UI. Diseed dari snapshot item
+  // (kalau sebelumnya udah pernah upload), lalu diupdate optimis begitu
+  // upload baru sukses.
+  const [borrowDocumentName, setBorrowDocumentName] = useState<string | null>(
+    item.borrow_document_file_name ?? null
+  )
 
   const { mutate: updateFinding, isPending } = useUpdateStockOpnameFinding({ transactionNumber })
+  const { mutate: uploadBorrowDocument, isPending: isUploadingBorrowDocument } =
+    useUploadStockOpnameBorrowDocument({ transactionNumber })
 
-  const isMissing = physicalStatus === "MISSING"
+  const isAbsent = isPhysicalStatusAbsent(physicalStatus)
+  const isBorrowed = physicalStatus === "BORROWED"
 
-  // Fisik "Tidak Ada" -> Kondisi otomatis "Tidak Ada" dan terkunci, karena
-  // kondisi gak relevan buat dinilai kalau barangnya gak ada. Balik ke
-  // "Ada" -> kondisi direset supaya user pilih ulang yang sesuai.
+  // Fisik "Tidak Ada"/"Dipinjam" -> Kondisi otomatis "Tidak Ada" dan terkunci,
+  // karena kondisi gak relevan buat dinilai kalau barangnya gak ada di lokasi.
+  // Balik ke "Ada" -> kondisi direset supaya user pilih ulang yang sesuai.
   useEffect(() => {
-    if (isMissing) {
+    if (isAbsent) {
       setCondition("NOT_APPLICABLE")
     } else {
       setCondition((prev) => (prev === "NOT_APPLICABLE" ? "" : prev))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isMissing])
+  }, [isAbsent])
+
+  const handleBorrowDocumentChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    uploadBorrowDocument(
+      { assetId: item.asset_id, file },
+      { onSuccess: () => setBorrowDocumentName(file.name) }
+    )
+    e.target.value = ""
+  }
 
   const physicalStatusOptions = getPhysicalStatusOptions(t)
   const conditionOptions = getConditionOptions(t).filter(
-    (opt) => isMissing || opt.value !== "NOT_APPLICABLE"
+    (opt) => isAbsent || opt.value !== "NOT_APPLICABLE"
   )
   const assetStatusOptions = getAssetStatusOptions(t)
 
   const handleSubmit = () => {
     if (!physicalStatus || !condition) {
       toast.error(t("stockOpnameFindingModal.toast.required"))
+      return
+    }
+    if (isBorrowed && !borrowDocumentName) {
+      toast.error(t("stockOpnameFindingModal.toast.borrowDocumentRequired"))
       return
     }
 
@@ -122,6 +147,26 @@ export function UpdateStockOpnameFindingModal({
             </select>
           </div>
 
+          {isBorrowed && (
+            <div className="space-y-1.5">
+              <label className="block text-xs font-medium text-gray-700 dark:text-gray-300">
+                {t("stockOpnameFindingModal.borrowDocument")} <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="file"
+                accept="application/pdf"
+                disabled={isPending || isUploadingBorrowDocument}
+                onChange={handleBorrowDocumentChange}
+                className="w-full text-xs text-gray-600 dark:text-gray-300 file:mr-3 file:px-3 file:py-1.5 file:rounded-lg file:border-0 file:text-xs file:font-medium file:bg-indigo-50 file:text-indigo-600 dark:file:bg-indigo-500/10 dark:file:text-indigo-400 hover:file:bg-indigo-100 disabled:opacity-50"
+              />
+              <p className="text-[11px] text-gray-400">
+                {isUploadingBorrowDocument
+                  ? t("stockOpnameFindingModal.borrowDocumentUploading")
+                  : borrowDocumentName ?? t("stockOpnameFindingModal.borrowDocumentHint")}
+              </p>
+            </div>
+          )}
+
           <div className="space-y-1.5">
             <label className="block text-xs font-medium text-gray-700 dark:text-gray-300">
               {t("stockOpnameFindingModal.condition")} <span className="text-red-500">*</span>
@@ -129,7 +174,7 @@ export function UpdateStockOpnameFindingModal({
             <select
               value={condition}
               onChange={(e) => setCondition(e.target.value)}
-              disabled={isPending || isMissing}
+              disabled={isPending || isAbsent}
               className="w-full px-3 py-2.5 text-sm border border-gray-300 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
             >
               <option value="">{t("stockOpnameFindingModal.conditionPlaceholder")}</option>
@@ -183,7 +228,7 @@ export function UpdateStockOpnameFindingModal({
           </button>
           <button
             onClick={handleSubmit}
-            disabled={isPending || !physicalStatus || !condition}
+            disabled={isPending || !physicalStatus || !condition || (isBorrowed && !borrowDocumentName)}
             className="flex-1 px-4 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isPending ? t("stockOpnameFindingModal.submitting") : t("stockOpnameFindingModal.submit")}

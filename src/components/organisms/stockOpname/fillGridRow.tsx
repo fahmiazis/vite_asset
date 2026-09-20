@@ -1,7 +1,8 @@
 import { memo } from "react"
 import type { TFunction } from "i18next"
-import { getPhysicalStatusOptions, getConditionOptions, getAssetStatusOptions } from "./findingOptions"
+import { getPhysicalStatusOptions, getConditionOptions, getAssetStatusOptions, isPhysicalStatusAbsent } from "./findingOptions"
 import { PhotoUploadField } from "./photoUploadField"
+import { BorrowDocumentUploadField } from "./borrowDocumentUploadField"
 import type { StockOpnameItem } from "../../../models/stockOpname/detail"
 
 export interface FillRowState {
@@ -21,6 +22,7 @@ interface StockOpnameFillGridRowProps {
   error?: string
   t: TFunction
   onFieldChange: (assetId: number, field: FillFieldName, value: string) => void
+  onBorrowDocumentUploaded: (assetId: number) => void
 }
 
 const cellClass = "border border-gray-200 dark:border-gray-800 px-2 py-1 align-top"
@@ -35,9 +37,11 @@ function StockOpnameFillGridRowInner({
   error,
   t,
   onFieldChange,
+  onBorrowDocumentUploaded,
 }: StockOpnameFillGridRowProps) {
-  const isMissing = state.physical_status === "MISSING"
-  const conditionOptions = getConditionOptions(t).filter((opt) => isMissing || opt.value !== "NOT_APPLICABLE")
+  const isAbsent = isPhysicalStatusAbsent(state.physical_status)
+  const isBorrowed = state.physical_status === "BORROWED"
+  const conditionOptions = getConditionOptions(t).filter((opt) => isAbsent || opt.value !== "NOT_APPLICABLE")
 
   return (
     <tr
@@ -78,11 +82,23 @@ function StockOpnameFillGridRowInner({
           ))}
         </select>
       </td>
+      <td className={`${cellClass} w-14`}>
+        {isBorrowed ? (
+          <BorrowDocumentUploadField
+            transactionNumber={transactionNumber}
+            assetId={item.asset_id}
+            fileName={item.borrow_document_file_name}
+            onUploaded={() => onBorrowDocumentUploaded(item.asset_id)}
+          />
+        ) : (
+          <span className="block text-center text-gray-300 dark:text-gray-700">-</span>
+        )}
+      </td>
       <td className={`${cellClass} min-w-[100px]`}>
         <select
           value={state.condition}
           onChange={(e) => onFieldChange(item.asset_id, "condition", e.target.value)}
-          disabled={isMissing}
+          disabled={isAbsent}
           className={`${inputClass} disabled:opacity-50`}
         >
           <option value="">{t("stockOpnameFillPage.selectPlaceholder")}</option>

@@ -607,8 +607,13 @@
     "physicalStatusPlaceholder": "选择实物状态",
     "physicalStatusOptions": {
       "exists": "存在",
-      "missing": "遗失"
+      "missing": "遗失",
+      "borrowed": "借出"
     },
+    "borrowDocument": "借用文件",
+    "borrowDocumentHint": "PDF,状态为借出时必填",
+    "borrowDocumentPlaceholder": "选择PDF文件",
+    "borrowDocumentUploading": "上传中...",
     "condition": "状态",
     "conditionPlaceholder": "选择状态",
     "conditionOptions": {
@@ -634,7 +639,8 @@
     "submit": "保存结果",
     "submitting": "保存中...",
     "toast": {
-      "required": "实物状态和状态为必填项"
+      "required": "实物状态和状态为必填项",
+      "borrowDocumentRequired": "状态为借出时必须上传借用文件(PDF)"
     }
   },
   "submitStockOpnameModal": {
@@ -787,6 +793,7 @@
     "columnCondition": "状态",
     "columnAssetStatus": "资产状态",
     "columnNotes": "备注",
+    "columnBorrowDocument": "借用文件",
     "selectPlaceholder": "-",
     "notesPlaceholder": "备注...",
     "unsavedBadge": "未保存",
@@ -912,5 +919,12 @@
     "capturedOn": "拍摄于",
     "clickToReplace": "点击更换",
     "uploadTooltip": "尚无照片 — 点击上传"
+  },
+  "stockOpnameBorrowDocument": {
+    "label": "借用文件",
+    "uploadCta": "上传文件",
+    "hint": "PDF格式，状态为借出的资产必填",
+    "clickToReplace": "点击更换",
+    "uploadTooltip": "尚无文件 — 点击上传"
   }
 }
