@@ -557,7 +557,15 @@
     "save": "บันทึก",
     "saving": "กำลังบันทึก...",
     "lastUpdated": "อัปเดตล่าสุด",
-    "notYetUpdated": "ยังไม่เคยอัปเดต"
+    "notYetUpdated": "ยังไม่เคยอัปเดต",
+    "borrowDocSectionTitle": "เอกสารการยืม (สถานะถูกยืม)",
+    "allowedFormatsLabel": "รูปแบบไฟล์ที่ยอมรับ",
+    "formatPdf": "PDF",
+    "formatWord": "Word (.doc/.docx)",
+    "formatPhoto": "รูปภาพ (JPEG/PNG/WEBP)",
+    "noFormatSelected": "เลือกอย่างน้อย 1 รูปแบบไฟล์",
+    "borrowDocRequiredLabel": "จำเป็นต้องกรอก",
+    "borrowDocRequiredHint": "เมื่อปิดใช้งาน สินทรัพย์ที่มีสถานะถูกยืมยังคงบันทึก/ส่งได้โดยไม่ต้องมีเอกสาร — ฟิลด์นี้จะกลายเป็นตัวเลือกในฟอร์ม"
   },
   "createStockOpnamePage": {
     "title": "สร้างการตรวจนับสินทรัพย์",

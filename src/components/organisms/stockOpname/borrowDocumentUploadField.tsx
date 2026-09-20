@@ -1,6 +1,8 @@
 import { useRef, useState, type ChangeEvent } from "react"
 import { useTranslation } from "react-i18next"
 import { useUploadStockOpnameBorrowDocument } from "../../../hooks/mutation/stockOpname/uploadBorrowDocument"
+import { useStockOpnameConfig } from "../../../hooks/query/stockOpname/config"
+import { borrowDocumentAcceptAttr } from "./findingOptions"
 
 interface BorrowDocumentUploadFieldProps {
   transactionNumber: string
@@ -20,6 +22,8 @@ export function BorrowDocumentUploadField({
   const { t } = useTranslation()
   const inputRef = useRef<HTMLInputElement>(null)
   const { mutate: uploadDoc, isPending } = useUploadStockOpnameBorrowDocument({ transactionNumber })
+  const { data: configData } = useStockOpnameConfig()
+  const isRequired = configData?.data.borrow_doc_is_required ?? true
 
   // Nama file lokal biar tooltip langsung update begitu upload sukses,
   // gak nunggu round-trip refetch detail (sama alasan kayak PhotoUploadField).
@@ -55,7 +59,9 @@ export function BorrowDocumentUploadField({
         className={`w-9 h-9 rounded-md border flex items-center justify-center overflow-hidden transition-colors flex-shrink-0 disabled:opacity-50 ${
           effectiveFileName
             ? "border-gray-200 dark:border-gray-700 text-indigo-500"
-            : "border-dashed border-red-300 dark:border-red-700 text-red-400 hover:border-indigo-400 hover:text-indigo-500"
+            : isRequired
+            ? "border-dashed border-red-300 dark:border-red-700 text-red-400 hover:border-indigo-400 hover:text-indigo-500"
+            : "border-dashed border-gray-300 dark:border-gray-700 text-gray-400 hover:border-indigo-400 hover:text-indigo-500"
         }`}
       >
         {isPending ? (
@@ -69,7 +75,7 @@ export function BorrowDocumentUploadField({
       <input
         ref={inputRef}
         type="file"
-        accept="application/pdf"
+        accept={borrowDocumentAcceptAttr(configData?.data)}
         className="hidden"
         onChange={handleFileChange}
       />

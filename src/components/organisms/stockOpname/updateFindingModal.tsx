@@ -3,8 +3,9 @@ import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 import { useUpdateStockOpnameFinding } from "../../../hooks/mutation/stockOpname/updateFinding"
 import { useUploadStockOpnameBorrowDocument } from "../../../hooks/mutation/stockOpname/uploadBorrowDocument"
+import { useStockOpnameConfig } from "../../../hooks/query/stockOpname/config"
 import type { StockOpnameItem } from "../../../models/stockOpname/detail"
-import { getPhysicalStatusOptions, getConditionOptions, getAssetStatusOptions, isPhysicalStatusAbsent } from "./findingOptions"
+import { getPhysicalStatusOptions, getConditionOptions, getAssetStatusOptions, isPhysicalStatusAbsent, borrowDocumentAcceptAttr } from "./findingOptions"
 import { PhotoUploadField } from "./photoUploadField"
 
 type UpdateStockOpnameFindingModalProps = {
@@ -36,9 +37,14 @@ export function UpdateStockOpnameFindingModal({
   const { mutate: updateFinding, isPending } = useUpdateStockOpnameFinding({ transactionNumber })
   const { mutate: uploadBorrowDocument, isPending: isUploadingBorrowDocument } =
     useUploadStockOpnameBorrowDocument({ transactionNumber })
+  const { data: configData } = useStockOpnameConfig()
 
   const isAbsent = isPhysicalStatusAbsent(physicalStatus)
   const isBorrowed = physicalStatus === "BORROWED"
+  // Default wajib=true selama config masih loading, biar gak sempat keliatan
+  // opsional lalu tiba-tiba jadi wajib begitu config kebaca.
+  const isBorrowDocumentRequired = configData?.data.borrow_doc_is_required ?? true
+  const borrowDocumentMissing = isBorrowed && isBorrowDocumentRequired && !borrowDocumentName
 
   // Fisik "Tidak Ada"/"Dipinjam" -> Kondisi otomatis "Tidak Ada" dan terkunci,
   // karena kondisi gak relevan buat dinilai kalau barangnya gak ada di lokasi.
@@ -73,7 +79,7 @@ export function UpdateStockOpnameFindingModal({
       toast.error(t("stockOpnameFindingModal.toast.required"))
       return
     }
-    if (isBorrowed && !borrowDocumentName) {
+    if (borrowDocumentMissing) {
       toast.error(t("stockOpnameFindingModal.toast.borrowDocumentRequired"))
       return
     }
@@ -150,11 +156,12 @@ export function UpdateStockOpnameFindingModal({
           {isBorrowed && (
             <div className="space-y-1.5">
               <label className="block text-xs font-medium text-gray-700 dark:text-gray-300">
-                {t("stockOpnameFindingModal.borrowDocument")} <span className="text-red-500">*</span>
+                {t("stockOpnameFindingModal.borrowDocument")}{" "}
+                {isBorrowDocumentRequired && <span className="text-red-500">*</span>}
               </label>
               <input
                 type="file"
-                accept="application/pdf"
+                accept={borrowDocumentAcceptAttr(configData?.data)}
                 disabled={isPending || isUploadingBorrowDocument}
                 onChange={handleBorrowDocumentChange}
                 className="w-full text-xs text-gray-600 dark:text-gray-300 file:mr-3 file:px-3 file:py-1.5 file:rounded-lg file:border-0 file:text-xs file:font-medium file:bg-indigo-50 file:text-indigo-600 dark:file:bg-indigo-500/10 dark:file:text-indigo-400 hover:file:bg-indigo-100 disabled:opacity-50"
@@ -228,7 +235,7 @@ export function UpdateStockOpnameFindingModal({
           </button>
           <button
             onClick={handleSubmit}
-            disabled={isPending || !physicalStatus || !condition || (isBorrowed && !borrowDocumentName)}
+            disabled={isPending || !physicalStatus || !condition || borrowDocumentMissing}
             className="flex-1 px-4 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isPending ? t("stockOpnameFindingModal.submitting") : t("stockOpnameFindingModal.submit")}

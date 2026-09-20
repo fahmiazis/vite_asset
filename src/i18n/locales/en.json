@@ -557,7 +557,15 @@
     "save": "Save",
     "saving": "Saving...",
     "lastUpdated": "Last updated",
-    "notYetUpdated": "Never updated"
+    "notYetUpdated": "Never updated",
+    "borrowDocSectionTitle": "Loan Document (Borrowed status)",
+    "allowedFormatsLabel": "Accepted File Formats",
+    "formatPdf": "PDF",
+    "formatWord": "Word (.doc/.docx)",
+    "formatPhoto": "Photo (JPEG/PNG/WEBP)",
+    "noFormatSelected": "Select at least 1 file format",
+    "borrowDocRequiredLabel": "Required",
+    "borrowDocRequiredHint": "When turned off, assets marked Borrowed can still be saved/submitted without a document — the field becomes optional in the form."
   },
   "createStockOpnamePage": {
     "title": "Create Stock Opname",

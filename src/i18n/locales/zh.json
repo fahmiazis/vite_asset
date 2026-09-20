@@ -557,7 +557,15 @@
     "save": "保存",
     "saving": "保存中...",
     "lastUpdated": "最后更新",
-    "notYetUpdated": "尚未更新"
+    "notYetUpdated": "尚未更新",
+    "borrowDocSectionTitle": "借用文件（借出状态）",
+    "allowedFormatsLabel": "接受的文件格式",
+    "formatPdf": "PDF",
+    "formatWord": "Word (.doc/.docx)",
+    "formatPhoto": "照片 (JPEG/PNG/WEBP)",
+    "noFormatSelected": "至少选择一种文件格式",
+    "borrowDocRequiredLabel": "必填",
+    "borrowDocRequiredHint": "关闭后，状态为借出的资产仍可在没有文件的情况下保存/提交——该字段在表单中变为可选。"
   },
   "createStockOpnamePage": {
     "title": "新建库存盘点",

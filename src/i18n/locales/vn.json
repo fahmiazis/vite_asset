@@ -557,7 +557,15 @@
     "save": "Lưu",
     "saving": "Đang lưu...",
     "lastUpdated": "Cập nhật lần cuối",
-    "notYetUpdated": "Chưa từng cập nhật"
+    "notYetUpdated": "Chưa từng cập nhật",
+    "borrowDocSectionTitle": "Tài Liệu Mượn (trạng thái Đang mượn)",
+    "allowedFormatsLabel": "Định Dạng File Được Chấp Nhận",
+    "formatPdf": "PDF",
+    "formatWord": "Word (.doc/.docx)",
+    "formatPhoto": "Ảnh (JPEG/PNG/WEBP)",
+    "noFormatSelected": "Chọn ít nhất 1 định dạng file",
+    "borrowDocRequiredLabel": "Bắt buộc",
+    "borrowDocRequiredHint": "Khi tắt, tài sản có trạng thái Đang mượn vẫn có thể lưu/nộp mà không cần tài liệu — trường này trở thành tùy chọn trong biểu mẫu."
   },
   "createStockOpnamePage": {
     "title": "Tạo Kiểm Kê Tài Sản",

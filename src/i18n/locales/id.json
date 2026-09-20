@@ -557,7 +557,15 @@
     "save": "Simpan",
     "saving": "Menyimpan...",
     "lastUpdated": "Terakhir diubah",
-    "notYetUpdated": "Belum pernah diubah"
+    "notYetUpdated": "Belum pernah diubah",
+    "borrowDocSectionTitle": "Dokumen Peminjaman (status Dipinjam)",
+    "allowedFormatsLabel": "Format File yang Diterima",
+    "formatPdf": "PDF",
+    "formatWord": "Word (.doc/.docx)",
+    "formatPhoto": "Foto (JPEG/PNG/WEBP)",
+    "noFormatSelected": "Pilih minimal 1 format file",
+    "borrowDocRequiredLabel": "Wajib diisi",
+    "borrowDocRequiredHint": "Kalau dimatikan, aset berstatus Dipinjam tetap bisa disimpan/disubmit tanpa dokumen — field-nya jadi opsional di form."
   },
   "createStockOpnamePage": {
     "title": "Buat Stock Opname",

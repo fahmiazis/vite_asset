@@ -1,4 +1,5 @@
 import type { TFunction } from "i18next"
+import type { StockOpnameConfig } from "../../../models/stockOpname/config"
 
 export function getPhysicalStatusOptions(t: TFunction) {
   return [
@@ -22,6 +23,23 @@ export function getConditionOptions(t: TFunction) {
     { value: "BROKEN", label: t("stockOpnameFindingModal.conditionOptions.broken") },
     { value: "NOT_APPLICABLE", label: t("stockOpnameFindingModal.conditionOptions.na") },
   ]
+}
+
+// borrowDocumentAcceptAttr bikin value `accept` buat <input type="file">
+// dokumen peminjaman dari config saat ini (PDF/Word/Foto). Fallback ke PDF
+// kalau config belum kebaca (loading) atau semuanya kebetulan dimatikan,
+// biar input gak pernah kosong total.
+export function borrowDocumentAcceptAttr(config?: StockOpnameConfig) {
+  const parts: string[] = []
+  if (!config || config.borrow_doc_allow_pdf) parts.push("application/pdf")
+  if (config?.borrow_doc_allow_word) {
+    parts.push("application/msword")
+    parts.push("application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+  }
+  if (config?.borrow_doc_allow_photo) {
+    parts.push("image/jpeg", "image/png", "image/webp")
+  }
+  return parts.join(",")
 }
 
 export function getAssetStatusOptions(t: TFunction) {

@@ -19,18 +19,35 @@ export default function StockOpnameConfigPage() {
 
   const [startDay, setStartDay] = useState(25)
   const [endDay, setEndDay] = useState(8)
+  const [allowPdf, setAllowPdf] = useState(true)
+  const [allowWord, setAllowWord] = useState(false)
+  const [allowPhoto, setAllowPhoto] = useState(false)
+  const [borrowDocRequired, setBorrowDocRequired] = useState(true)
 
   useEffect(() => {
     if (data?.data) {
       setStartDay(data.data.submission_start_day)
       setEndDay(data.data.submission_end_day)
+      setAllowPdf(data.data.borrow_doc_allow_pdf)
+      setAllowWord(data.data.borrow_doc_allow_word)
+      setAllowPhoto(data.data.borrow_doc_allow_photo)
+      setBorrowDocRequired(data.data.borrow_doc_is_required)
     }
   }, [data])
 
   const isWrapping = endDay < startDay
+  const noFormatSelected = !allowPdf && !allowWord && !allowPhoto
 
   const handleSave = () => {
-    updateConfig({ submission_start_day: startDay, submission_end_day: endDay })
+    if (noFormatSelected) return
+    updateConfig({
+      submission_start_day: startDay,
+      submission_end_day: endDay,
+      borrow_doc_allow_pdf: allowPdf,
+      borrow_doc_allow_word: allowWord,
+      borrow_doc_allow_photo: allowPhoto,
+      borrow_doc_is_required: borrowDocRequired,
+    })
   }
 
   if (isLoading) {
@@ -99,21 +116,81 @@ export default function StockOpnameConfigPage() {
           <p className="text-xs text-indigo-500 dark:text-indigo-400">{t("stockOpnameConfigPage.wrapHint")}</p>
         )}
 
-        <div className="flex items-center justify-between pt-2 border-t border-gray-100 dark:border-gray-800">
-          <p className="text-[11px] text-gray-400">
-            {t("stockOpnameConfigPage.lastUpdated")}:{" "}
-            {data?.data.updated_by
-              ? formatDateTime(data.data.updated_at)
-              : t("stockOpnameConfigPage.notYetUpdated")}
+      </div>
+
+      <div className="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-xl p-5 space-y-4">
+        <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200">
+          {t("stockOpnameConfigPage.borrowDocSectionTitle")}
+        </h3>
+
+        <div className="space-y-2">
+          <p className="text-xs font-medium text-gray-700 dark:text-gray-300">
+            {t("stockOpnameConfigPage.allowedFormatsLabel")}
           </p>
-          <button
-            onClick={handleSave}
-            disabled={isPending}
-            className="px-4 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-colors disabled:opacity-50"
-          >
-            {isPending ? t("stockOpnameConfigPage.saving") : t("stockOpnameConfigPage.save")}
-          </button>
+          <div className="flex flex-wrap gap-4">
+            <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={allowPdf}
+                onChange={(e) => setAllowPdf(e.target.checked)}
+                disabled={isPending}
+                className="w-4 h-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+              />
+              {t("stockOpnameConfigPage.formatPdf")}
+            </label>
+            <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={allowWord}
+                onChange={(e) => setAllowWord(e.target.checked)}
+                disabled={isPending}
+                className="w-4 h-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+              />
+              {t("stockOpnameConfigPage.formatWord")}
+            </label>
+            <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={allowPhoto}
+                onChange={(e) => setAllowPhoto(e.target.checked)}
+                disabled={isPending}
+                className="w-4 h-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+              />
+              {t("stockOpnameConfigPage.formatPhoto")}
+            </label>
+          </div>
+          {noFormatSelected && (
+            <p className="text-xs text-red-500">{t("stockOpnameConfigPage.noFormatSelected")}</p>
+          )}
         </div>
+
+        <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300 cursor-pointer pt-2 border-t border-gray-100 dark:border-gray-800">
+          <input
+            type="checkbox"
+            checked={borrowDocRequired}
+            onChange={(e) => setBorrowDocRequired(e.target.checked)}
+            disabled={isPending}
+            className="w-4 h-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+          />
+          {t("stockOpnameConfigPage.borrowDocRequiredLabel")}
+        </label>
+        <p className="text-xs text-gray-400">{t("stockOpnameConfigPage.borrowDocRequiredHint")}</p>
+      </div>
+
+      <div className="flex items-center justify-between">
+        <p className="text-[11px] text-gray-400">
+          {t("stockOpnameConfigPage.lastUpdated")}:{" "}
+          {data?.data.updated_by
+            ? formatDateTime(data.data.updated_at)
+            : t("stockOpnameConfigPage.notYetUpdated")}
+        </p>
+        <button
+          onClick={handleSave}
+          disabled={isPending || noFormatSelected}
+          className="px-4 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-colors disabled:opacity-50"
+        >
+          {isPending ? t("stockOpnameConfigPage.saving") : t("stockOpnameConfigPage.save")}
+        </button>
       </div>
     </section>
   )
