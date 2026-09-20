@@ -50,6 +50,14 @@ import MutationDetailPage from '../components/pages/mutation/detail'
 import DisposalFormPage from '../components/pages/disposal/create'
 import DisposalPage from '../components/pages/disposal'
 import DisposalDetailPage from '../components/pages/disposal/detail'
+import StockOpnamePage from '../components/pages/stockOpname'
+import CreateStockOpnamePage from '../components/pages/stockOpname/create'
+import StockOpnameDetailPage from '../components/pages/stockOpname/detail'
+import StockOpnameReportPage from '../components/pages/stockOpname/report'
+import StockOpnameConfigPage from '../components/pages/stockOpname/config'
+import StockOpnameFillPage from '../components/pages/stockOpname/fill'
+import GuidePage from '../components/pages/guide'
+import StockOpnameGuidePage from '../components/pages/guide/stockOpname'
 
 export const router = createBrowserRouter([
   // {
@@ -71,6 +79,12 @@ export const router = createBrowserRouter([
     path: '/dashboard',
     element: <ProtectedRoute />,
     children: [
+      {
+        // Full-screen, sengaja di luar MainLayout (no sidebar/navbar) biar
+        // grid "Lengkapi Data" dapet ruang layar penuh kayak excel.
+        path: 'stock-opname/fill/*',
+        element: <StockOpnameFillPage />,
+      },
       {
         element: <MainLayout />,
         children: [
@@ -137,6 +151,34 @@ export const router = createBrowserRouter([
           {
             path: 'disposal/*',
             element: <DisposalDetailPage />,
+          },
+          {
+            path: 'guide',
+            element: <GuidePage />,
+          },
+          {
+            path: 'guide/stock-opname',
+            element: <StockOpnameGuidePage />,
+          },
+          {
+            path: 'stock-opname',
+            element: <StockOpnamePage />,
+          },
+          {
+            path: 'stock-opname/create',
+            element: <CreateStockOpnamePage />,
+          },
+          {
+            path: 'stock-opname/report',
+            element: <StockOpnameReportPage />,
+          },
+          {
+            path: 'stock-opname/config',
+            element: <StockOpnameConfigPage />,
+          },
+          {
+            path: 'stock-opname/*',
+            element: <StockOpnameDetailPage />,
           },
           {
             path: 'setting-attachment',

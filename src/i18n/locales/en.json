@@ -464,79 +464,508 @@
     }
   },
   "mutationDetail": {
-  "transactionNumber": "Transaction Number",
-  "transactionType": "Transaction Type",
-  "date": "Date",
-  "category": "Category",
-  "targetBranch": "Target Branch",
-  "createdBy": "Created By",
-  "createdAt": "Created At",
-  "updatedAt": "Updated At",
-  "notes": "Notes",
-  "assetList": "Asset List",
-  "assets": "assets",
-  "addAsset": "Add Asset",
-  "noAssets": "No assets added yet",
-  "category2": "Category",
-  "documentNumber": "Document Number",
-  "fromBranch": "From Branch",
-  "toBranch": "To Branch",
-  "stageHistory": "Stage History",
-  "by": "by",
-  "submitTransaction": "Submit Transaction",
-  "approve": "Approve",
-  "confirmReceiving": "Confirm Receiving",
-  "executeTransaction": "Execute Mutation"
-},
-"menuTable": {
-  "search": "Search menu...",
-  "assign": "Assign",
-  "create": "Create",
-  "loading": "Loading data...",
-  "noData": "No data available",
-  "show": "Show",
-  "until": "until",
-  "from": "from",
-  "data": "data",
-  "page": "Page",
-  "of": "of",
-  "columns": {
-    "no": "No",
-    "id": "ID",
-    "parentId": "Parent ID",
-    "menuName": "Menu Name",
-    "path": "Path",
-    "status": "Status",
-    "action": "Action"
+    "transactionNumber": "Transaction Number",
+    "transactionType": "Transaction Type",
+    "date": "Date",
+    "category": "Category",
+    "targetBranch": "Target Branch",
+    "createdBy": "Created By",
+    "createdAt": "Created At",
+    "updatedAt": "Updated At",
+    "notes": "Notes",
+    "assetList": "Asset List",
+    "assets": "assets",
+    "addAsset": "Add Asset",
+    "noAssets": "No assets added yet",
+    "category2": "Category",
+    "documentNumber": "Document Number",
+    "fromBranch": "From Branch",
+    "toBranch": "To Branch",
+    "stageHistory": "Stage History",
+    "by": "by",
+    "submitTransaction": "Submit Transaction",
+    "approve": "Approve",
+    "confirmReceiving": "Confirm Receiving",
+    "executeTransaction": "Execute Mutation"
   },
-  "status": {
-    "active": "Active",
-    "inactive": "Inactive"
+  "menuTable": {
+    "search": "Search menu...",
+    "assign": "Assign",
+    "create": "Create",
+    "loading": "Loading data...",
+    "noData": "No data available",
+    "show": "Show",
+    "until": "until",
+    "from": "from",
+    "data": "data",
+    "page": "Page",
+    "of": "of",
+    "columns": {
+      "no": "No",
+      "id": "ID",
+      "parentId": "Parent ID",
+      "menuName": "Menu Name",
+      "path": "Path",
+      "status": "Status",
+      "action": "Action"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "actions": {
+      "detail": "Detail",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "deleteModal": {
+      "title": "Delete Menu",
+      "description": "Are you sure you want to delete",
+      "warning": "This action cannot be undone.",
+      "cancel": "Cancel",
+      "confirm": "Delete",
+      "deleting": "Deleting..."
+    }
   },
-  "actions": {
-    "detail": "Detail",
-    "edit": "Edit",
-    "delete": "Delete"
+  "attachment": {
+    "modal": {
+      "title": "Add Attachment",
+      "desc": "Upload the required documents for this transaction.",
+      "cancel": "Cancel",
+      "submit": "Upload",
+      "uploading": "Uploading...",
+      "empty": "No attachments available for this stage."
+    },
+    "uploadSuccess": "Attachments uploaded successfully.",
+    "uploadError": "Failed to upload attachments."
   },
-  "deleteModal": {
-    "title": "Delete Menu",
-    "description": "Are you sure you want to delete",
-    "warning": "This action cannot be undone.",
+  "stockOpnamePage": {
+    "title": "Stock Opname",
+    "createButton": "+ Create Stock Opname",
+    "reportButton": "Report",
+    "configButton": "Config"
+  },
+  "stockOpnameConfigPage": {
+    "title": "Stock Opname Config",
+    "subtitle": "Set the monthly stock opname submission date window",
+    "back": "Back",
+    "windowSectionTitle": "Submission Window",
+    "startDayLabel": "Start Day",
+    "endDayLabel": "End Day",
+    "hint": "Stock opnames can still be submitted anytime — this window is only used to flag whether a submission was on schedule or not (shown on the detail page).",
+    "wrapHint": "The end day is smaller than the start day, so this window automatically wraps into the next month.",
+    "save": "Save",
+    "saving": "Saving...",
+    "lastUpdated": "Last updated",
+    "notYetUpdated": "Never updated",
+    "borrowDocSectionTitle": "Loan Document (Borrowed status)",
+    "allowedFormatsLabel": "Accepted File Formats",
+    "formatPdf": "PDF",
+    "formatWord": "Word (.doc/.docx)",
+    "formatPhoto": "Photo (JPEG/PNG/WEBP)",
+    "noFormatSelected": "Select at least 1 file format",
+    "borrowDocRequiredLabel": "Required",
+    "borrowDocRequiredHint": "When turned off, assets marked Borrowed can still be saved/submitted without a document — the field becomes optional in the form."
+  },
+  "createStockOpnamePage": {
+    "title": "Create Stock Opname",
+    "subtitle": "Create a stock opname draft, assets are added after the draft is saved",
+    "dateLabel": "Opname Date",
+    "notesLabel": "Notes",
+    "notesPlaceholder": "e.g. Routine Q3 opname for Bandung Barat warehouse",
     "cancel": "Cancel",
-    "confirm": "Delete",
-    "deleting": "Deleting..."
+    "submit": "Save Draft",
+    "submitting": "Saving..."
+  },
+  "stockOpnameStepper": {
+    "submit": "Submit",
+    "approval": "Approval",
+    "execute": "Execute",
+    "done": "Done"
+  },
+  "stockOpnameDetail": {
+    "transactionNumber": "Transaction Number",
+    "opnameDate": "Opname Date",
+    "createdBy": "Created By",
+    "createdAt": "Created At",
+    "updatedAt": "Updated At",
+    "submissionStatus": "Submission Status",
+    "onSchedule": "On Schedule",
+    "lateSchedule": "Off Schedule",
+    "notes": "Notes",
+    "assetList": "Asset List",
+    "assets": "assets",
+    "noAssets": "No assets added yet",
+    "systemData": "System Data",
+    "foundResult": "Found Result",
+    "condition": "Condition",
+    "physicalStatus": "Physical Status",
+    "assetStatus": "Asset Status",
+    "fillFinding": "Fill Finding",
+    "editFinding": "Edit Finding",
+    "approvalNotInitiated": "Approval has not been submitted for this transaction.",
+    "initiateApproval": "Submit for Approval",
+    "initiating": "Submitting...",
+    "toastInitiateSuccess": "Approval submitted successfully",
+    "toastInitiateError": "Failed to submit approval",
+    "stageHistory": "Stage History",
+    "noStageHistory": "No stage history yet",
+    "by": "by",
+    "submitStockOpname": "Submit Stock Opname",
+    "approve": "Approve",
+    "execute": "Execute Stock Opname",
+    "reject": "Reject",
+    "downloadTemplate": "Download Excel Template",
+    "uploadTemplate": "Upload Excel Result",
+    "tableNo": "No",
+    "tableAsset": "Asset",
+    "tableCategory": "Category",
+    "tableNotes": "Notes",
+    "tableAction": "Action",
+    "tableShowing": "Showing",
+    "tableOf": "of",
+    "tablePageSize": "Rows/page:",
+    "fillDataButton": "Complete Data"
+  },
+  "stockOpnameFindingModal": {
+    "title": "Fill Physical Finding",
+    "physicalStatus": "Physical Status",
+    "physicalStatusPlaceholder": "Select physical status",
+    "physicalStatusOptions": {
+      "exists": "Exists",
+      "missing": "Missing",
+      "borrowed": "Borrowed"
+    },
+    "borrowDocument": "Loan Document",
+    "borrowDocumentHint": "PDF, required for assets currently on loan",
+    "borrowDocumentPlaceholder": "Choose PDF file",
+    "borrowDocumentUploading": "Uploading...",
+    "condition": "Condition",
+    "conditionPlaceholder": "Select condition",
+    "conditionOptions": {
+      "good": "Good",
+      "fair": "Fair",
+      "poor": "Poor",
+      "broken": "Badly Broken",
+      "na": "Not Applicable"
+    },
+    "assetStatus": "Asset Status",
+    "assetStatusHint": "(optional, fill in if changed)",
+    "assetStatusOptions": {
+      "unchanged": "No change",
+      "active": "Active",
+      "inactive": "Inactive",
+      "maintenance": "Maintenance",
+      "retired": "Retired"
+    },
+    "notes": "Notes",
+    "optional": "optional",
+    "notesPlaceholder": "e.g. Scratches found on the unit body",
+    "cancel": "Cancel",
+    "submit": "Save Finding",
+    "submitting": "Saving...",
+    "toast": {
+      "required": "Physical status and condition are required",
+      "borrowDocumentRequired": "A loan document (PDF) is required for Borrowed status"
+    }
+  },
+  "submitStockOpnameModal": {
+    "title": "Submit Stock Opname",
+    "warningMessage": "Once submitted, the draft can no longer be edited and will be immediately sent for approval.",
+    "notes": "Notes",
+    "optional": "optional",
+    "notesPlaceholder": "e.g. All units in the warehouse have been checked",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "saving": "Saving...",
+    "initiating": "Submitting for approval...",
+    "toast": {
+      "success": "Stock opname submitted and sent for approval successfully",
+      "errorSubmit": "Failed to submit stock opname",
+      "errorInitiate": "Submit succeeded, but failed to submit for approval"
+    }
+  },
+  "approveStockOpnameModal": {
+    "title": "Approve Stock Opname",
+    "confirmationTitle": "Approval Confirmation",
+    "confirmationDescription": "Once all steps are approved, the stock opname will automatically move to the execution stage.",
+    "notes": "Notes",
+    "optional": "optional",
+    "notesPlaceholder": "Approval notes...",
+    "cancel": "Cancel",
+    "approve": "Approve",
+    "approving": "Approving...",
+    "toast": {
+      "success": "Approval approved successfully",
+      "error": "Failed to approve"
+    },
+    "stepFallback": "Approval step"
+  },
+  "executeStockOpnameModal": {
+    "title": "Execute Stock Opname",
+    "infoMessage": "The findings will be written to the asset data (condition, physical status, asset status) and can no longer be changed.",
+    "notes": "Notes",
+    "optional": "optional",
+    "notesPlaceholder": "Execution notes...",
+    "cancel": "Cancel",
+    "submit": "Execute",
+    "submitting": "Executing...",
+    "toast": {
+      "success": "Stock opname executed successfully",
+      "error": "Failed to execute stock opname"
+    }
+  },
+  "rejectStockOpnameModal": {
+    "title": "Reject Stock Opname",
+    "warningMessage": "The stock opname will be rejected and can no longer proceed.",
+    "reasonLabel": "Rejection Reason",
+    "reasonPlaceholder": "Explain the reason for rejection (minimum 10 characters)",
+    "reasonTooShort": "Reason must be at least {{min}} characters ({{current}}/{{min}})",
+    "cancel": "Cancel",
+    "confirm": "Yes, Reject",
+    "rejecting": "Rejecting...",
+    "toast": {
+      "success": "Stock opname rejected successfully",
+      "error": "Failed to reject stock opname"
+    }
+  },
+  "stockOpnameReportPage": {
+    "title": "Stock Opname Report",
+    "backToList": "Back to list",
+    "view": "View",
+    "dashboard": "Dashboard",
+    "detailReport": "Detail Report",
+    "period": "Period",
+    "go": "Go",
+    "plant": "Plant",
+    "allPlant": "All",
+    "assetUnit": "assets",
+    "downloading": "Downloading...",
+    "downloadReport": "Download Report",
+    "loading": "Loading report...",
+    "stats": {
+      "totalAsset": "Total Assets",
+      "finish": "Finish",
+      "done": "done",
+      "inProgress": "In Progress",
+      "belumSubmit": "Not Submitted",
+      "rejected": "Rejected",
+      "revisi": "Revision",
+      "disposal": "Disposal",
+      "acquisVal": "Acquis Val",
+      "bookVal": "Book Val"
+    },
+    "charts": {
+      "statusPerGrouping": "Status per grouping",
+      "physicalVsSystem": "Physical vs SAP status",
+      "statusFisik": "Physical Status",
+      "statusSap": "SAP Status",
+      "ada": "Present",
+      "tidakAda": "Not Present",
+      "conditionSummary": "Asset condition",
+      "baik": "Good",
+      "rusak": "Damaged",
+      "belumIsi": "Not Filled",
+      "statusSubmit": "Submission status",
+      "ungrouped": "Ungrouped"
+    },
+    "rekap": {
+      "label": "Recapitulation",
+      "unitInfo": "Unit / Info",
+      "unsupported": "not supported",
+      "unit": "units",
+      "areaClear": "Area Clear",
+      "areaNotClear": "Area Not Clear",
+      "totalArea": "Total National Area",
+      "costCenterTitle": "Asset value per cost center (top 10)",
+      "noData": "No data"
+    }
+  },
+  "stockOpnameTemplateModal": {
+    "title": "Upload Finding Result (Excel)",
+    "description": "Upload the filled-in excel file to update all asset findings at once.",
+    "fileLabel": "Excel File",
+    "chooseFile": "Choose file",
+    "noFileChosen": "No file chosen",
+    "cancel": "Cancel",
+    "submit": "Upload & Process",
+    "uploading": "Processing...",
+    "toastDownloadError": "Failed to download template",
+    "toastUploadRequireFile": "Please select an excel file first",
+    "resultTitle": "Upload Result",
+    "updatedCount": "Updated",
+    "failedCount": "Failed",
+    "errorsTitle": "Error Details",
+    "errorRow": "Row",
+    "close": "Close"
+  },
+  "stockOpnameFillPage": {
+    "title": "Complete Data",
+    "subtitle": "Fill in findings directly in the table, autosaved every few seconds",
+    "back": "Back",
+    "notDraft": "Completing data is only available while the stock opname is still a draft",
+    "saveNow": "Save Now",
+    "statusSaving": "Saving...",
+    "statusSaved": "Saved",
+    "statusErrorSuffix": "asset(s) failed to save",
+    "statusIdle": "No changes yet",
+    "lastSaved": "Last saved",
+    "secondsAgo": "seconds ago",
+    "justNow": "just now",
+    "columnNo": "No",
+    "columnAsset": "Asset",
+    "columnCategory": "Category",
+    "columnPhysicalStatus": "Physical Status",
+    "columnCondition": "Condition",
+    "columnAssetStatus": "Asset Status",
+    "columnNotes": "Notes",
+    "columnBorrowDocument": "Loan Doc.",
+    "selectPlaceholder": "-",
+    "notesPlaceholder": "Notes...",
+    "unsavedBadge": "unsaved",
+    "searchPlaceholder": "Search asset name or number... (Ctrl+F)",
+    "searchNoResults": "No matching assets"
+  },
+  "guidePage": {
+    "title": "User Guide",
+    "subtitle": "Pick a module to learn how to use it",
+    "modules": {
+      "stockOpname": {
+        "title": "Stock Opname",
+        "description": "How to create, fill, submit, approve, and execute a stock opname"
+      }
+    }
+  },
+  "guideStockOpname": {
+    "back": "Back",
+    "title": "Stock Opname Guide",
+    "subtitle": "Everything you need to know to use Stock Opname, from creating a draft to reports",
+    "toc": "Contents",
+    "sections": {
+      "overview": {
+        "title": "Stock Opname Flow",
+        "summary": "Stock opname is a physical asset audit for your branch, compared against what the system has on record. The flow goes:",
+        "steps": [
+          "Draft — all assets are added automatically, you fill in the check results",
+          "Approval — waits for approval following your branch's approval flow",
+          "Execute — findings are applied to the asset data",
+          "Finished — asset data is updated and can no longer be changed"
+        ],
+        "tip": "A stock opname can be rejected during the Approval or Execute stage if something's wrong."
+      },
+      "createDraft": {
+        "title": "1. Create a New Stock Opname",
+        "summary": "Open the Stock Opname menu, then click \"Create Stock Opname\".",
+        "steps": [
+          "The opname date is always today — it can't be changed manually",
+          "Add notes if needed (optional), then save",
+          "Once saved, ALL assets in your homebase branch are added automatically — no need to add them one by one"
+        ],
+        "tip": "There's no longer a \"one asset can only be in one active stock opname\" restriction — you can create a new stock opname anytime, even for a branch that already has another one in progress, or on the same day."
+      },
+      "fillSingle": {
+        "title": "2. Fill Findings — One at a Time",
+        "summary": "Best when you only need to update a few assets.",
+        "steps": [
+          "On the detail page, find the asset you want to check",
+          "Click \"Fill Finding\" (or \"Edit Finding\" if it's already filled)",
+          "Upload the Physical Proof Photo — required for every asset before the stock opname can be submitted",
+          "Choose Physical Status: Exists / Missing / Borrowed",
+          "If you choose \"Borrowed\", also upload a Loan Document — accepted formats (PDF/Word/Photo) and whether it's required are set by an admin on the Config page",
+          "Choose Condition — if Physical Status is \"Missing\" or \"Borrowed\", Condition auto-locks to \"Not Applicable\"",
+          "Fill in Asset Status if it changed, and Notes if needed",
+          "Click \"Save Finding\""
+        ]
+      },
+      "fillGrid": {
+        "title": "3. Fill Findings — Complete Data (many assets at once)",
+        "summary": "Best when checking many assets in a row without opening/closing popups.",
+        "steps": [
+          "On the detail page, click \"Complete Data\"",
+          "A full-screen spreadsheet-like view opens — one row per asset, edit cells directly",
+          "Click the camera icon in the Photo column to upload the Physical Proof Photo — required for every asset",
+          "If Physical Status is set to \"Borrowed\", a Loan Document column appears — click its icon to upload",
+          "Just type — no need to click save each time, it autosaves every 8 seconds",
+          "Watch the small indicator top-right for save status (Saving... / Saved)",
+          "Don't want to wait? Click \"Save Now\"",
+          "Lots of assets? Press Ctrl+F (Cmd+F on Mac) to search by name or asset number"
+        ],
+        "tip": "A row that failed to save (e.g. an invalid Physical Status/Condition pair, or Borrowed status without an uploaded loan document) shows a small red dot — hover it to see why."
+      },
+      "fillExcel": {
+        "title": "4. Fill Findings — Via Excel",
+        "summary": "Good for offline work, or sending to someone else checking assets on-site.",
+        "steps": [
+          "Click \"Download Template\" — get an excel file with every asset in this stock opname",
+          "Fill in Physical Status, Condition, Asset Status, and Notes columns",
+          "Save the file, then click \"Upload Result\" and pick the filled file",
+          "The system processes every row — valid ones are saved right away, invalid ones are reported with the row and reason"
+        ]
+      },
+      "submitApproval": {
+        "title": "5. Submit & Approval",
+        "summary": "Once every asset has a finding, it's time to submit.",
+        "steps": [
+          "Click \"Submit Stock Opname\" on the detail page",
+          "The stock opname enters the Approval stage, following your branch's approval flow",
+          "Track progress under \"Approval Status\" — see who needs to approve and what's pending"
+        ],
+        "tip": "Submit is rejected if any asset: has an empty Physical Status/Condition, has no Physical Proof Photo uploaded, or (if Borrowed and a document is currently required in Config) has no Loan Document uploaded."
+      },
+      "execute": {
+        "title": "6. Execute",
+        "summary": "Once every approval step is done, the stock opname enters the Execute stage.",
+        "steps": [
+          "An authorized role (e.g. Asset PIC) clicks \"Execute Stock Opname\"",
+          "The system applies every finding to the asset data (condition, physical status, asset status)",
+          "After this the stock opname is \"Finished\" and its data can no longer be changed"
+        ]
+      },
+      "reject": {
+        "title": "7. Reject",
+        "summary": "If something's wrong during Approval or Execute, the stock opname can be rejected.",
+        "steps": [
+          "Click \"Reject\" on the detail page",
+          "Enter a reason (required, at least 10 characters)",
+          "A rejected stock opname can't be resumed — create a new draft if it's still needed"
+        ]
+      },
+      "report": {
+        "title": "8. Reports",
+        "summary": "See a recap of stock opname results per period and branch.",
+        "steps": [
+          "Open Stock Opname → Report",
+          "Pick month, year, and branch (or all branches)",
+          "View the summary on the dashboard, or open \"Detail\" for the full recap table",
+          "Click \"Export\" to download the report as excel"
+        ]
+      },
+      "config": {
+        "title": "9. Stock Opname Settings",
+        "summary": "Some stock opname rules can be set on the Config page — accessed via the \"Config\" button on the Stock Opname list page.",
+        "steps": [
+          "Submission Window — set the monthly start and end day used to flag a submission as \"on schedule\" (stock opnames can still be submitted anytime, this only affects the status shown on the detail page)",
+          "Loan Document Formats — check which file formats are accepted for Borrowed-status assets: PDF, Word, and/or Photo",
+          "Required — turn on/off whether a Loan Document is mandatory for Borrowed-status assets",
+          "Click \"Save\" to apply the changes"
+        ],
+        "tip": "After a stock opname is submitted, the detail page shows \"On Schedule\" or \"Off Schedule\" based on the Submission Window active at the time of submit."
+      }
+    }
+  },
+  "stockOpnamePhoto": {
+    "label": "Physical Proof Photo",
+    "uploadCta": "Upload Photo",
+    "hint": "JPEG, max 2MB, original camera photo (not forwarded via chat), taken within the last 10 days",
+    "capturedOn": "Captured",
+    "clickToReplace": "click to replace",
+    "uploadTooltip": "No photo yet — click to upload"
+  },
+  "stockOpnameBorrowDocument": {
+    "label": "Loan Document",
+    "uploadCta": "Upload Document",
+    "hint": "PDF, required for assets with Borrowed status",
+    "clickToReplace": "click to replace",
+    "uploadTooltip": "No document yet — click to upload"
   }
-},
-"attachment": {
-  "modal": {
-    "title": "Add Attachment",
-    "desc": "Upload the required documents for this transaction.",
-    "cancel": "Cancel",
-    "submit": "Upload",
-    "uploading": "Uploading...",
-    "empty": "No attachments available for this stage."
-  },
-  "uploadSuccess": "Attachments uploaded successfully.",
-  "uploadError": "Failed to upload attachments."
-}
 }
