@@ -133,7 +133,7 @@ export default function MutationDetailPage() {
             { label: t("mutationDetail.date"),            value: formatDate(transaction.transaction_date) },
             { label: t("mutationDetail.category"),        value: transaction.category_name },
             { label: t("mutationDetail.targetBranch"),    value: transaction.to_branch_code },
-            { label: t("mutationDetail.createdBy"),       value: transaction.created_by },
+            { label: t("mutationDetail.createdBy"),       value: transaction.created_by_name ?? transaction.created_by },
             { label: t("mutationDetail.createdAt"),       value: formatDateTime(transaction.created_at) },
             { label: t("mutationDetail.updatedAt"),       value: formatDateTime(transaction.updated_at) },
           ].map((item) => (

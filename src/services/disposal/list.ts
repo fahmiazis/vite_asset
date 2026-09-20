@@ -4,16 +4,26 @@ import type { disposalListProps } from "../../models/disposal/list";
 export interface DisposalListParams {
   page: number
   limit: number
-  search?: string
+  /** filter yang didukung backend (dto.DisposalListFilter) */
+  disposal_type?: string
+  status?: string
+  current_stage?: string
+  created_by?: string
+  start_date?: string
+  end_date?: string
 }
 
 export const disposalList = async (params: DisposalListParams): Promise<disposalListProps> => {
-  const { page, limit, search } = params
+  const { page, limit, ...filters } = params
 
   const query = new URLSearchParams({
     page: String(page),
     limit: String(limit),
-    ...(search ? { search } : {}),
+  })
+
+  // hanya kirim filter yang terisi
+  Object.entries(filters).forEach(([key, value]) => {
+    if (value) query.append(key, value)
   })
 
   const res = await axiosPrivate.get(`/transactions/disposal?${query.toString()}`)

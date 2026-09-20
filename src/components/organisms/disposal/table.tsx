@@ -8,7 +8,19 @@ import {
 import { useState } from "react"
 import { disposalColumns } from "./column"
 import type { disposalListState } from "../../../models/disposal/list"
-import { Search01Icon } from "hugeicons-react"
+import {
+  DISPOSAL_TYPE,
+  disposalStageLabel,
+  stagesForDisposalType,
+} from "../../../utils/disposalStage"
+
+export interface DisposalFilters {
+  disposal_type: string
+  status: string
+  current_stage: string
+  start_date: string
+  end_date: string
+}
 
 interface DisposalTableProps {
   data: disposalListState[]
@@ -16,9 +28,22 @@ interface DisposalTableProps {
   page: number
   pageSize: number
   isLoading?: boolean
+  filters: DisposalFilters
   onPageChange: (page: number) => void
-  onSearchChange: (value: string) => void
+  onFiltersChange: (filters: DisposalFilters) => void
+  onResetFilters: () => void
 }
+
+// Union stage DISPOSE + SELL, tanpa duplikat — dipakai untuk opsi filter
+const ALL_STAGES = Array.from(
+  new Set([
+    ...stagesForDisposalType(DISPOSAL_TYPE.SELL),
+    ...stagesForDisposalType(DISPOSAL_TYPE.DISPOSE),
+    "REJECTED",
+  ])
+)
+
+const STATUS_OPTIONS = ["DRAFT", "PENDING", "PROCESSING", "COMPLETED", "REJECTED"]
 
 export function DisposalTable({
   data,
@@ -26,11 +51,20 @@ export function DisposalTable({
   page,
   pageSize,
   isLoading,
+  filters,
   onPageChange,
-  onSearchChange,
+  onFiltersChange,
+  onResetFilters,
 }: DisposalTableProps) {
   const [sorting, setSorting] = useState<SortingState>([])
-  const [searchValue, setSearchValue] = useState("")
+
+  const setFilter = (key: keyof DisposalFilters, value: string) =>
+    onFiltersChange({ ...filters, [key]: value })
+
+  const hasActiveFilter = Object.values(filters).some(Boolean)
+
+  const selectClass =
+    "px-3 py-2 text-sm border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
 
   const totalPages = Math.max(1, Math.ceil(total / pageSize))
   const from = total === 0 ? 0 : (page - 1) * pageSize + 1
@@ -47,11 +81,6 @@ export function DisposalTable({
     pageCount: totalPages,
   })
 
-  const handleSearch = (val: string) => {
-    setSearchValue(val)
-    onSearchChange(val)
-  }
-
   if (isLoading && data.length === 0) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -66,22 +95,70 @@ export function DisposalTable({
   return (
     <div className="space-y-4 bg-white dark:bg-gray-950 p-6 rounded-2xl">
 
-      {/* Search */}
-      <section className="flex items-center justify-between w-full">
-        <div className="relative">
-          <Search01Icon size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray1" />
-          <input
-            type="text"
-            placeholder="Cari no. transaksi, tipe disposal..."
-            value={searchValue}
-            onChange={(e) => handleSearch(e.target.value)}
-            className="pl-9 pr-4 py-2 text-sm border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-72"
-          />
-        </div>
+      {/* Filter */}
+      <section className="flex flex-wrap items-center gap-2">
+        <select
+          value={filters.disposal_type}
+          onChange={(e) => setFilter("disposal_type", e.target.value)}
+          className={selectClass}
+        >
+          <option value="">Semua tipe</option>
+          <option value={DISPOSAL_TYPE.DISPOSE}>Dispose</option>
+          <option value={DISPOSAL_TYPE.SELL}>Sell</option>
+        </select>
 
-        {/* Loading indicator saat fetch halaman baru */}
+        <select
+          value={filters.status}
+          onChange={(e) => setFilter("status", e.target.value)}
+          className={selectClass}
+        >
+          <option value="">Semua status</option>
+          {STATUS_OPTIONS.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+
+        <select
+          value={filters.current_stage}
+          onChange={(e) => setFilter("current_stage", e.target.value)}
+          className={selectClass}
+        >
+          <option value="">Semua stage</option>
+          {ALL_STAGES.map((stage) => (
+            <option key={stage} value={stage}>
+              {disposalStageLabel(stage)}
+            </option>
+          ))}
+        </select>
+
+        <input
+          type="date"
+          value={filters.start_date}
+          onChange={(e) => setFilter("start_date", e.target.value)}
+          className={selectClass}
+          title="Tanggal transaksi dari"
+        />
+        <input
+          type="date"
+          value={filters.end_date}
+          onChange={(e) => setFilter("end_date", e.target.value)}
+          className={selectClass}
+          title="Tanggal transaksi sampai"
+        />
+
+        {hasActiveFilter && (
+          <button
+            onClick={onResetFilters}
+            className="px-3 py-2 text-sm text-gray1 hover:text-[var(--text-color)] underline underline-offset-2"
+          >
+            Reset
+          </button>
+        )}
+
         {isLoading && (
-          <div className="flex items-center gap-2 text-xs text-gray1">
+          <div className="flex items-center gap-2 text-xs text-gray1 ml-auto">
             <div className="animate-spin rounded-full h-3.5 w-3.5 border-b-2 border-gray-500" />
             Memuat...
           </div>

@@ -271,7 +271,7 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
   const infoGrid = [
     { label: t("detailTransaction.info.transactionType"), value: transaction.transaction_type },
     { label: t("detailTransaction.info.date"), value: formatDate(transaction.transaction_date) },
-    { label: t("detailTransaction.info.createdBy"), value: transaction.created_by },
+    { label: t("detailTransaction.info.createdBy"), value: transaction.created_by_name ?? transaction.created_by },
     { label: t("detailTransaction.info.approvedBy"), value: transaction.approved_by ?? t("detailTransaction.info.notYetApproved") },
   ]
 

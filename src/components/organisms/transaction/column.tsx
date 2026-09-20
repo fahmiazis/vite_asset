@@ -173,7 +173,9 @@ export const transaksiColumns: ColumnDef<transactionListState>[] = [
   {
     id: "created_by",
     header: () => <HeaderCell labelKey="transaksiColumn.headers.createdBy" />,
-    cell: ({ row }) => <Avatar name={row.original.transaction.created_by} />,
+    cell: ({ row }) => (
+      <Avatar name={row.original.transaction.created_by_name ?? row.original.transaction.created_by} />
+    ),
   },
   {
     id: "transaction_date",

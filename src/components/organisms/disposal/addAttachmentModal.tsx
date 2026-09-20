@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react"
 import { useTranslation } from "react-i18next"
-import { useQueryClient } from "@tanstack/react-query"
 import { useAttachmentSettingList } from "../../../hooks/query/attachmentSetting/list"
 import toast from "react-hot-toast"
 import { FileUploadField } from "../transaction/detail"
 import { useUploadDisposalAttachment } from "../../../hooks/mutation/disposal/uploadAttachmentDisposal"
+import { disposalStageLabel } from "../../../utils/disposalStage"
 
 interface AttachmentFileState {
     id: number
@@ -17,8 +17,10 @@ interface AttachmentFileState {
 
 interface AddAttachmentModalProps {
     transactionNumber: string
-    transactionType: string
+    /** ID baris transaction_disposal_assets (asset.id), BUKAN asset_id */
     transactionDisposalAssetId: string
+    assetNumber?: string
+    /** stage transaksi saat ini — menentukan config attachment mana yang diminta */
     stage: string
     onConfirm: () => void
     onCancel: () => void
@@ -27,34 +29,35 @@ interface AddAttachmentModalProps {
 export default function AddAttachmentModal({
     transactionNumber,
     transactionDisposalAssetId,
-    transactionType,
+    assetNumber,
     stage,
     onConfirm,
     onCancel,
 }: AddAttachmentModalProps) {
     const { t } = useTranslation()
-    const queryClient = useQueryClient()
     const [attachments, setAttachments] = useState<AttachmentFileState[]>([])
 
     const { data: attachSetting, isLoading } = useAttachmentSettingList("disposal")
     const { mutateAsync: uploadAttachment, isPending: isUploading } = useUploadDisposalAttachment()
 
     useEffect(() => {
-        if (attachSetting?.data) {
-            const filtered = attachSetting.data.filter(
-                (item) => item.is_active && item.stage === stage
-            )
-            setAttachments(
-                attachSetting.data.map((item) => ({
-                    id: item.id,
-                    name: item.attachment_type,
-                    description: item.description,
-                    is_required: item.is_required,
-                    stage: item.stage,
-                    file: null,
-                }))
-            )
-        }
+        if (!attachSetting?.data) return
+
+        // FIX: hanya config yang aktif DAN milik stage berjalan
+        const filtered = attachSetting.data.filter(
+            (item) => item.is_active && item.stage === stage
+        )
+
+        setAttachments(
+            filtered.map((item) => ({
+                id: item.id,
+                name: item.attachment_type,
+                description: item.description,
+                is_required: item.is_required,
+                stage: item.stage,
+                file: null,
+            }))
+        )
     }, [attachSetting, stage])
 
     const handleFileChange = (id: number, file: File | null) => {
@@ -82,9 +85,6 @@ export default function AddAttachmentModal({
                     })
                 )
             )
-            await queryClient.resetQueries({
-                queryKey: ["transaction-detail-with-stage"],
-            })
             toast.success(t("attachment.uploadSuccess"))
             onConfirm()
         } catch {
@@ -104,8 +104,12 @@ export default function AddAttachmentModal({
                 <h3 className="text-center text-base font-semibold text-gray-900 dark:text-white mb-1">
                     {t("attachment.modal.title")}
                 </h3>
-                <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-5">
+                <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-1">
                     {t("attachment.modal.desc")}
+                </p>
+                <p className="text-center text-xs text-gray-400 mb-5">
+                    Stage <span className="font-semibold">{disposalStageLabel(stage)}</span>
+                    {assetNumber && <> &middot; Aset <span className="font-mono">{assetNumber}</span></>}
                 </p>
 
                 {/* Content */}
@@ -116,7 +120,7 @@ export default function AddAttachmentModal({
                         </div>
                     ) : attachments.length === 0 ? (
                         <p className="text-center text-sm text-gray-400 dark:text-gray-600 py-6">
-                            {t("attachment.modal.empty")}
+                            Tidak ada konfigurasi dokumen untuk stage {disposalStageLabel(stage)}
                         </p>
                     ) : (
                         attachments.map((item) => (

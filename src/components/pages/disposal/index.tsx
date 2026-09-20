@@ -1,16 +1,32 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useDisposalList } from "../../../hooks/query/disposal/list"
-import { DisposalTable } from "../../organisms/disposal/table"
+import { DisposalTable, type DisposalFilters } from "../../organisms/disposal/table"
 
 const PAGE_SIZE = 10
+
+const EMPTY_FILTERS: DisposalFilters = {
+  disposal_type: "",
+  status: "",
+  current_stage: "",
+  start_date: "",
+  end_date: "",
+}
 
 export default function DisposalPage() {
   const navigate = useNavigate()
   const [page, setPage] = useState(1)
-  const [search, setSearch] = useState("")
+  const [filters, setFilters] = useState<DisposalFilters>(EMPTY_FILTERS)
 
-  const { data, isLoading } = useDisposalList({ page, limit: PAGE_SIZE, search })
+  const { data, isLoading } = useDisposalList({
+    page,
+    limit: PAGE_SIZE,
+    disposal_type: filters.disposal_type || undefined,
+    status: filters.status || undefined,
+    current_stage: filters.current_stage || undefined,
+    start_date: filters.start_date || undefined,
+    end_date: filters.end_date || undefined,
+  })
 
   return (
     <div>
@@ -30,10 +46,15 @@ export default function DisposalPage() {
         page={page}
         pageSize={PAGE_SIZE}
         isLoading={isLoading}
+        filters={filters}
         onPageChange={setPage}
-        onSearchChange={(val) => {
-          setSearch(val)
-          setPage(1) // reset ke page 1 waktu search berubah
+        onFiltersChange={(next) => {
+          setFilters(next)
+          setPage(1) // reset ke halaman 1 tiap filter berubah
+        }}
+        onResetFilters={() => {
+          setFilters(EMPTY_FILTERS)
+          setPage(1)
         }}
       />
     </div>

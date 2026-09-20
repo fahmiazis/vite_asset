@@ -22,6 +22,7 @@ export interface Transaction {
   to_branch_code: string
   notes: string
   created_by: string
+  created_by_name: string | null
   created_at: string
   updated_at: string
 }

@@ -9,7 +9,7 @@ export const useUserDetail = (id: string) => {
     error,
     refetch,
   } = useQuery<DetailUserProps>({
-    queryKey: ["user-detail"],
+    queryKey: ["user-detail", id],
     queryFn: () => userDetail(id),
   });
 

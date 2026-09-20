@@ -77,12 +77,12 @@ export const mutationColumns = (
       },
     },
     {
-      accessorFn: (row) => row.transaction.created_by,
+      accessorFn: (row) => row.transaction.created_by_name ?? row.transaction.created_by,
       id: "created_by",
       header: t("label.mutation.createdBy"),
       cell: ({ row }) => (
         <div className="text-sm text-gray-600 dark:text-gray-300">
-          {row.original.transaction.created_by}
+          {row.original.transaction.created_by_name ?? row.original.transaction.created_by}
         </div>
       ),
     },

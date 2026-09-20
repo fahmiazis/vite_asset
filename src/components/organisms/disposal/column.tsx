@@ -1,6 +1,12 @@
 import type { ColumnDef } from "@tanstack/react-table"
 import { useNavigate } from "react-router-dom"
 import type { disposalListState } from "../../../models/disposal/list"
+import {
+  disposalStageLabel,
+  disposalTypeLabel,
+  formatRupiah,
+  isSell,
+} from "../../../utils/disposalStage"
 
 // --- Helpers ---
 function formatDate(value: string) {
@@ -12,25 +18,14 @@ function formatDate(value: string) {
   })
 }
 
-const DISPOSAL_TYPE_LABEL: Record<string, string> = {
-  sale: "Penjualan",
-  scrap: "Pemusnahan",
-  donation: "Donasi / Hibah",
-  write_off: "Write-off",
-}
-
 // --- Disposal Type Badge ---
 function DisposalTypeBadge({ value }: { value: string }) {
-  const map: Record<string, string> = {
-    sale:      "bg-blue-50 text-blue-700",
-    scrap:     "bg-red-50 text-red-600",
-    donation:  "bg-purple-50 text-purple-700",
-    write_off: "bg-orange-50 text-orange-700",
-  }
-  const cls = map[value?.toLowerCase()] ?? "bg-gray-100 text-gray-600"
+  const cls = isSell(value)
+    ? "bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400"
+    : "bg-orange-50 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400"
   return (
     <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold ${cls}`}>
-      {DISPOSAL_TYPE_LABEL[value?.toLowerCase()] ?? value ?? "-"}
+      {disposalTypeLabel(value)}
     </span>
   )
 }
@@ -38,11 +33,13 @@ function DisposalTypeBadge({ value }: { value: string }) {
 // --- Transaction Status Badge ---
 function StatusBadge({ value }: { value: string }) {
   const map: Record<string, { dot: string; bg: string }> = {
-    pending:   { dot: "bg-yellow-400", bg: "bg-yellow-50 text-yellow-700" },
-    approved:  { dot: "bg-green-500",  bg: "bg-green-50 text-green-700" },
-    rejected:  { dot: "bg-red-500",    bg: "bg-red-50 text-red-600" },
-    completed: { dot: "bg-blue-500",   bg: "bg-blue-50 text-blue-700" },
-    cancelled: { dot: "bg-gray-400",   bg: "bg-gray-100 text-gray-600" },
+    draft:      { dot: "bg-gray-400",   bg: "bg-gray-100 text-gray-600" },
+    pending:    { dot: "bg-yellow-400", bg: "bg-yellow-50 text-yellow-700" },
+    processing: { dot: "bg-blue-500",   bg: "bg-blue-50 text-blue-700" },
+    approved:   { dot: "bg-green-500",  bg: "bg-green-50 text-green-700" },
+    rejected:   { dot: "bg-red-500",    bg: "bg-red-50 text-red-600" },
+    completed:  { dot: "bg-blue-500",   bg: "bg-blue-50 text-blue-700" },
+    cancelled:  { dot: "bg-gray-400",   bg: "bg-gray-100 text-gray-600" },
   }
   const s = map[value?.toLowerCase()] ?? map["cancelled"]
   return (
@@ -110,8 +107,20 @@ export const disposalColumns: ColumnDef<disposalListState>[] = [
     id: "current_stage",
     header: "STAGE",
     cell: ({ row }) => (
-      <span className="text-xs text-gray1 capitalize">
-        {row.original.transaction.current_stage?.replace(/_/g, " ") ?? "-"}
+      <span className="text-xs text-gray1">
+        {disposalStageLabel(row.original.transaction.current_stage)}
+      </span>
+    ),
+  },
+  {
+    accessorFn: (row) => row.transaction.sale_value,
+    id: "sale_value",
+    header: "NILAI JUAL",
+    cell: ({ row }) => (
+      <span className="text-sm whitespace-nowrap">
+        {row.original.transaction.sale_value != null
+          ? formatRupiah(row.original.transaction.sale_value)
+          : "-"}
       </span>
     ),
   },
@@ -126,11 +135,13 @@ export const disposalColumns: ColumnDef<disposalListState>[] = [
     ),
   },
   {
-    accessorFn: (row) => row.transaction.created_by,
+    accessorFn: (row) => row.transaction.created_by_name ?? row.transaction.created_by,
     id: "created_by",
     header: "DIBUAT OLEH",
     cell: ({ row }) => (
-      <span className="text-sm">{row.original.transaction.created_by ?? "-"}</span>
+      <span className="text-sm">
+        {row.original.transaction.created_by_name ?? row.original.transaction.created_by ?? "-"}
+      </span>
     ),
   },
   {
