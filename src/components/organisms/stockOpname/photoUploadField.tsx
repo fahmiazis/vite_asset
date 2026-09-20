@@ -48,8 +48,8 @@ export function PhotoUploadField({
     uploadPhoto(
       { assetId, file },
       {
-        // Upload ditolak (validasi ukuran/EXIF/duplikat) -> jangan nampilin
-        // foto yang ditolak seolah-olah berhasil kesimpen.
+        // Upload ditolak (validasi ukuran/tanggal modified/duplikat) -> jangan
+        // nampilin foto yang ditolak seolah-olah berhasil kesimpen.
         onError: () => setLocalPreview(null),
       }
     )
@@ -60,7 +60,7 @@ export function PhotoUploadField({
     <input
       ref={inputRef}
       type="file"
-      accept="image/jpeg"
+      accept="image/jpeg,image/png,image/webp"
       className="hidden"
       onChange={handleFileChange}
     />

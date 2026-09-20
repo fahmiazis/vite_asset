@@ -9,6 +9,9 @@ export const uploadStockOpnamePhoto = async (
   const formData = new FormData()
   formData.append("asset_id", String(assetId))
   formData.append("file", file)
+  // Dipakai backend buat validasi "maks 10 hari" dari tanggal modified file,
+  // bukan EXIF (banyak foto forward/kompres yang EXIF-nya udah hilang).
+  formData.append("file_modified_at", String(file.lastModified))
 
   const res = await axiosPrivate.post<stockOpnameDetailProps>(
     "/transactions/stock-opname/draft/photo/upload",
