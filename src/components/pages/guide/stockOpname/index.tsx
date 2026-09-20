@@ -12,6 +12,7 @@ import {
   Target01Icon,
   Cancel01Icon,
   ChartUpIcon,
+  Settings01Icon,
 } from "hugeicons-react"
 
 type GuideIcon = ComponentType<{ className?: string }>
@@ -33,6 +34,7 @@ const SECTION_IDS = [
   "execute",
   "reject",
   "report",
+  "config",
 ] as const
 
 const SECTION_ICONS: Record<(typeof SECTION_IDS)[number], GuideIcon> = {
@@ -45,6 +47,7 @@ const SECTION_ICONS: Record<(typeof SECTION_IDS)[number], GuideIcon> = {
   execute: Target01Icon,
   reject: Cancel01Icon,
   report: ChartUpIcon,
+  config: Settings01Icon,
 }
 
 export default function StockOpnameGuidePage() {

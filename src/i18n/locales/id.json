@@ -861,7 +861,7 @@
           "Isi catatan kalau perlu (opsional), lalu simpan",
           "Begitu tersimpan, SEMUA asset di branch homebase kamu otomatis masuk ke daftar — gak perlu nambahin satu-satu"
         ],
-        "tip": "Kalau semua asset di branch kamu lagi \"dipegang\" stock opname lain yang belum selesai, sistem bakal nolak bikin draft baru dan kasih tau stock opname mana yang masih jalan. Selesaikan atau tolak itu dulu."
+        "tip": "Gak ada lagi batasan \"satu asset cuma boleh di satu stock opname aktif\" — kamu bisa bikin stock opname baru kapan aja, termasuk buat branch yang masih ada stock opname lain yang berjalan atau di hari yang sama."
       },
       "fillSingle": {
         "title": "2. Isi Hasil Cek — Satu Per Satu",
@@ -869,8 +869,10 @@
         "steps": [
           "Di halaman detail stock opname, cari asset yang mau dicek",
           "Klik tombol \"Isi Temuan\" (atau \"Edit Temuan\" kalau udah pernah diisi)",
-          "Pilih Status Fisik: Ada / Tidak Ada",
-          "Pilih Kondisi — kalau Status Fisik-nya \"Tidak Ada\", Kondisi otomatis kekunci ke \"Tidak Ada\" juga",
+          "Upload Foto Bukti Fisik — wajib buat tiap asset sebelum stock opname bisa disubmit",
+          "Pilih Status Fisik: Ada / Tidak Ada / Dipinjam",
+          "Kalau pilih \"Dipinjam\", upload juga Dokumen Peminjaman — format yang diterima (PDF/Word/Foto) dan wajib-tidaknya diatur admin di halaman Config",
+          "Pilih Kondisi — kalau Status Fisik-nya \"Tidak Ada\" atau \"Dipinjam\", Kondisi otomatis kekunci ke \"Tidak Ada\" juga",
           "Isi Status Aset kalau ada perubahan, dan Catatan kalau perlu",
           "Klik \"Simpan Temuan\""
         ]
@@ -881,12 +883,14 @@
         "steps": [
           "Di halaman detail, klik tombol \"Lengkapi Data\"",
           "Kebuka tampilan layar penuh mirip excel — tiap baris satu asset, kolomnya bisa diisi langsung",
+          "Klik ikon kamera di kolom Foto buat upload Foto Bukti Fisik — wajib diisi tiap asset",
+          "Kalau Status Fisik diisi \"Dipinjam\", muncul kolom Dokumen Peminjaman — klik ikon dokumennya buat upload",
           "Ketik aja, gak perlu klik simpan tiap kali — otomatis tersimpan sendiri tiap 8 detik",
           "Lihat indikator kecil di pojok kanan atas buat tau status simpannya (Menyimpan... / Tersimpan)",
           "Kalau gak mau nunggu, klik \"Simpan Sekarang\"",
           "Asset-nya banyak? Tekan Ctrl+F (Cmd+F di Mac) buat cari cepat berdasarkan nama atau nomor asset"
         ],
-        "tip": "Kalau ada baris yang gagal tersimpan (misal kombinasi Status Fisik/Kondisi gak valid), bakal ada titik merah kecil di baris itu — arahkan kursor buat lihat kenapa."
+        "tip": "Kalau ada baris yang gagal tersimpan (misal kombinasi Status Fisik/Kondisi gak valid, atau status Dipinjam tapi dokumen peminjaman belum diupload), bakal ada titik merah kecil di baris itu — arahkan kursor buat lihat kenapa."
       },
       "fillExcel": {
         "title": "4. Isi Hasil Cek — Lewat Excel",
@@ -906,7 +910,7 @@
           "Stock opname masuk tahap Approval, jalan sesuai alur persetujuan yang diatur buat branch kamu",
           "Cek progress-nya di bagian \"Status Approval\" — kelihatan siapa aja yang harus approve dan mana yang udah/belum"
         ],
-        "tip": "Submit bakal ditolak kalau masih ada asset yang belum diisi Status Fisik atau Kondisi-nya."
+        "tip": "Submit bakal ditolak kalau ada asset yang: belum diisi Status Fisik/Kondisi, belum diupload Foto Bukti Fisik-nya, atau (kalau statusnya Dipinjam & lagi diwajibkan di Config) belum diupload Dokumen Peminjaman."
       },
       "execute": {
         "title": "6. Eksekusi",
@@ -935,6 +939,17 @@
           "Lihat ringkasan di dashboard, atau buka \"Detail\" buat tabel rekap lengkap",
           "Klik \"Export\" buat download laporan dalam bentuk excel"
         ]
+      },
+      "config": {
+        "title": "9. Pengaturan Stock Opname",
+        "summary": "Beberapa aturan stock opname bisa diatur lewat halaman Config — diakses lewat tombol \"Config\" di halaman daftar Stock Opname.",
+        "steps": [
+          "Jendela Submit — atur tanggal mulai & akhir tiap bulan buat nandain submit yang \"tepat jadwal\" (stock opname tetap bisa disubmit kapan aja, ini cuma nentuin status di halaman detail)",
+          "Format Dokumen Peminjaman — centang format file yang diterima buat aset berstatus Dipinjam: PDF, Word, dan/atau Foto",
+          "Wajib Diisi — nyalain/matiin apakah Dokumen Peminjaman wajib diupload buat aset berstatus Dipinjam",
+          "Klik \"Simpan\" buat nerapin perubahan"
+        ],
+        "tip": "Setelah stock opname disubmit, halaman detail bakal nampilin status \"Tepat Jadwal\" atau \"Di Luar Jadwal\" sesuai Jendela Submit yang lagi aktif pas submit dilakukan."
       }
     }
   },

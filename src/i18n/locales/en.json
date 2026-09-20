@@ -861,7 +861,7 @@
           "Add notes if needed (optional), then save",
           "Once saved, ALL assets in your homebase branch are added automatically — no need to add them one by one"
         ],
-        "tip": "If every asset in your branch is already tied up in another stock opname that's still in progress, creation is rejected and you're told which one is blocking it. Finish or reject that one first."
+        "tip": "There's no longer a \"one asset can only be in one active stock opname\" restriction — you can create a new stock opname anytime, even for a branch that already has another one in progress, or on the same day."
       },
       "fillSingle": {
         "title": "2. Fill Findings — One at a Time",
@@ -869,8 +869,10 @@
         "steps": [
           "On the detail page, find the asset you want to check",
           "Click \"Fill Finding\" (or \"Edit Finding\" if it's already filled)",
-          "Choose Physical Status: Exists / Missing",
-          "Choose Condition — if Physical Status is \"Missing\", Condition auto-locks to \"Not Applicable\"",
+          "Upload the Physical Proof Photo — required for every asset before the stock opname can be submitted",
+          "Choose Physical Status: Exists / Missing / Borrowed",
+          "If you choose \"Borrowed\", also upload a Loan Document — accepted formats (PDF/Word/Photo) and whether it's required are set by an admin on the Config page",
+          "Choose Condition — if Physical Status is \"Missing\" or \"Borrowed\", Condition auto-locks to \"Not Applicable\"",
           "Fill in Asset Status if it changed, and Notes if needed",
           "Click \"Save Finding\""
         ]
@@ -881,12 +883,14 @@
         "steps": [
           "On the detail page, click \"Complete Data\"",
           "A full-screen spreadsheet-like view opens — one row per asset, edit cells directly",
+          "Click the camera icon in the Photo column to upload the Physical Proof Photo — required for every asset",
+          "If Physical Status is set to \"Borrowed\", a Loan Document column appears — click its icon to upload",
           "Just type — no need to click save each time, it autosaves every 8 seconds",
           "Watch the small indicator top-right for save status (Saving... / Saved)",
           "Don't want to wait? Click \"Save Now\"",
           "Lots of assets? Press Ctrl+F (Cmd+F on Mac) to search by name or asset number"
         ],
-        "tip": "A row that failed to save (e.g. an invalid Physical Status/Condition pair) shows a small red dot — hover it to see why."
+        "tip": "A row that failed to save (e.g. an invalid Physical Status/Condition pair, or Borrowed status without an uploaded loan document) shows a small red dot — hover it to see why."
       },
       "fillExcel": {
         "title": "4. Fill Findings — Via Excel",
@@ -906,7 +910,7 @@
           "The stock opname enters the Approval stage, following your branch's approval flow",
           "Track progress under \"Approval Status\" — see who needs to approve and what's pending"
         ],
-        "tip": "Submit is rejected if any asset still has an empty Physical Status or Condition."
+        "tip": "Submit is rejected if any asset: has an empty Physical Status/Condition, has no Physical Proof Photo uploaded, or (if Borrowed and a document is currently required in Config) has no Loan Document uploaded."
       },
       "execute": {
         "title": "6. Execute",
@@ -935,6 +939,17 @@
           "View the summary on the dashboard, or open \"Detail\" for the full recap table",
           "Click \"Export\" to download the report as excel"
         ]
+      },
+      "config": {
+        "title": "9. Stock Opname Settings",
+        "summary": "Some stock opname rules can be set on the Config page — accessed via the \"Config\" button on the Stock Opname list page.",
+        "steps": [
+          "Submission Window — set the monthly start and end day used to flag a submission as \"on schedule\" (stock opnames can still be submitted anytime, this only affects the status shown on the detail page)",
+          "Loan Document Formats — check which file formats are accepted for Borrowed-status assets: PDF, Word, and/or Photo",
+          "Required — turn on/off whether a Loan Document is mandatory for Borrowed-status assets",
+          "Click \"Save\" to apply the changes"
+        ],
+        "tip": "After a stock opname is submitted, the detail page shows \"On Schedule\" or \"Off Schedule\" based on the Submission Window active at the time of submit."
       }
     }
   },
