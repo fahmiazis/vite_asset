@@ -24,6 +24,9 @@ import ApprovalPage from '../components/pages/approval'
 import ApprovalFlowDetail from '../components/pages/approval/detail'
 import CreateStepApproval from '../components/pages/approval/detail/createStep'
 import EditApprovalFlow from '../components/pages/approval/edit'
+import DisposalAgreementPage from '../components/pages/disposalAgreement'
+import CreateDisposalAgreementPage from '../components/pages/disposalAgreement/create'
+import DisposalAgreementDetailPage from '../components/pages/disposalAgreement/detail'
 import UpdateMenuPage from '../components/pages/menu/update'
 import AssetsCategoryPage from '../components/pages/assetsCategory'
 import CreateAssetsCategory from '../components/pages/assetsCategory/create'
@@ -125,6 +128,21 @@ export const router = createBrowserRouter([
           {
             path: 'disposal/create',
             element: <DisposalFormPage />,
+          },
+          // Kesepakatan disposal (agreement) — halaman terpisah dari disposal.
+          // React Router memilih rute berdasarkan kekhususan, bukan urutan,
+          // jadi 'disposal/agreement' tetap menang atas splat 'disposal/*'.
+          {
+            path: 'disposal/agreement',
+            element: <DisposalAgreementPage />,
+          },
+          {
+            path: 'disposal/agreement/create',
+            element: <CreateDisposalAgreementPage />,
+          },
+          {
+            path: 'disposal/agreement/*',
+            element: <DisposalAgreementDetailPage />,
           },
           {
             path: 'disposal/*',

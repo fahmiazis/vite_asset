@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { StageActionModal } from "./stageActionModal"
+import { StepDecisionModal } from "./stepDecisionModal"
 import { SetSaleValuesModal } from "./setSaleValuesModal"
 import { SubmitDisposalModal } from "./submitDraftModal"
 import {
@@ -14,11 +15,19 @@ import {
 } from "../../../hooks/mutation/disposal/stageActions"
 import {
   DISPOSAL_STAGE,
+  canCancelAtStage,
   canRejectAtStage,
   disposalStageLabel,
   isTerminalStage,
 } from "../../../utils/disposalStage"
 import { useDisposalApprovalStatus } from "../../../hooks/query/disposal/approvalStatus"
+import { useMyProfile } from "../../../hooks/query/auth/myProfile"
+import {
+  useApproveDisposalStep,
+  useRejectDisposalStep,
+  useReviseDisposal,
+  useCancelDisposal,
+} from "../../../hooks/mutation/disposal/approvalAction"
 import type { DisposalAsset, Transaction } from "../../../models/disposal/detail"
 
 type ActiveModal =
@@ -31,6 +40,10 @@ type ActiveModal =
   | "tax"
   | "asset-deletion"
   | "reject"
+  | "step-approve"
+  | "step-reject"
+  | "step-revise"
+  | "cancel"
   | null
 
 interface DisposalStageActionBarProps {
@@ -89,6 +102,59 @@ export function DisposalStageActionBar({
 
   const approvalSummary = approvalStatus?.data
   const approvalInitiated = (approvalSummary?.total_steps ?? 0) > 0
+
+  // ── Aksi approver & pengaju ──────────────────────────────────────────────
+  // Tombolnya sengaja ditaruh di bawah (bukan di dalam daftar step) supaya
+  // approver membaca dulu seluruh data pengajuan sebelum memutuskan.
+  const { data: profile } = useMyProfile()
+  const myUserId = profile?.data?.id
+  const myRoleIds = new Set((profile?.data?.roles ?? []).map((role) => role.id))
+
+  const stepApprove = useApproveDisposalStep(transactionNumber)
+  const stepReject = useRejectDisposalStep(transactionNumber)
+  const stepRevise = useReviseDisposal(transactionNumber)
+  const cancelDisposal = useCancelDisposal(transactionNumber)
+
+  const [notes, setNotes] = useState("")
+  // aset yang ditandai perlu revisi — hanya dipakai mode revisi
+  const [reviseAssetIds, setReviseAssetIds] = useState<number[]>([])
+
+  // Step berjalan = baris pending pertama. Backend tidak memeriksa urutan saat
+  // approve, jadi UI yang menjaga supaya step belakang tidak mendahului.
+  const currentApproval = approvalSummary?.approvals?.find(
+    (item) => item.status?.toLowerCase() === "pending"
+  )
+
+  const isCurrentApprover =
+    !!currentApproval &&
+    (myRoleIds.has(currentApproval.approver_role_id) ||
+      (!!currentApproval.approver_user_id &&
+        currentApproval.approver_user_id === myUserId))
+
+  const isCreator = !!myUserId && transaction.created_by === myUserId
+  const canCancel = isCreator && canCancelAtStage(stage)
+
+  const isActionPending =
+    stepApprove.isPending ||
+    stepReject.isPending ||
+    stepRevise.isPending ||
+    cancelDisposal.isPending
+
+  const closeAction = () => {
+    setModal(null)
+    setNotes("")
+    setReviseAssetIds([])
+  }
+
+  const toggleReviseAsset = (disposalAssetId: number) =>
+    setReviseAssetIds((prev) =>
+      prev.includes(disposalAssetId)
+        ? prev.filter((id) => id !== disposalAssetId)
+        : [...prev, disposalAssetId]
+    )
+
+  // hanya aset aktif yang masuk akal untuk direvisi
+  const revisableAssets = assets.filter((asset) => asset.status === "PENDING")
 
   // Aksi utama per stage
   const primaryAction = (() => {
@@ -246,6 +312,50 @@ export function DisposalStageActionBar({
         />
       )}
 
+      {(modal === "step-approve" ||
+        modal === "step-reject" ||
+        modal === "step-revise" ||
+        modal === "cancel") && (
+        <StepDecisionModal
+          mode={modal}
+          stepName={currentApproval?.flow_step?.step_name ?? ""}
+          notes={notes}
+          onNotesChange={setNotes}
+          isPending={isActionPending}
+          assets={revisableAssets}
+          selectedAssetIds={reviseAssetIds}
+          onToggleAsset={toggleReviseAsset}
+          onClose={closeAction}
+          onConfirm={() => {
+            const done = { onSuccess: closeAction }
+
+            if (modal === "cancel") {
+              cancelDisposal.mutate(notes.trim(), done)
+              return
+            }
+            if (modal === "step-revise") {
+              stepRevise.mutate(
+                { revisionNotes: notes.trim(), disposalAssetIds: reviseAssetIds },
+                done
+              )
+              return
+            }
+            if (!currentApproval) return
+
+            const payload = {
+              transaction_approval_id: currentApproval.id,
+              notes: notes.trim() || undefined,
+            }
+
+            if (modal === "step-approve") {
+              stepApprove.mutate(payload, done)
+            } else {
+              stepReject.mutate(payload, done)
+            }
+          }}
+        />
+      )}
+
       {/* ── Buttons ── */}
       <div className="flex flex-wrap items-center justify-end gap-3">
         {primaryDisabled && blockReason && (
@@ -263,7 +373,54 @@ export function DisposalStageActionBar({
           </p>
         )}
 
-        {canRejectAtStage(stage) && (
+        {/* Pembatalan oleh pengaju — beda aktor dan beda stage akhir dengan
+            reject. Hanya muncul untuk pembuat transaksinya sendiri. */}
+        {canCancel && (
+          <button
+            onClick={() => setModal("cancel")}
+            disabled={isActionPending}
+            className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl transition-colors disabled:opacity-50"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+            {t("disposalAction.cancelRequest.button")}
+          </button>
+        )}
+
+        {/* Aksi approver step berjalan */}
+        {isCurrentApprover && (
+          <>
+            <button
+              onClick={() => setModal("step-revise")}
+              disabled={isActionPending}
+              className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium border border-amber-300 dark:border-amber-700 text-amber-700 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/30 rounded-xl transition-colors disabled:opacity-50"
+            >
+              {t("disposalAction.step.revise")}
+            </button>
+            <button
+              onClick={() => setModal("step-reject")}
+              disabled={isActionPending}
+              className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium border border-red-300 dark:border-red-700 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-xl transition-colors disabled:opacity-50"
+            >
+              {t("disposalAction.step.reject")}
+            </button>
+            <button
+              onClick={() => setModal("step-approve")}
+              disabled={isActionPending}
+              className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl transition-colors disabled:opacity-50"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+              {t("disposalAction.step.approve")}
+            </button>
+          </>
+        )}
+
+        {/* Reject level transaksi untuk stage non-approval (finance, tax, dst)
+            — tetap memakai permission reject_transaction seperti sebelumnya */}
+        {!isCurrentApprover && !approvalInitiated && canRejectAtStage(stage) && (
           <button
             onClick={() => setModal("reject")}
             className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium border border-red-300 dark:border-red-700 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-xl transition-colors"

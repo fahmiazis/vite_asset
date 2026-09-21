@@ -262,7 +262,13 @@
     "rejectedSuccess": "Attachment rejected",
     "reviewFailed": "Failed to save review",
     "zoomIn": "Zoom in",
-    "zoomOut": "Zoom out"
+    "zoomOut": "Zoom out",
+    "download": "Download",
+    "noPreview": "Preview is only available for images and PDF. Use download to open this file.",
+    "loadError": "Failed to load the file. It may have been removed from the server.",
+    "documentType": "Document type",
+    "asset": "Asset",
+    "uploadedBy": "Uploaded by"
   },
   "verifyModal": {
     "title": "Verify Transaction",
@@ -411,7 +417,12 @@
     "toast": {
       "noAsset": "Please select an asset first",
       "noReason": "Disposal reason is required"
-    }
+    },
+    "searchPlaceholder": "Search asset number or name...",
+    "assetEmpty": "No eligible assets found",
+    "filterHint": "Showing available assets in branch {{branch}} only",
+    "moreResults": "{{count}} matches, refine your search",
+    "noHomebase": "Your account has no active homebase branch, so assets cannot be filtered. Set it first on the branch page."
   },
   "addAssetMutationModal": {
     "title": "Add Asset",
@@ -552,7 +563,8 @@
       "TAX": "Tax",
       "ASSET_DELETION": "Asset Deletion",
       "FINISHED": "Finished",
-      "REJECTED": "Rejected"
+      "REJECTED": "Rejected",
+      "CANCELLED": "Cancelled"
     },
     "type": {
       "DISPOSE": "Dispose",
@@ -778,6 +790,54 @@
       "info": "The transaction moves to the Rejected stage and the assets return to their previous status. This cannot be undone.",
       "notesLabel": "Rejection reason",
       "notesPlaceholder": "Explain the reason for rejection"
+    },
+    "step": {
+      "approve": "Approve",
+      "reject": "Reject",
+      "revise": "Revise",
+      "notesRequired": "Reason",
+      "notesOptional": "Notes (optional)",
+      "cancelButton": "Cancel",
+      "processing": "Processing...",
+      "approveModal": {
+        "title": "Approve This Step",
+        "desc": "Step: {{step}}",
+        "confirm": "Approve",
+        "placeholder": "Add a note for this approval..."
+      },
+      "rejectModal": {
+        "title": "Reject This Step",
+        "desc": "The transaction will be rejected and the assets released. This cannot be undone.",
+        "confirm": "Reject",
+        "placeholder": "Explain why this is rejected (min. 5 characters)"
+      },
+      "reviseModal": {
+        "title": "Return for Revision",
+        "desc": "The transaction goes back to DRAFT so the creator can fix it and submit again. Approvals recorded so far are cleared; assets and uploaded documents stay.",
+        "confirm": "Return for Revision",
+        "placeholder": "What needs to be fixed? (min. 5 characters)"
+      },
+      "toast": {
+        "approveSuccess": "Step approved",
+        "approveError": "Failed to approve this step",
+        "rejectSuccess": "Transaction rejected",
+        "rejectError": "Failed to reject this step",
+        "reviseSuccess": "Transaction returned to draft",
+        "reviseError": "Failed to return this transaction"
+      },
+      "pickAssets": "Assets to fix",
+      "pickAssetsHint": "Only the assets you tick can be changed by the submitter. The transaction as a whole still returns to DRAFT."
+    },
+    "cancelRequest": {
+      "button": "Cancel Request",
+      "success": "Transaction cancelled",
+      "error": "Failed to cancel this transaction",
+      "modal": {
+        "title": "Cancel This Request",
+        "desc": "You are cancelling your own submission. The transaction ends as CANCELLED and the assets are released. This cannot be undone.",
+        "confirm": "Yes, Cancel",
+        "placeholder": "Why is this cancelled? (min. 5 characters)"
+      }
     }
   },
   "disposalStagePanel": {
@@ -817,6 +877,75 @@
       "noUploads": "No documents uploaded yet",
       "rejectionReason": "Rejection reason",
       "review": "Review"
-    }
+    },
+    "nothingToShow": "Nothing to show for this stage yet"
+  },
+  "disposalDocuments": {
+    "title": "Documents",
+    "subtitle": "All documents across stages, grouped by stage",
+    "summary": "{{approved}}/{{required}} approved",
+    "empty": "No documents configured for this transaction yet"
+  },
+  "disposalDetail": {
+    "needsRevision": "Needs revision",
+    "revisionNote": "Revision note",
+    "revisionBanner": "This transaction was returned for revision. Only the assets marked \"Needs revision\" can be changed, and no new assets can be added until it is submitted again."
+  },
+  "disposalAgreement": {
+    "title": "Disposal Agreement",
+    "createTitle": "Create Disposal Agreement",
+    "detailTitle": "Agreement Detail",
+    "create": "Create Agreement",
+    "searchPlaceholder": "Search agreement number...",
+    "empty": "No agreements yet",
+    "totalItems": "{{count}} transactions",
+    "eligibleTitle": "Eligible transactions",
+    "eligibleHint": "Disposals that already passed approval request and are not in an active agreement yet",
+    "noEligible": "No transactions are eligible right now",
+    "selectAll": "Select all",
+    "unselectAll": "Unselect all",
+    "assetCount": "{{count}} assets",
+    "notes": "Notes",
+    "optional": "optional",
+    "notesPlaceholder": "Notes for the approvers...",
+    "summary": "{{transactions}} transactions · {{assets}} assets · {{branches}} branches selected",
+    "submit": "Submit Agreement",
+    "submitting": "Submitting...",
+    "cancel": "Cancel",
+    "agreementNumber": "Agreement number",
+    "totalTransactions": "Total transactions",
+    "createdBy": "Created by",
+    "createdAt": "Created at",
+    "approvalProgress": "Approval progress",
+    "members": "Transactions in this agreement",
+    "membersHint": "Once the agreement is approved, each transaction continues on its own transaction number",
+    "approvalStatus": "Approval Status",
+    "rejectionReason": "Rejection reason",
+    "stage": {
+      "APPROVAL_AGREEMENT": "Waiting approval",
+      "FINISHED": "Approved",
+      "REJECTED": "Rejected"
+    },
+    "validation": {
+      "pickAtLeastOne": "Pick at least one transaction"
+    },
+    "toast": {
+      "created": "Agreement created",
+      "createError": "Failed to create agreement",
+      "approved": "Step approved",
+      "approveError": "Failed to approve",
+      "rejected": "Agreement rejected",
+      "rejectError": "Failed to reject"
+    },
+    "column": {
+      "no": "No",
+      "number": "Agreement Number",
+      "items": "Transactions",
+      "createdBy": "Created By",
+      "createdAt": "Created At",
+      "status": "Status"
+    },
+    "emptySearch": "No agreement matches your search",
+    "viewDisposal": "Detail"
   }
 }

@@ -262,7 +262,13 @@
     "rejectedSuccess": "Đã từ chối tệp đính kèm",
     "reviewFailed": "Không thể lưu đánh giá",
     "zoomIn": "Phóng to",
-    "zoomOut": "Thu nhỏ"
+    "zoomOut": "Thu nhỏ",
+    "download": "Tải xuống",
+    "noPreview": "Chỉ xem trước được ảnh và PDF. Hãy tải xuống để mở tệp này.",
+    "loadError": "Không tải được tệp. Có thể tệp đã bị xóa khỏi máy chủ.",
+    "documentType": "Loại tài liệu",
+    "asset": "Tài sản",
+    "uploadedBy": "Người tải lên"
   },
   "verifyModal": {
     "title": "Xác Minh Giao Dịch",
@@ -411,7 +417,12 @@
     "toast": {
       "noAsset": "Vui lòng chọn tài sản trước",
       "noReason": "Lý do thanh lý là bắt buộc"
-    }
+    },
+    "searchPlaceholder": "Tìm mã hoặc tên tài sản...",
+    "assetEmpty": "Không có tài sản nào đủ điều kiện",
+    "filterHint": "Chỉ hiển thị tài sản khả dụng tại chi nhánh {{branch}}",
+    "moreResults": "{{count}} kết quả phù hợp, hãy thu hẹp tìm kiếm",
+    "noHomebase": "Tài khoản của bạn chưa có chi nhánh chính đang hoạt động nên không thể lọc tài sản. Hãy thiết lập ở trang chi nhánh trước."
   },
   "addAssetMutationModal": {
     "title": "Thêm Tài Sản",
@@ -552,7 +563,8 @@
       "TAX": "Tax",
       "ASSET_DELETION": "Asset Deletion",
       "FINISHED": "Finished",
-      "REJECTED": "Rejected"
+      "REJECTED": "Rejected",
+      "CANCELLED": "Cancelled"
     },
     "type": {
       "DISPOSE": "Dispose",
@@ -778,6 +790,54 @@
       "info": "Giao dịch sẽ chuyển sang trạng thái Rejected và tài sản trở lại trạng thái trước đó. Không thể hoàn tác.",
       "notesLabel": "Lý do từ chối",
       "notesPlaceholder": "Giải thích lý do từ chối"
+    },
+    "step": {
+      "approve": "Phê duyệt",
+      "reject": "Từ chối",
+      "revise": "Yêu cầu sửa",
+      "notesRequired": "Lý do",
+      "notesOptional": "Ghi chú (tùy chọn)",
+      "cancelButton": "Hủy",
+      "processing": "Đang xử lý...",
+      "approveModal": {
+        "title": "Phê Duyệt Bước Này",
+        "desc": "Bước: {{step}}",
+        "confirm": "Phê duyệt",
+        "placeholder": "Thêm ghi chú cho lần phê duyệt này..."
+      },
+      "rejectModal": {
+        "title": "Từ Chối Giao Dịch",
+        "desc": "Giao dịch sẽ bị từ chối và tài sản được giải phóng. Không thể hoàn tác.",
+        "confirm": "Từ chối",
+        "placeholder": "Giải thích lý do từ chối (tối thiểu 5 ký tự)"
+      },
+      "reviseModal": {
+        "title": "Trả Về Để Sửa",
+        "desc": "Giao dịch quay lại trạng thái DRAFT để người tạo sửa rồi gửi lại. Các phê duyệt đã ghi nhận sẽ bị xóa; tài sản và tài liệu đã tải lên vẫn giữ nguyên.",
+        "confirm": "Trả về",
+        "placeholder": "Cần sửa những gì? (tối thiểu 5 ký tự)"
+      },
+      "toast": {
+        "approveSuccess": "Đã phê duyệt bước",
+        "approveError": "Không thể phê duyệt bước này",
+        "rejectSuccess": "Đã từ chối giao dịch",
+        "rejectError": "Không thể từ chối bước này",
+        "reviseSuccess": "Đã trả giao dịch về bản nháp",
+        "reviseError": "Không thể trả lại giao dịch này"
+      },
+      "pickAssets": "Tài sản cần sửa",
+      "pickAssetsHint": "Người gửi chỉ có thể sửa những tài sản được chọn. Toàn bộ giao dịch vẫn quay lại DRAFT."
+    },
+    "cancelRequest": {
+      "button": "Hủy Yêu Cầu",
+      "success": "Đã hủy giao dịch",
+      "error": "Không thể hủy giao dịch này",
+      "modal": {
+        "title": "Hủy Yêu Cầu Này",
+        "desc": "Bạn đang hủy yêu cầu của chính mình. Giao dịch kết thúc với trạng thái CANCELLED và tài sản được giải phóng. Không thể hoàn tác.",
+        "confirm": "Vâng, Hủy",
+        "placeholder": "Lý do hủy? (tối thiểu 5 ký tự)"
+      }
     }
   },
   "disposalStagePanel": {
@@ -817,6 +877,75 @@
       "noUploads": "Chưa có tài liệu nào được tải lên",
       "rejectionReason": "Lý do từ chối",
       "review": "Kiểm tra"
-    }
+    },
+    "nothingToShow": "Chưa có gì để hiển thị cho giai đoạn này"
+  },
+  "disposalDocuments": {
+    "title": "Tài Liệu",
+    "subtitle": "Tất cả tài liệu của mọi giai đoạn, nhóm theo giai đoạn",
+    "summary": "Đã duyệt {{approved}}/{{required}}",
+    "empty": "Chưa có tài liệu nào được cấu hình cho giao dịch này"
+  },
+  "disposalDetail": {
+    "needsRevision": "Cần sửa",
+    "revisionNote": "Ghi chú sửa đổi",
+    "revisionBanner": "Giao dịch này đã được trả về để sửa. Chỉ những tài sản được đánh dấu \"Cần sửa\" mới có thể thay đổi, và không thể thêm tài sản mới cho đến khi gửi lại."
+  },
+  "disposalAgreement": {
+    "title": "Thỏa Thuận Thanh Lý",
+    "createTitle": "Tạo Thỏa Thuận Thanh Lý",
+    "detailTitle": "Chi Tiết Thỏa Thuận",
+    "create": "Tạo Thỏa Thuận",
+    "searchPlaceholder": "Tìm mã thỏa thuận...",
+    "empty": "Chưa có thỏa thuận nào",
+    "totalItems": "{{count}} giao dịch",
+    "eligibleTitle": "Giao dịch có thể gộp",
+    "eligibleHint": "Thanh lý đã qua phê duyệt yêu cầu và chưa thuộc thỏa thuận đang hoạt động",
+    "noEligible": "Hiện chưa có giao dịch nào đủ điều kiện",
+    "selectAll": "Chọn tất cả",
+    "unselectAll": "Bỏ chọn tất cả",
+    "assetCount": "{{count}} tài sản",
+    "notes": "Ghi chú",
+    "optional": "tùy chọn",
+    "notesPlaceholder": "Ghi chú cho người phê duyệt...",
+    "summary": "Đã chọn {{transactions}} giao dịch · {{assets}} tài sản · {{branches}} chi nhánh",
+    "submit": "Gửi Thỏa Thuận",
+    "submitting": "Đang gửi...",
+    "cancel": "Hủy",
+    "agreementNumber": "Mã thỏa thuận",
+    "totalTransactions": "Tổng giao dịch",
+    "createdBy": "Người tạo",
+    "createdAt": "Ngày tạo",
+    "approvalProgress": "Tiến độ phê duyệt",
+    "members": "Giao dịch trong thỏa thuận này",
+    "membersHint": "Sau khi thỏa thuận được duyệt, mỗi giao dịch tiếp tục với mã giao dịch riêng",
+    "approvalStatus": "Trạng Thái Phê Duyệt",
+    "rejectionReason": "Lý do từ chối",
+    "stage": {
+      "APPROVAL_AGREEMENT": "Chờ phê duyệt",
+      "FINISHED": "Đã duyệt",
+      "REJECTED": "Bị từ chối"
+    },
+    "validation": {
+      "pickAtLeastOne": "Hãy chọn ít nhất một giao dịch"
+    },
+    "toast": {
+      "created": "Tạo thỏa thuận thành công",
+      "createError": "Không thể tạo thỏa thuận",
+      "approved": "Đã phê duyệt bước",
+      "approveError": "Không thể phê duyệt",
+      "rejected": "Đã từ chối thỏa thuận",
+      "rejectError": "Không thể từ chối"
+    },
+    "column": {
+      "no": "STT",
+      "number": "Mã Thỏa Thuận",
+      "items": "Giao Dịch",
+      "createdBy": "Người Tạo",
+      "createdAt": "Ngày Tạo",
+      "status": "Trạng Thái"
+    },
+    "emptySearch": "Không có thỏa thuận nào khớp với tìm kiếm",
+    "viewDisposal": "Chi tiết"
   }
 }

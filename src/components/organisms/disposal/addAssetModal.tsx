@@ -1,30 +1,62 @@
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 import { useAssetList } from "../../../hooks/query/asset/list"
+import { useActiveHomebase } from "../../../hooks/query/homebase/active"
 import { useAddAssetToDisposal } from "../../../hooks/mutation/disposal/addAsset"
+
+/** sama dengan models.AssetStatusAvailable di backend */
+const ASSET_STATUS_AVAILABLE = "AVAILABLE"
 
 type AddAssetToDisposalModalProps = {
   transactionNumber: string
+  /** asset_id yang sudah ada di draft ini — disembunyikan dari pilihan */
+  existingAssetIds?: number[]
   onClose: () => void
   onSuccess?: () => void
 }
 
 export function AddAssetToDisposalModal({
   transactionNumber,
+  existingAssetIds = [],
   onClose,
   onSuccess,
 }: AddAssetToDisposalModalProps) {
   const [selectedAssetId, setSelectedAssetId] = useState<number | null>(null)
   const [disposalReason, setDisposalReason] = useState("")
   const [notes, setNotes] = useState("")
+  const [search, setSearch] = useState("")
 
   const { t } = useTranslation()
-  const { data: assetData, isLoading: isLoadingAssets } = useAssetList({ page: 1, limit: 100 })
+
+  // Filter mengikuti validasi AddAssetToDisposal di backend:
+  // status harus AVAILABLE dan cabangnya sama dengan homebase pembuat.
+  // Aset yang sudah masuk disposal lain otomatis tidak ikut karena statusnya
+  // sudah berubah jadi IN_DISPOSAL.
+  const { branchCode, branchName, isLoading: isLoadingBranch } = useActiveHomebase()
+
+  const { data: assetData, isLoading: isLoadingAssets } = useAssetList({
+    page: 1,
+    limit: 100,
+    search: search.trim() || undefined,
+    assetStatus: ASSET_STATUS_AVAILABLE,
+    branchCode,
+    enabled: !!branchCode,
+  })
+
   const { mutate: addAsset, isPending } = useAddAssetToDisposal({ transactionNumber })
 
-  const assets = assetData?.data?.data ?? []
+  const total = assetData?.data?.total ?? 0
+
+  // Aset yang sudah ada di draft ini disaring di sisi klien — backend menolak
+  // duplikat, tapi lebih baik tidak ditawarkan sejak awal.
+  const assets = useMemo(() => {
+    const taken = new Set(existingAssetIds)
+    return (assetData?.data?.data ?? []).filter((a) => !taken.has(a.id))
+  }, [assetData, existingAssetIds])
+
   const selectedAsset = assets.find((a) => a.id === selectedAssetId)
+  const isLoadingOptions = isLoadingBranch || isLoadingAssets
 
   const handleSubmit = () => {
     if (!selectedAsset) {
@@ -85,21 +117,54 @@ export function AddAssetToDisposalModal({
             <label className="block text-xs font-medium text-gray-700 dark:text-gray-300">
               {t("addAssetModal.asset")} <span className="text-red-500">*</span>
             </label>
-            <select
-              value={selectedAssetId ?? ""}
-              onChange={(e) => setSelectedAssetId(Number(e.target.value) || null)}
-              disabled={isPending || isLoadingAssets}
-              className="w-full px-3 py-2.5 text-sm border border-gray-300 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
-            >
-              <option value="">
-                {isLoadingAssets ? t("addAssetModal.assetLoading") : t("addAssetModal.assetPlaceholder")}
-              </option>
-              {assets.map((asset) => (
-                <option key={asset.id} value={asset.id}>
-                  {asset.asset_number} — {asset.asset_name}
-                </option>
-              ))}
-            </select>
+
+            {!branchCode && !isLoadingBranch ? (
+              <p className="px-3 py-2.5 text-xs text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 rounded-xl">
+                {t("addAssetModal.noHomebase")}
+              </p>
+            ) : (
+              <>
+                <input
+                  type="text"
+                  value={search}
+                  onChange={(e) => {
+                    setSearch(e.target.value)
+                    setSelectedAssetId(null)
+                  }}
+                  placeholder={t("addAssetModal.searchPlaceholder")}
+                  disabled={isPending}
+                  className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
+                />
+
+                <select
+                  value={selectedAssetId ?? ""}
+                  onChange={(e) => setSelectedAssetId(Number(e.target.value) || null)}
+                  disabled={isPending || isLoadingOptions}
+                  className="w-full px-3 py-2.5 text-sm border border-gray-300 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
+                >
+                  <option value="">
+                    {isLoadingOptions
+                      ? t("addAssetModal.assetLoading")
+                      : assets.length === 0
+                        ? t("addAssetModal.assetEmpty")
+                        : t("addAssetModal.assetPlaceholder")}
+                  </option>
+                  {assets.map((asset) => (
+                    <option key={asset.id} value={asset.id}>
+                      {asset.asset_number} — {asset.asset_name}
+                    </option>
+                  ))}
+                </select>
+
+                <p className="text-xs text-gray-400">
+                  {t("addAssetModal.filterHint", {
+                    branch: branchName || branchCode,
+                  })}
+                  {total > assets.length &&
+                    ` · ${t("addAssetModal.moreResults", { count: total })}`}
+                </p>
+              </>
+            )}
           </div>
 
           {/* Selected asset info preview */}
@@ -162,7 +227,7 @@ export function AddAssetToDisposalModal({
           </button>
           <button
             onClick={handleSubmit}
-            disabled={isPending || isLoadingAssets || !selectedAssetId || !disposalReason.trim()}
+            disabled={isPending || isLoadingOptions || !selectedAssetId || !disposalReason.trim()}
             className="flex-1 px-4 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isPending ? t("addAssetModal.submitting") : t("addAssetModal.submit")}

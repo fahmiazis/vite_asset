@@ -3,11 +3,13 @@ import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { useDisposalDetail } from "../../../../hooks/query/disposal/detail"
 import { useDisposalStageGate } from "../../../../hooks/query/disposal/stageGate"
+import { useDisposalAttachmentStatus } from "../../../../hooks/query/disposal/attachmentStatus"
 import { AddAssetToDisposalModal } from "../../../organisms/disposal/addAssetModal"
 import { RemoveAssetModal } from "../../../organisms/disposal/deleteAssetModal"
 import AddAttachmentModal from "../../../organisms/disposal/addAttachmentModal"
 import { DisposalAttachmentPanel } from "../../../organisms/disposal/attachmentPanel"
 import { DisposalApprovalStatusPanel } from "../../../organisms/disposal/approvalStatusPanel"
+import { DisposalDocumentsSection } from "../../../organisms/disposal/documentsSection"
 import { DisposalStageStepper } from "../../../organisms/disposal/stageStepper"
 import { DisposalStageActionBar } from "../../../organisms/disposal/stageActionBar"
 import {
@@ -102,6 +104,33 @@ export default function DisposalDetailPage() {
     stage
   )
 
+  // Stage yang detailnya sedang dibuka. Dihitung sebelum early return karena
+  // dipakai sebagai parameter hook di bawah.
+  //
+  // REJECTED tidak ada di daftar stage (bukan bagian alur normal) — fallback
+  // ke stage pertama supaya panelnya tetap menunjuk ke sesuatu yang valid.
+  const defaultStage =
+    stageIndex(transaction?.disposal_type, stage) >= 0
+      ? stage
+      : stagesForDisposalType(transaction?.disposal_type)[0]
+  const selectedStage = pickedStage === undefined ? defaultStage : pickedStage
+
+  // Query key-nya sama persis dengan yang dipakai DisposalAttachmentPanel,
+  // jadi react-query hanya melakukan satu request. Hasilnya dipakai untuk
+  // memutuskan panel dokumen perlu dirender atau tidak.
+  const { data: attachmentStatus, isLoading: isLoadingAttachments } =
+    useDisposalAttachmentStatus(
+      transaction?.transaction_number ?? "",
+      selectedStage ?? ""
+    )
+
+  // Stage tanpa config attachment tidak perlu menampilkan panel dokumen sama
+  // sekali. Dokumen yang terlanjur diupload sebelum config-nya dihapus tetap
+  // ditampilkan supaya tidak hilang diam-diam.
+  const stageHasDocuments = (attachmentStatus?.data?.assets ?? []).some(
+    (asset) => asset.total_required > 0 || asset.attachments.length > 0
+  )
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -115,17 +144,29 @@ export default function DisposalDetailPage() {
   const { assets, stages } = data.data
   const isDraft = stage === DISPOSAL_STAGE.DRAFT
 
-  // default: stage berjalan langsung terbuka. REJECTED tidak ada di daftar
-  // stage (bukan bagian alur normal) — fallback ke stage pertama supaya
-  // panelnya tetap menunjuk ke sesuatu yang valid.
-  const defaultStage =
-    stageIndex(transaction.disposal_type, stage) >= 0
-      ? stage
-      : stagesForDisposalType(transaction.disposal_type)[0]
-  const selectedStage = pickedStage === undefined ? defaultStage : pickedStage
+  // Approver menandai aset mana yang perlu diperbaiki. Selama penanda itu ada,
+  // pengaju hanya boleh menyentuh aset bertanda — aturannya sama dengan
+  // assertAssetRevisable di backend.
+  const hasPendingRevision = assets.some(
+    (asset) => asset.needs_revision && asset.status === "PENDING"
+  )
+  const isAssetLocked = (asset: DisposalAsset) =>
+    hasPendingRevision && !asset.needs_revision
+
   const stageHistory = selectedStage
     ? stages.filter((item) => item.to_stage?.toUpperCase() === selectedStage)
     : []
+
+  const isApprovalStage =
+    selectedStage === DISPOSAL_STAGE.APPROVAL_REQUEST ||
+    selectedStage === DISPOSAL_STAGE.APPROVAL_AGREEMENT
+
+  // stage yang belum dilalui dan tidak punya config dokumen tidak punya apa pun
+  // untuk ditampilkan — kasih keterangan daripada area kosong
+  const stageHasContent =
+    isApprovalStage ||
+    (assets.length > 0 && stageHasDocuments) ||
+    stageHistory.length > 0
 
   return (
     <section className="space-y-4 mt-4">
@@ -133,6 +174,7 @@ export default function DisposalDetailPage() {
       {showAddAsset && (
         <AddAssetToDisposalModal
           transactionNumber={transaction.transaction_number}
+          existingAssetIds={assets.map((a) => a.asset_id)}
           onClose={() => setShowAddAsset(false)}
         />
       )}
@@ -252,8 +294,8 @@ export default function DisposalDetailPage() {
               />
             )}
 
-            {/* Kelengkapan dokumen stage tersebut */}
-            {assets.length > 0 && (
+            {/* Dokumen — hanya kalau stage ini memang punya config attachment */}
+            {assets.length > 0 && stageHasDocuments && (
               <DisposalAttachmentPanel
                 embedded
                 transactionNumber={transaction.transaction_number}
@@ -263,6 +305,12 @@ export default function DisposalDetailPage() {
                   if (target) setAttachTarget(target)
                 }}
               />
+            )}
+
+            {!stageHasContent && !isLoadingAttachments && (
+              <p className="text-sm text-gray-400 text-center py-6">
+                {t("disposalStagePanel.nothingToShow")}
+              </p>
             )}
 
             {/* Riwayat perpindahan menuju stage ini */}
@@ -310,7 +358,7 @@ export default function DisposalDetailPage() {
             <span className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-500 px-2 py-0.5 rounded-full">
               {assets.length} aset
             </span>
-            {isDraft && (
+            {isDraft && !hasPendingRevision && (
               <button
                 onClick={() => setShowAddAsset(true)}
                 className="flex items-center gap-1.5 text-xs font-medium text-indigo-600 hover:text-indigo-700 bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-900/30 dark:hover:bg-indigo-900/50 px-2.5 py-1 rounded-lg transition-colors"
@@ -323,6 +371,12 @@ export default function DisposalDetailPage() {
             )}
           </div>
         </div>
+
+        {isDraft && hasPendingRevision && (
+          <p className="mb-3 text-xs text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 rounded-lg px-3 py-2">
+            {t("disposalDetail.revisionBanner")}
+          </p>
+        )}
 
         {assets.length === 0 ? (
           <div className="text-center py-10 text-sm text-gray-400">
@@ -344,8 +398,17 @@ export default function DisposalDetailPage() {
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
+                    {asset.needs_revision && asset.status === "PENDING" && (
+                      <span
+                        className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-700"
+                        title={asset.revision_notes ?? undefined}
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                        {t("disposalDetail.needsRevision")}
+                      </span>
+                    )}
                     <AssetStatusBadge status={asset.status} />
-                    {isDraft && (
+                    {isDraft && !isAssetLocked(asset) && (
                       <button
                         onClick={() => setAssetToRemove({ id: asset.asset_id, name: asset.asset_name ?? asset.asset_number })}
                         className="flex items-center justify-center w-7 h-7 rounded-lg text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors"
@@ -357,7 +420,7 @@ export default function DisposalDetailPage() {
                       </button>
                     )}
                     {/* Upload dokumen tersedia di setiap stage aktif, sesuai config attachment stage tsb */}
-                    {!isTerminalStage(stage) && asset.status === "PENDING" && (
+                    {!isTerminalStage(stage) && asset.status === "PENDING" && !isAssetLocked(asset) && (
                       <button
                         onClick={() => setAttachTarget(asset)}
                         className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors"
@@ -406,6 +469,15 @@ export default function DisposalDetailPage() {
                     )}
                   </div>
 
+                  {asset.needs_revision && asset.revision_notes && (
+                    <p className="mt-3 text-xs text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 rounded-lg px-3 py-2">
+                      <span className="font-medium">
+                        {t("disposalDetail.revisionNote")}:
+                      </span>{" "}
+                      {asset.revision_notes}
+                    </p>
+                  )}
+
                   {asset.notes && (
                     <p className="mt-3 text-xs text-gray-500 dark:text-gray-400 italic">
                       "{asset.notes}"
@@ -417,6 +489,19 @@ export default function DisposalDetailPage() {
           </div>
         )}
       </div>
+
+      {/* Dokumen lintas stage — satu tempat untuk approver & audit */}
+      {assets.length > 0 && (
+        <DisposalDocumentsSection
+          transactionNumber={transaction.transaction_number}
+          disposalType={transaction.disposal_type}
+          currentStage={stage}
+          onUploadForAsset={(assetNumber) => {
+            const target = assets.find((a) => a.asset_number === assetNumber)
+            if (target) setAttachTarget(target)
+          }}
+        />
+      )}
 
       {/* Stage History */}
       <div className="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-xl p-5">

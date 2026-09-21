@@ -262,7 +262,13 @@
     "rejectedSuccess": "Attachment ditolak",
     "reviewFailed": "Gagal menyimpan review",
     "zoomIn": "Perbesar",
-    "zoomOut": "Perkecil"
+    "zoomOut": "Perkecil",
+    "download": "Unduh",
+    "noPreview": "Preview hanya tersedia untuk gambar dan PDF. Pakai tombol unduh untuk membuka file ini.",
+    "loadError": "Gagal memuat file. Kemungkinan filenya sudah tidak ada di server.",
+    "documentType": "Jenis dokumen",
+    "asset": "Aset",
+    "uploadedBy": "Diupload oleh"
   },
   "verifyModal": {
     "title": "Verifikasi Transaksi",
@@ -411,7 +417,12 @@
     "toast": {
       "noAsset": "Pilih aset terlebih dahulu",
       "noReason": "Alasan disposal wajib diisi"
-    }
+    },
+    "searchPlaceholder": "Cari nomor atau nama aset...",
+    "assetEmpty": "Tidak ada aset yang memenuhi syarat",
+    "filterHint": "Hanya menampilkan aset tersedia di cabang {{branch}}",
+    "moreResults": "{{count}} aset cocok, persempit pencarian",
+    "noHomebase": "Akun kamu belum punya homebase aktif, jadi aset tidak bisa difilter. Atur dulu di halaman cabang."
   },
   "addAssetMutationModal": {
     "title": "Tambah Aset",
@@ -552,7 +563,8 @@
       "TAX": "Tax",
       "ASSET_DELETION": "Asset Deletion",
       "FINISHED": "Finished",
-      "REJECTED": "Rejected"
+      "REJECTED": "Rejected",
+      "CANCELLED": "Cancelled"
     },
     "type": {
       "DISPOSE": "Dispose",
@@ -778,6 +790,54 @@
       "info": "Transaksi akan masuk stage Rejected dan aset dikembalikan ke status semula. Aksi ini tidak bisa dibatalkan.",
       "notesLabel": "Alasan penolakan",
       "notesPlaceholder": "Jelaskan alasan penolakan"
+    },
+    "step": {
+      "approve": "Setujui",
+      "reject": "Tolak",
+      "revise": "Revisi",
+      "notesRequired": "Alasan",
+      "notesOptional": "Catatan (opsional)",
+      "cancelButton": "Batal",
+      "processing": "Memproses...",
+      "approveModal": {
+        "title": "Setujui Step Ini",
+        "desc": "Step: {{step}}",
+        "confirm": "Setujui",
+        "placeholder": "Tambahkan catatan untuk persetujuan ini..."
+      },
+      "rejectModal": {
+        "title": "Tolak Transaksi",
+        "desc": "Transaksi akan ditolak dan aset dilepas kembali. Aksi ini tidak bisa dibatalkan.",
+        "confirm": "Tolak",
+        "placeholder": "Jelaskan alasan penolakan (min. 5 karakter)"
+      },
+      "reviseModal": {
+        "title": "Kembalikan untuk Revisi",
+        "desc": "Transaksi dikembalikan ke DRAFT supaya pembuatnya bisa memperbaiki lalu submit ulang. Approval yang sudah tercatat dihapus; aset dan dokumen yang sudah diupload tetap ada.",
+        "confirm": "Kembalikan",
+        "placeholder": "Apa yang perlu diperbaiki? (min. 5 karakter)"
+      },
+      "toast": {
+        "approveSuccess": "Step disetujui",
+        "approveError": "Gagal menyetujui step ini",
+        "rejectSuccess": "Transaksi ditolak",
+        "rejectError": "Gagal menolak step ini",
+        "reviseSuccess": "Transaksi dikembalikan ke draft",
+        "reviseError": "Gagal mengembalikan transaksi ini"
+      },
+      "pickAssets": "Aset yang perlu diperbaiki",
+      "pickAssetsHint": "Hanya aset yang dicentang yang bisa diubah pengaju. Transaksinya sendiri tetap kembali ke DRAFT seluruhnya."
+    },
+    "cancelRequest": {
+      "button": "Batalkan",
+      "success": "Transaksi dibatalkan",
+      "error": "Gagal membatalkan transaksi ini",
+      "modal": {
+        "title": "Batalkan Pengajuan Ini",
+        "desc": "Kamu membatalkan pengajuanmu sendiri. Transaksi berakhir dengan status CANCELLED dan aset dilepas kembali. Aksi ini tidak bisa dibatalkan.",
+        "confirm": "Ya, Batalkan",
+        "placeholder": "Kenapa dibatalkan? (min. 5 karakter)"
+      }
     }
   },
   "disposalStagePanel": {
@@ -817,6 +877,75 @@
       "noUploads": "Belum ada dokumen diupload",
       "rejectionReason": "Alasan ditolak",
       "review": "Review"
-    }
+    },
+    "nothingToShow": "Belum ada yang bisa ditampilkan untuk stage ini"
+  },
+  "disposalDocuments": {
+    "title": "Dokumen",
+    "subtitle": "Seluruh dokumen dari semua stage, dikelompokkan per stage",
+    "summary": "{{approved}}/{{required}} disetujui",
+    "empty": "Belum ada dokumen yang dikonfigurasi untuk transaksi ini"
+  },
+  "disposalDetail": {
+    "needsRevision": "Perlu revisi",
+    "revisionNote": "Catatan revisi",
+    "revisionBanner": "Transaksi ini dikembalikan untuk revisi. Hanya aset bertanda \"Perlu revisi\" yang bisa diubah, dan aset baru tidak bisa ditambahkan sampai disubmit ulang."
+  },
+  "disposalAgreement": {
+    "title": "Kesepakatan Disposal",
+    "createTitle": "Buat Kesepakatan Disposal",
+    "detailTitle": "Detail Kesepakatan",
+    "create": "Buat Kesepakatan",
+    "searchPlaceholder": "Cari nomor kesepakatan...",
+    "empty": "Belum ada kesepakatan",
+    "totalItems": "{{count}} transaksi",
+    "eligibleTitle": "Transaksi yang bisa digabungkan",
+    "eligibleHint": "Disposal yang sudah lolos approval request dan belum masuk kesepakatan aktif",
+    "noEligible": "Belum ada transaksi yang bisa digabungkan",
+    "selectAll": "Pilih semua",
+    "unselectAll": "Batalkan semua",
+    "assetCount": "{{count}} aset",
+    "notes": "Catatan",
+    "optional": "opsional",
+    "notesPlaceholder": "Catatan untuk para approver...",
+    "summary": "{{transactions}} transaksi · {{assets}} aset · {{branches}} cabang dipilih",
+    "submit": "Ajukan Kesepakatan",
+    "submitting": "Mengajukan...",
+    "cancel": "Batal",
+    "agreementNumber": "Nomor kesepakatan",
+    "totalTransactions": "Jumlah transaksi",
+    "createdBy": "Dibuat oleh",
+    "createdAt": "Dibuat pada",
+    "approvalProgress": "Progres approval",
+    "members": "Transaksi dalam kesepakatan ini",
+    "membersHint": "Setelah kesepakatan disetujui, tiap transaksi lanjut memakai nomor transaksinya sendiri",
+    "approvalStatus": "Status Persetujuan",
+    "rejectionReason": "Alasan penolakan",
+    "stage": {
+      "APPROVAL_AGREEMENT": "Menunggu persetujuan",
+      "FINISHED": "Disetujui",
+      "REJECTED": "Ditolak"
+    },
+    "validation": {
+      "pickAtLeastOne": "Pilih minimal satu transaksi"
+    },
+    "toast": {
+      "created": "Kesepakatan berhasil dibuat",
+      "createError": "Gagal membuat kesepakatan",
+      "approved": "Step disetujui",
+      "approveError": "Gagal menyetujui",
+      "rejected": "Kesepakatan ditolak",
+      "rejectError": "Gagal menolak"
+    },
+    "column": {
+      "no": "No",
+      "number": "Nomor Kesepakatan",
+      "items": "Transaksi",
+      "createdBy": "Dibuat Oleh",
+      "createdAt": "Dibuat Pada",
+      "status": "Status"
+    },
+    "emptySearch": "Tidak ada kesepakatan yang cocok dengan pencarian",
+    "viewDisposal": "Detail"
   }
 }

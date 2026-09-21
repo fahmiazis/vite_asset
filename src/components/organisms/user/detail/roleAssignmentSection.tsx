@@ -11,9 +11,14 @@ interface RoleAssignmentSectionProps {
 }
 
 /**
- * Atur role yang dimiliki user (POST /users/:id/roles).
- * Backend mewajibkan minimal satu role — user tanpa role akan ditolak
- * semua endpoint ber-permission.
+ * Atur role user (POST /users/:id/roles).
+ *
+ * Satu user = satu role. Endpoint-nya tetap menerima array (kontrak backend
+ * tidak diubah), tapi UI hanya mengizinkan satu pilihan sehingga yang terkirim
+ * selalu berisi satu id.
+ *
+ * User tanpa role akan ditolak semua endpoint ber-permission, jadi pilihannya
+ * tidak boleh kosong.
  */
 export default function RoleAssignmentSection({
   user,
@@ -21,38 +26,34 @@ export default function RoleAssignmentSection({
 }: RoleAssignmentSectionProps) {
   const { data: roleListData, isLoading: loadingRoles } = useRoleList()
 
+  // data lama bisa saja punya lebih dari satu role — yang pertama dipakai
+  // sebagai nilai awal, sisanya akan tergantikan begitu disimpan
   const assignedIds = useMemo(
     () => (user?.roles ?? []).map((role) => role.id),
     [user]
   )
+  const currentRoleId = assignedIds[0] ?? ""
 
-  const [selected, setSelected] = useState<string[]>(assignedIds)
+  const [selected, setSelected] = useState<string>(currentRoleId)
 
   useEffect(() => {
-    setSelected(assignedIds)
-  }, [assignedIds])
+    setSelected(currentRoleId)
+  }, [currentRoleId])
 
   const { mutate: assignRoles, isPending } = useAssignRoles({
     userId: user?.id ?? "",
   })
 
-  const changed = useMemo(() => {
-    const a = [...selected].sort().join(",")
-    const b = [...assignedIds].sort().join(",")
-    return a !== b
-  }, [selected, assignedIds])
-
-  const toggle = (roleId: string) => {
-    setSelected((prev) =>
-      prev.includes(roleId) ? prev.filter((id) => id !== roleId) : [...prev, roleId]
-    )
-  }
+  const changed = useMemo(
+    () => selected !== currentRoleId || assignedIds.length > 1,
+    [selected, currentRoleId, assignedIds]
+  )
 
   const handleSave = () => {
-    if (selected.length === 0) {
-      return toast.error("Pilih minimal satu role")
+    if (!selected) {
+      return toast.error("Pilih satu role")
     }
-    assignRoles({ role_ids: selected })
+    assignRoles({ role_ids: [selected] })
   }
 
   const roles = roleListData?.data ?? []
@@ -67,7 +68,7 @@ export default function RoleAssignmentSection({
             Role User
           </h3>
           <p className="text-xs text-gray-400 mt-0.5">
-            Hak akses user mengikuti gabungan permission dari semua role yang dipilih
+            Satu user hanya punya satu role — hak aksesnya mengikuti role tersebut
           </p>
         </div>
 
@@ -86,9 +87,16 @@ export default function RoleAssignmentSection({
         </p>
       )}
 
-      {selected.length === 0 && (
+      {!selected && (
         <p className="text-xs text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 px-3 py-2 rounded-lg mb-3">
-          Minimal satu role harus dipilih.
+          Role harus dipilih.
+        </p>
+      )}
+
+      {assignedIds.length > 1 && (
+        <p className="text-xs text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 px-3 py-2 rounded-lg mb-3">
+          User ini masih punya {assignedIds.length} role dari data lama. Menyimpan
+          akan menyisakan satu role saja.
         </p>
       )}
 
@@ -106,11 +114,12 @@ export default function RoleAssignmentSection({
               className="flex items-start gap-3 px-3 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800/50 cursor-pointer transition-colors"
             >
               <input
-                type="checkbox"
-                checked={selected.includes(role.id)}
-                onChange={() => toggle(role.id)}
+                type="radio"
+                name="user-role"
+                checked={selected === role.id}
+                onChange={() => setSelected(role.id)}
                 disabled={isPending}
-                className="mt-0.5 w-4 h-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                className="mt-0.5 w-4 h-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
               />
               <span className="min-w-0 flex-1">
                 <span className="block text-sm font-medium text-gray-800 dark:text-gray-200">

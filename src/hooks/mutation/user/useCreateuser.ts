@@ -2,8 +2,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import type { UpdateUserRequest } from '../../../models/users/update';
-import { updateUser } from '../../../services/users/update';
+import type { CreateUserRequest } from '../../../models/users/create';
 import { createUser } from '../../../services/users/create';
 
 interface UseUpdateUserParams {
@@ -23,19 +22,15 @@ export function useCreateUser({
   const navigate = useNavigate();
 
   return useMutation({
-    mutationFn: ({ payload }: { payload: UpdateUserRequest }) =>
-      createUser( payload),
+    mutationFn: ({ payload }: { payload: CreateUserRequest }) =>
+      createUser(payload),
 
     onSuccess: (data) => {
-      queryClient.invalidateQueries({
-        queryKey: ['create users'],
-      });
+      // FIX: key-nya 'user-list' (lihat hooks/query/user/list.ts) — sebelumnya
+      // meng-invalidate 'create users' yang tidak pernah dipakai query mana pun
+      queryClient.invalidateQueries({ queryKey: ['user-list'] });
 
-      queryClient.invalidateQueries({
-        queryKey: ['user'],
-      });
-
-      toast.success(data.message || 'User updated successfully');
+      toast.success(data.message || 'User berhasil dibuat');
 
       if (redirectOnSuccess) {
         navigate(redirectPath);

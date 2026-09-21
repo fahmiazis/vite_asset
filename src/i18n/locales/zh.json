@@ -262,7 +262,13 @@
     "rejectedSuccess": "附件已拒绝",
     "reviewFailed": "保存审核失败",
     "zoomIn": "放大",
-    "zoomOut": "缩小"
+    "zoomOut": "缩小",
+    "download": "下载",
+    "noPreview": "仅支持预览图片和 PDF。请下载后打开此文件。",
+    "loadError": "文件加载失败，可能已从服务器移除。",
+    "documentType": "文件类型",
+    "asset": "资产",
+    "uploadedBy": "上传人"
   },
   "verifyModal": {
     "title": "验证交易",
@@ -411,7 +417,12 @@
     "toast": {
       "noAsset": "请先选择一个资产",
       "noReason": "处置原因为必填项"
-    }
+    },
+    "searchPlaceholder": "搜索资产编号或名称...",
+    "assetEmpty": "没有符合条件的资产",
+    "filterHint": "仅显示分支 {{branch}} 中可用的资产",
+    "moreResults": "匹配 {{count}} 条，请缩小搜索范围",
+    "noHomebase": "您的账号没有启用的主分支，无法筛选资产。请先在分支页面设置。"
   },
   "addAssetMutationModal": {
     "title": "添加资产",
@@ -552,7 +563,8 @@
       "TAX": "Tax",
       "ASSET_DELETION": "Asset Deletion",
       "FINISHED": "Finished",
-      "REJECTED": "Rejected"
+      "REJECTED": "Rejected",
+      "CANCELLED": "Cancelled"
     },
     "type": {
       "DISPOSE": "Dispose",
@@ -778,6 +790,54 @@
       "info": "交易将进入 Rejected 状态，资产恢复为原状态。此操作不可撤销。",
       "notesLabel": "拒绝原因",
       "notesPlaceholder": "请说明拒绝原因"
+    },
+    "step": {
+      "approve": "批准",
+      "reject": "拒绝",
+      "revise": "退回修改",
+      "notesRequired": "原因",
+      "notesOptional": "备注（可选）",
+      "cancelButton": "取消",
+      "processing": "处理中...",
+      "approveModal": {
+        "title": "批准该步骤",
+        "desc": "步骤：{{step}}",
+        "confirm": "批准",
+        "placeholder": "为本次批准添加备注..."
+      },
+      "rejectModal": {
+        "title": "拒绝交易",
+        "desc": "交易将被拒绝，资产将被释放。此操作不可撤销。",
+        "confirm": "拒绝",
+        "placeholder": "请说明拒绝原因（至少 5 个字符）"
+      },
+      "reviseModal": {
+        "title": "退回修改",
+        "desc": "交易将退回 DRAFT 状态，由创建人修改后重新提交。已记录的审批会被清除；资产和已上传的文件保持不变。",
+        "confirm": "退回",
+        "placeholder": "需要修改什么？（至少 5 个字符）"
+      },
+      "toast": {
+        "approveSuccess": "步骤已批准",
+        "approveError": "批准该步骤失败",
+        "rejectSuccess": "交易已拒绝",
+        "rejectError": "拒绝该步骤失败",
+        "reviseSuccess": "交易已退回草稿",
+        "reviseError": "退回该交易失败"
+      },
+      "pickAssets": "需要修改的资产",
+      "pickAssetsHint": "提交人只能修改勾选的资产。整笔交易仍会退回 DRAFT 状态。"
+    },
+    "cancelRequest": {
+      "button": "取消申请",
+      "success": "交易已取消",
+      "error": "取消该交易失败",
+      "modal": {
+        "title": "取消此申请",
+        "desc": "您正在取消自己提交的申请。交易将以 CANCELLED 状态结束，资产将被释放。此操作不可撤销。",
+        "confirm": "确认取消",
+        "placeholder": "取消原因？（至少 5 个字符）"
+      }
     }
   },
   "disposalStagePanel": {
@@ -817,6 +877,75 @@
       "noUploads": "尚未上传任何文件",
       "rejectionReason": "拒绝原因",
       "review": "审核"
-    }
+    },
+    "nothingToShow": "该阶段暂无可显示的内容"
+  },
+  "disposalDocuments": {
+    "title": "文件",
+    "subtitle": "所有阶段的文件，按阶段分组",
+    "summary": "已批准 {{approved}}/{{required}}",
+    "empty": "该交易尚未配置任何文件"
+  },
+  "disposalDetail": {
+    "needsRevision": "需修改",
+    "revisionNote": "修改说明",
+    "revisionBanner": "该交易已被退回修改。只有标记为“需修改”的资产可以变更，在重新提交前无法新增资产。"
+  },
+  "disposalAgreement": {
+    "title": "处置协议",
+    "createTitle": "创建处置协议",
+    "detailTitle": "协议详情",
+    "create": "创建协议",
+    "searchPlaceholder": "搜索协议编号...",
+    "empty": "暂无协议",
+    "totalItems": "{{count}} 笔交易",
+    "eligibleTitle": "可合并的交易",
+    "eligibleHint": "已通过审批申请且尚未纳入有效协议的处置交易",
+    "noEligible": "目前没有可合并的交易",
+    "selectAll": "全选",
+    "unselectAll": "取消全选",
+    "assetCount": "{{count}} 项资产",
+    "notes": "备注",
+    "optional": "可选",
+    "notesPlaceholder": "给审批人的备注...",
+    "summary": "已选 {{transactions}} 笔交易 · {{assets}} 项资产 · {{branches}} 个分支",
+    "submit": "提交协议",
+    "submitting": "提交中...",
+    "cancel": "取消",
+    "agreementNumber": "协议编号",
+    "totalTransactions": "交易总数",
+    "createdBy": "创建人",
+    "createdAt": "创建时间",
+    "approvalProgress": "审批进度",
+    "members": "本协议包含的交易",
+    "membersHint": "协议获批后，每笔交易将以各自的交易编号继续流转",
+    "approvalStatus": "审批状态",
+    "rejectionReason": "拒绝原因",
+    "stage": {
+      "APPROVAL_AGREEMENT": "等待审批",
+      "FINISHED": "已批准",
+      "REJECTED": "已拒绝"
+    },
+    "validation": {
+      "pickAtLeastOne": "请至少选择一笔交易"
+    },
+    "toast": {
+      "created": "协议创建成功",
+      "createError": "创建协议失败",
+      "approved": "步骤已批准",
+      "approveError": "批准失败",
+      "rejected": "协议已拒绝",
+      "rejectError": "拒绝失败"
+    },
+    "column": {
+      "no": "序号",
+      "number": "协议编号",
+      "items": "交易数",
+      "createdBy": "创建人",
+      "createdAt": "创建时间",
+      "status": "状态"
+    },
+    "emptySearch": "没有符合搜索条件的协议",
+    "viewDisposal": "详情"
   }
 }

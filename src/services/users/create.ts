@@ -1,10 +1,10 @@
 import { axiosPrivate } from '../../libs/instance';
-import type { UpdateUserRequest, UpdateUserResponse } from '../../models/users/update';
+import type { CreateUserRequest, CreateUserResponse } from '../../models/users/create';
 
 export const createUser = async (
-  payload: UpdateUserRequest
-): Promise<UpdateUserResponse> => {
-  const response = await axiosPrivate.post<UpdateUserResponse>(
+  payload: CreateUserRequest
+): Promise<CreateUserResponse> => {
+  const response = await axiosPrivate.post<CreateUserResponse>(
     `/users`,
     payload
   );

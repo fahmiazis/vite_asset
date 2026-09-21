@@ -16,6 +16,8 @@ export const DISPOSAL_STAGE = {
   ASSET_DELETION: "ASSET_DELETION",
   FINISHED: "FINISHED",
   REJECTED: "REJECTED",
+  /** dibatalkan oleh pengaju sendiri — beda dengan REJECTED oleh approver */
+  CANCELLED: "CANCELLED",
 } as const
 
 export type DisposalStage = (typeof DISPOSAL_STAGE)[keyof typeof DISPOSAL_STAGE]
@@ -84,6 +86,7 @@ export const DISPOSAL_STAGE_LABEL: Record<string, string> = {
   ASSET_DELETION: "Asset Deletion",
   FINISHED: "Finished",
   REJECTED: "Rejected",
+  CANCELLED: "Cancelled",
 }
 
 export function disposalStageLabel(stage?: string | null): string {
@@ -114,7 +117,26 @@ export function isSell(disposalType?: string | null): boolean {
 /** Stage terminal — tidak ada aksi lanjutan */
 export function isTerminalStage(stage?: string | null): boolean {
   const s = stage?.toUpperCase()
-  return s === DISPOSAL_STAGE.FINISHED || s === DISPOSAL_STAGE.REJECTED
+  return (
+    s === DISPOSAL_STAGE.FINISHED ||
+    s === DISPOSAL_STAGE.REJECTED ||
+    s === DISPOSAL_STAGE.CANCELLED
+  )
+}
+
+/**
+ * Stage yang masih boleh dibatalkan pengaju — cermin cancelableStages di
+ * services.CancelDisposal. Mulai EXECUTE sudah ada efek samping.
+ */
+export function canCancelAtStage(stage?: string | null): boolean {
+  const s = stage?.toUpperCase()
+  if (!s) return false
+  return (
+    s === DISPOSAL_STAGE.DRAFT ||
+    s === DISPOSAL_STAGE.PURCHASING ||
+    s === DISPOSAL_STAGE.APPROVAL_REQUEST ||
+    s === DISPOSAL_STAGE.APPROVAL_AGREEMENT
+  )
 }
 
 /** Stage yang boleh di-reject (backend menolak DRAFT / FINISHED / REJECTED) */

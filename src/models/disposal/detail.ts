@@ -44,6 +44,9 @@ export interface DisposalAsset {
   document_number: string | null
   notes: string | null
   status: "PENDING" | "DELETED" | "CANCELLED" | string
+  /** ditandai approver saat minta revisi — hanya ini yang boleh diubah pengaju */
+  needs_revision?: boolean
+  revision_notes?: string | null
   attachments?: DisposalAttachment[]
   created_at: string
   updated_at: string
