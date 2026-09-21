@@ -88,6 +88,7 @@ function StockOpnameFillGridRowInner({
             transactionNumber={transactionNumber}
             assetId={item.asset_id}
             fileName={item.borrow_document_file_name}
+            documentUrl={item.borrow_document_url}
             onUploaded={() => onBorrowDocumentUploaded(item.asset_id)}
           />
         ) : (

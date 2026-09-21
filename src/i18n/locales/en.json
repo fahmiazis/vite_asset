@@ -959,13 +959,24 @@
     "hint": "JPEG, max 2MB, original camera photo (not forwarded via chat), taken within the last 10 days",
     "capturedOn": "Captured",
     "clickToReplace": "click to replace",
-    "uploadTooltip": "No photo yet — click to upload"
+    "uploadTooltip": "No photo yet — click to upload",
+    "clickToView": "click to view",
+    "replace": "Replace Photo"
   },
   "stockOpnameBorrowDocument": {
     "label": "Loan Document",
     "uploadCta": "Upload Document",
     "hint": "PDF, required for assets with Borrowed status",
     "clickToReplace": "click to replace",
-    "uploadTooltip": "No document yet — click to upload"
+    "uploadTooltip": "No document yet — click to upload",
+    "clickToView": "click to view",
+    "replace": "Replace Document"
+  },
+  "stockOpnameFilePreview": {
+    "close": "Close",
+    "replace": "Replace",
+    "loadError": "Failed to load file.",
+    "noPreview": "This file format can't be previewed in the browser.",
+    "download": "Download"
   }
 }

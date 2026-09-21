@@ -959,13 +959,24 @@
     "hint": "JPEG格式，最大2MB，相机原图（非聊天转发压缩图），10天内拍摄",
     "capturedOn": "拍摄于",
     "clickToReplace": "点击更换",
-    "uploadTooltip": "尚无照片 — 点击上传"
+    "uploadTooltip": "尚无照片 — 点击上传",
+    "clickToView": "点击查看",
+    "replace": "更换照片"
   },
   "stockOpnameBorrowDocument": {
     "label": "借用文件",
     "uploadCta": "上传文件",
     "hint": "PDF格式，状态为借出的资产必填",
     "clickToReplace": "点击更换",
-    "uploadTooltip": "尚无文件 — 点击上传"
+    "uploadTooltip": "尚无文件 — 点击上传",
+    "clickToView": "点击查看",
+    "replace": "更换文件"
+  },
+  "stockOpnameFilePreview": {
+    "close": "关闭",
+    "replace": "更换",
+    "loadError": "文件加载失败。",
+    "noPreview": "浏览器无法预览此文件格式。",
+    "download": "下载"
   }
 }

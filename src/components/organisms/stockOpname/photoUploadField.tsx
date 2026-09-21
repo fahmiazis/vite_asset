@@ -2,6 +2,8 @@ import { useEffect, useRef, useState, type ChangeEvent } from "react"
 import { useTranslation } from "react-i18next"
 import { Camera01Icon } from "hugeicons-react"
 import { useUploadStockOpnamePhoto } from "../../../hooks/mutation/stockOpname/uploadPhoto"
+import { useAuthedBlobUrl } from "../../../hooks/custom/useAuthedBlobUrl"
+import { FilePreviewModal } from "./filePreviewModal"
 
 interface PhotoUploadFieldProps {
   transactionNumber: string
@@ -38,7 +40,11 @@ export function PhotoUploadField({
     }
   }, [localPreview])
 
-  const fullUrl = localPreview ?? (photoUrl ? `${import.meta.env.VITE_IMAGE_ACCESS}${photoUrl}` : null)
+  // Endpoint foto butuh Authorization header, jadi gak bisa dipakai langsung
+  // sebagai <img src> — di-fetch dulu jadi blob URL.
+  const photoBlob = useAuthedBlobUrl(photoUrl ? `${import.meta.env.VITE_IMAGE_ACCESS}${photoUrl}` : null)
+  const fullUrl = localPreview ?? photoBlob.objectUrl
+  const [previewOpen, setPreviewOpen] = useState(false)
   const formattedDate = localPreview ? null : formatCapturedDate(capturedAt)
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -71,11 +77,11 @@ export function PhotoUploadField({
       <div className="flex justify-center">
         <button
           type="button"
-          onClick={() => inputRef.current?.click()}
-          disabled={isPending}
+          onClick={() => (fullUrl ? setPreviewOpen(true) : inputRef.current?.click())}
+          disabled={isPending || photoBlob.isLoading}
           title={
-            formattedDate
-              ? `${t("stockOpnamePhoto.capturedOn")} ${formattedDate} — ${t("stockOpnamePhoto.clickToReplace")}`
+            fullUrl
+              ? `${formattedDate ? `${t("stockOpnamePhoto.capturedOn")} ${formattedDate} — ` : ""}${t("stockOpnamePhoto.clickToView")}`
               : t("stockOpnamePhoto.uploadTooltip")
           }
           className={`w-9 h-9 rounded-md border flex items-center justify-center overflow-hidden transition-colors flex-shrink-0 disabled:opacity-50 ${
@@ -84,7 +90,7 @@ export function PhotoUploadField({
               : "border-dashed border-red-300 dark:border-red-700 text-red-400 hover:border-indigo-400 hover:text-indigo-500"
           }`}
         >
-          {isPending ? (
+          {isPending || photoBlob.isLoading ? (
             <span className="w-3 h-3 border-2 border-gray-300 border-t-indigo-500 rounded-full animate-spin" />
           ) : fullUrl ? (
             <img src={fullUrl} alt="" className="w-full h-full object-cover" />
@@ -93,6 +99,16 @@ export function PhotoUploadField({
           )}
         </button>
         {hiddenInput}
+        {previewOpen && fullUrl && (
+          <FilePreviewModal
+            title={t("stockOpnamePhoto.label")}
+            src={fullUrl}
+            mimeType="image/*"
+            onClose={() => setPreviewOpen(false)}
+            onReplace={() => inputRef.current?.click()}
+            replaceLabel={t("stockOpnamePhoto.replace")}
+          />
+        )}
       </div>
     )
   }

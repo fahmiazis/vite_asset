@@ -959,13 +959,24 @@
     "hint": "JPEG, tối đa 2MB, ảnh gốc từ máy ảnh (không phải chuyển tiếp qua chat), chụp trong 10 ngày gần đây",
     "capturedOn": "Chụp lúc",
     "clickToReplace": "bấm để thay",
-    "uploadTooltip": "Chưa có ảnh — bấm để tải lên"
+    "uploadTooltip": "Chưa có ảnh — bấm để tải lên",
+    "clickToView": "bấm để xem",
+    "replace": "Thay Ảnh"
   },
   "stockOpnameBorrowDocument": {
     "label": "Tài Liệu Mượn",
     "uploadCta": "Tải Tài Liệu Lên",
     "hint": "PDF, bắt buộc đối với tài sản có trạng thái Đang mượn",
     "clickToReplace": "bấm để thay",
-    "uploadTooltip": "Chưa có tài liệu — bấm để tải lên"
+    "uploadTooltip": "Chưa có tài liệu — bấm để tải lên",
+    "clickToView": "bấm để xem",
+    "replace": "Thay Tài Liệu"
+  },
+  "stockOpnameFilePreview": {
+    "close": "Đóng",
+    "replace": "Thay",
+    "loadError": "Không thể tải tệp.",
+    "noPreview": "Trình duyệt không thể xem trước định dạng tệp này.",
+    "download": "Tải xuống"
   }
 }

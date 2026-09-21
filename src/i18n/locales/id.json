@@ -959,13 +959,24 @@
     "hint": "JPEG, maks 2MB, foto asli kamera (bukan hasil forward chat), diambil maks 10 hari lalu",
     "capturedOn": "Diambil",
     "clickToReplace": "klik buat ganti",
-    "uploadTooltip": "Belum ada foto — klik buat upload"
+    "uploadTooltip": "Belum ada foto — klik buat upload",
+    "clickToView": "klik buat lihat",
+    "replace": "Ganti Foto"
   },
   "stockOpnameBorrowDocument": {
     "label": "Dokumen Peminjaman",
     "uploadCta": "Upload Dokumen",
     "hint": "PDF, wajib untuk aset berstatus Dipinjam",
     "clickToReplace": "klik buat ganti",
-    "uploadTooltip": "Belum ada dokumen — klik buat upload"
+    "uploadTooltip": "Belum ada dokumen — klik buat upload",
+    "clickToView": "klik buat lihat",
+    "replace": "Ganti Dokumen"
+  },
+  "stockOpnameFilePreview": {
+    "close": "Tutup",
+    "replace": "Ganti",
+    "loadError": "Gagal memuat file.",
+    "noPreview": "Format file ini tidak bisa di-preview di browser.",
+    "download": "Download"
   }
 }
