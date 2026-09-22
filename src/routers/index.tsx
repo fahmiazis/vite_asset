@@ -55,6 +55,7 @@ import CreateStockOpnamePage from '../components/pages/stockOpname/create'
 import StockOpnameDetailPage from '../components/pages/stockOpname/detail'
 import StockOpnameReportPage from '../components/pages/stockOpname/report'
 import StockOpnameConfigPage from '../components/pages/stockOpname/config'
+import StockOpnameStatusMasterPage from '../components/pages/stockOpname/statusMaster'
 import StockOpnameFillPage from '../components/pages/stockOpname/fill'
 import GuidePage from '../components/pages/guide'
 import StockOpnameGuidePage from '../components/pages/guide/stockOpname'
@@ -175,6 +176,10 @@ export const router = createBrowserRouter([
           {
             path: 'stock-opname/config',
             element: <StockOpnameConfigPage />,
+          },
+          {
+            path: 'stock-opname/status-master',
+            element: <StockOpnameStatusMasterPage />,
           },
           {
             path: 'stock-opname/*',

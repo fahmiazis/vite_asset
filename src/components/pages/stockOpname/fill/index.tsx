@@ -3,7 +3,10 @@ import { useNavigate, useParams } from "react-router-dom"
 import { useTranslation } from "react-i18next"
 import { useStockOpnameDetail } from "../../../../hooks/query/stockOpname/detail"
 import { useBulkUpdateStockOpnameFinding } from "../../../../hooks/mutation/stockOpname/bulkUpdateFinding"
+import { useStockOpnamePhysicalStatusMasters } from "../../../../hooks/query/stockOpname/physicalStatusMasterList"
+import { useStockOpnameConditionMasters } from "../../../../hooks/query/stockOpname/conditionMasterList"
 import { StockOpnameFillGridRow, type FillFieldName, type FillRowState } from "../../../organisms/stockOpname/fillGridRow"
+import { isPhysicalStatusAbsent, isConditionNotApplicableValue, notApplicableConditionCode } from "../../../organisms/stockOpname/findingOptions"
 import type { BulkUpdateStockOpnameFindingItem } from "../../../../models/stockOpname/bulkUpdateFinding"
 
 const AUTOSAVE_INTERVAL_MS = 8000
@@ -22,6 +25,10 @@ export default function StockOpnameFillPage() {
 
   const { data, isLoading } = useStockOpnameDetail(transactionNumber)
   const { mutateAsync: bulkUpdate } = useBulkUpdateStockOpnameFinding({ transactionNumber })
+  const { data: physicalStatusMastersData } = useStockOpnamePhysicalStatusMasters()
+  const { data: conditionMastersData } = useStockOpnameConditionMasters()
+  const physicalStatusMasters = physicalStatusMastersData?.data ?? []
+  const conditionMasters = conditionMastersData?.data ?? []
 
   const [rows, setRows] = useState<Record<number, FillRowState>>({})
   const [rowErrors, setRowErrors] = useState<Record<number, string>>({})
@@ -94,13 +101,14 @@ export default function StockOpnameFillPage() {
       const next: FillRowState = { ...current, [field]: rawValue }
       const patch: Partial<BulkUpdateStockOpnameFindingItem> = { [field]: rawValue }
 
-      // Fisik "Tidak Ada" -> Kondisi otomatis "Tidak Ada" & terkunci.
+      // Fisik "Tidak Ada"/"Dipinjam" -> Kondisi otomatis "Tidak Ada" & terkunci.
       // Balik ke "Ada" -> Kondisi direset kosong biar dipilih ulang.
       if (field === "physical_status") {
-        if (rawValue === "MISSING") {
-          next.condition = "NOT_APPLICABLE"
-          patch.condition = "NOT_APPLICABLE"
-        } else if (current.condition === "NOT_APPLICABLE") {
+        if (isPhysicalStatusAbsent(physicalStatusMasters, rawValue)) {
+          const naCode = notApplicableConditionCode(conditionMasters)
+          next.condition = naCode
+          patch.condition = naCode
+        } else if (isConditionNotApplicableValue(conditionMasters, current.condition)) {
           next.condition = ""
           patch.condition = ""
         }
@@ -111,7 +119,7 @@ export default function StockOpnameFillPage() {
     })
 
     setRowErrors((prev) => (prev[assetId] ? { ...prev, [assetId]: "" } : prev))
-  }, [])
+  }, [physicalStatusMasters, conditionMasters])
 
   const flush = useCallback(async () => {
     if (flushingRef.current) return
@@ -154,18 +162,20 @@ export default function StockOpnameFillPage() {
 
   // Dokumen peminjaman kesimpen lewat endpoint upload terpisah (bukan lewat
   // bulk-update-finding), tapi validasi "wajib ada dokumen" terjadi pas
-  // physical_status=BORROWED disimpan. Kalau user pilih "Dipinjam" duluan
-  // sebelum dokumennya keupload, autosave bakal gagal & pending fieldnya
-  // ke-drop (lihat flush) — begitu dokumen kelar diupload, re-queue &
-  // langsung coba simpan ulang biar gak nunggu interval berikutnya.
+  // physical_status yang requires_borrow_document disimpan. Kalau user pilih
+  // status itu duluan sebelum dokumennya keupload, autosave bakal gagal &
+  // pending fieldnya ke-drop (lihat flush) — begitu dokumen kelar diupload,
+  // re-queue pakai physical_status yang lagi dipilih di baris itu & langsung
+  // coba simpan ulang biar gak nunggu interval berikutnya.
   const handleBorrowDocumentUploaded = useCallback((assetId: number) => {
+    const currentPhysicalStatus = rows[assetId]?.physical_status || ""
     pendingRef.current[assetId] = {
       ...pendingRef.current[assetId],
-      physical_status: "BORROWED",
-      condition: "NOT_APPLICABLE",
+      physical_status: currentPhysicalStatus,
+      condition: notApplicableConditionCode(conditionMasters),
     }
     flush()
-  }, [flush])
+  }, [flush, rows, conditionMasters])
 
   useEffect(() => {
     const interval = setInterval(flush, AUTOSAVE_INTERVAL_MS)
@@ -309,6 +319,8 @@ export default function StockOpnameFillPage() {
                   state={rows[item.asset_id] ?? emptyRowState()}
                   error={rowErrors[item.asset_id]}
                   t={t}
+                  physicalStatusMasters={physicalStatusMasters}
+                  conditionMasters={conditionMasters}
                   onFieldChange={handleFieldChange}
                   onBorrowDocumentUploaded={handleBorrowDocumentUploaded}
                 />

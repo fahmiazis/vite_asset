@@ -1,28 +1,45 @@
 import type { TFunction } from "i18next"
 import type { StockOpnameConfig } from "../../../models/stockOpname/config"
+import type { StockOpnameConditionMaster, StockOpnamePhysicalStatusMaster } from "../../../models/stockOpname/statusMaster"
 
-export function getPhysicalStatusOptions(t: TFunction) {
-  return [
-    { value: "EXISTS", label: t("stockOpnameFindingModal.physicalStatusOptions.exists") },
-    { value: "MISSING", label: t("stockOpnameFindingModal.physicalStatusOptions.missing") },
-    { value: "BORROWED", label: t("stockOpnameFindingModal.physicalStatusOptions.borrowed") },
-  ]
+// Physical status & condition SEKARANG master data (bisa ditambah admin
+// lewat halaman /dashboard/stock-opname/status-master), bukan hardcode lagi
+// — labelnya dari database (single-language, gak ikut i18n), sama seperti
+// nama kategori aset / branch yang juga master data.
+
+export function getPhysicalStatusOptions(masters: StockOpnamePhysicalStatusMaster[]) {
+  return masters.map((m) => ({ value: m.code, label: m.label }))
 }
 
-// Status fisik yang berarti asetnya gak ada di lokasi buat dicek -> kondisi
-// gak relevan dinilai, dipaksa NOT_APPLICABLE (dipakai modal & grid "Lengkapi Data").
-export function isPhysicalStatusAbsent(physicalStatus: string) {
-  return physicalStatus === "MISSING" || physicalStatus === "BORROWED"
+// isPhysicalStatusAbsent: status fisik yang berarti asetnya gak ada di
+// lokasi buat dicek -> kondisi gak relevan dinilai, dipaksa ke condition
+// yang is_not_applicable_value=true (dipakai modal & grid "Lengkapi Data").
+export function isPhysicalStatusAbsent(masters: StockOpnamePhysicalStatusMaster[], physicalStatus: string) {
+  return masters.find((m) => m.code === physicalStatus)?.requires_not_applicable_condition ?? false
 }
 
-export function getConditionOptions(t: TFunction) {
-  return [
-    { value: "GOOD", label: t("stockOpnameFindingModal.conditionOptions.good") },
-    { value: "FAIR", label: t("stockOpnameFindingModal.conditionOptions.fair") },
-    { value: "POOR", label: t("stockOpnameFindingModal.conditionOptions.poor") },
-    { value: "BROKEN", label: t("stockOpnameFindingModal.conditionOptions.broken") },
-    { value: "NOT_APPLICABLE", label: t("stockOpnameFindingModal.conditionOptions.na") },
-  ]
+export function requiresBorrowDocument(masters: StockOpnamePhysicalStatusMaster[], physicalStatus: string) {
+  return masters.find((m) => m.code === physicalStatus)?.requires_borrow_document ?? false
+}
+
+// notApplicableConditionCode: dipakai buat auto-set condition begitu
+// physical_status pindah ke status yang isPhysicalStatusAbsent — ambil kode
+// condition pertama yang ditandai is_not_applicable_value=true.
+export function notApplicableConditionCode(masters: StockOpnameConditionMaster[]) {
+  return masters.find((m) => m.is_not_applicable_value)?.code ?? ""
+}
+
+export function isConditionNotApplicableValue(masters: StockOpnameConditionMaster[], condition: string) {
+  return masters.find((m) => m.code === condition)?.is_not_applicable_value ?? false
+}
+
+// includeNotApplicable=false -> buang opsi yang is_not_applicable_value
+// (dipakai saat physical_status BUKAN yang "absent", biar user gak bisa
+// pilih kondisi "Tidak Ada" padahal asetnya ada).
+export function getConditionOptions(masters: StockOpnameConditionMaster[], includeNotApplicable: boolean) {
+  return masters
+    .filter((m) => includeNotApplicable || !m.is_not_applicable_value)
+    .map((m) => ({ value: m.code, label: m.label }))
 }
 
 // borrowDocumentAcceptAttr bikin value `accept` buat <input type="file">

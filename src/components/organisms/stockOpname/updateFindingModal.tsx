@@ -4,8 +4,19 @@ import { useTranslation } from "react-i18next"
 import { useUpdateStockOpnameFinding } from "../../../hooks/mutation/stockOpname/updateFinding"
 import { useUploadStockOpnameBorrowDocument } from "../../../hooks/mutation/stockOpname/uploadBorrowDocument"
 import { useStockOpnameConfig } from "../../../hooks/query/stockOpname/config"
+import { useStockOpnamePhysicalStatusMasters } from "../../../hooks/query/stockOpname/physicalStatusMasterList"
+import { useStockOpnameConditionMasters } from "../../../hooks/query/stockOpname/conditionMasterList"
 import type { StockOpnameItem } from "../../../models/stockOpname/detail"
-import { getPhysicalStatusOptions, getConditionOptions, getAssetStatusOptions, isPhysicalStatusAbsent, borrowDocumentAcceptAttr } from "./findingOptions"
+import {
+  getPhysicalStatusOptions,
+  getConditionOptions,
+  getAssetStatusOptions,
+  isPhysicalStatusAbsent,
+  isConditionNotApplicableValue,
+  requiresBorrowDocument,
+  notApplicableConditionCode,
+  borrowDocumentAcceptAttr,
+} from "./findingOptions"
 import { PhotoUploadField } from "./photoUploadField"
 
 type UpdateStockOpnameFindingModalProps = {
@@ -38,9 +49,13 @@ export function UpdateStockOpnameFindingModal({
   const { mutate: uploadBorrowDocument, isPending: isUploadingBorrowDocument } =
     useUploadStockOpnameBorrowDocument({ transactionNumber })
   const { data: configData } = useStockOpnameConfig()
+  const { data: physicalStatusMastersData } = useStockOpnamePhysicalStatusMasters()
+  const { data: conditionMastersData } = useStockOpnameConditionMasters()
+  const physicalStatusMasters = physicalStatusMastersData?.data ?? []
+  const conditionMasters = conditionMastersData?.data ?? []
 
-  const isAbsent = isPhysicalStatusAbsent(physicalStatus)
-  const isBorrowed = physicalStatus === "BORROWED"
+  const isAbsent = isPhysicalStatusAbsent(physicalStatusMasters, physicalStatus)
+  const isBorrowed = requiresBorrowDocument(physicalStatusMasters, physicalStatus)
   // Default wajib=true selama config masih loading, biar gak sempat keliatan
   // opsional lalu tiba-tiba jadi wajib begitu config kebaca.
   const isBorrowDocumentRequired = configData?.data.borrow_doc_is_required ?? true
@@ -50,13 +65,14 @@ export function UpdateStockOpnameFindingModal({
   // karena kondisi gak relevan buat dinilai kalau barangnya gak ada di lokasi.
   // Balik ke "Ada" -> kondisi direset supaya user pilih ulang yang sesuai.
   useEffect(() => {
+    if (conditionMasters.length === 0) return // tunggu master data kebaca dulu, jangan timpa nilai awal
     if (isAbsent) {
-      setCondition("NOT_APPLICABLE")
+      setCondition(notApplicableConditionCode(conditionMasters))
     } else {
-      setCondition((prev) => (prev === "NOT_APPLICABLE" ? "" : prev))
+      setCondition((prev) => (isConditionNotApplicableValue(conditionMasters, prev) ? "" : prev))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAbsent])
+  }, [isAbsent, conditionMasters])
 
   const handleBorrowDocumentChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -68,10 +84,8 @@ export function UpdateStockOpnameFindingModal({
     e.target.value = ""
   }
 
-  const physicalStatusOptions = getPhysicalStatusOptions(t)
-  const conditionOptions = getConditionOptions(t).filter(
-    (opt) => isAbsent || opt.value !== "NOT_APPLICABLE"
-  )
+  const physicalStatusOptions = getPhysicalStatusOptions(physicalStatusMasters)
+  const conditionOptions = getConditionOptions(conditionMasters, isAbsent)
   const assetStatusOptions = getAssetStatusOptions(t)
 
   const handleSubmit = () => {

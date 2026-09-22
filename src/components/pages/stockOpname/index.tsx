@@ -25,6 +25,12 @@ export default function StockOpnamePage() {
             {t("stockOpnamePage.configButton", "Config")}
           </button>
           <button
+            onClick={() => navigate("/dashboard/stock-opname/status-master")}
+            className="px-4 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          >
+            {t("stockOpnamePage.statusMasterButton", "Master Status")}
+          </button>
+          <button
             onClick={() => navigate("/dashboard/stock-opname/report")}
             className="px-4 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
           >
