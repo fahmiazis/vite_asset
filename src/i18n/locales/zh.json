@@ -543,7 +543,28 @@
     "title": "库存盘点",
     "createButton": "+ 新建库存盘点",
     "reportButton": "报表",
-    "configButton": "配置"
+    "configButton": "配置",
+    "statusMasterButton": "主状态",
+    "table": {
+      "loading": "正在加载数据...",
+      "loadingInline": "加载中...",
+      "noData": "暂无库存盘点数据",
+      "detailButton": "详情",
+      "pagination": {
+        "showing": "显示第 {{from}} – {{to}} 条，共 {{total}} 条",
+        "page": "第 {{current}} / {{total}} 页"
+      }
+    }
+  },
+  "stockOpnameColumn": {
+    "transactionNumber": "交易编号",
+    "transactionDate": "交易日期",
+    "status": "状态",
+    "stage": "阶段",
+    "itemCount": "资产数量",
+    "createdBy": "创建人",
+    "createdAt": "创建时间",
+    "action": "操作"
   },
   "stockOpnameConfigPage": {
     "title": "库存盘点配置",

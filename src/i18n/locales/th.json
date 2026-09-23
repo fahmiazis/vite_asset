@@ -543,7 +543,28 @@
     "title": "ตรวจนับสินทรัพย์",
     "createButton": "+ สร้างการตรวจนับสินทรัพย์",
     "reportButton": "รายงาน",
-    "configButton": "ตั้งค่า"
+    "configButton": "ตั้งค่า",
+    "statusMasterButton": "สถานะหลัก",
+    "table": {
+      "loading": "กำลังโหลดข้อมูล...",
+      "loadingInline": "กำลังโหลด...",
+      "noData": "ไม่มีข้อมูลตรวจนับสินทรัพย์",
+      "detailButton": "รายละเอียด",
+      "pagination": {
+        "showing": "แสดง {{from}} – {{to}} จาก {{total}} รายการ",
+        "page": "หน้า {{current}} / {{total}}"
+      }
+    }
+  },
+  "stockOpnameColumn": {
+    "transactionNumber": "เลขที่ธุรกรรม",
+    "transactionDate": "วันที่ทำธุรกรรม",
+    "status": "สถานะ",
+    "stage": "ขั้นตอน",
+    "itemCount": "จำนวนสินทรัพย์",
+    "createdBy": "สร้างโดย",
+    "createdAt": "วันที่สร้าง",
+    "action": "การดำเนินการ"
   },
   "stockOpnameConfigPage": {
     "title": "ตั้งค่าการตรวจนับสินทรัพย์",

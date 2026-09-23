@@ -543,7 +543,28 @@
     "title": "Stock Opname",
     "createButton": "+ Create Stock Opname",
     "reportButton": "Report",
-    "configButton": "Config"
+    "configButton": "Config",
+    "statusMasterButton": "Master Status",
+    "table": {
+      "loading": "Loading data...",
+      "loadingInline": "Loading...",
+      "noData": "No stock opname data",
+      "detailButton": "Detail",
+      "pagination": {
+        "showing": "Showing {{from}} – {{to}} of {{total}} data",
+        "page": "Page {{current}} / {{total}}"
+      }
+    }
+  },
+  "stockOpnameColumn": {
+    "transactionNumber": "Transaction No.",
+    "transactionDate": "Transaction Date",
+    "status": "Status",
+    "stage": "Stage",
+    "itemCount": "Asset Count",
+    "createdBy": "Created By",
+    "createdAt": "Created At",
+    "action": "Action"
   },
   "stockOpnameConfigPage": {
     "title": "Stock Opname Config",

@@ -543,7 +543,28 @@
     "title": "Kiểm Kê Tài Sản",
     "createButton": "+ Tạo Kiểm Kê Tài Sản",
     "reportButton": "Báo cáo",
-    "configButton": "Cấu Hình"
+    "configButton": "Cấu Hình",
+    "statusMasterButton": "Trạng Thái Chính",
+    "table": {
+      "loading": "Đang tải dữ liệu...",
+      "loadingInline": "Đang tải...",
+      "noData": "Không có dữ liệu kiểm kê tài sản",
+      "detailButton": "Chi tiết",
+      "pagination": {
+        "showing": "Hiển thị {{from}} – {{to}} trong {{total}} dữ liệu",
+        "page": "Trang {{current}} / {{total}}"
+      }
+    }
+  },
+  "stockOpnameColumn": {
+    "transactionNumber": "Số Giao Dịch",
+    "transactionDate": "Ngày Giao Dịch",
+    "status": "Trạng Thái",
+    "stage": "Giai Đoạn",
+    "itemCount": "Số Lượng Tài Sản",
+    "createdBy": "Người Tạo",
+    "createdAt": "Ngày Tạo",
+    "action": "Hành Động"
   },
   "stockOpnameConfigPage": {
     "title": "Cấu Hình Kiểm Kê Tài Sản",
