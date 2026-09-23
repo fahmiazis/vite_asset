@@ -1,6 +1,8 @@
 import type { ColumnDef } from "@tanstack/react-table"
 import type { TFunction } from "i18next"
 import type { StockOpnameItem } from "../../../models/stockOpname/detail"
+import { StockOpnamePhotoViewCell } from "./photoViewCell"
+import { StockOpnameBorrowDocumentViewCell } from "./borrowDocumentViewCell"
 
 export function AssetStatusBadge({ status }: { status?: string | null }) {
   const map: Record<string, string> = {
@@ -69,6 +71,23 @@ export function getStockOpnameItemColumns({
       size: 40,
       cell: ({ row }) => (
         <span className="text-xs text-gray-400">{row.index + 1}</span>
+      ),
+    },
+    {
+      id: "photo",
+      header: t("stockOpnamePhoto.label"),
+      cell: ({ row }) => (
+        <StockOpnamePhotoViewCell photoUrl={row.original.photo_url} capturedAt={row.original.photo_captured_at} />
+      ),
+    },
+    {
+      id: "borrow_document",
+      header: t("stockOpnameFillPage.columnBorrowDocument"),
+      cell: ({ row }) => (
+        <StockOpnameBorrowDocumentViewCell
+          fileName={row.original.borrow_document_file_name}
+          documentUrl={row.original.borrow_document_url}
+        />
       ),
     },
     {
