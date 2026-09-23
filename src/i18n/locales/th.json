@@ -617,6 +617,8 @@
     "reject": "ปฏิเสธ",
     "downloadTemplate": "ดาวน์โหลดเทมเพลต Excel",
     "uploadTemplate": "อัปโหลดผล Excel",
+    "downloadDocumentation": "ดาวน์โหลดเอกสารการตรวจนับ",
+    "toastDownloadDocumentationError": "ดาวน์โหลดเอกสารไม่สำเร็จ",
     "tableNo": "ลำดับ",
     "tableAsset": "สินทรัพย์",
     "tableCategory": "หมวดหมู่",

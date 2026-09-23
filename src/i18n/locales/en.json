@@ -617,6 +617,8 @@
     "reject": "Reject",
     "downloadTemplate": "Download Excel Template",
     "uploadTemplate": "Upload Excel Result",
+    "downloadDocumentation": "Download Opname",
+    "toastDownloadDocumentationError": "Failed to download documentation",
     "tableNo": "No",
     "tableAsset": "Asset",
     "tableCategory": "Category",

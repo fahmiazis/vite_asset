@@ -5,6 +5,7 @@ import { useStockOpnameDetail } from "../../../../hooks/query/stockOpname/detail
 import { useStockOpnameApprovalStatus } from "../../../../hooks/query/stockOpname/approvalStatus"
 import { useInitiateApprovalStockOpname } from "../../../../hooks/mutation/stockOpname/initiateApproval"
 import { useDownloadStockOpnameTemplate } from "../../../../hooks/mutation/stockOpname/downloadTemplate"
+import { useDownloadStockOpnameDocumentation } from "../../../../hooks/mutation/stockOpname/downloadDocumentation"
 import { UploadStockOpnameTemplateModal } from "../../../organisms/stockOpname/uploadTemplateModal"
 import { UpdateStockOpnameFindingModal } from "../../../organisms/stockOpname/updateFindingModal"
 import { SubmitStockOpnameModal } from "../../../organisms/stockOpname/submitDraftModal"
@@ -47,6 +48,7 @@ export default function StockOpnameDetailPage() {
   const { data: approvalData, error: approvalError } = useStockOpnameApprovalStatus(id ?? "")
   const { mutate: retryInitiateApproval, isPending: isRetryingInitiate } = useInitiateApprovalStockOpname(id ?? "")
   const { mutate: downloadTemplate, isPending: isDownloadingTemplate } = useDownloadStockOpnameTemplate()
+  const { mutate: downloadDocumentation, isPending: isDownloadingDocumentation } = useDownloadStockOpnameDocumentation()
 
   if (isLoading) {
     return (
@@ -198,6 +200,18 @@ export default function StockOpnameDetailPage() {
                   {t("stockOpnameDetail.uploadTemplate")}
                 </button>
               </>
+            )}
+            {!isDraft && (
+              <button
+                onClick={() => downloadDocumentation(transaction.transaction_number)}
+                disabled={isDownloadingDocumentation}
+                className="flex items-center gap-1.5 text-xs font-medium text-gray-600 hover:text-gray-700 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-gray-300 px-2.5 py-1 rounded-lg transition-colors disabled:opacity-50"
+              >
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
+                </svg>
+                {t("stockOpnameDetail.downloadDocumentation")}
+              </button>
             )}
           </div>
         </div>

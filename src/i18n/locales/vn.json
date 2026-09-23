@@ -617,6 +617,8 @@
     "reject": "Từ Chối",
     "downloadTemplate": "Tải Mẫu Excel",
     "uploadTemplate": "Tải Lên Kết Quả Excel",
+    "downloadDocumentation": "Tải Tài Liệu Kiểm Kê",
+    "toastDownloadDocumentationError": "Không thể tải tài liệu",
     "tableNo": "STT",
     "tableAsset": "Tài Sản",
     "tableCategory": "Danh Mục",

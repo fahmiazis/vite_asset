@@ -617,6 +617,8 @@
     "reject": "Tolak",
     "downloadTemplate": "Download Template Excel",
     "uploadTemplate": "Upload Hasil Excel",
+    "downloadDocumentation": "Download Opname",
+    "toastDownloadDocumentationError": "Gagal mengunduh dokumentasi",
     "tableNo": "No",
     "tableAsset": "Aset",
     "tableCategory": "Kategori",

@@ -617,6 +617,8 @@
     "reject": "拒绝",
     "downloadTemplate": "下载Excel模板",
     "uploadTemplate": "上传Excel结果",
+    "downloadDocumentation": "下载盘点文档",
+    "toastDownloadDocumentationError": "下载文档失败",
     "tableNo": "序号",
     "tableAsset": "资产",
     "tableCategory": "类别",
