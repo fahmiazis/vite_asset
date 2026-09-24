@@ -41,9 +41,15 @@ export default function StockOpnameFillPage() {
   const flushingRef = useRef(false)
   const searchInputRef = useRef<HTMLInputElement>(null)
 
-  const items = useMemo(() => data?.data?.items ?? [], [data])
   const transaction = data?.data?.transaction
   const isDraft = transaction?.current_stage === "DRAFT"
+  const revisionMode = isDraft && !!data?.data?.revision_mode
+  // Selama DRAFT revisi cuma asset yang dichecklist yang boleh diubah —
+  // asset lain gak ditampilin di grid sama sekali (dikunci juga di BE).
+  const items = useMemo(() => {
+    const all = data?.data?.items ?? []
+    return data?.data?.revision_mode ? all.filter((item) => item.needs_revision) : all
+  }, [data])
 
   // Ctrl/Cmd+F fokus ke search box di halaman ini alih-alih native
   // find-in-page browser — lebih kepake karena beneran filter baris grid,
@@ -269,6 +275,15 @@ export default function StockOpnameFillPage() {
           </button>
         </div>
       </div>
+
+      {revisionMode && (
+        <div className="flex items-center gap-2 px-4 py-2 border-b border-amber-100 dark:border-amber-900/40 bg-amber-50 dark:bg-amber-900/20 text-xs text-amber-700 dark:text-amber-400">
+          <svg className="w-3.5 h-3.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h10a5 5 0 015 5v2M3 10l4-4m-4 4l4 4" />
+          </svg>
+          {t("stockOpnameFillPage.revisionModeNotice", { count: items.length })}
+        </div>
+      )}
 
       {/* Body */}
       {!isDraft ? (

@@ -12,6 +12,7 @@ import { SubmitStockOpnameModal } from "../../../organisms/stockOpname/submitDra
 import { ApproveStockOpnameModal } from "../../../organisms/stockOpname/approveModal"
 import { ExecuteStockOpnameModal } from "../../../organisms/stockOpname/executeModal"
 import { RejectStockOpnameModal } from "../../../organisms/stockOpname/rejectModal"
+import { ReviseStockOpnameModal } from "../../../organisms/stockOpname/reviseModal"
 import { StockOpnameStepper, StockOpnameStageHistory } from "../../../organisms/stockOpname/stageTimeline"
 import { StatusBadge } from "../../../organisms/stockOpname/column"
 import { StockOpnameItemsTable } from "../../../organisms/stockOpname/itemsTable"
@@ -44,6 +45,7 @@ export default function StockOpnameDetailPage() {
   const [showApprove, setShowApprove] = useState(false)
   const [showExecute, setShowExecute] = useState(false)
   const [showReject, setShowReject] = useState(false)
+  const [showRevise, setShowRevise] = useState(false)
 
   const { data: approvalData, error: approvalError } = useStockOpnameApprovalStatus(id ?? "")
   const { mutate: retryInitiateApproval, isPending: isRetryingInitiate } = useInitiateApprovalStockOpname(id ?? "")
@@ -66,6 +68,14 @@ export default function StockOpnameDetailPage() {
   const isApprovalStage = transaction.current_stage === "APPROVAL"
   const isExecuteStage = transaction.current_stage === "EXECUTE_STOCK_OPNAME"
   const canReject = isApprovalStage || isExecuteStage
+  // Revisi = aksi approver (sejajar Approve) atau eksekutor (sejajar Execute) —
+  // balikin ke DRAFT dengan asset yang dichecklist. Otorisasi dicek di BE.
+  const canRevise = (isApprovalStage && !!approvalData?.data) || isExecuteStage
+  const revisionMode = isDraft && !!data.data.revision_mode
+  const revisionItemCount = items.filter((item) => item.needs_revision).length
+  const latestRevisionNotes = revisionMode
+    ? [...stages].reverse().find((stage) => stage.action === "REVISE")?.notes ?? null
+    : null
   const approvalNotYetInitiated = isApprovalStage && !!approvalError && !approvalData?.data
 
   return (
@@ -106,6 +116,14 @@ export default function StockOpnameDetailPage() {
         <RejectStockOpnameModal
           transactionNumber={transaction.transaction_number}
           onClose={() => setShowReject(false)}
+        />
+      )}
+      {showRevise && (
+        <ReviseStockOpnameModal
+          transactionNumber={transaction.transaction_number}
+          items={items}
+          mode={isApprovalStage ? "approval" : "execute"}
+          onClose={() => setShowRevise(false)}
         />
       )}
 
@@ -216,7 +234,28 @@ export default function StockOpnameDetailPage() {
           </div>
         </div>
 
-        <StockOpnameItemsTable items={items} isDraft={isDraft} onFillFinding={setFindingItem} />
+        {revisionMode && (
+          <div className="mb-4 flex items-start gap-3 p-3 rounded-xl bg-amber-50 dark:bg-amber-900/20 border border-amber-100 dark:border-amber-800">
+            <svg className="w-4 h-4 text-amber-500 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h10a5 5 0 015 5v2M3 10l4-4m-4 4l4 4" />
+            </svg>
+            <div className="min-w-0">
+              <p className="text-xs font-semibold text-amber-800 dark:text-amber-300">
+                {t("stockOpnameDetail.revisionBannerTitle", { count: revisionItemCount, total: items.length })}
+              </p>
+              <p className="text-xs text-amber-700 dark:text-amber-400 mt-0.5">
+                {t("stockOpnameDetail.revisionBannerDescription")}
+              </p>
+              {latestRevisionNotes && (
+                <p className="text-xs text-amber-700 dark:text-amber-400 mt-1 italic">
+                  "{latestRevisionNotes}"
+                </p>
+              )}
+            </div>
+          </div>
+        )}
+
+        <StockOpnameItemsTable items={items} isDraft={isDraft} revisionMode={revisionMode} onFillFinding={setFindingItem} />
       </div>
 
       {/* Approval status */}
@@ -314,6 +353,18 @@ export default function StockOpnameDetailPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
             {t("stockOpnameDetail.execute")}
+          </button>
+        )}
+
+        {canRevise && (
+          <button
+            onClick={() => setShowRevise(true)}
+            className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium border border-amber-500 text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/20 rounded-xl transition-colors"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h10a5 5 0 015 5v2M3 10l4-4m-4 4l4 4" />
+            </svg>
+            {t("stockOpnameDetail.revise")}
           </button>
         )}
 

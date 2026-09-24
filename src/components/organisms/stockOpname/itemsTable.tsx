@@ -14,15 +14,17 @@ const PAGE_SIZE_OPTIONS = [5, 10, 15, 20, 30, 50, 100]
 interface StockOpnameItemsTableProps {
   items: StockOpnameItem[]
   isDraft: boolean
+  // DRAFT hasil revisi — item tanpa needs_revision dikunci
+  revisionMode?: boolean
   onFillFinding: (item: StockOpnameItem) => void
 }
 
-export function StockOpnameItemsTable({ items, isDraft, onFillFinding }: StockOpnameItemsTableProps) {
+export function StockOpnameItemsTable({ items, isDraft, revisionMode = false, onFillFinding }: StockOpnameItemsTableProps) {
   const { t } = useTranslation()
   const [pageIndex, setPageIndex] = useState(0)
   const [pageSize, setPageSize] = useState(10)
 
-  const columns = getStockOpnameItemColumns({ t, isDraft, onFillFinding })
+  const columns = getStockOpnameItemColumns({ t, isDraft, revisionMode, onFillFinding })
 
   const table = useReactTable({
     data: items,
@@ -65,7 +67,14 @@ export function StockOpnameItemsTable({ items, isDraft, onFillFinding }: StockOp
             <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
               {table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map((row) => (
-                  <tr key={row.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition-colors">
+                  <tr
+                    key={row.id}
+                    className={`transition-colors ${
+                      revisionMode && row.original.needs_revision
+                        ? "bg-amber-50/60 dark:bg-amber-900/10 hover:bg-amber-50 dark:hover:bg-amber-900/20"
+                        : "hover:bg-gray-50 dark:hover:bg-gray-800/40"
+                    }`}
+                  >
                     {row.getVisibleCells().map((cell) => (
                       <td key={cell.id} className="px-3 py-2.5 align-top">
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
