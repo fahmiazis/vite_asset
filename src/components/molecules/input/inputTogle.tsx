@@ -1,4 +1,4 @@
-import { forwardRef, type InputHTMLAttributes } from 'react'
+import { forwardRef, useId, type InputHTMLAttributes } from 'react'
 
 interface CyberToggleProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'onChange'> {
@@ -10,13 +10,19 @@ interface CyberToggleProps
 export const InputToggle = forwardRef<
   HTMLInputElement,
   CyberToggleProps
->(({ checked, onChange, id = 'cyber-toggle', disabled, ...rest }, ref) => {
+>(({ checked, onChange, id, disabled, ...rest }, ref) => {
+  // id harus unik per toggle: label di bawah nempel ke input lewat htmlFor,
+  // jadi kalau beberapa toggle di satu halaman share id yang sama, klik
+  // toggle mana pun malah ngubah toggle pertama.
+  const autoId = useId()
+  const inputId = id ?? autoId
+
   return (
     <div className="cyber-toggle-wrapper">
       {/* INPUT — WAJIB SEBELUM LABEL */}
       <input
         ref={ref}
-        id={id}
+        id={inputId}
         type="checkbox"
         className="cyber-toggle-checkbox"
         checked={checked}
@@ -26,7 +32,7 @@ export const InputToggle = forwardRef<
       />
 
       {/* TOGGLE */}
-      <label className="cyber-toggle" htmlFor={id}>
+      <label className="cyber-toggle" htmlFor={inputId}>
         <div className="cyber-toggle-track">
           <div className="cyber-toggle-track-glow"></div>
 
