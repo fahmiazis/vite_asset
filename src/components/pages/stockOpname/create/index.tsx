@@ -39,21 +39,21 @@ export default function CreateStockOpnamePage() {
 
       {/* Header */}
       <div>
-        <h2 className="text-xl font-semibold">{t("createStockOpnamePage.title")}</h2>
-        <p className="text-sm text-gray-500">
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">{t("createStockOpnamePage.title")}</h2>
+        <p className="text-sm text-gray-500 dark:text-gray-400">
           {t("createStockOpnamePage.subtitle")}
         </p>
       </div>
 
       {/* Form Card */}
-      <div className="bg-white border rounded-xl p-6 space-y-5">
+      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-6 space-y-5">
 
         {/* Transaction Date — otomatis tanggal hari ini, gak bisa diubah */}
         <div className="flex flex-col gap-1">
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
             {t("createStockOpnamePage.dateLabel")}
           </label>
-          <div className="border rounded-lg px-3 py-2 text-sm bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300">
+          <div className="border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2 text-sm bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300">
             {todayLabel}
           </div>
         </div>
@@ -79,7 +79,7 @@ export default function CreateStockOpnamePage() {
           type="button"
           onClick={() => navigate(-1)}
           disabled={isPending}
-          className="flex-1 border px-4 py-2 rounded-lg text-sm hover:bg-gray-50 disabled:opacity-50"
+          className="flex-1 border border-gray-300 dark:border-gray-600 px-4 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50"
         >
           {t("createStockOpnamePage.cancel")}
         </button>

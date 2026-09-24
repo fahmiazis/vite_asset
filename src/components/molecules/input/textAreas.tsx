@@ -76,13 +76,14 @@ export const Textareas = forwardRef<HTMLTextAreaElement, TextareaProps>(
             }
             className={`
               w-full px-4 py-2 border rounded-lg placeholder-black text-black
+              dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500
               transition-colors duration-200 resize-y
               ${
                 hasError
-                  ? 'border-red-500 focus:ring-2 focus:ring-red-500 focus:border-red-500'
+                  ? 'border-red-500 dark:border-red-500 focus:ring-2 focus:ring-red-500 focus:border-red-500'
                   : isDisabled
-                  ? 'bg-gray-100 border-gray-300 cursor-not-allowed focus:ring-0 focus:outline-none'
-                  : 'border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none'
+                  ? 'bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-700 cursor-not-allowed focus:ring-0 focus:outline-none'
+                  : 'border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none'
               }
               ${textareaClassName || ''}
             `}
@@ -105,7 +106,7 @@ export const Textareas = forwardRef<HTMLTextAreaElement, TextareaProps>(
         {error && (
           <p 
             id={`${label}-error`}
-            className="mt-1 text-xs text-red-600"
+            className="mt-1 text-xs text-red-600 dark:text-red-400"
             role="alert"
           >
             {error}
@@ -116,7 +117,7 @@ export const Textareas = forwardRef<HTMLTextAreaElement, TextareaProps>(
         {helperText && !error && (
           <p 
             id={`${label}-helper`}
-            className="mt-1 text-xs text-gray-500"
+            className="mt-1 text-xs text-gray-500 dark:text-gray-400"
           >
             {helperText}
           </p>
