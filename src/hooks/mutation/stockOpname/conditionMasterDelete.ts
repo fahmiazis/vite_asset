@@ -10,6 +10,8 @@ export function useDeleteStockOpnameConditionMaster() {
 
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["stock-opname-condition-masters"] })
+      // relasi status fisik -> kondisi ikut berubah
+      queryClient.invalidateQueries({ queryKey: ["stock-opname-physical-status-masters"] })
       toast.success(data.message || "Kondisi berhasil dihapus")
     },
 

@@ -695,7 +695,8 @@
     "toast": {
       "required": "Status fisik dan kondisi wajib diisi",
       "borrowDocumentRequired": "Dokumen peminjaman (PDF) wajib diupload untuk status Dipinjam"
-    }
+    },
+    "conditionSelectPhysicalFirst": "Pilih status fisik dulu"
   },
   "submitStockOpnameModal": {
     "title": "Submit Stock Opname",

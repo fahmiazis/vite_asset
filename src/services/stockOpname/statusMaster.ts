@@ -6,6 +6,7 @@ import type {
   stockOpnameConditionMasterListProps,
   stockOpnamePhysicalStatusMasterCreateProps,
   stockOpnamePhysicalStatusMasterListProps,
+  UpdateStockOpnamePhysicalStatusConditionsPayload,
 } from "../../models/stockOpname/statusMaster"
 
 const BASE_URL = "/transactions/stock-opname/status-master"
@@ -19,6 +20,17 @@ export const createStockOpnamePhysicalStatusMaster = async (
   payload: CreateStockOpnamePhysicalStatusMasterPayload
 ): Promise<stockOpnamePhysicalStatusMasterCreateProps> => {
   const res = await axiosPrivate.post(`${BASE_URL}/physical-status`, payload)
+  return res.data
+}
+
+export const updateStockOpnamePhysicalStatusConditions = async ({
+  id,
+  payload,
+}: {
+  id: number
+  payload: UpdateStockOpnamePhysicalStatusConditionsPayload
+}): Promise<stockOpnamePhysicalStatusMasterCreateProps> => {
+  const res = await axiosPrivate.put(`${BASE_URL}/physical-status/${id}/conditions`, payload)
   return res.data
 }
 

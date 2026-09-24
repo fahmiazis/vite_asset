@@ -695,7 +695,8 @@
     "toast": {
       "required": "กรุณากรอกสถานะทางกายภาพและสภาพ",
       "borrowDocumentRequired": "จำเป็นต้องอัปโหลดเอกสารการยืม (PDF) สำหรับสถานะถูกยืม"
-    }
+    },
+    "conditionSelectPhysicalFirst": "เลือกสถานะทางกายภาพก่อน"
   },
   "submitStockOpnameModal": {
     "title": "ส่งการตรวจนับสินทรัพย์",

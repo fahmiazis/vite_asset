@@ -695,7 +695,8 @@
     "toast": {
       "required": "Physical status and condition are required",
       "borrowDocumentRequired": "A loan document (PDF) is required for Borrowed status"
-    }
+    },
+    "conditionSelectPhysicalFirst": "Select physical status first"
   },
   "submitStockOpnameModal": {
     "title": "Submit Stock Opname",

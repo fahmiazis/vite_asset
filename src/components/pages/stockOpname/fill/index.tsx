@@ -4,9 +4,8 @@ import { useTranslation } from "react-i18next"
 import { useStockOpnameDetail } from "../../../../hooks/query/stockOpname/detail"
 import { useBulkUpdateStockOpnameFinding } from "../../../../hooks/mutation/stockOpname/bulkUpdateFinding"
 import { useStockOpnamePhysicalStatusMasters } from "../../../../hooks/query/stockOpname/physicalStatusMasterList"
-import { useStockOpnameConditionMasters } from "../../../../hooks/query/stockOpname/conditionMasterList"
 import { StockOpnameFillGridRow, type FillFieldName, type FillRowState } from "../../../organisms/stockOpname/fillGridRow"
-import { isPhysicalStatusAbsent, isConditionNotApplicableValue, notApplicableConditionCode } from "../../../organisms/stockOpname/findingOptions"
+import { reconcileCondition } from "../../../organisms/stockOpname/findingOptions"
 import type { BulkUpdateStockOpnameFindingItem } from "../../../../models/stockOpname/bulkUpdateFinding"
 
 const AUTOSAVE_INTERVAL_MS = 8000
@@ -26,9 +25,7 @@ export default function StockOpnameFillPage() {
   const { data, isLoading } = useStockOpnameDetail(transactionNumber)
   const { mutateAsync: bulkUpdate } = useBulkUpdateStockOpnameFinding({ transactionNumber })
   const { data: physicalStatusMastersData } = useStockOpnamePhysicalStatusMasters()
-  const { data: conditionMastersData } = useStockOpnameConditionMasters()
-  const physicalStatusMasters = physicalStatusMastersData?.data ?? []
-  const conditionMasters = conditionMastersData?.data ?? []
+  const physicalStatusMasters = useMemo(() => physicalStatusMastersData?.data ?? [], [physicalStatusMastersData])
 
   const [rows, setRows] = useState<Record<number, FillRowState>>({})
   const [rowErrors, setRowErrors] = useState<Record<number, string>>({})
@@ -107,16 +104,13 @@ export default function StockOpnameFillPage() {
       const next: FillRowState = { ...current, [field]: rawValue }
       const patch: Partial<BulkUpdateStockOpnameFindingItem> = { [field]: rawValue }
 
-      // Fisik "Tidak Ada"/"Dipinjam" -> Kondisi otomatis "Tidak Ada" & terkunci.
-      // Balik ke "Ada" -> Kondisi direset kosong biar dipilih ulang.
+      // Kondisi ngikutin relasi status fisik -> kondisi di master data: yang
+      // gak diizinkan lagi direset, kalau cuma 1 opsi langsung dipilih.
       if (field === "physical_status") {
-        if (isPhysicalStatusAbsent(physicalStatusMasters, rawValue)) {
-          const naCode = notApplicableConditionCode(conditionMasters)
-          next.condition = naCode
-          patch.condition = naCode
-        } else if (isConditionNotApplicableValue(conditionMasters, current.condition)) {
-          next.condition = ""
-          patch.condition = ""
+        const reconciled = reconcileCondition(physicalStatusMasters, rawValue, current.condition)
+        if (reconciled !== current.condition) {
+          next.condition = reconciled
+          patch.condition = reconciled
         }
       }
 
@@ -125,7 +119,7 @@ export default function StockOpnameFillPage() {
     })
 
     setRowErrors((prev) => (prev[assetId] ? { ...prev, [assetId]: "" } : prev))
-  }, [physicalStatusMasters, conditionMasters])
+  }, [physicalStatusMasters])
 
   const flush = useCallback(async () => {
     if (flushingRef.current) return
@@ -174,14 +168,13 @@ export default function StockOpnameFillPage() {
   // re-queue pakai physical_status yang lagi dipilih di baris itu & langsung
   // coba simpan ulang biar gak nunggu interval berikutnya.
   const handleBorrowDocumentUploaded = useCallback((assetId: number) => {
-    const currentPhysicalStatus = rows[assetId]?.physical_status || ""
     pendingRef.current[assetId] = {
       ...pendingRef.current[assetId],
-      physical_status: currentPhysicalStatus,
-      condition: notApplicableConditionCode(conditionMasters),
+      physical_status: rows[assetId]?.physical_status || "",
+      condition: rows[assetId]?.condition || "",
     }
     flush()
-  }, [flush, rows, conditionMasters])
+  }, [flush, rows])
 
   useEffect(() => {
     const interval = setInterval(flush, AUTOSAVE_INTERVAL_MS)
@@ -335,7 +328,6 @@ export default function StockOpnameFillPage() {
                   error={rowErrors[item.asset_id]}
                   t={t}
                   physicalStatusMasters={physicalStatusMasters}
-                  conditionMasters={conditionMasters}
                   onFieldChange={handleFieldChange}
                   onBorrowDocumentUploaded={handleBorrowDocumentUploaded}
                 />

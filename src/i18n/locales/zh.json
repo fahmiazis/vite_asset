@@ -695,7 +695,8 @@
     "toast": {
       "required": "实物状态和状态为必填项",
       "borrowDocumentRequired": "状态为借出时必须上传借用文件(PDF)"
-    }
+    },
+    "conditionSelectPhysicalFirst": "请先选择实物状态"
   },
   "submitStockOpnameModal": {
     "title": "提交库存盘点",

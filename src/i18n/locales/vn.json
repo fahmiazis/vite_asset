@@ -695,7 +695,8 @@
     "toast": {
       "required": "Trạng thái vật lý và tình trạng là bắt buộc",
       "borrowDocumentRequired": "Tài liệu mượn (PDF) là bắt buộc đối với trạng thái Đang mượn"
-    }
+    },
+    "conditionSelectPhysicalFirst": "Chọn tình trạng thực tế trước"
   },
   "submitStockOpnameModal": {
     "title": "Gửi Kiểm Kê Tài Sản",
