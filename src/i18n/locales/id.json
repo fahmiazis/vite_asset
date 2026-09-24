@@ -635,6 +635,7 @@
     "submitStockOpname": "Submit Stock Opname",
     "approve": "Approve",
     "execute": "Eksekusi Stock Opname",
+    "revise": "Revisi",
     "reject": "Tolak",
     "downloadTemplate": "Download Template Excel",
     "uploadTemplate": "Upload Hasil Excel",
@@ -648,7 +649,11 @@
     "tableShowing": "Menampilkan",
     "tableOf": "dari",
     "tablePageSize": "Baris/hal:",
-    "fillDataButton": "Lengkapi Data"
+    "fillDataButton": "Lengkapi Data",
+    "needsRevision": "Perlu revisi",
+    "lockedForRevision": "Terkunci",
+    "revisionBannerTitle": "Revisi: {{count}} dari {{total}} aset perlu diperbaiki",
+    "revisionBannerDescription": "Cuma aset yang di-highlight yang bisa diubah. Aset lain terkunci sampai revisi ini di-submit ulang."
   },
   "stockOpnameFindingModal": {
     "title": "Isi Temuan Fisik",
@@ -752,6 +757,22 @@
       "error": "Gagal menolak stock opname"
     }
   },
+  "reviseStockOpnameModal": {
+    "title": "Revisi Stock Opname",
+    "warningMessage": "Stock opname akan dikembalikan ke Draft. Creator cuma bisa mengubah aset yang dicentang — aset lain tetap terkunci. Setelah di-submit ulang, approval mulai lagi dari step pertama.",
+    "assetsLabel": "Aset yang perlu direvisi",
+    "selectedCount": "{{count}} dari {{total}} dipilih",
+    "searchPlaceholder": "Cari nomor atau nama aset...",
+    "checkAllShown": "Centang semua yang tampil",
+    "noAssetsFound": "Aset tidak ditemukan",
+    "notesLabel": "Catatan Revisi",
+    "notesPlaceholder": "Jelaskan apa yang perlu diperbaiki (minimal 5 karakter)",
+    "notesTooShort": "Catatan minimal {{min}} karakter ({{current}}/{{min}})",
+    "cancel": "Batal",
+    "reviseAll": "Revisi Semua",
+    "reviseSelected": "Revisi Terpilih ({{count}})",
+    "revising": "Memproses..."
+  },
   "stockOpnameReportPage": {
     "title": "Report Stock Opname",
     "backToList": "Kembali ke daftar",
@@ -847,7 +868,8 @@
     "notesPlaceholder": "Catatan...",
     "unsavedBadge": "belum tersimpan",
     "searchPlaceholder": "Cari nama atau nomor asset... (Ctrl+F)",
-    "searchNoResults": "Gak ada asset yang cocok"
+    "searchNoResults": "Gak ada asset yang cocok",
+    "revisionModeNotice": "Mode revisi — cuma {{count}} aset yang diminta revisi yang ditampilkan"
   },
   "guidePage": {
     "title": "Panduan Penggunaan",
@@ -874,7 +896,7 @@
           "Eksekusi — hasil temuan diterapkan ke data aset",
           "Selesai — data aset udah keupdate, gak bisa diubah lagi"
         ],
-        "tip": "Stock opname bisa ditolak (Reject) di tahap Approval atau Eksekusi kalau ada masalah."
+        "tip": "Di tahap Approval atau Eksekusi, stock opname bisa dikembalikan buat diperbaiki (Revisi) atau ditolak (Tolak). Revisi balik ke Draft, sedangkan Tolak itu final."
       },
       "createDraft": {
         "title": "1. Bikin Stock Opname Baru",
@@ -931,7 +953,8 @@
         "steps": [
           "Klik \"Submit Stock Opname\" di halaman detail",
           "Stock opname masuk tahap Approval, jalan sesuai alur persetujuan yang diatur buat branch kamu",
-          "Cek progress-nya di bagian \"Status Approval\" — kelihatan siapa aja yang harus approve dan mana yang udah/belum"
+          "Cek progress-nya di bagian \"Status Approval\" — kelihatan siapa aja yang harus approve dan mana yang udah/belum",
+          "Approver yang lagi dapet giliran bisa Approve, minta Revisi, atau Tolak"
         ],
         "tip": "Submit bakal ditolak kalau ada asset yang: belum diisi Status Fisik/Kondisi, belum diupload Foto Bukti Fisik-nya, atau (kalau statusnya Dipinjam & lagi diwajibkan di Config) belum diupload Dokumen Peminjaman."
       },
@@ -944,17 +967,33 @@
           "Setelah ini stock opname-nya \"Selesai\" dan datanya udah gak bisa diubah lagi"
         ]
       },
-      "reject": {
-        "title": "7. Tolak (Reject)",
-        "summary": "Kalau ada masalah pas Approval atau Eksekusi, stock opname bisa ditolak.",
+      "revise": {
+        "title": "7. Revisi (Kembalikan buat Diperbaiki)",
+        "summary": "Kalau ada temuan yang salah tapi ajuannya masih bisa dilanjut, approver (di tahap Approval) atau eksekutor (di tahap Eksekusi) bisa minta revisi. Gak perlu ditolak.",
         "steps": [
-          "Klik \"Tolak\" di halaman detail",
+          "Approver/eksekutor klik \"Revisi\" di halaman detail",
+          "Centang asset yang perlu dibenerin. Bisa cari pakai nomor/nama asset, atau klik \"Centang semua yang tampil\"",
+          "Isi Catatan Revisi (wajib, minimal 5 karakter), jelasin apa yang salah",
+          "Klik \"Revisi Terpilih\" buat asset yang dicentang aja, atau \"Revisi Semua\" kalau semua asset perlu dicek ulang",
+          "Stock opname balik ke Draft. Creator bakal lihat banner revisi, asset yang dicentang ditandai \"Perlu revisi\", dan asset lain \"Terkunci\" (gak bisa diubah)",
+          "Creator benerin asset yang ditandai lewat Isi Temuan, Lengkapi Data, atau Excel (isinya cuma asset yang diminta revisi), lalu Submit ulang",
+          "Setelah submit ulang, approval mulai lagi dari approver pertama"
+        ],
+        "tip": "Pas submit ulang, cek umur foto (maks 10 hari) cuma berlaku buat asset yang diminta revisi. Kalau foto asset itu udah lama, upload ulang foto yang baru."
+      },
+      "reject": {
+        "title": "8. Tolak (Reject)",
+        "summary": "Pakai Tolak kalau ajuan stock opname memang gak bisa dipakai lagi. Beda sama Revisi, penolakan itu final.",
+        "steps": [
+          "Di tahap Approval atau Eksekusi, klik \"Tolak\" di halaman detail",
           "Isi alasan penolakan (wajib, minimal 10 karakter)",
-          "Stock opname yang udah ditolak gak bisa dilanjutin lagi — kalau masih perlu, bikin draft baru"
-        ]
+          "Status stock opname langsung jadi Ditolak dan ajuannya berhenti. Gak bisa direvisi, disubmit ulang, atau dieksekusi lagi",
+          "Kalau stock opname-nya masih diperlukan, bikin draft baru"
+        ],
+        "tip": "Temuannya masih bisa dibenerin? Pakai Revisi, jangan Tolak."
       },
       "report": {
-        "title": "8. Laporan",
+        "title": "9. Laporan",
         "summary": "Buat lihat rekap hasil stock opname per periode dan branch.",
         "steps": [
           "Buka menu Stock Opname → Laporan",
@@ -964,7 +1003,7 @@
         ]
       },
       "config": {
-        "title": "9. Pengaturan Stock Opname",
+        "title": "10. Pengaturan Stock Opname",
         "summary": "Beberapa aturan stock opname bisa diatur lewat halaman Config — diakses lewat tombol \"Config\" di halaman daftar Stock Opname.",
         "steps": [
           "Jendela Submit — atur tanggal mulai & akhir tiap bulan buat nandain submit yang \"tepat jadwal\" (stock opname tetap bisa disubmit kapan aja, ini cuma nentuin status di halaman detail)",

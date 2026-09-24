@@ -635,6 +635,7 @@
     "submitStockOpname": "Gửi Kiểm Kê Tài Sản",
     "approve": "Phê Duyệt",
     "execute": "Thực Thi Kiểm Kê",
+    "revise": "Chỉnh Sửa",
     "reject": "Từ Chối",
     "downloadTemplate": "Tải Mẫu Excel",
     "uploadTemplate": "Tải Lên Kết Quả Excel",
@@ -648,7 +649,11 @@
     "tableShowing": "Hiển thị",
     "tableOf": "trong số",
     "tablePageSize": "Số dòng/trang:",
-    "fillDataButton": "Hoàn Thiện Dữ Liệu"
+    "fillDataButton": "Hoàn Thiện Dữ Liệu",
+    "needsRevision": "Cần chỉnh sửa",
+    "lockedForRevision": "Đã khóa",
+    "revisionBannerTitle": "Chỉnh sửa: {{count}} / {{total}} tài sản cần sửa",
+    "revisionBannerDescription": "Chỉ sửa được các tài sản được đánh dấu. Tài sản khác bị khóa cho đến khi gửi lại."
   },
   "stockOpnameFindingModal": {
     "title": "Nhập Kết Quả Kiểm Tra Thực Tế",
@@ -752,6 +757,22 @@
       "error": "Không thể từ chối kiểm kê tài sản"
     }
   },
+  "reviseStockOpnameModal": {
+    "title": "Chỉnh Sửa Kiểm Kê Tài Sản",
+    "warningMessage": "Kiểm kê sẽ quay lại trạng thái Nháp. Người tạo chỉ sửa được các tài sản đã chọn — tài sản khác bị khóa. Sau khi gửi lại, phê duyệt bắt đầu lại từ bước đầu tiên.",
+    "assetsLabel": "Tài sản cần chỉnh sửa",
+    "selectedCount": "Đã chọn {{count}} / {{total}}",
+    "searchPlaceholder": "Tìm mã hoặc tên tài sản...",
+    "checkAllShown": "Chọn tất cả đang hiển thị",
+    "noAssetsFound": "Không tìm thấy tài sản",
+    "notesLabel": "Ghi Chú Chỉnh Sửa",
+    "notesPlaceholder": "Giải thích nội dung cần sửa (tối thiểu 5 ký tự)",
+    "notesTooShort": "Ghi chú phải có ít nhất {{min}} ký tự ({{current}}/{{min}})",
+    "cancel": "Hủy",
+    "reviseAll": "Chỉnh Sửa Tất Cả",
+    "reviseSelected": "Chỉnh Sửa Đã Chọn ({{count}})",
+    "revising": "Đang xử lý..."
+  },
   "stockOpnameReportPage": {
     "title": "Báo Cáo Kiểm Kê Tài Sản",
     "backToList": "Quay lại danh sách",
@@ -847,7 +868,8 @@
     "notesPlaceholder": "Ghi chú...",
     "unsavedBadge": "chưa lưu",
     "searchPlaceholder": "Tìm tên hoặc số tài sản... (Ctrl+F)",
-    "searchNoResults": "Không tìm thấy tài sản phù hợp"
+    "searchNoResults": "Không tìm thấy tài sản phù hợp",
+    "revisionModeNotice": "Chế độ chỉnh sửa — chỉ hiển thị {{count}} tài sản cần chỉnh sửa"
   },
   "guidePage": {
     "title": "Hướng Dẫn Sử Dụng",
@@ -874,7 +896,7 @@
           "Thực thi — kết quả được áp dụng vào dữ liệu tài sản",
           "Hoàn tất — dữ liệu tài sản đã cập nhật, không thể sửa nữa"
         ],
-        "tip": "Stock opname có thể bị từ chối ở bước Phê duyệt hoặc Thực thi nếu có vấn đề."
+        "tip": "Ở bước Phê duyệt hoặc Thực Thi, kiểm kê có thể được trả lại để sửa (Chỉnh sửa) hoặc bị từ chối (Từ chối). Chỉnh sửa đưa về Nháp, còn Từ chối là kết thúc."
       },
       "createDraft": {
         "title": "1. Tạo Stock Opname Mới",
@@ -931,7 +953,8 @@
         "steps": [
           "Bấm \"Gửi Duyệt Stock Opname\" ở trang chi tiết",
           "Stock opname vào giai đoạn Phê duyệt, theo quy trình của chi nhánh bạn",
-          "Theo dõi tiến độ ở \"Trạng Thái Phê Duyệt\" — xem ai cần duyệt và cái nào xong/chưa"
+          "Theo dõi tiến độ ở \"Trạng Thái Phê Duyệt\" — xem ai cần duyệt và cái nào xong/chưa",
+          "Người phê duyệt đến lượt có thể Phê duyệt, yêu cầu Chỉnh sửa, hoặc Từ chối"
         ],
         "tip": "Gửi duyệt sẽ bị từ chối nếu có tài sản: chưa điền Trạng Thái Vật Lý/Tình Trạng, chưa tải Ảnh Bằng Chứng Thực Tế, hoặc (nếu Đang mượn và Cấu Hình đang yêu cầu bắt buộc) chưa tải Tài Liệu Mượn."
       },
@@ -944,17 +967,33 @@
           "Sau bước này stock opname \"Hoàn Tất\" và dữ liệu không thể sửa nữa"
         ]
       },
-      "reject": {
-        "title": "7. Từ Chối",
-        "summary": "Nếu có vấn đề khi Phê duyệt hoặc Thực thi, stock opname có thể bị từ chối.",
+      "revise": {
+        "title": "7. Chỉnh Sửa (Trả Lại Để Sửa)",
+        "summary": "Nếu một số kết quả sai nhưng yêu cầu vẫn có thể tiếp tục, người phê duyệt (bước Phê duyệt) hoặc người thực thi (bước Thực Thi) có thể yêu cầu chỉnh sửa thay vì từ chối.",
         "steps": [
-          "Bấm \"Từ Chối\" ở trang chi tiết",
-          "Nhập lý do từ chối (bắt buộc, tối thiểu 10 ký tự)",
-          "Stock opname đã từ chối không thể tiếp tục — tạo nháp mới nếu vẫn cần"
-        ]
+          "Người phê duyệt/thực thi nhấn \"Chỉnh Sửa\" ở trang chi tiết",
+          "Chọn các tài sản cần sửa. Tìm theo mã/tên tài sản, hoặc nhấn \"Chọn tất cả đang hiển thị\"",
+          "Điền Ghi Chú Chỉnh Sửa (bắt buộc, tối thiểu 5 ký tự) giải thích điểm sai",
+          "Nhấn \"Chỉnh Sửa Đã Chọn\" cho các tài sản đã chọn, hoặc \"Chỉnh Sửa Tất Cả\" nếu cần kiểm tra lại toàn bộ",
+          "Kiểm kê quay về Nháp. Người tạo thấy banner chỉnh sửa, tài sản được chọn có nhãn \"Cần chỉnh sửa\", tài sản khác \"Đã khóa\" (không sửa được)",
+          "Người tạo sửa các tài sản được đánh dấu qua Nhập Kết Quả, Hoàn Thiện Dữ Liệu, hoặc Excel (chỉ chứa tài sản cần sửa), rồi gửi lại",
+          "Sau khi gửi lại, phê duyệt bắt đầu lại từ người phê duyệt đầu tiên"
+        ],
+        "tip": "Khi gửi lại, kiểm tra tuổi ảnh (tối đa 10 ngày) chỉ áp dụng cho tài sản cần chỉnh sửa. Nếu ảnh đã cũ, hãy tải ảnh mới."
+      },
+      "reject": {
+        "title": "8. Từ Chối",
+        "summary": "Dùng Từ chối khi yêu cầu kiểm kê không thể sử dụng nữa. Khác với Chỉnh sửa, từ chối là kết thúc.",
+        "steps": [
+          "Ở bước Phê duyệt hoặc Thực Thi, nhấn \"Từ Chối\" ở trang chi tiết",
+          "Điền lý do từ chối (bắt buộc, tối thiểu 10 ký tự)",
+          "Kiểm kê chuyển sang Bị từ chối và yêu cầu dừng lại. Không thể chỉnh sửa, gửi lại, hoặc thực thi nữa",
+          "Nếu vẫn cần kiểm kê, hãy tạo bản nháp mới"
+        ],
+        "tip": "Kết quả vẫn sửa được? Dùng Chỉnh sửa, đừng Từ chối."
       },
       "report": {
-        "title": "8. Báo Cáo",
+        "title": "9. Báo Cáo",
         "summary": "Xem tổng hợp kết quả stock opname theo kỳ và chi nhánh.",
         "steps": [
           "Mở Stock Opname → Báo Cáo",
@@ -964,7 +1003,7 @@
         ]
       },
       "config": {
-        "title": "9. Cài Đặt Stock Opname",
+        "title": "10. Cài Đặt Stock Opname",
         "summary": "Một số quy tắc stock opname có thể chỉnh ở trang Cấu Hình — vào từ nút \"Cấu Hình\" ở trang danh sách Stock Opname.",
         "steps": [
           "Khung Thời Gian Gửi Duyệt — đặt ngày bắt đầu & kết thúc mỗi tháng để đánh dấu việc gửi duyệt là \"đúng hạn\" (stock opname vẫn có thể gửi duyệt bất cứ lúc nào, cài đặt này chỉ ảnh hưởng trạng thái hiển thị ở trang chi tiết)",

@@ -635,6 +635,7 @@
     "submitStockOpname": "Submit Stock Opname",
     "approve": "Approve",
     "execute": "Execute Stock Opname",
+    "revise": "Revise",
     "reject": "Reject",
     "downloadTemplate": "Download Excel Template",
     "uploadTemplate": "Upload Excel Result",
@@ -648,7 +649,11 @@
     "tableShowing": "Showing",
     "tableOf": "of",
     "tablePageSize": "Rows/page:",
-    "fillDataButton": "Complete Data"
+    "fillDataButton": "Complete Data",
+    "needsRevision": "Needs revision",
+    "lockedForRevision": "Locked",
+    "revisionBannerTitle": "Revision: {{count}} of {{total}} assets need fixing",
+    "revisionBannerDescription": "Only the highlighted assets can be changed. Other assets are locked until this revision is resubmitted."
   },
   "stockOpnameFindingModal": {
     "title": "Fill Physical Finding",
@@ -752,6 +757,22 @@
       "error": "Failed to reject stock opname"
     }
   },
+  "reviseStockOpnameModal": {
+    "title": "Revise Stock Opname",
+    "warningMessage": "The stock opname returns to Draft. The creator can only change the checked assets — other assets stay locked. Approval restarts from the first step after resubmission.",
+    "assetsLabel": "Assets to revise",
+    "selectedCount": "{{count}} of {{total}} selected",
+    "searchPlaceholder": "Search asset number or name...",
+    "checkAllShown": "Check all shown",
+    "noAssetsFound": "No assets found",
+    "notesLabel": "Revision Notes",
+    "notesPlaceholder": "Explain what needs to be fixed (minimum 5 characters)",
+    "notesTooShort": "Notes must be at least {{min}} characters ({{current}}/{{min}})",
+    "cancel": "Cancel",
+    "reviseAll": "Revise All",
+    "reviseSelected": "Revise Selected ({{count}})",
+    "revising": "Processing..."
+  },
   "stockOpnameReportPage": {
     "title": "Stock Opname Report",
     "backToList": "Back to list",
@@ -847,7 +868,8 @@
     "notesPlaceholder": "Notes...",
     "unsavedBadge": "unsaved",
     "searchPlaceholder": "Search asset name or number... (Ctrl+F)",
-    "searchNoResults": "No matching assets"
+    "searchNoResults": "No matching assets",
+    "revisionModeNotice": "Revision mode — only the {{count}} assets requested for revision are shown"
   },
   "guidePage": {
     "title": "User Guide",
@@ -874,7 +896,7 @@
           "Execute — findings are applied to the asset data",
           "Finished — asset data is updated and can no longer be changed"
         ],
-        "tip": "A stock opname can be rejected during the Approval or Execute stage if something's wrong."
+        "tip": "During Approval or Execution, a stock opname can be sent back for fixing (Revise) or rejected (Reject). Revise returns it to Draft, while Reject is final."
       },
       "createDraft": {
         "title": "1. Create a New Stock Opname",
@@ -931,7 +953,8 @@
         "steps": [
           "Click \"Submit Stock Opname\" on the detail page",
           "The stock opname enters the Approval stage, following your branch's approval flow",
-          "Track progress under \"Approval Status\" — see who needs to approve and what's pending"
+          "Track progress under \"Approval Status\" — see who needs to approve and what's pending",
+          "The approver whose turn it is can Approve, request a Revision, or Reject"
         ],
         "tip": "Submit is rejected if any asset: has an empty Physical Status/Condition, has no Physical Proof Photo uploaded, or (if Borrowed and a document is currently required in Config) has no Loan Document uploaded."
       },
@@ -944,17 +967,33 @@
           "After this the stock opname is \"Finished\" and its data can no longer be changed"
         ]
       },
-      "reject": {
-        "title": "7. Reject",
-        "summary": "If something's wrong during Approval or Execute, the stock opname can be rejected.",
+      "revise": {
+        "title": "7. Revise (Send Back for Fixing)",
+        "summary": "If some findings are wrong but the submission can still continue, the approver (during Approval) or the executor (during Execution) can request a revision instead of rejecting it.",
         "steps": [
-          "Click \"Reject\" on the detail page",
-          "Enter a reason (required, at least 10 characters)",
-          "A rejected stock opname can't be resumed — create a new draft if it's still needed"
-        ]
+          "The approver/executor clicks \"Revise\" on the detail page",
+          "Check the assets that need fixing. Search by asset number/name, or click \"Check all shown\"",
+          "Fill in the Revision Notes (required, at least 5 characters) explaining what's wrong",
+          "Click \"Revise Selected\" for the checked assets only, or \"Revise All\" if every asset needs rechecking",
+          "The stock opname returns to Draft. The creator sees a revision banner, checked assets are marked \"Needs revision\", and other assets are \"Locked\" (can't be changed)",
+          "The creator fixes the marked assets via Fill Finding, Complete Data, or Excel (which only contain the assets to revise), then submits again",
+          "After resubmission, approval restarts from the first approver"
+        ],
+        "tip": "On resubmission, the photo age check (max 10 days) only applies to the assets requested for revision. If an asset's photo is old, upload a new one."
+      },
+      "reject": {
+        "title": "8. Reject",
+        "summary": "Use Reject when the stock opname submission can't be used anymore. Unlike Revise, a rejection is final.",
+        "steps": [
+          "During Approval or Execution, click \"Reject\" on the detail page",
+          "Fill in the rejection reason (required, at least 10 characters)",
+          "The stock opname becomes Rejected and the submission stops. It can't be revised, resubmitted, or executed anymore",
+          "If the stock opname is still needed, create a new draft"
+        ],
+        "tip": "Can the findings still be fixed? Use Revise, not Reject."
       },
       "report": {
-        "title": "8. Reports",
+        "title": "9. Reports",
         "summary": "See a recap of stock opname results per period and branch.",
         "steps": [
           "Open Stock Opname → Report",
@@ -964,7 +1003,7 @@
         ]
       },
       "config": {
-        "title": "9. Stock Opname Settings",
+        "title": "10. Stock Opname Settings",
         "summary": "Some stock opname rules can be set on the Config page — accessed via the \"Config\" button on the Stock Opname list page.",
         "steps": [
           "Submission Window — set the monthly start and end day used to flag a submission as \"on schedule\" (stock opnames can still be submitted anytime, this only affects the status shown on the detail page)",

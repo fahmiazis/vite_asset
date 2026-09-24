@@ -11,6 +11,7 @@ import {
   CheckmarkBadge01Icon,
   Target01Icon,
   Cancel01Icon,
+  ArrowTurnBackwardIcon,
   ChartUpIcon,
   Settings01Icon,
 } from "hugeicons-react"
@@ -32,6 +33,7 @@ const SECTION_IDS = [
   "fillExcel",
   "submitApproval",
   "execute",
+  "revise",
   "reject",
   "report",
   "config",
@@ -45,6 +47,7 @@ const SECTION_ICONS: Record<(typeof SECTION_IDS)[number], GuideIcon> = {
   fillExcel: BookDownloadIcon,
   submitApproval: CheckmarkBadge01Icon,
   execute: Target01Icon,
+  revise: ArrowTurnBackwardIcon,
   reject: Cancel01Icon,
   report: ChartUpIcon,
   config: Settings01Icon,
