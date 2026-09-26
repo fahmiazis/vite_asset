@@ -1899,5 +1899,72 @@
       "uploaded": "Dokumen terunggah",
       "error": "Aksi gagal"
     }
+  },
+  "transactionReport": {
+    "procurement": {
+      "title": "Report Procurement",
+      "subtitle": "Barang pengadaan per transaksi, sesuai cabang yang di-assign ke kamu"
+    },
+    "mutation": {
+      "title": "Report Mutasi",
+      "subtitle": "Aset yang dimutasi, dari cabang kamu sebagai pengaju maupun tujuan"
+    },
+    "disposal": {
+      "title": "Report Disposal",
+      "subtitle": "Aset yang di-disposal per transaksi, sesuai cabang yang di-assign ke kamu"
+    },
+    "downloadExcel": "Unduh Excel",
+    "downloading": "Mengunduh...",
+    "downloadSuccess": "Report berhasil diunduh",
+    "downloadFailed": "Gagal mengunduh report",
+    "searchPlaceholder": "Cari nomor transaksi, catatan, barang atau aset...",
+    "allBranches": "Semua cabang",
+    "myBranches": "Semua cabang saya",
+    "branchScopeNote": "Menampilkan transaksi dari {{count}} cabang yang di-assign ke kamu.",
+    "noBranchNote": "Kamu belum punya cabang — minta administrator meng-assign cabang.",
+    "reset": "Reset",
+    "allStages": "Semua",
+    "loading": "Memuat...",
+    "empty": "Tidak ada data untuk filter ini",
+    "forbidden": "Kamu tidak punya akses ke report ini",
+    "loadFailed": "Gagal memuat report",
+    "stat": {
+      "transactions": "Transaksi",
+      "items": "Barang",
+      "quantity": "Total qty",
+      "totalValue": "Total nilai",
+      "assets": "Aset",
+      "assetsPending": "Aset belum dieksekusi",
+      "assetsExecuted": "Aset sudah dieksekusi",
+      "saleValue": "Total nilai jual",
+      "incomeValue": "Total pemasukan"
+    },
+    "column": {
+      "no": "No",
+      "transactionNumber": "No. Transaksi",
+      "date": "Tanggal",
+      "branch": "Cabang",
+      "stage": "Stage",
+      "itemName": "Barang",
+      "category": "Kategori",
+      "quantity": "Qty",
+      "unitPrice": "Harga satuan",
+      "totalPrice": "Total harga",
+      "distribution": "Distribusi cabang",
+      "createdBy": "Dibuat oleh",
+      "assetNumber": "No. Aset",
+      "assetName": "Nama aset",
+      "fromBranch": "Dari cabang",
+      "toBranch": "Ke cabang",
+      "toLocation": "Lokasi tujuan",
+      "documentNumber": "No. Dokumen",
+      "assetStatus": "Status aset",
+      "disposalType": "Tipe",
+      "reason": "Alasan",
+      "saleValue": "Nilai jual",
+      "incomeValue": "Pemasukan",
+      "invoiceNumber": "No. Faktur",
+      "agreementNumber": "No. Agreement"
+    }
   }
 }

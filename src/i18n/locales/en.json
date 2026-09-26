@@ -1899,5 +1899,72 @@
       "uploaded": "Document uploaded",
       "error": "Action failed"
     }
+  },
+  "transactionReport": {
+    "procurement": {
+      "title": "Procurement Report",
+      "subtitle": "Procurement items per transaction, limited to your assigned branches"
+    },
+    "mutation": {
+      "title": "Mutation Report",
+      "subtitle": "Mutated assets, from your branches as requester or destination"
+    },
+    "disposal": {
+      "title": "Disposal Report",
+      "subtitle": "Disposed assets per transaction, limited to your assigned branches"
+    },
+    "downloadExcel": "Download Excel",
+    "downloading": "Downloading...",
+    "downloadSuccess": "Report downloaded",
+    "downloadFailed": "Failed to download report",
+    "searchPlaceholder": "Search transaction number, notes, item or asset...",
+    "allBranches": "All branches",
+    "myBranches": "All my branches",
+    "branchScopeNote": "Showing transactions from the {{count}} branch(es) assigned to you.",
+    "noBranchNote": "You have no branch assigned yet — ask the administrator to assign one.",
+    "reset": "Reset",
+    "allStages": "All",
+    "loading": "Loading...",
+    "empty": "No data for this filter",
+    "forbidden": "You do not have access to this report",
+    "loadFailed": "Failed to load report",
+    "stat": {
+      "transactions": "Transactions",
+      "items": "Items",
+      "quantity": "Total quantity",
+      "totalValue": "Total value",
+      "assets": "Assets",
+      "assetsPending": "Assets pending",
+      "assetsExecuted": "Assets executed",
+      "saleValue": "Total sale value",
+      "incomeValue": "Total income"
+    },
+    "column": {
+      "no": "No",
+      "transactionNumber": "Transaction No.",
+      "date": "Date",
+      "branch": "Branch",
+      "stage": "Stage",
+      "itemName": "Item",
+      "category": "Category",
+      "quantity": "Qty",
+      "unitPrice": "Unit price",
+      "totalPrice": "Total price",
+      "distribution": "Branch distribution",
+      "createdBy": "Created by",
+      "assetNumber": "Asset No.",
+      "assetName": "Asset name",
+      "fromBranch": "From branch",
+      "toBranch": "To branch",
+      "toLocation": "Destination location",
+      "documentNumber": "Document No.",
+      "assetStatus": "Asset status",
+      "disposalType": "Type",
+      "reason": "Reason",
+      "saleValue": "Sale value",
+      "incomeValue": "Income",
+      "invoiceNumber": "Invoice No.",
+      "agreementNumber": "Agreement No."
+    }
   }
 }

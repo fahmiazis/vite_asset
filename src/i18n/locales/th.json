@@ -1899,5 +1899,72 @@
       "uploaded": "อัปโหลดเอกสารแล้ว",
       "error": "ดำเนินการไม่สำเร็จ"
     }
+  },
+  "transactionReport": {
+    "procurement": {
+      "title": "รายงานการจัดซื้อ",
+      "subtitle": "รายการจัดซื้อต่อธุรกรรม เฉพาะสาขาที่คุณได้รับมอบหมาย"
+    },
+    "mutation": {
+      "title": "รายงานการโอนย้าย",
+      "subtitle": "สินทรัพย์ที่โอนย้าย จากสาขาของคุณในฐานะผู้ขอหรือปลายทาง"
+    },
+    "disposal": {
+      "title": "รายงานการจำหน่าย",
+      "subtitle": "สินทรัพย์ที่จำหน่ายต่อธุรกรรม เฉพาะสาขาที่คุณได้รับมอบหมาย"
+    },
+    "downloadExcel": "ดาวน์โหลด Excel",
+    "downloading": "กำลังดาวน์โหลด...",
+    "downloadSuccess": "ดาวน์โหลดรายงานแล้ว",
+    "downloadFailed": "ดาวน์โหลดรายงานไม่สำเร็จ",
+    "searchPlaceholder": "ค้นหาเลขที่ธุรกรรม หมายเหตุ รายการ หรือสินทรัพย์...",
+    "allBranches": "ทุกสาขา",
+    "myBranches": "ทุกสาขาของฉัน",
+    "branchScopeNote": "แสดงธุรกรรมจาก {{count}} สาขาที่คุณได้รับมอบหมาย",
+    "noBranchNote": "คุณยังไม่ได้รับมอบหมายสาขา — โปรดติดต่อผู้ดูแลระบบ",
+    "reset": "รีเซ็ต",
+    "allStages": "ทั้งหมด",
+    "loading": "กำลังโหลด...",
+    "empty": "ไม่มีข้อมูลสำหรับตัวกรองนี้",
+    "forbidden": "คุณไม่มีสิทธิ์เข้าถึงรายงานนี้",
+    "loadFailed": "โหลดรายงานไม่สำเร็จ",
+    "stat": {
+      "transactions": "ธุรกรรม",
+      "items": "รายการ",
+      "quantity": "จำนวนรวม",
+      "totalValue": "มูลค่ารวม",
+      "assets": "สินทรัพย์",
+      "assetsPending": "สินทรัพย์รอดำเนินการ",
+      "assetsExecuted": "สินทรัพย์ดำเนินการแล้ว",
+      "saleValue": "มูลค่าขายรวม",
+      "incomeValue": "รายรับรวม"
+    },
+    "column": {
+      "no": "ลำดับ",
+      "transactionNumber": "เลขที่ธุรกรรม",
+      "date": "วันที่",
+      "branch": "สาขา",
+      "stage": "Stage",
+      "itemName": "รายการ",
+      "category": "หมวดหมู่",
+      "quantity": "จำนวน",
+      "unitPrice": "ราคาต่อหน่วย",
+      "totalPrice": "ราคารวม",
+      "distribution": "การกระจายสาขา",
+      "createdBy": "สร้างโดย",
+      "assetNumber": "เลขที่สินทรัพย์",
+      "assetName": "ชื่อสินทรัพย์",
+      "fromBranch": "จากสาขา",
+      "toBranch": "ไปยังสาขา",
+      "toLocation": "สถานที่ปลายทาง",
+      "documentNumber": "เลขที่เอกสาร",
+      "assetStatus": "สถานะสินทรัพย์",
+      "disposalType": "ประเภท",
+      "reason": "เหตุผล",
+      "saleValue": "มูลค่าขาย",
+      "incomeValue": "รายรับ",
+      "invoiceNumber": "เลขที่ใบกำกับ",
+      "agreementNumber": "เลขที่ข้อตกลง"
+    }
   }
 }

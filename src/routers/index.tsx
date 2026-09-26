@@ -64,6 +64,9 @@ import StockOpnamePage from '../components/pages/stockOpname'
 import CreateStockOpnamePage from '../components/pages/stockOpname/create'
 import StockOpnameDetailPage from '../components/pages/stockOpname/detail'
 import StockOpnameReportPage from '../components/pages/stockOpname/report'
+import ProcurementReportPage from '../components/pages/procurementReport'
+import MutationReportPage from '../components/pages/mutationReport'
+import DisposalReportPage from '../components/pages/disposalReport'
 import StockOpnameConfigPage from '../components/pages/stockOpname/config'
 import StockOpnameFillPage from '../components/pages/stockOpname/fill'
 import GuidePage from '../components/pages/guide'
@@ -186,6 +189,18 @@ export const router = createBrowserRouter([
           {
             path: 'stock-opname/create',
             element: <CreateStockOpnamePage />,
+          },
+          {
+            path: 'procurement-report',
+            element: <ProcurementReportPage />,
+          },
+          {
+            path: 'mutation-report',
+            element: <MutationReportPage />,
+          },
+          {
+            path: 'disposal-report',
+            element: <DisposalReportPage />,
           },
           {
             path: 'stock-opname/report',

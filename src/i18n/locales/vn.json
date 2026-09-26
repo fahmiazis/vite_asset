@@ -1899,5 +1899,72 @@
       "uploaded": "Đã tải tài liệu",
       "error": "Thao tác thất bại"
     }
+  },
+  "transactionReport": {
+    "procurement": {
+      "title": "Báo cáo mua sắm",
+      "subtitle": "Hàng mua sắm theo giao dịch, giới hạn theo chi nhánh được gán cho bạn"
+    },
+    "mutation": {
+      "title": "Báo cáo điều chuyển",
+      "subtitle": "Tài sản điều chuyển, từ chi nhánh của bạn là bên yêu cầu hoặc bên nhận"
+    },
+    "disposal": {
+      "title": "Báo cáo thanh lý",
+      "subtitle": "Tài sản thanh lý theo giao dịch, giới hạn theo chi nhánh được gán cho bạn"
+    },
+    "downloadExcel": "Tải Excel",
+    "downloading": "Đang tải...",
+    "downloadSuccess": "Đã tải báo cáo",
+    "downloadFailed": "Tải báo cáo thất bại",
+    "searchPlaceholder": "Tìm số giao dịch, ghi chú, hàng hoặc tài sản...",
+    "allBranches": "Tất cả chi nhánh",
+    "myBranches": "Tất cả chi nhánh của tôi",
+    "branchScopeNote": "Hiển thị giao dịch từ {{count}} chi nhánh được gán cho bạn.",
+    "noBranchNote": "Bạn chưa được gán chi nhánh — hãy liên hệ quản trị viên.",
+    "reset": "Đặt lại",
+    "allStages": "Tất cả",
+    "loading": "Đang tải...",
+    "empty": "Không có dữ liệu cho bộ lọc này",
+    "forbidden": "Bạn không có quyền xem báo cáo này",
+    "loadFailed": "Tải báo cáo thất bại",
+    "stat": {
+      "transactions": "Giao dịch",
+      "items": "Mặt hàng",
+      "quantity": "Tổng số lượng",
+      "totalValue": "Tổng giá trị",
+      "assets": "Tài sản",
+      "assetsPending": "Tài sản chờ xử lý",
+      "assetsExecuted": "Tài sản đã thực hiện",
+      "saleValue": "Tổng giá bán",
+      "incomeValue": "Tổng thu"
+    },
+    "column": {
+      "no": "STT",
+      "transactionNumber": "Số giao dịch",
+      "date": "Ngày",
+      "branch": "Chi nhánh",
+      "stage": "Stage",
+      "itemName": "Mặt hàng",
+      "category": "Danh mục",
+      "quantity": "SL",
+      "unitPrice": "Đơn giá",
+      "totalPrice": "Thành tiền",
+      "distribution": "Phân bổ chi nhánh",
+      "createdBy": "Người tạo",
+      "assetNumber": "Số tài sản",
+      "assetName": "Tên tài sản",
+      "fromBranch": "Từ chi nhánh",
+      "toBranch": "Đến chi nhánh",
+      "toLocation": "Vị trí đến",
+      "documentNumber": "Số chứng từ",
+      "assetStatus": "Trạng thái tài sản",
+      "disposalType": "Loại",
+      "reason": "Lý do",
+      "saleValue": "Giá bán",
+      "incomeValue": "Thu",
+      "invoiceNumber": "Số hóa đơn",
+      "agreementNumber": "Số thỏa thuận"
+    }
   }
 }
