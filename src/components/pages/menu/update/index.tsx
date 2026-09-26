@@ -8,6 +8,7 @@ import { useUpdateMenu } from '../../../../hooks/mutation/menu/useUpdateMenus'
 import { IconPicker } from '../../../organisms/menu/iconPicker'
 import { MENU_TYPE, menuTypeOf } from '../../../../utils/menu/menuType'
 import type { MenuType } from '../../../../models/menu/list'
+import { buildMenuParentOptions } from '../../../../utils/menuParent'
 
 export default function UpdateMenu() {
     const { id } = useParams()
@@ -46,10 +47,15 @@ export default function UpdateMenu() {
         [allMenus, id]
     )
 
-    // Kandidat induk: menu level atas, selain dirinya sendiri
+    // Menu biasa hanya boleh menempel di level atas; menu hak akses tidak
+    // tampil di sidebar sehingga boleh menempel di sub menu juga
     const parentOptions = useMemo(
-        () => allMenus.filter((m) => !m.parent_id && m.id !== id),
-        [allMenus, id]
+        () =>
+            buildMenuParentOptions(allMenus, {
+                allowSubMenu: menuType === 'permission',
+                excludeId: id,
+            }),
+        [allMenus, id, menuType]
     )
 
     const { mutate, isPending } = useUpdateMenu(id || '')
@@ -146,7 +152,9 @@ export default function UpdateMenu() {
 
                 {/* Grup induk */}
                 <div>
-                    <label className={labelClass}>Grup Induk</label>
+                    <label className={labelClass}>
+                        {menuType === 'permission' ? 'Menu Induk' : 'Grup Induk'}
+                    </label>
                     <select
                         value={parentId}
                         onChange={(e) => setParentId(e.target.value)}
@@ -154,10 +162,9 @@ export default function UpdateMenu() {
                         className={inputClass}
                     >
                         <option value=''>— Tanpa grup (menu level atas) —</option>
-                        {parentOptions.map((m) => (
-                            <option key={m.id} value={m.id}>
-                                {m.name}
-                                {!m.path ? ' (grup)' : ''}
+                        {parentOptions.map((option) => (
+                            <option key={option.id} value={option.id}>
+                                {option.label}
                             </option>
                         ))}
                     </select>

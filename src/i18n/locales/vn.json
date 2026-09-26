@@ -48,7 +48,8 @@
       "action": "Hành động",
       "approved": "Đã duyệt",
       "rejected": "Đã từ chối",
-      "pending": "Đang chờ"
+      "pending": "Đang chờ",
+      "stage": "Giai Đoạn"
     }
   },
   "transaksiHeader": {
@@ -63,10 +64,13 @@
   "transaksiTable": {
     "tabs": {
       "all": "Tất cả",
-      "pending": "Chờ xử lý",
-      "approved": "Đã duyệt",
-      "rejected": "Từ chối",
-      "draft": "Bản nháp"
+      "waiting": "Chờ tôi xử lý",
+      "draft": "Nháp",
+      "verification": "Xác minh",
+      "approval": "Phê duyệt",
+      "process": "Đang xử lý",
+      "finished": "Hoàn tất",
+      "rejected": "Bị từ chối"
     },
     "searchPlaceholder": "Tìm theo tên tài sản, số PO hoặc người yêu cầu...",
     "noData": "Không có dữ liệu",
@@ -84,7 +88,8 @@
       "qty": "SL",
       "totalValue": "Tổng Giá Trị",
       "status": "Trạng Thái",
-      "action": "Hành Động"
+      "action": "Hành Động",
+      "stage": "Giai Đoạn"
     },
     "status": {
       "approved": "Đã duyệt",
@@ -387,7 +392,10 @@
     "toast": {
       "success": "Gửi thanh lý thành công",
       "error": "Không thể gửi thanh lý"
-    }
+    },
+    "revisionTitle": "Gửi lại bản sửa",
+    "revisionInfo": "Các tài sản được đánh dấu cần sửa sẽ được gửi lại và quy trình phê duyệt bắt đầu lại từ bước đầu tiên. Dấu cần sửa sẽ được xóa khi thành công.",
+    "revisionSubmit": "Gửi lại"
   },
   "removeAssetModal": {
     "title": "Xóa Tài Sản",
@@ -742,10 +750,19 @@
     "terminal": "Giao dịch đã {{stage}} — không còn thao tác nào.",
     "waitingApproval": "Đã gửi phê duyệt — đang chờ người duyệt ({{done}}/{{total}} bước).",
     "submit": {
-      "button": "Gửi Giao Dịch"
+      "button": "Gửi Giao Dịch",
+      "revisionButton": "Gửi lại bản sửa"
     },
     "saleValues": {
-      "button": "Nhập Giá Bán"
+      "button": "Nhập Giá Bán",
+      "title": "Nhập giá trị bán",
+      "info": "Nhập giá trị bán cho từng tài sản. Sau khi lưu, giao dịch chuyển sang giai đoạn Yêu cầu phê duyệt.",
+      "notesLabel": "Ghi chú",
+      "notesPlaceholder": "Ghi chú mua hàng (tùy chọn)",
+      "confirm": "Lưu & Tiếp tục",
+      "noAssets": "Không có tài sản hoạt động trong giao dịch này",
+      "invalid": "Giá trị bán phải lớn hơn 0",
+      "total": "Tổng giá trị bán"
     },
     "approvalRequest": {
       "button": "Gửi Yêu Cầu Phê Duyệt",
@@ -768,14 +785,21 @@
     "finance": {
       "button": "Xác Nhận Tài Chính",
       "title": "Xác Nhận Tài Chính",
-      "info": "Sau khi xác nhận, giao dịch chuyển sang bước Tax.",
-      "notesLabel": "Ghi chú tài chính"
+      "info": "Mọi tài sản phải được nhập thu nhập. Sau khi xác nhận, giao dịch chuyển sang giai đoạn Thuế.",
+      "notesLabel": "Ghi chú tài chính",
+      "incomeInvalid": "Số tiền thu phải lớn hơn 0",
+      "saleValueLabel": "Giá trị bán đã thống nhất",
+      "difference": "Chênh lệch"
     },
     "tax": {
       "button": "Xác Nhận Thuế",
       "title": "Xác Nhận Thuế",
-      "info": "Sau khi xác nhận, giao dịch chuyển sang bước Asset Deletion.",
-      "notesLabel": "Ghi chú thuế"
+      "info": "Mọi tài sản phải được nhập hóa đơn. Sau khi xác nhận, giao dịch chuyển sang giai đoạn Xóa tài sản.",
+      "notesLabel": "Ghi chú thuế",
+      "invoiceNumberLabel": "Số hóa đơn",
+      "invoiceNumberPlaceholder": "VD: INV/2026/09/0001",
+      "invoiceDateLabel": "Ngày hóa đơn",
+      "invoiceHint": "Bắt buộc — sau giai đoạn này tài sản bị xóa và không thể ghi nhận hóa đơn ở đây nữa."
     },
     "assetDeletion": {
       "button": "Xác Nhận Xóa Tài Sản",
@@ -838,6 +862,23 @@
         "confirm": "Vâng, Hủy",
         "placeholder": "Lý do hủy? (tối thiểu 5 ký tự)"
       }
+    },
+    "incomeValues": {
+      "button": "Nhập thu nhập",
+      "title": "Nhập thu nhập theo tài sản",
+      "info": "Nhập số tiền thu được cho từng tài sản. Lưu không làm chuyển giai đoạn — dùng Xác nhận Tài chính ở dưới khi đã nhập đủ.",
+      "notesLabel": "Ghi chú tài chính",
+      "confirm": "Lưu",
+      "noAssets": "Không có tài sản hoạt động trong giao dịch này",
+      "total": "Tổng thu nhập"
+    },
+    "invoices": {
+      "button": "Nhập hóa đơn",
+      "title": "Nhập hóa đơn theo tài sản",
+      "info": "Nhập số và ngày hóa đơn cho từng tài sản. Lưu không làm chuyển giai đoạn — dùng Xác nhận Thuế ở dưới khi đã nhập đủ.",
+      "notesLabel": "Ghi chú thuế",
+      "confirm": "Lưu",
+      "noAssets": "Không có tài sản hoạt động trong giao dịch này"
     }
   },
   "disposalStagePanel": {
@@ -873,12 +914,21 @@
       "missing": "{{count}} chưa tải lên",
       "complete": "Đầy đủ",
       "incomplete": "Chưa đủ",
+      "uploaded": "Đã tải lên",
       "upload": "Tải lên",
       "noUploads": "Chưa có tài liệu nào được tải lên",
       "rejectionReason": "Lý do từ chối",
-      "review": "Kiểm tra"
+      "review": "Kiểm tra",
+      "noneWithStatus": "Không có tài liệu ở trạng thái này",
+      "view": "Xem"
     },
-    "nothingToShow": "Chưa có gì để hiển thị cho giai đoạn này"
+    "nothingToShow": "Chưa có gì để hiển thị cho giai đoạn này",
+    "tab": {
+      "ALL": "Tất cả",
+      "PENDING": "Chờ duyệt",
+      "APPROVED": "Đã duyệt",
+      "REJECTED": "Bị từ chối"
+    }
   },
   "disposalDocuments": {
     "title": "Tài Liệu",
@@ -889,7 +939,22 @@
   "disposalDetail": {
     "needsRevision": "Cần sửa",
     "revisionNote": "Ghi chú sửa đổi",
-    "revisionBanner": "Giao dịch này đã được trả về để sửa. Chỉ những tài sản được đánh dấu \"Cần sửa\" mới có thể thay đổi, và không thể thêm tài sản mới cho đến khi gửi lại."
+    "revisionBanner": "Giao dịch này đã được trả về để sửa. Chỉ những tài sản được đánh dấu \"Cần sửa\" mới có thể thay đổi, và không thể thêm tài sản mới cho đến khi gửi lại.",
+    "info": {
+      "transactionType": "Loại giao dịch",
+      "date": "Ngày",
+      "disposalType": "Loại thanh lý",
+      "createdBy": "Người tạo",
+      "createdAt": "Tạo lúc",
+      "updatedAt": "Cập nhật lúc",
+      "saleValue": "Giá trị bán",
+      "incomeValue": "Số tiền thu được",
+      "invoiceNumber": "Số hóa đơn",
+      "invoiceDate": "Ngày hóa đơn",
+      "requestNumber": "Số yêu cầu",
+      "agreementNumber": "Số thỏa thuận"
+    },
+    "revisionHowTo": "Khi các tài sản được đánh dấu đã sửa xong, nhấn “{{action}}” ở cuối trang này để đánh dấu hoàn tất chỉnh sửa."
   },
   "disposalAgreement": {
     "title": "Thỏa Thuận Thanh Lý",
@@ -917,8 +982,6 @@
     "createdBy": "Người tạo",
     "createdAt": "Ngày tạo",
     "approvalProgress": "Tiến độ phê duyệt",
-    "members": "Giao dịch trong thỏa thuận này",
-    "membersHint": "Sau khi thỏa thuận được duyệt, mỗi giao dịch tiếp tục với mã giao dịch riêng",
     "approvalStatus": "Trạng Thái Phê Duyệt",
     "rejectionReason": "Lý do từ chối",
     "stage": {
@@ -946,6 +1009,139 @@
       "status": "Trạng Thái"
     },
     "emptySearch": "Không có thỏa thuận nào khớp với tìm kiếm",
-    "viewDisposal": "Chi tiết"
+    "viewDisposal": "Chi tiết",
+    "assets": "Tài sản trong thỏa thuận này",
+    "assetsHint": "Toàn bộ tài sản từ các giao dịch được gộp. Sau khi duyệt, mỗi giao dịch tiếp tục với mã giao dịch riêng.",
+    "noAssets": "Không có tài sản",
+    "totalAssets": "Tổng tài sản",
+    "assetColumn": {
+      "no": "STT",
+      "asset": "Tài Sản",
+      "category": "Danh Mục",
+      "branch": "Chi Nhánh",
+      "reason": "Lý Do Thanh Lý",
+      "saleValue": "Giá Bán",
+      "transaction": "Giao Dịch"
+    },
+    "filter": {
+      "allStages": "Tất cả giai đoạn",
+      "startDate": "Từ ngày",
+      "endDate": "Đến ngày",
+      "reset": "Đặt lại"
+    }
+  },
+  "assetCategory": {
+    "title": "Danh Mục Tài Sản",
+    "createTitle": "Thêm Danh Mục Tài Sản",
+    "updateTitle": "Sửa Danh Mục Tài Sản",
+    "create": "Thêm Danh Mục",
+    "save": "Lưu Thay Đổi",
+    "saving": "Đang lưu...",
+    "cancel": "Hủy",
+    "edit": "Sửa",
+    "delete": "Xóa",
+    "active": "Hoạt động",
+    "inactive": "Không hoạt động",
+    "searchPlaceholder": "Tìm mã hoặc tên...",
+    "empty": "Chưa có danh mục tài sản",
+    "emptySearch": "Không có danh mục nào khớp với tìm kiếm",
+    "codeHelper": "Mã ngắn, 2-50 ký tự. Lưu dưới dạng chữ in hoa.",
+    "descriptionPlaceholder": "Những tài sản nào thuộc danh mục này...",
+    "inactiveWarning": "Danh mục không hoạt động vẫn đọc được, nhưng không nên dùng cho tài sản mới.",
+    "column": {
+      "no": "STT",
+      "code": "Mã",
+      "name": "Tên Danh Mục",
+      "description": "Mô tả",
+      "status": "Trạng Thái",
+      "actions": "Thao Tác"
+    },
+    "validation": {
+      "code": "Mã danh mục tối thiểu 2 ký tự",
+      "name": "Tên danh mục tối thiểu 2 ký tự",
+      "noChanges": "Chưa có thay đổi nào"
+    },
+    "deleteModal": {
+      "title": "Xóa Danh Mục",
+      "desc": "Danh mục \"{{name}}\" ({{code}}) sẽ bị xóa. Tiếp tục?",
+      "warning": "Tài sản và thiết lập khấu hao tham chiếu danh mục này sẽ mất tham chiếu. Nếu dữ liệu cũ vẫn dùng, nên vô hiệu hóa thay vì xóa.",
+      "confirm": "Vâng, Xóa",
+      "deleting": "Đang xóa...",
+      "cancel": "Hủy"
+    },
+    "toast": {
+      "updated": "Cập nhật danh mục thành công",
+      "updateError": "Không thể cập nhật danh mục",
+      "deleted": "Xóa danh mục thành công",
+      "deleteError": "Không thể xóa danh mục"
+    }
+  },
+  "mutationList": {
+    "title": "Điều Chuyển Tài Sản",
+    "subtitle": "Đã ghi nhận {{count}} điều chuyển",
+    "create": "Tạo Điều Chuyển"
+  },
+  "disposalList": {
+    "title": "Thanh Lý Tài Sản",
+    "subtitle": "Đã ghi nhận {{count}} thanh lý",
+    "create": "Tạo Thanh Lý",
+    "tab": {
+      "all": "Tất cả",
+      "draft": "Bản nháp",
+      "approval": "Chờ Phê Duyệt",
+      "process": "Đang Xử Lý",
+      "finished": "Hoàn tất",
+      "closed": "Từ chối / Hủy",
+      "waiting": "Chờ Tôi Xử Lý"
+    },
+    "needsRevision": "Cần chỉnh sửa ({{count}})",
+    "searchPlaceholder": "Tìm số giao dịch, ghi chú hoặc tài sản..."
+  },
+  "listStats": {
+    "total": "Tổng",
+    "draft": "Bản nháp",
+    "onApproval": "Đang Phê Duyệt",
+    "finished": "Hoàn tất",
+    "ofTotal": "{{percent}}% trên tổng"
+  },
+  "table": {
+    "showData": "Hiển thị",
+    "showAll": "Tất cả"
+  },
+  "mutationDocuments": {
+    "title": "Tài liệu",
+    "subtitle": "Tài liệu kèm theo cho từng tài sản của lần điều chuyển này",
+    "empty": "Giao dịch này chưa có tài liệu",
+    "noConfig": "Chưa có cấu hình tài liệu cho điều chuyển"
+  },
+  "revisionDecision": {
+    "revise": {
+      "button": "Yêu cầu chỉnh sửa",
+      "title": "Trả lại để chỉnh sửa",
+      "info": "Giao dịch quay lại DRAFT với nội dung còn nguyên. Đánh dấu các dòng cần sửa — người gửi chỉ có thể thay đổi những dòng đó.",
+      "pickRows": "Dòng cần chỉnh sửa",
+      "noRows": "Không có dòng nào để đánh dấu",
+      "notesLabel": "Ghi chú chỉnh sửa",
+      "notesPlaceholder": "Giải thích điều cần sửa...",
+      "confirm": "Trả lại để chỉnh sửa"
+    },
+    "cancel": {
+      "button": "Hủy đề nghị",
+      "title": "Hủy đề nghị",
+      "info": "Đề nghị bị đóng vĩnh viễn. Khác với từ chối: việc hủy do chính người gửi thực hiện.",
+      "notesLabel": "Lý do",
+      "notesPlaceholder": "Giải thích lý do hủy...",
+      "confirm": "Hủy đề nghị"
+    },
+    "minChars": "Tối thiểu {{min}} ký tự ({{current}}/{{min}})",
+    "processing": "Đang xử lý...",
+    "cancelButton": "Đóng",
+    "badge": "Cần chỉnh sửa"
+  },
+  "dateRange": {
+    "label": "Ngày giao dịch",
+    "from": "Từ ngày",
+    "to": "Đến ngày",
+    "reset": "Đặt lại"
   }
 }

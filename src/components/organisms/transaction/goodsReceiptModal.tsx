@@ -5,6 +5,7 @@ import { useGoodsReceipt } from "../../../hooks/mutation/transaction/goodsReceip
 import { useGoodsReceiptStatus } from "../../../hooks/query/transaction/goodsReceipt"
 import { useQueryClient } from "@tanstack/react-query"
 import type { Item as GRItem, Asset as GRAsset } from "../../../models/transaction/grStatus"
+import { useSingleSubmit } from "../../../hooks/useSingleSubmit"
 
 type GoodsReceiptModalProps = {
     transactionNumber: string
@@ -105,6 +106,8 @@ export function GoodsReceiptModal({
             onClose()
         }
     }
+
+    const guard = useSingleSubmit(isPending)
 
     const handleSubmit = () => {
         if (mode === "single") return handleSubmitSingle()
@@ -407,7 +410,7 @@ export function GoodsReceiptModal({
                         {t("goodsReceipt.cancel")}
                     </button>
                     <button
-                        onClick={handleSubmit}
+                        onClick={guard(handleSubmit)}
                         disabled={isPending || !isValid || !!bulkProgress}
                         className="flex-1 px-4 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors disabled:opacity-50"
                     >

@@ -48,7 +48,8 @@
       "action": "Aksi",
       "approved": "Disetujui",
       "rejected": "Ditolak",
-      "pending": "Menunggu"
+      "pending": "Menunggu",
+      "stage": "Stage"
     }
   },
   "transaksiHeader": {
@@ -63,10 +64,13 @@
   "transaksiTable": {
     "tabs": {
       "all": "Semua",
-      "pending": "Menunggu",
-      "approved": "Disetujui",
-      "rejected": "Ditolak",
-      "draft": "Draf"
+      "waiting": "Menunggu Saya",
+      "draft": "Draft",
+      "verification": "Verifikasi",
+      "approval": "Persetujuan",
+      "process": "Diproses",
+      "finished": "Selesai",
+      "rejected": "Ditolak"
     },
     "searchPlaceholder": "Cari nama aset, nomor PO, atau pemohon...",
     "noData": "Tidak ada data tersedia",
@@ -84,7 +88,8 @@
       "qty": "Qty",
       "totalValue": "Total Nilai",
       "status": "Status",
-      "action": "Aksi"
+      "action": "Aksi",
+      "stage": "Stage"
     },
     "status": {
       "approved": "Disetujui",
@@ -387,7 +392,10 @@
     "toast": {
       "success": "Disposal berhasil disubmit",
       "error": "Gagal mengsubmit disposal"
-    }
+    },
+    "revisionTitle": "Kirim Ulang Perbaikan",
+    "revisionInfo": "Aset yang ditandai revisi akan diajukan ulang dan persetujuan dimulai lagi dari step pertama. Tanda revisi otomatis hilang setelah berhasil.",
+    "revisionSubmit": "Kirim Ulang"
   },
   "removeAssetModal": {
     "title": "Hapus Aset",
@@ -742,10 +750,19 @@
     "terminal": "Transaksi sudah {{stage}} — tidak ada aksi lanjutan.",
     "waitingApproval": "Approval sudah diajukan — menunggu approver ({{done}}/{{total}} step selesai).",
     "submit": {
-      "button": "Submit Transaksi"
+      "button": "Submit Transaksi",
+      "revisionButton": "Kirim Ulang Perbaikan"
     },
     "saleValues": {
-      "button": "Input Nilai Jual"
+      "button": "Input Nilai Jual",
+      "title": "Input Nilai Jual",
+      "info": "Isi nilai jual untuk setiap aset. Setelah disimpan, transaksi lanjut ke stage Approval Request.",
+      "notesLabel": "Catatan",
+      "notesPlaceholder": "Catatan purchasing (opsional)",
+      "confirm": "Simpan & Lanjut",
+      "noAssets": "Tidak ada aset aktif pada transaksi ini",
+      "invalid": "Nilai jual harus lebih dari 0",
+      "total": "Total nilai jual"
     },
     "approvalRequest": {
       "button": "Ajukan Permohonan Persetujuan",
@@ -768,14 +785,21 @@
     "finance": {
       "button": "Konfirmasi Finance",
       "title": "Konfirmasi Finance",
-      "info": "Setelah dikonfirmasi, transaksi lanjut ke stage Tax.",
-      "notesLabel": "Catatan finance"
+      "info": "Setiap aset harus sudah terisi nilai pemasukannya. Setelah dikonfirmasi, transaksi lanjut ke stage Pajak.",
+      "notesLabel": "Catatan finance",
+      "incomeInvalid": "Nilai pemasukan harus lebih dari 0",
+      "saleValueLabel": "Nilai jual disepakati",
+      "difference": "Selisih"
     },
     "tax": {
       "button": "Konfirmasi Pajak",
       "title": "Konfirmasi Pajak",
-      "info": "Setelah dikonfirmasi, transaksi lanjut ke stage Asset Deletion.",
-      "notesLabel": "Catatan pajak"
+      "info": "Setiap aset harus sudah terisi data fakturnya. Setelah dikonfirmasi, transaksi lanjut ke stage Penghapusan Aset.",
+      "notesLabel": "Catatan pajak",
+      "invoiceNumberLabel": "Nomor faktur",
+      "invoiceNumberPlaceholder": "mis. INV/2026/09/0001",
+      "invoiceDateLabel": "Tanggal faktur",
+      "invoiceHint": "Wajib diisi — setelah stage ini aset dihapus dan faktur tidak bisa dicatat lagi di sini."
     },
     "assetDeletion": {
       "button": "Konfirmasi Penghapusan Aset",
@@ -838,6 +862,23 @@
         "confirm": "Ya, Batalkan",
         "placeholder": "Kenapa dibatalkan? (min. 5 karakter)"
       }
+    },
+    "incomeValues": {
+      "button": "Isi Pemasukan",
+      "title": "Isi Pemasukan per Aset",
+      "info": "Isi nilai pemasukan untuk setiap aset. Menyimpan tidak memindahkan stage — pakai Konfirmasi Finance di bawah kalau semuanya sudah terisi.",
+      "notesLabel": "Catatan finance",
+      "confirm": "Simpan",
+      "noAssets": "Tidak ada aset aktif pada transaksi ini",
+      "total": "Total pemasukan"
+    },
+    "invoices": {
+      "button": "Isi Faktur",
+      "title": "Isi Faktur per Aset",
+      "info": "Isi nomor dan tanggal faktur untuk setiap aset. Menyimpan tidak memindahkan stage — pakai Konfirmasi Pajak di bawah kalau semuanya sudah terisi.",
+      "notesLabel": "Catatan pajak",
+      "confirm": "Simpan",
+      "noAssets": "Tidak ada aset aktif pada transaksi ini"
     }
   },
   "disposalStagePanel": {
@@ -873,12 +914,21 @@
       "missing": "{{count}} belum diupload",
       "complete": "Lengkap",
       "incomplete": "Belum lengkap",
+      "uploaded": "Sudah diunggah",
       "upload": "Upload",
       "noUploads": "Belum ada dokumen diupload",
       "rejectionReason": "Alasan ditolak",
-      "review": "Review"
+      "review": "Review",
+      "noneWithStatus": "Tidak ada dokumen dengan status ini",
+      "view": "Lihat"
     },
-    "nothingToShow": "Belum ada yang bisa ditampilkan untuk stage ini"
+    "nothingToShow": "Belum ada yang bisa ditampilkan untuk stage ini",
+    "tab": {
+      "ALL": "Semua",
+      "PENDING": "Menunggu",
+      "APPROVED": "Disetujui",
+      "REJECTED": "Ditolak"
+    }
   },
   "disposalDocuments": {
     "title": "Dokumen",
@@ -889,7 +939,22 @@
   "disposalDetail": {
     "needsRevision": "Perlu revisi",
     "revisionNote": "Catatan revisi",
-    "revisionBanner": "Transaksi ini dikembalikan untuk revisi. Hanya aset bertanda \"Perlu revisi\" yang bisa diubah, dan aset baru tidak bisa ditambahkan sampai disubmit ulang."
+    "revisionBanner": "Transaksi ini dikembalikan untuk revisi. Hanya aset bertanda \"Perlu revisi\" yang bisa diubah, dan aset baru tidak bisa ditambahkan sampai disubmit ulang.",
+    "info": {
+      "transactionType": "Tipe transaksi",
+      "date": "Tanggal",
+      "disposalType": "Tipe disposal",
+      "createdBy": "Dibuat oleh",
+      "createdAt": "Dibuat pada",
+      "updatedAt": "Diupdate pada",
+      "saleValue": "Nilai jual",
+      "incomeValue": "Nilai pemasukan",
+      "invoiceNumber": "Nomor faktur",
+      "invoiceDate": "Tanggal faktur",
+      "requestNumber": "No. Permohonan",
+      "agreementNumber": "No. Persetujuan"
+    },
+    "revisionHowTo": "Kalau aset yang ditandai sudah diperbaiki, tekan “{{action}}” di bagian bawah halaman ini untuk menandai revisinya selesai."
   },
   "disposalAgreement": {
     "title": "Kesepakatan Disposal",
@@ -917,8 +982,6 @@
     "createdBy": "Dibuat oleh",
     "createdAt": "Dibuat pada",
     "approvalProgress": "Progres approval",
-    "members": "Transaksi dalam kesepakatan ini",
-    "membersHint": "Setelah kesepakatan disetujui, tiap transaksi lanjut memakai nomor transaksinya sendiri",
     "approvalStatus": "Status Persetujuan",
     "rejectionReason": "Alasan penolakan",
     "stage": {
@@ -946,6 +1009,139 @@
       "status": "Status"
     },
     "emptySearch": "Tidak ada kesepakatan yang cocok dengan pencarian",
-    "viewDisposal": "Detail"
+    "viewDisposal": "Detail",
+    "assets": "Aset dalam kesepakatan ini",
+    "assetsHint": "Seluruh aset dari transaksi yang digabungkan. Setelah disetujui, tiap transaksi lanjut memakai nomor transaksinya sendiri.",
+    "noAssets": "Tidak ada aset",
+    "totalAssets": "Jumlah aset",
+    "assetColumn": {
+      "no": "No",
+      "asset": "Aset",
+      "category": "Kategori",
+      "branch": "Cabang",
+      "reason": "Alasan Disposal",
+      "saleValue": "Nilai Jual",
+      "transaction": "Transaksi"
+    },
+    "filter": {
+      "allStages": "Semua stage",
+      "startDate": "Dari tanggal",
+      "endDate": "Sampai tanggal",
+      "reset": "Reset"
+    }
+  },
+  "assetCategory": {
+    "title": "Kategori Aset",
+    "createTitle": "Tambah Kategori Aset",
+    "updateTitle": "Ubah Kategori Aset",
+    "create": "Tambah Kategori",
+    "save": "Simpan Perubahan",
+    "saving": "Menyimpan...",
+    "cancel": "Batal",
+    "edit": "Ubah",
+    "delete": "Hapus",
+    "active": "Aktif",
+    "inactive": "Nonaktif",
+    "searchPlaceholder": "Cari kode atau nama...",
+    "empty": "Belum ada kategori aset",
+    "emptySearch": "Tidak ada kategori yang cocok dengan pencarian",
+    "codeHelper": "Kode singkat, 2-50 karakter. Disimpan dalam huruf kapital.",
+    "descriptionPlaceholder": "Aset seperti apa yang masuk kategori ini...",
+    "inactiveWarning": "Kategori nonaktif tetap bisa dibaca, tapi sebaiknya tidak dipakai untuk aset baru.",
+    "column": {
+      "no": "No",
+      "code": "Kode",
+      "name": "Nama Kategori",
+      "description": "Deskripsi",
+      "status": "Status",
+      "actions": "Aksi"
+    },
+    "validation": {
+      "code": "Kode kategori minimal 2 karakter",
+      "name": "Nama kategori minimal 2 karakter",
+      "noChanges": "Belum ada yang diubah"
+    },
+    "deleteModal": {
+      "title": "Hapus Kategori",
+      "desc": "Kategori \"{{name}}\" ({{code}}) akan dihapus. Lanjutkan?",
+      "warning": "Aset dan pengaturan penyusutan yang menunjuk kategori ini akan kehilangan acuannya. Kalau masih dipakai data lama, lebih aman dinonaktifkan saja.",
+      "confirm": "Ya, Hapus",
+      "deleting": "Menghapus...",
+      "cancel": "Batal"
+    },
+    "toast": {
+      "updated": "Kategori berhasil diubah",
+      "updateError": "Gagal mengubah kategori",
+      "deleted": "Kategori berhasil dihapus",
+      "deleteError": "Gagal menghapus kategori"
+    }
+  },
+  "mutationList": {
+    "title": "Mutasi Aset",
+    "subtitle": "{{count}} mutasi tercatat",
+    "create": "Buat Mutasi"
+  },
+  "disposalList": {
+    "title": "Disposal Aset",
+    "subtitle": "{{count}} disposal tercatat",
+    "create": "Buat Disposal",
+    "tab": {
+      "all": "Semua",
+      "draft": "Draft",
+      "approval": "Menunggu Persetujuan",
+      "process": "Sedang Diproses",
+      "finished": "Selesai",
+      "closed": "Ditolak / Batal",
+      "waiting": "Menunggu Saya"
+    },
+    "needsRevision": "Perlu revisi ({{count}})",
+    "searchPlaceholder": "Cari no. transaksi, catatan, atau aset..."
+  },
+  "listStats": {
+    "total": "Total",
+    "draft": "Draft",
+    "onApproval": "Proses Persetujuan",
+    "finished": "Selesai",
+    "ofTotal": "{{percent}}% dari total"
+  },
+  "table": {
+    "showData": "Tampilkan",
+    "showAll": "Semua"
+  },
+  "mutationDocuments": {
+    "title": "Dokumen",
+    "subtitle": "Dokumen pendukung per aset untuk mutasi ini",
+    "empty": "Belum ada dokumen pada transaksi ini",
+    "noConfig": "Belum ada konfigurasi dokumen untuk mutasi"
+  },
+  "revisionDecision": {
+    "revise": {
+      "button": "Minta Revisi",
+      "title": "Kembalikan untuk Revisi",
+      "info": "Transaksi kembali ke DRAFT dengan isinya tetap utuh. Tandai baris yang harus diperbaiki — hanya itu yang bisa diubah pengaju.",
+      "pickRows": "Baris yang perlu diperbaiki",
+      "noRows": "Tidak ada baris yang bisa ditandai",
+      "notesLabel": "Catatan revisi",
+      "notesPlaceholder": "Jelaskan apa yang harus diperbaiki...",
+      "confirm": "Kembalikan untuk Revisi"
+    },
+    "cancel": {
+      "button": "Batalkan Ajuan",
+      "title": "Batalkan Ajuan",
+      "info": "Pengajuan ditutup permanen. Beda dengan penolakan: pembatalan dilakukan pengaju atas pengajuannya sendiri.",
+      "notesLabel": "Alasan",
+      "notesPlaceholder": "Jelaskan alasan pembatalan...",
+      "confirm": "Batalkan Ajuan"
+    },
+    "minChars": "Minimal {{min}} karakter ({{current}}/{{min}})",
+    "processing": "Memproses...",
+    "cancelButton": "Tutup",
+    "badge": "Perlu revisi"
+  },
+  "dateRange": {
+    "label": "Tanggal transaksi",
+    "from": "Tanggal dari",
+    "to": "Tanggal sampai",
+    "reset": "Reset"
   }
 }

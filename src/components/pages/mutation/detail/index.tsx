@@ -9,6 +9,14 @@ import { MutationApprovalStatus } from "../../../organisms/mutation/approvalStat
 import { ApproveModal } from "../../../organisms/mutation/approveModal"
 import { ConfirmReceivingModal } from "../../../organisms/mutation/confirmReceiveModal"
 import { ExecuteMutationModal } from "../../../organisms/mutation/executeMutationModal"
+import { MutationAttachmentPanel } from "../../../organisms/mutation/attachmentPanel"
+import AddMutationAttachmentModal from "../../../organisms/mutation/addAttachmentModal"
+import { RevisionDecisionModal } from "../../../organisms/common/revisionDecisionModal"
+import { useMyProfile } from "../../../../hooks/query/auth/myProfile"
+import {
+  useCancelMutation,
+  useReturnMutationForRevision,
+} from "../../../../hooks/mutation/mutation/revision"
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString("id-ID", {
@@ -62,6 +70,9 @@ export default function MutationDetailPage() {
   const [showApprove, setShowApprove]               = useState(false)
   const [showConfirmReceiving, setShowConfirmReceiving] = useState(false)
   const [showExecute, setShowExecute]               = useState(false)
+  // aset yang sedang diunggahkan dokumennya
+  const [attachTarget, setAttachTarget] = useState<{ id: number; assetNumber: string } | null>(null)
+  const [revisionMode, setRevisionMode] = useState<"revise" | "cancel" | null>(null)
 
   if (isLoading) {
     return (
@@ -75,8 +86,69 @@ export default function MutationDetailPage() {
 
   const { transaction, assets, stages } = data.data
 
+  // Bolanya ada di user ini? Dihitung backend dari hak akses role terhadap
+  // route stage berjalan; khusus penerimaan, yang dicocokkan cabang TUJUAN.
+  const waitingForMe = data.data.waiting_for_me ?? false
+  const stage = transaction.current_stage?.toUpperCase()
+
+  // Sebelumnya ketiga tombol di bawah dirender tanpa syarat apa pun, sehingga
+  // mutasi yang masih DRAFT pun menampilkan tombol Setujui, Konfirmasi
+  // Penerimaan, dan Eksekusi sekaligus.
+  const canApprove = waitingForMe && stage === "APPROVAL"
+  const canConfirmReceiving = waitingForMe && stage === "MUTATION_RECEIVING"
+  const canExecute = waitingForMe && stage === "EXECUTE_MUTATION"
+
+  // Revisi diminta approver step berjalan; pembatalan hanya oleh pengaju.
+  const { data: profile } = useMyProfile()
+  const isCreator =
+    !!profile?.data?.id && profile.data.id === transaction.created_by
+  const canCancel = isCreator && ["DRAFT", "APPROVAL"].includes(stage)
+
+  const closeRevision = () => setRevisionMode(null)
+  const revisionKeys = ["mutation-detail", "mutation-list"]
+
+  const returnForRevision = useReturnMutationForRevision({
+    transactionNumber: id || "",
+    invalidateKeys: revisionKeys,
+    onSuccess: closeRevision,
+  })
+  const cancelMutation = useCancelMutation({
+    transactionNumber: id || "",
+    invalidateKeys: revisionKeys,
+    onSuccess: closeRevision,
+  })
+
   return (
     <section className="space-y-4 mt-4">
+      {revisionMode && (
+        <RevisionDecisionModal
+          mode={revisionMode}
+          transactionNumber={transaction.transaction_number}
+          rows={assets
+            .filter((asset) => asset.status === "PENDING")
+            .map((asset) => ({
+              id: asset.id,
+              label: asset.asset_name ?? asset.asset_number,
+              sublabel: `${asset.asset_number} · ${asset.from_branch_code} → ${asset.to_branch_code}`,
+            }))}
+          isPending={returnForRevision.isPending || cancelMutation.isPending}
+          onConfirm={({ notes, rowIds }) =>
+            revisionMode === "revise"
+              ? returnForRevision.mutate({ revision_notes: notes, row_ids: rowIds })
+              : cancelMutation.mutate({ reason: notes })
+          }
+          onClose={closeRevision}
+        />
+      )}
+      {attachTarget && (
+        <AddMutationAttachmentModal
+          transactionNumber={id || ""}
+          transactionMutationAssetId={String(attachTarget.id)}
+          assetNumber={attachTarget.assetNumber}
+          onConfirm={() => setAttachTarget(null)}
+          onCancel={() => setAttachTarget(null)}
+        />
+      )}
       {showAddAsset && (
         <AddAssetModal
           transactionNumber={id || ""}
@@ -299,11 +371,24 @@ export default function MutationDetailPage() {
         </div>
       </div>
 
+      {/* Dokumen per aset */}
+      {assets.length > 0 && (
+        <MutationAttachmentPanel
+          transactionNumber={id ?? ""}
+          canReview={waitingForMe}
+          canUpload={waitingForMe}
+          onUploadForAsset={(assetNumber) => {
+            const target = assets.find((a) => a.asset_number === assetNumber)
+            if (target) setAttachTarget({ id: target.id, assetNumber })
+          }}
+        />
+      )}
+
       {/* Approval Status */}
       <MutationApprovalStatus transactionNumber={id ?? ""} />
 
       {/* Actions */}
-      {transaction.status === "DRAFT" && (
+      {waitingForMe && stage === "DRAFT" && (
         <div className="flex justify-end">
           <button
             onClick={() => setShowSubmit(true)}
@@ -317,6 +402,29 @@ export default function MutationDetailPage() {
         </div>
       )}
 
+      {/* Aksi approver step berjalan & pembatalan oleh pengaju */}
+      {(canApprove || canCancel) && (
+        <div className="flex justify-end gap-2">
+          {canApprove && (
+            <button
+              onClick={() => setRevisionMode("revise")}
+              className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium border border-amber-300 dark:border-amber-700 text-amber-700 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/30 rounded-xl transition-colors"
+            >
+              {t("revisionDecision.revise.button")}
+            </button>
+          )}
+          {canCancel && (
+            <button
+              onClick={() => setRevisionMode("cancel")}
+              className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium border border-red-300 dark:border-red-700 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-xl transition-colors"
+            >
+              {t("revisionDecision.cancel.button")}
+            </button>
+          )}
+        </div>
+      )}
+
+      {canApprove && (
       <div className="flex justify-end">
         <button
           onClick={() => setShowApprove(true)}
@@ -328,7 +436,9 @@ export default function MutationDetailPage() {
           {t("mutationDetail.approve")}
         </button>
       </div>
+      )}
 
+      {canConfirmReceiving && (
       <div className="flex justify-end">
         <button
           onClick={() => setShowConfirmReceiving(true)}
@@ -340,7 +450,9 @@ export default function MutationDetailPage() {
           {t("mutationDetail.confirmReceiving")}
         </button>
       </div>
+      )}
 
+      {canExecute && (
       <div className="flex justify-end">
         <button
           onClick={() => setShowExecute(true)}
@@ -352,6 +464,7 @@ export default function MutationDetailPage() {
           {t("mutationDetail.executeTransaction")}
         </button>
       </div>
+      )}
     </section>
   )
 }

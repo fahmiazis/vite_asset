@@ -10,9 +10,11 @@ export function useUpdateAttachmentSetting(id: number) {
       updateAttachmentSetting(id, payload),
 
     onSuccess: () => {
-      queryClient.resetQueries({ queryKey: ["attachment-setting-list"] })
-      queryClient.resetQueries({ queryKey: ["attachment-setting-list", ""] })
-      queryClient.resetQueries({ queryKey: ["attachment-setting-detail", id] })
+      queryClient.invalidateQueries({ queryKey: ["attachment-setting-list"] })
+      // FIX: query detail memakai key 'attach-setting-detail'
+      // (hooks/query/attachmentSetting/detail.ts), bukan 'attachment-setting-detail',
+      // jadi reset yang lama tidak pernah mengenai cache mana pun
+      queryClient.invalidateQueries({ queryKey: ["attach-setting-detail", id] })
     },
   })
 }

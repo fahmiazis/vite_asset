@@ -6,12 +6,12 @@ import {
   type SortingState,
 } from "@tanstack/react-table"
 import { useState } from "react"
+import { useTranslation } from "react-i18next"
+import { DateRangeFilter } from "../common/dateRangeFilter"
 import { disposalColumns } from "./column"
 import type { disposalListState } from "../../../models/disposal/list"
 import {
   DISPOSAL_TYPE,
-  disposalStageLabel,
-  stagesForDisposalType,
 } from "../../../utils/disposalStage"
 
 export interface DisposalFilters {
@@ -20,6 +20,8 @@ export interface DisposalFilters {
   current_stage: string
   start_date: string
   end_date: string
+  /** dicari server-side: nomor transaksi, catatan, nomor/nama aset */
+  search: string
 }
 
 interface DisposalTableProps {
@@ -34,16 +36,7 @@ interface DisposalTableProps {
   onResetFilters: () => void
 }
 
-// Union stage DISPOSE + SELL, tanpa duplikat — dipakai untuk opsi filter
-const ALL_STAGES = Array.from(
-  new Set([
-    ...stagesForDisposalType(DISPOSAL_TYPE.SELL),
-    ...stagesForDisposalType(DISPOSAL_TYPE.DISPOSE),
-    "REJECTED",
-  ])
-)
 
-const STATUS_OPTIONS = ["DRAFT", "PENDING", "PROCESSING", "COMPLETED", "REJECTED"]
 
 export function DisposalTable({
   data,
@@ -56,6 +49,7 @@ export function DisposalTable({
   onFiltersChange,
   onResetFilters,
 }: DisposalTableProps) {
+  const { t } = useTranslation()
   const [sorting, setSorting] = useState<SortingState>([])
 
   const setFilter = (key: keyof DisposalFilters, value: string) =>
@@ -97,6 +91,17 @@ export function DisposalTable({
 
       {/* Filter */}
       <section className="flex flex-wrap items-center gap-2">
+        {/* Pencarian dilakukan server-side, bukan pada baris yang sedang
+            tampil — daftarnya paginasi, jadi mencari di client hanya akan
+            menemukan yang kebetulan ada di halaman ini. */}
+        <input
+          type="search"
+          value={filters.search}
+          onChange={(e) => setFilter("search", e.target.value)}
+          placeholder={t("disposalList.searchPlaceholder")}
+          className={`${selectClass} min-w-[220px]`}
+        />
+
         <select
           value={filters.disposal_type}
           onChange={(e) => setFilter("disposal_type", e.target.value)}
@@ -107,45 +112,10 @@ export function DisposalTable({
           <option value={DISPOSAL_TYPE.SELL}>Sell</option>
         </select>
 
-        <select
-          value={filters.status}
-          onChange={(e) => setFilter("status", e.target.value)}
-          className={selectClass}
-        >
-          <option value="">Semua status</option>
-          {STATUS_OPTIONS.map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
-
-        <select
-          value={filters.current_stage}
-          onChange={(e) => setFilter("current_stage", e.target.value)}
-          className={selectClass}
-        >
-          <option value="">Semua stage</option>
-          {ALL_STAGES.map((stage) => (
-            <option key={stage} value={stage}>
-              {disposalStageLabel(stage)}
-            </option>
-          ))}
-        </select>
-
-        <input
-          type="date"
-          value={filters.start_date}
-          onChange={(e) => setFilter("start_date", e.target.value)}
-          className={selectClass}
-          title="Tanggal transaksi dari"
-        />
-        <input
-          type="date"
-          value={filters.end_date}
-          onChange={(e) => setFilter("end_date", e.target.value)}
-          className={selectClass}
-          title="Tanggal transaksi sampai"
+        <DateRangeFilter
+          start_date={filters.start_date}
+          end_date={filters.end_date}
+          onChange={(range) => onFiltersChange({ ...filters, ...range })}
         />
 
         {hasActiveFilter && (

@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next"
 import { useQueryClient } from "@tanstack/react-query"
 
 import { useExecuteAsset } from "../../../hooks/mutation/transaction/executeAsset"
+import { useSingleSubmit } from "../../../hooks/useSingleSubmit"
 
 type ExecuteAssetModalProps = {
     transactionNumber: string
@@ -24,6 +25,8 @@ export function ExecuteAssetModal({
 
     const { mutate: executeAsset, isPending } =
         useExecuteAsset(transactionNumber)
+
+    const guard = useSingleSubmit(isPending)
 
     const handleSubmit = () => {
         executeAsset(
@@ -141,7 +144,7 @@ export function ExecuteAssetModal({
                     </button>
 
                     <button
-                        onClick={handleSubmit}
+                        onClick={guard(handleSubmit)}
                         disabled={isPending}
                         className="
                             flex-1

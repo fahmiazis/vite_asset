@@ -8,40 +8,57 @@ import {
   type SortingState,
   type ColumnFiltersState,
 } from "@tanstack/react-table"
-import { useMemo, useState } from "react"
+import { useState } from "react"
 import { transaksiColumns } from "./column"
 import { SearchingIcon } from "hugeicons-react"
 import type { transactionListState } from "../../../models/transaction/list"
+import {
+  DateRangeFilter,
+  type DateRangeValue,
+} from "../common/dateRangeFilter"
 import { useTranslation } from "react-i18next"
+
+export interface TransaksiTab {
+  label: string
+  value: string
+  count: number
+}
 
 interface TransaksiTableProps {
   data: transactionListState[]
   isLoading?: boolean
+  /**
+   * Tab dikendalikan halaman, bukan tabel, karena penyaringannya dilakukan
+   * server — termasuk tab "Menunggu Saya" yang tidak bisa dihitung dari data
+   * satu halaman saja.
+   */
+  tabs: TransaksiTab[]
+  activeTab: string
+  onTabChange: (value: string) => void
+  /** filter tanggal transaksi — ikut baris filter, sama dengan /disposal */
+  dateRange: DateRangeValue
+  onDateRangeChange: (range: DateRangeValue) => void
+  onResetFilters: () => void
 }
 
-export function TransaksiTable({ data, isLoading }: TransaksiTableProps) {
+export function TransaksiTable({
+  data,
+  isLoading,
+  tabs,
+  activeTab,
+  onTabChange,
+  dateRange,
+  onDateRangeChange,
+  onResetFilters,
+}: TransaksiTableProps) {
   const { t } = useTranslation()
 
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState("")
-  const [activeTab, setActiveTab] = useState("all")
-
-  const STATUS_TABS = [
-    { label: t("transaksiTable.tabs.all"),      value: "all",      count: data.length },
-    { label: t("transaksiTable.tabs.pending"),  value: "PENDING",  count: data.filter(d => d.transaction.status === "PENDING").length },
-    { label: t("transaksiTable.tabs.approved"), value: "APPROVED", count: data.filter(d => d.transaction.status === "APPROVED").length },
-    { label: t("transaksiTable.tabs.rejected"), value: "REJECTED", count: data.filter(d => d.transaction.status === "REJECTED").length },
-    { label: t("transaksiTable.tabs.draft"),    value: "DRAFT",    count: data.filter(d => d.transaction.status === "DRAFT").length },
-  ]
-
-  const filteredData = useMemo(
-    () => activeTab === "all" ? data : data.filter((d) => d.transaction.status === activeTab),
-    [data, activeTab]
-  )
 
   const table = useReactTable({
-    data: filteredData,
+    data,
     columns: transaksiColumns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -71,10 +88,10 @@ export function TransaksiTable({ data, isLoading }: TransaksiTableProps) {
       {/* Tab Status */}
       <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 pb-0">
         <div className="flex items-center gap-1">
-          {STATUS_TABS.map((tab) => (
+          {tabs.map((tab) => (
             <button
               key={tab.value}
-              onClick={() => setActiveTab(tab.value)}
+              onClick={() => onTabChange(tab.value)}
               className={`flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium transition-colors rounded-t-md ${activeTab === tab.value
                 ? "bg-gray-900 dark:bg-white text-white dark:text-gray-900"
                 : "text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
@@ -92,9 +109,9 @@ export function TransaksiTable({ data, isLoading }: TransaksiTableProps) {
         </div>
       </div>
 
-      {/* Search Row */}
-      <div className="flex items-center gap-3 py-3">
-        <div className="relative flex-1 max-w-md">
+      {/* Search + filter — satu baris, sama dengan /disposal */}
+      <div className="flex flex-wrap items-center gap-2 py-3">
+        <div className="relative max-w-md flex-1 min-w-[220px]">
           <SearchingIcon size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
           <input
             type="text"
@@ -104,6 +121,15 @@ export function TransaksiTable({ data, isLoading }: TransaksiTableProps) {
             className="w-full pl-9 pr-4 py-2 text-sm border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 placeholder:text-gray-400 dark:placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
           />
         </div>
+
+        <DateRangeFilter {...dateRange} onChange={onDateRangeChange} />
+
+        <button
+          onClick={onResetFilters}
+          className="px-3 py-2 text-sm text-gray-500 hover:text-gray-800 dark:hover:text-gray-200 underline underline-offset-2"
+        >
+          {t("dateRange.reset")}
+        </button>
       </div>
 
       {/* Table */}

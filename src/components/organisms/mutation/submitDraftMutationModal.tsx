@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next"
 import { useQueryClient } from "@tanstack/react-query"
 import { useSubmitDraftMutation } from "../../../hooks/mutation/mutation/submitDraftMutation"
 import { useInitiateApprovalMutation } from "../../../hooks/mutation/mutation/initiateApprovalMutation"
+import { useSingleSubmit } from "../../../hooks/useSingleSubmit"
 
 type SubmitMutationModalProps = {
   transactionNumber: string
@@ -24,6 +25,8 @@ export function SubmitMutationModal({
   const { mutate: initiateApproval, isPending: isInitiating } = useInitiateApprovalMutation(transactionNumber)
 
   const isPending = isSubmitting || isInitiating
+
+  const guard = useSingleSubmit(isPending)
 
   const handleSubmit = () => {
     submitMutation(
@@ -127,7 +130,7 @@ export function SubmitMutationModal({
           </button>
 
           <button
-            onClick={handleSubmit}
+            onClick={guard(handleSubmit)}
             disabled={isPending}
             className="flex-1 px-4 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >

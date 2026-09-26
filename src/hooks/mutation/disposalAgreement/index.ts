@@ -23,7 +23,7 @@ export function useCreateDisposalAgreement() {
       queryClient.invalidateQueries({ queryKey: ["disposal-agreement-list"] })
       queryClient.invalidateQueries({ queryKey: ["disposal-agreement-eligible"] })
       toast.success(data?.message || t("disposalAgreement.toast.created"))
-      navigate("/dashboard/disposal/agreement")
+      navigate("/dashboard/disposal-agreement")
     },
 
     onError: (error: any) => {

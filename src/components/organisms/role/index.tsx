@@ -12,6 +12,7 @@ import { useState } from 'react'
 import type { roleListState } from '../../../models/roles/list'
 import { roleColumns } from './columns'
 import { useNavigate } from 'react-router-dom'
+import { PageSizeSelect, usePageSize } from '../../molecules/table/pageSize'
 
 interface RoleTableProps {
   data: roleListState[]
@@ -46,6 +47,8 @@ const navigate = useNavigate()
       },
     },
   })
+
+  const { mode: pageSizeMode, setMode: setPageSizeMode } = usePageSize(table)
 
   if (isLoading) {
     return (
@@ -133,8 +136,10 @@ const navigate = useNavigate()
       </div>
 
       {/* Pagination */}
-      <div className="flex items-center justify-between">
-        <div className="text-xs">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center gap-4">
+          <PageSizeSelect value={pageSizeMode} onChange={setPageSizeMode} />
+          <div className="text-xs">
           Show{' '}
           <span className="font-medium">
             {table.getState().pagination.pageIndex *
@@ -154,6 +159,7 @@ const navigate = useNavigate()
             {table.getFilteredRowModel().rows.length}
           </span>{' '}
           data
+          </div>
         </div>
 
         <div className="flex items-center gap-2">

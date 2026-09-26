@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useTranslation } from "react-i18next"
 import { StageActionModal } from "./stageActionModal"
 import { useSetDisposalSaleValues } from "../../../hooks/mutation/disposal/stageActions"
 import { formatRupiah } from "../../../utils/disposalStage"
@@ -19,6 +20,7 @@ export function SetSaleValuesModal({
   assets,
   onClose,
 }: SetSaleValuesModalProps) {
+  const { t } = useTranslation()
   const pendingAssets = assets.filter((a) => a.status === "PENDING")
 
   const [values, setValues] = useState<Record<number, string>>(() =>
@@ -55,12 +57,12 @@ export function SetSaleValuesModal({
 
   return (
     <StageActionModal
-      title="Input Nilai Jual"
+      title={t("disposalAction.saleValues.title")}
       transactionNumber={transactionNumber}
-      infoMessage="Isi nilai jual untuk setiap aset. Setelah disimpan, transaksi lanjut ke stage Approval Request."
-      notesLabel="Catatan"
-      notesPlaceholder="Catatan purchasing (opsional)"
-      confirmLabel="Simpan & Lanjut"
+      infoMessage={t("disposalAction.saleValues.info")}
+      notesLabel={t("disposalAction.saleValues.notesLabel")}
+      notesPlaceholder={t("disposalAction.saleValues.notesPlaceholder")}
+      confirmLabel={t("disposalAction.saleValues.confirm")}
       isPending={isPending}
       confirmDisabled={hasInvalid || pendingAssets.length === 0}
       onConfirm={handleConfirm}
@@ -69,7 +71,7 @@ export function SetSaleValuesModal({
       <div className="space-y-3">
         {pendingAssets.length === 0 ? (
           <p className="text-sm text-gray-400 text-center py-4">
-            Tidak ada aset aktif pada transaksi ini
+            {t("disposalAction.saleValues.noAssets")}
           </p>
         ) : (
           pendingAssets.map((asset) => {
@@ -107,7 +109,9 @@ export function SetSaleValuesModal({
                   />
                 </div>
                 {invalid && (
-                  <p className="text-xs text-red-500 mt-1">Nilai jual harus lebih dari 0</p>
+                  <p className="text-xs text-red-500 mt-1">
+                    {t("disposalAction.saleValues.invalid")}
+                  </p>
                 )}
               </div>
             )
@@ -116,7 +120,9 @@ export function SetSaleValuesModal({
 
         {pendingAssets.length > 0 && (
           <div className="flex items-center justify-between px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-800">
-            <span className="text-xs text-gray-500 dark:text-gray-400">Total nilai jual</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">
+              {t("disposalAction.saleValues.total")}
+            </span>
             <span className="text-sm font-semibold text-gray-800 dark:text-gray-200">
               {formatRupiah(total)}
             </span>

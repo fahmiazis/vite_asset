@@ -30,6 +30,7 @@ import DisposalAgreementDetailPage from '../components/pages/disposalAgreement/d
 import UpdateMenuPage from '../components/pages/menu/update'
 import AssetsCategoryPage from '../components/pages/assetsCategory'
 import CreateAssetsCategory from '../components/pages/assetsCategory/create'
+import UpdateAssetsCategory from '../components/pages/assetsCategory/update'
 
 // guard route
 import ProtectedRoute from '../components/organisms/guard/protectedRoute'
@@ -129,19 +130,21 @@ export const router = createBrowserRouter([
             path: 'disposal/create',
             element: <DisposalFormPage />,
           },
-          // Kesepakatan disposal (agreement) — halaman terpisah dari disposal.
-          // React Router memilih rute berdasarkan kekhususan, bukan urutan,
-          // jadi 'disposal/agreement' tetap menang atas splat 'disposal/*'.
+          // Kesepakatan disposal — sengaja SEJAJAR dengan disposal, bukan
+          // di bawahnya ('disposal-agreement', bukan 'disposal/agreement').
+          // Sidebar menandai menu aktif dengan pencocokan awalan
+          // (`pathname.startsWith(path + "/")`), jadi path bersarang membuat
+          // menu Disposal ikut tersorot saat halaman agreement dibuka.
           {
-            path: 'disposal/agreement',
+            path: 'disposal-agreement',
             element: <DisposalAgreementPage />,
           },
           {
-            path: 'disposal/agreement/create',
+            path: 'disposal-agreement/create',
             element: <CreateDisposalAgreementPage />,
           },
           {
-            path: 'disposal/agreement/*',
+            path: 'disposal-agreement/*',
             element: <DisposalAgreementDetailPage />,
           },
           {
@@ -161,19 +164,19 @@ export const router = createBrowserRouter([
             element: <DetailAttachmentSettingPage />,
           },
           {
-            path: 'transaction',
+            path: 'procurement',
             element: <TransactionPage />,
           },
           {
-            path: 'transaction/*',
+            path: 'procurement/*',
             element: <DetailTransaction />,
           },
           {
-            path: 'transaction/update/*',
+            path: 'procurement/update/*',
             element: <EditTransactionPage />,
           },
           {
-            path: 'transaction/create',
+            path: 'procurement/create',
             element: <CreateTransactionPage />,
           },
           {
@@ -199,6 +202,10 @@ export const router = createBrowserRouter([
           {
             path: 'asset-category/create',
             element: <CreateAssetsCategory />,
+          },
+          {
+            path: 'asset-category/:id/update',
+            element: <UpdateAssetsCategory />,
           },
           {
             path: 'branch',

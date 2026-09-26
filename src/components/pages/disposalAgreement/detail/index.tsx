@@ -13,7 +13,8 @@ import {
 import { useMyProfile } from "../../../../hooks/query/auth/myProfile"
 import { AgreementStageBadge } from "../../../organisms/disposalAgreement/stageBadge"
 import { StepDecisionModal } from "../../../organisms/disposal/stepDecisionModal"
-import { disposalTypeLabel, formatRupiah } from "../../../../utils/disposalStage"
+import { formatRupiah } from "../../../../utils/disposalStage"
+import { approvalRoleWithActor } from "../../../../utils/approval"
 
 function formatDateTime(value: string) {
   return new Date(value).toLocaleString("id-ID", {
@@ -113,6 +114,10 @@ export default function DisposalAgreementDetailPage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {[
             {
+              label: t("disposalAgreement.totalAssets"),
+              value: `${agreement.total_assets ?? 0}`,
+            },
+            {
               label: t("disposalAgreement.totalTransactions"),
               value: `${agreement.total_items}`,
             },
@@ -159,56 +164,95 @@ export default function DisposalAgreementDetailPage() {
         )}
       </div>
 
-      {/* Transaksi anggota */}
+      {/* Daftar aset — yang ditimbang saat menyetujui kesepakatan adalah
+          asetnya, bukan nomor transaksinya. Nomor transaksi tetap dibawa per
+          baris supaya tetap bisa ditelusuri. */}
       <div className="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-xl p-5">
         <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">
-          {t("disposalAgreement.members")}
+          {t("disposalAgreement.assets")}
         </h3>
-        <p className="text-xs text-gray-400 mb-4">{t("disposalAgreement.membersHint")}</p>
+        <p className="text-xs text-gray-400 mb-4">{t("disposalAgreement.assetsHint")}</p>
 
-        <div className="space-y-2">
-          {(agreement.items ?? []).map((item) => (
-            <div
-              key={item.transaction_number}
-              className="flex items-start justify-between gap-3 px-3 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-indigo-300 dark:hover:border-indigo-700 transition-colors"
-            >
-              <div className="min-w-0">
-                <p className="text-xs font-mono font-medium text-gray-800 dark:text-gray-200 truncate">
-                  {item.transaction_number}
-                </p>
-                <p className="text-xs text-gray-400 mt-0.5">
-                  {disposalTypeLabel(item.disposal_type)}
-                  {" · "}
-                  {item.branch_code}
-                  {" · "}
-                  {t("disposalAgreement.assetCount", { count: item.total_assets })}
-                </p>
-              </div>
+        <div className="rounded-md border border-gray-200 dark:border-gray-700 overflow-x-auto">
+          <table className="w-full">
+            <thead className="bg-gray-50 dark:bg-gray-900">
+              <tr>
+                {[
+                  { key: "no", label: t("disposalAgreement.assetColumn.no"), className: "w-16 text-center" },
+                  { key: "asset", label: t("disposalAgreement.assetColumn.asset") },
+                  { key: "category", label: t("disposalAgreement.assetColumn.category") },
+                  { key: "branch", label: t("disposalAgreement.assetColumn.branch") },
+                  { key: "reason", label: t("disposalAgreement.assetColumn.reason") },
+                  { key: "value", label: t("disposalAgreement.assetColumn.saleValue"), className: "text-right" },
+                  { key: "transaction", label: t("disposalAgreement.assetColumn.transaction") },
+                ].map((column) => (
+                  <th
+                    key={column.key}
+                    className={`px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-600 dark:text-gray-300 whitespace-nowrap ${
+                      column.className ?? ""
+                    }`}
+                  >
+                    {column.label}
+                  </th>
+                ))}
+              </tr>
+            </thead>
 
-              <div className="flex items-center gap-3 flex-shrink-0">
-                {item.total_sale_value != null && (
-                  <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
-                    {formatRupiah(item.total_sale_value)}
-                  </span>
-                )}
-
-                {/* Dibuka di tab baru: approver biasanya memeriksa beberapa
-                    transaksi sekaligus, jadi halaman agreement tidak ikut
-                    hilang saat crosscheck. */}
-                <a
-                  href={`/dashboard/disposal/${item.transaction_number}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-indigo-600 hover:text-indigo-700 bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-900/30 dark:hover:bg-indigo-900/50 rounded-lg transition-colors whitespace-nowrap"
-                >
-                  {t("disposalAgreement.viewDisposal")}
-                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                  </svg>
-                </a>
-              </div>
-            </div>
-          ))}
+            <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800">
+              {(agreement.assets ?? []).length === 0 ? (
+                <tr>
+                  <td colSpan={7} className="px-4 py-10 text-center text-sm text-gray-400">
+                    {t("disposalAgreement.noAssets")}
+                  </td>
+                </tr>
+              ) : (
+                (agreement.assets ?? []).map((asset, index) => (
+                  <tr
+                    key={asset.disposal_asset_id}
+                    className="transition-colors hover:bg-gray-50 dark:hover:bg-gray-800"
+                  >
+                    <td className="px-4 py-3 text-center text-sm text-gray-500 dark:text-gray-400">
+                      {index + 1}
+                    </td>
+                    <td className="px-4 py-3">
+                      <p className="text-sm font-medium text-gray-800 dark:text-gray-200">
+                        {asset.asset_name ?? "-"}
+                      </p>
+                      <p className="text-xs font-mono text-gray-400 mt-0.5">
+                        {asset.asset_number}
+                      </p>
+                    </td>
+                    <td className="px-4 py-3 text-sm text-gray-600 dark:text-gray-300 whitespace-nowrap">
+                      {asset.category_name ?? "-"}
+                    </td>
+                    <td className="px-4 py-3 text-sm text-gray-600 dark:text-gray-300 whitespace-nowrap">
+                      {asset.branch_code ?? "-"}
+                    </td>
+                    <td className="px-4 py-3 text-xs text-gray-500 dark:text-gray-400 max-w-xs">
+                      {asset.disposal_reason || "-"}
+                    </td>
+                    <td className="px-4 py-3 text-sm text-right text-gray-700 dark:text-gray-300 whitespace-nowrap">
+                      {asset.sale_value != null ? formatRupiah(asset.sale_value) : "-"}
+                    </td>
+                    <td className="px-4 py-3 whitespace-nowrap">
+                      <a
+                        href={`/dashboard/disposal/${asset.transaction_number}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-xs font-mono text-indigo-600 hover:text-indigo-700 hover:underline"
+                        title={t("disposalAgreement.viewDisposal")}
+                      >
+                        {asset.transaction_number}
+                        <svg className="w-3 h-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                      </a>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
 
@@ -249,7 +293,7 @@ export default function DisposalAgreementDetailPage() {
                     {approval.flow_step?.step_name ?? approval.approver_role_name}
                   </p>
                   <p className="text-xs text-gray-400 mt-0.5">
-                    {approval.approver_role_name}
+                    {approvalRoleWithActor(approval.approver_role_name, approval)}
                   </p>
                   {approval.notes && (
                     <p className="text-xs text-gray-500 dark:text-gray-400 italic mt-1">

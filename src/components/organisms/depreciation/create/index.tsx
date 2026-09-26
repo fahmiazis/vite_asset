@@ -5,12 +5,15 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { Selects } from "../../../molecules/input/selects"
 import { useCreateDepreciation } from "../../../../hooks/mutation/depreciation/create"
+import { useAssetsCategoryList } from "../../../../hooks/query/assetsCategory/list"
+import { AssetPicker } from "../../../molecules/input/assetPicker"
 
 // ─── Schema ───────────────────────────────────────────────────────────────────
 
 const createDepreciationSchema = z.object({
     setting_type: z.string().min(1, "Setting type is required"),
-    reference_id: z.number().min(1, "Reference ID is required"),
+    // id kategori aset (setting_type CATEGORY) atau id aset (ASSET)
+    reference_id: z.number({ error: "Reference is required" }).min(1, "Reference is required"),
     calculation_method: z.string().min(1, "Calculation method is required"),
     depreciation_period: z.string().min(1, "Depreciation period is required"),
     useful_life_months: z.number().min(1, "Minimum 1 month"),
@@ -71,7 +74,7 @@ function TextInput({
 
 export default function CreateDepreciationPage() {
     const {
-        register, control, handleSubmit, watch,
+        register, control, handleSubmit, watch, setValue,
         formState: { errors, isSubmitting },
     } = useForm<CreateDepreciationFormValues>({
         resolver: zodResolver(createDepreciationSchema),
@@ -89,6 +92,22 @@ export default function CreateDepreciationPage() {
     })
 
     const calculationMethod = watch("calculation_method")
+    const settingType = watch("setting_type")
+
+    // reference_id menunjuk ke kategori aset saat setting_type = CATEGORY,
+    // dan ke aset saat ASSET (lihat dto.CreateDepreciationSettingRequest).
+    // Untuk kategori, id-nya dipilih dari master kategori supaya tidak perlu
+    // hafal angka — backend mengisi reference_value-nya sendiri dari
+    // category_code.
+    const { data: categoryData, isLoading: isLoadingCategories } = useAssetsCategoryList()
+
+    const categoryOptions = (categoryData?.data ?? [])
+        .filter((category) => category.is_active)
+        .map((category) => ({
+            id: category.id,
+            value: String(category.id),
+            label: `${category.category_code} — ${category.category_name}`,
+        }))
 
     const { mutate } = useCreateDepreciation({
         redirectOnSuccess: true,
@@ -117,8 +136,12 @@ export default function CreateDepreciationPage() {
                             <Selects
                                 label="Setting Type"
                                 value={field.value ?? ""}
-                                onChange={field.onChange}
                                 options={SETTING_TYPE_OPTIONS}
+                                onChange={(value) => {
+                                    field.onChange(value)
+                                    // id kategori tidak berlaku sebagai id aset
+                                    setValue("reference_id", undefined as unknown as number)
+                                }}
                                 placeholder="Select setting type"
                                 error={fieldState.error?.message}
                                 labelClassName="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
@@ -128,14 +151,49 @@ export default function CreateDepreciationPage() {
                         )}
                     />
 
-                    <TextInput
-                        label="Reference ID"
-                        type="number"
-                        required
-                        placeholder="1"
-                        error={errors.reference_id?.message}
-                        {...register("reference_id", { valueAsNumber: true })}
-                    />
+                    {settingType === "ASSET" ? (
+                        <Controller
+                            control={control}
+                            name="reference_id"
+                            render={({ field, fieldState }) => (
+                                <AssetPicker
+                                    label="Asset"
+                                    value={field.value}
+                                    onChange={field.onChange}
+                                    error={fieldState.error?.message}
+                                    helperText="Pengaturan penyusutan berlaku khusus untuk aset ini."
+                                    labelClassName="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                                    required
+                                />
+                            )}
+                        />
+                    ) : (
+                        <Controller
+                            control={control}
+                            name="reference_id"
+                            render={({ field, fieldState }) => (
+                                <Selects
+                                    label="Asset Category"
+                                    value={field.value ? String(field.value) : ""}
+                                    onChange={(value) => field.onChange(Number(value))}
+                                    options={categoryOptions}
+                                    placeholder={
+                                        !settingType
+                                            ? "Pilih setting type dulu"
+                                            : isLoadingCategories
+                                                ? "Memuat kategori..."
+                                                : "Pilih kategori aset"
+                                    }
+                                    error={fieldState.error?.message}
+                                    helperText="Pengaturan penyusutan berlaku untuk semua aset di kategori ini."
+                                    disabled={!settingType || isLoadingCategories}
+                                    labelClassName="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                                    selectClassName="text-sm py-2"
+                                    required
+                                />
+                            )}
+                        />
+                    )}
                 </div>
             </div>
 

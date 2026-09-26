@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next"
 import { useQueryClient } from "@tanstack/react-query"
 
 import { useProcessBudget } from "../../../hooks/mutation/transaction/processBudget"
+import { useSingleSubmit } from "../../../hooks/useSingleSubmit"
 
 type ProcessBudgetModalProps = {
     transactionNumber: string
@@ -24,6 +25,8 @@ export function ProcessBudgetModal({
 
     const { mutate: processBudget, isPending } =
         useProcessBudget(transactionNumber)
+
+    const guard = useSingleSubmit(isPending)
 
     const handleSubmit = () => {
         processBudget(
@@ -141,7 +144,7 @@ export function ProcessBudgetModal({
                     </button>
 
                     <button
-                        onClick={handleSubmit}
+                        onClick={guard(handleSubmit)}
                         disabled={isPending}
                         className="
                             flex-1

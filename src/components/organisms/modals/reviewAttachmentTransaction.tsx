@@ -28,6 +28,15 @@ function isImageMime(mime: string) {
   return mime.startsWith("image/")
 }
 
+/**
+ * PDF ikut dipreview, bukan hanya gambar. Dokumen pendukung pengadaan hampir
+ * semuanya PDF, jadi tanpa ini reviewer harus mengunduh dulu setiap berkas
+ * sebelum bisa memutuskan.
+ */
+function isPdfMime(mime: string, fileName: string) {
+  return mime === "application/pdf" || fileName.toLowerCase().endsWith(".pdf")
+}
+
 const STATUS_CLASS: Record<string, string> = {
   pending: "bg-yellow-50 text-yellow-700 border border-yellow-200",
   approved: "bg-green-50 text-green-700 border border-green-200",
@@ -81,6 +90,7 @@ function PreviewPanel({
   const [objectURL, setObjectURL] = useState<string | null>(null)
   const [loadError, setLoadError] = useState(false)
   const isImage = isImageMime(item.mime_type)
+  const isPdf = isPdfMime(item.mime_type, item.file_name)
   const ImageURL = import.meta.env.VITE_IMAGE_ACCESS
 
   const { t } = useTranslation()
@@ -141,6 +151,20 @@ function PreviewPanel({
               </button>
             )}
 
+            {/* unduh tersedia untuk semua tipe, bukan hanya yang gagal dipreview */}
+            {objectURL && (
+              <a
+                href={objectURL}
+                download={item.file_name}
+                className="p-1.5 rounded-lg border border-gray-200 dark:border-gray-600 text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                title={t("reviewAttachmentModal.download")}
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-9-4l4 4m0 0l4-4m-4 4V4" />
+                </svg>
+              </a>
+            )}
+
             <button
               onClick={onClose}
               className="p-1.5 rounded-lg border border-gray-200 dark:border-gray-600 text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
@@ -169,7 +193,14 @@ function PreviewPanel({
 
           {/* Content */}
           {objectURL && (
-            isImage ? (
+            isPdf ? (
+              <iframe
+                src={objectURL}
+                title={item.file_name}
+                className="w-full bg-white"
+                style={{ height: "70vh" }}
+              />
+            ) : isImage ? (
               <div className="flex items-center justify-center p-4 min-h-64">
                 <img
                   src={objectURL}

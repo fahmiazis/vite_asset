@@ -127,24 +127,62 @@ function moveMenu(
       status: asParent.status,
       children: asParent.children,
     }
-    return draft
-      .filter((m) => m.id !== itemId)
-      .map((m) =>
+
+    const without = draft.filter((m) => m.id !== itemId)
+
+    // Target menu level atas
+    if (without.some((m) => m.id === targetParentId)) {
+      return without.map((m) =>
         m.id === targetParentId ? { ...m, children: [...m.children, moved] } : m
       )
+    }
+
+    // Target sub menu — hanya menu hak akses yang boleh turun ke level 3
+    const targetIsSubMenu = without.some((m) =>
+      m.children.some((c) => c.id === targetParentId)
+    )
+    if (targetIsSubMenu && asParent.menuType === "permission") {
+      return without.map((m) => ({
+        ...m,
+        children: m.children.map((c) =>
+          c.id === targetParentId ? { ...c, children: [...c.children, moved] } : c
+        ),
+      }))
+    }
+
+    return draft
   }
 
-  // Cari sebagai sub menu
-  const owner = draft.find((m) => m.children.some((c) => c.id === itemId))
-  if (!owner) return draft
-  const child = owner.children.find((c) => c.id === itemId)!
-  if (owner.id === targetParentId) return draft
+  // Cari sebagai sub menu (level 2)
+  let owner = draft.find((m) => m.children.some((c) => c.id === itemId))
+  let child = owner?.children.find((c) => c.id === itemId)
 
-  const stripped = draft.map((m) =>
-    m.id === owner.id
-      ? { ...m, children: m.children.filter((c) => c.id !== itemId) }
-      : m
-  )
+  // Cari sebagai menu hak akses di level 3
+  let grandOwner: DraftChild | undefined
+  if (!child) {
+    for (const menu of draft) {
+      const found = menu.children.find((c) => c.children.some((g) => g.id === itemId))
+      if (found) {
+        owner = menu
+        grandOwner = found
+        child = found.children.find((g) => g.id === itemId)
+        break
+      }
+    }
+  }
+
+  if (!owner || !child) return draft
+
+  const currentParentId = grandOwner ? grandOwner.id : owner.id
+  if (currentParentId === targetParentId) return draft
+
+  // Lepaskan dari posisi lama
+  const stripped = draft.map((m) => ({
+    ...m,
+    children: m.children
+      .filter((c) => c.id !== itemId)
+      .map((c) => ({ ...c, children: c.children.filter((g) => g.id !== itemId) })),
+  }))
 
   if (targetParentId === null) {
     return [
@@ -161,9 +199,28 @@ function moveMenu(
     ]
   }
 
-  return stripped.map((m) =>
-    m.id === targetParentId ? { ...m, children: [...m.children, child] } : m
+  // Target menu level atas?
+  if (stripped.some((m) => m.id === targetParentId)) {
+    return stripped.map((m) =>
+      m.id === targetParentId ? { ...m, children: [...m.children, child] } : m
+    )
+  }
+
+  // Target sub menu — hanya menu hak akses yang boleh masuk ke level 3
+  const targetIsSubMenu = stripped.some((m) =>
+    m.children.some((c) => c.id === targetParentId)
   )
+  if (targetIsSubMenu && child.menuType === "permission") {
+    return stripped.map((m) => ({
+      ...m,
+      children: m.children.map((c) =>
+        c.id === targetParentId ? { ...c, children: [...c.children, child!] } : c
+      ),
+    }))
+  }
+
+  // Target tidak dikenali — kembalikan apa adanya supaya menu tidak hilang
+  return draft
 }
 
 /** Tanda tangan urutan, untuk deteksi perubahan */
@@ -181,6 +238,30 @@ function signature(draft: DraftMenu[]): string {
 /** Daftar menu level atas — kandidat grup tujuan */
 function topLevelOptions(draft: DraftMenu[]) {
   return draft.map((m) => ({ id: m.id, name: m.name }))
+}
+
+/**
+ * Kandidat induk untuk menu bertipe permission: menu level atas DITAMBAH sub
+ * menu. Menu hak akses tidak dirender di sidebar sehingga tidak menambah
+ * kedalaman — backend mengizinkannya menempel di mana pun
+ * (services.validateNesting).
+ *
+ * Sub menu bertipe permission tidak ikut: dia sendiri tidak punya halaman,
+ * jadi tidak berguna sebagai induk.
+ */
+function permissionTargetOptions(draft: DraftMenu[]) {
+  const options: { id: string; name: string }[] = []
+
+  for (const menu of draft) {
+    options.push({ id: menu.id, name: menu.name })
+
+    for (const child of menu.children) {
+      if (child.menuType === "permission") continue
+      options.push({ id: child.id, name: `${menu.name} › ${child.name}` })
+    }
+  }
+
+  return options
 }
 
 // ─── Baris sortable ──────────────────────────────────────────────────────────
@@ -271,6 +352,7 @@ function SortableChild({
   index,
   parentId,
   groups,
+  permissionTargets,
   onMove,
   onDelete,
 }: {
@@ -278,6 +360,8 @@ function SortableChild({
   index: number
   parentId: string
   groups: { id: string; name: string }[]
+  /** kandidat induk untuk menu hak akses — termasuk sub menu */
+  permissionTargets: { id: string; name: string }[]
   onMove: (itemId: string, targetParentId: string | null) => void
   onDelete: (item: { id: string; name: string; childCount: number }) => void
 }) {
@@ -318,9 +402,9 @@ function SortableChild({
 
       <GroupSelect
         value={parentId}
-        options={groups}
+        options={child.menuType === "permission" ? permissionTargets : groups}
         onChange={(v) => onMove(child.id, v || null)}
-        title="Pindahkan ke grup lain"
+        title="Pindahkan ke menu lain"
       />
 
       <EditLink id={child.id} />
@@ -333,10 +417,64 @@ function SortableChild({
   )
 }
 
+/**
+ * Menu hak akses di level 3.
+ *
+ * Tidak ikut drag & drop — urutannya tidak berpengaruh karena menu ini tidak
+ * dirender di sidebar. Yang penting dia terlihat dan bisa dipindahkan, supaya
+ * tidak "hilang" dari layar pengelolaan menu.
+ */
+function PermissionGrandChild({
+  item,
+  parentId,
+  permissionTargets,
+  onMove,
+  onDelete,
+}: {
+  item: DraftChild
+  parentId: string
+  permissionTargets: { id: string; name: string }[]
+  onMove: (itemId: string, targetParentId: string | null) => void
+  onDelete: (item: { id: string; name: string; childCount: number }) => void
+}) {
+  return (
+    <div className="flex items-center gap-2 pl-16 pr-3 py-2 rounded-lg border border-dashed border-gray-200 dark:border-gray-700 bg-gray-50/60 dark:bg-gray-900/40">
+      <span className="text-xs text-gray-300 dark:text-gray-600 flex-shrink-0">└</span>
+
+      <div className="min-w-0 flex-1">
+        <p className="text-xs font-medium text-gray-700 dark:text-gray-300 truncate">
+          {item.name}
+        </p>
+        <p className="text-xs text-gray-400 font-mono truncate">{item.path || "—"}</p>
+      </div>
+
+      <span
+        className={`text-xs font-medium px-2 py-0.5 rounded-full flex-shrink-0 ${MENU_TYPE.permission.cls}`}
+        title={MENU_TYPE.permission.desc}
+      >
+        {MENU_TYPE.permission.short}
+      </span>
+
+      <GroupSelect
+        value={parentId}
+        options={permissionTargets}
+        onChange={(v) => onMove(item.id, v || null)}
+        title="Pindahkan ke menu lain"
+      />
+
+      <EditLink id={item.id} />
+      <DeleteButton
+        onClick={() => onDelete({ id: item.id, name: item.name, childCount: 0 })}
+      />
+    </div>
+  )
+}
+
 function SortableParent({
   menu,
   index,
   allGroups,
+  permissionTargets,
   onMove,
   onDelete,
   onChildrenChange,
@@ -345,6 +483,8 @@ function SortableParent({
   index: number
   /** seluruh menu level atas; dipakai sebagai daftar grup tujuan */
   allGroups: { id: string; name: string }[]
+  /** kandidat induk untuk menu hak akses — termasuk sub menu */
+  permissionTargets: { id: string; name: string }[]
   onMove: (itemId: string, targetParentId: string | null) => void
   onDelete: (item: { id: string; name: string; childCount: number }) => void
   onChildrenChange: (children: DraftChild[]) => void
@@ -414,9 +554,17 @@ function SortableParent({
         ) : (
           <GroupSelect
             value=""
-            options={allGroups.filter((g) => g.id !== menu.id)}
+            // Menu hak akses boleh menempel di sub menu juga, jadi daftar
+            // tujuannya lebih luas daripada menu biasa
+            options={(menu.menuType === "permission" ? permissionTargets : allGroups).filter(
+              (g) => g.id !== menu.id
+            )}
             onChange={(v) => onMove(menu.id, v || null)}
-            title="Masukkan ke dalam grup"
+            title={
+              menu.menuType === "permission"
+                ? "Pindahkan ke menu lain"
+                : "Masukkan ke dalam grup"
+            }
           />
         )}
 
@@ -442,15 +590,28 @@ function SortableParent({
               strategy={verticalListSortingStrategy}
             >
               {menu.children.map((child, childIndex) => (
-                <SortableChild
-                  key={child.id}
-                  child={child}
-                  index={childIndex}
-                  parentId={menu.id}
-                  groups={allGroups}
-                  onMove={onMove}
-                  onDelete={onDelete}
-                />
+                <div key={child.id} className="space-y-2">
+                  <SortableChild
+                    child={child}
+                    index={childIndex}
+                    parentId={menu.id}
+                    groups={allGroups}
+                    permissionTargets={permissionTargets}
+                    onMove={onMove}
+                    onDelete={onDelete}
+                  />
+
+                  {child.children.map((grandChild) => (
+                    <PermissionGrandChild
+                      key={grandChild.id}
+                      item={grandChild}
+                      parentId={child.id}
+                      permissionTargets={permissionTargets}
+                      onMove={onMove}
+                      onDelete={onDelete}
+                    />
+                  ))}
+                </div>
               ))}
             </SortableContext>
           </DndContext>
@@ -494,6 +655,7 @@ export function MenuReorderPanel({ menus }: MenuReorderPanelProps) {
 
   const hasChanges = useMemo(() => signature(draft) !== baseline, [draft, baseline])
   const topLevelGroups = useMemo(() => topLevelOptions(draft), [draft])
+  const permissionTargets = useMemo(() => permissionTargetOptions(draft), [draft])
 
   const handleParentDragEnd = (event: DragEndEvent) => {
     const { active, over } = event
@@ -584,6 +746,7 @@ export function MenuReorderPanel({ menus }: MenuReorderPanelProps) {
                   menu={menu}
                   index={index}
                   allGroups={topLevelGroups}
+                  permissionTargets={permissionTargets}
                   onMove={handleMove}
                   onDelete={setToDelete}
                   onChildrenChange={(children) =>

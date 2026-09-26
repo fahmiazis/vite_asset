@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next"
 import { useMutationApprovalStatus } from "../../../hooks/query/mutation/approvalStatus"
 import type { Approval } from "../../../models/mutation/approvalStatus"
+import { approvalRoleWithActor } from "../../../utils/approval"
 
 type MutationApprovalStatusProps = {
   transactionNumber: string
@@ -112,7 +113,7 @@ export function MutationApprovalStatus({ transactionNumber }: MutationApprovalSt
                         {approval.flow_step?.step_name ?? `${t("approvalStatus.step")} ${index + 1}`}
                       </p>
                       <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">
-                        {approval.approver_role_name}
+                        {approvalRoleWithActor(approval.approver_role_name, approval)}
                       </p>
                     </div>
                     <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium border flex-shrink-0 ${badgeColor}`}>

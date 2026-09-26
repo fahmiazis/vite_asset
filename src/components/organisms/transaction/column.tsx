@@ -1,7 +1,10 @@
 import type { ColumnDef } from "@tanstack/react-table"
+import { formatStage } from "../../../utils/stage"
 import { useNavigate } from "react-router-dom"
 import type { transactionListState } from "../../../models/transaction/list"
+import { RevisionBadge } from "../common/revisionBadge"
 import { useState } from "react"
+import { useMyProfile } from "../../../hooks/query/auth/myProfile"
 import { useDeleteProcurement } from "../../../hooks/mutation/transaction/delete"
 import { useTranslation } from "react-i18next"
 
@@ -17,26 +20,6 @@ function Avatar({ name }: { name: string }) {
       </div>
       <p className="text-sm font-medium leading-tight text-gray-800 dark:text-gray-200">{name}</p>
     </div>
-  )
-}
-
-// --- Status Badge ---
-function StatusBadge({ value }: { value: string }) {
-  const { t } = useTranslation()
-
-  const map: Record<string, { dot: string; light: string; dark: string; labelKey: string }> = {
-    APPROVED: { dot: "bg-green-500", light: "bg-green-50 text-green-700",   dark: "dark:bg-green-900/40 dark:text-green-400",   labelKey: "transaksiColumn.status.approved" },
-    PENDING:  { dot: "bg-yellow-400", light: "bg-yellow-50 text-yellow-700", dark: "dark:bg-yellow-900/40 dark:text-yellow-400", labelKey: "transaksiColumn.status.pending"  },
-    REJECTED: { dot: "bg-red-500",    light: "bg-red-50 text-red-600",       dark: "dark:bg-red-900/40 dark:text-red-400",       labelKey: "transaksiColumn.status.rejected" },
-    DRAFT:    { dot: "bg-gray-400",   light: "bg-gray-100 text-gray-600",    dark: "dark:bg-gray-700 dark:text-gray-400",        labelKey: "transaksiColumn.status.draft"    },
-  }
-
-  const s = map[value?.toUpperCase()] ?? map["DRAFT"]
-  return (
-    <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold ${s.light} ${s.dark}`}>
-      <span className={`w-1.5 h-1.5 rounded-full ${s.dot}`} />
-      {t(s.labelKey)}
-    </span>
   )
 }
 
@@ -87,35 +70,61 @@ function DeleteModal({ id, onConfirm, onCancel, isLoading }: {
 }
 
 // --- Action Buttons ---
-function ActionButtons({ id, status }: { id: string; status: string }) {
+/**
+ * Ubah & hapus hanya untuk transaksi DRAFT milik sendiri — aturannya sama
+ * persis dengan backend (services.UpdateProcurement & DeleteProcurement:
+ * "can only update DRAFT transactions" dan "you can only update your own
+ * transactions").
+ *
+ * Sebelumnya kedua tombol selalu tampil: prop `status` diterima tapi tidak
+ * pernah dipakai, jadi user baru tahu tidak boleh setelah ditolak server.
+ */
+function ActionButtons({
+  id,
+  currentStage,
+  createdBy,
+}: {
+  id: string
+  currentStage: string
+  createdBy: string
+}) {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const { data: profile } = useMyProfile()
   const { mutate: deleteTransaction, isPending: isDeleting } = useDeleteProcurement({
     onSuccess: () => setShowDeleteModal(false),
   })
+
+  const isDraft = currentStage?.toUpperCase() === "DRAFT"
+  const isOwner = !!profile?.data?.id && profile.data.id === createdBy
+  const canModify = isDraft && isOwner
 
   return (
     <>
       <div className="flex items-center gap-1.5">
         <button
-          onClick={() => navigate(`/dashboard/transaction/${id}`)}
+          onClick={() => navigate(`/dashboard/procurement/${id}`)}
           className="px-3 py-1 text-xs font-medium border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
         >
           {t("transaksiColumn.actions.detail")}
         </button>
-        <button
-          onClick={() => navigate(`/dashboard/transaction/update/${id}`)}
-          className="px-3 py-1 text-xs font-medium border border-blue-400 dark:border-blue-500 text-blue-600 dark:text-blue-400 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
-        >
-          {t("transaksiColumn.actions.edit")}
-        </button>
-        <button
-          onClick={() => setShowDeleteModal(true)}
-          className="px-3 py-1 text-xs font-medium border border-red-400 dark:border-red-500 text-red-600 dark:text-red-400 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
-        >
-          {t("transaksiColumn.actions.delete")}
-        </button>
+        {canModify && (
+          <>
+            <button
+              onClick={() => navigate(`/dashboard/procurement/update/${id}`)}
+              className="px-3 py-1 text-xs font-medium border border-blue-400 dark:border-blue-500 text-blue-600 dark:text-blue-400 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
+            >
+              {t("transaksiColumn.actions.edit")}
+            </button>
+            <button
+              onClick={() => setShowDeleteModal(true)}
+              className="px-3 py-1 text-xs font-medium border border-red-400 dark:border-red-500 text-red-600 dark:text-red-400 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+            >
+              {t("transaksiColumn.actions.delete")}
+            </button>
+          </>
+        )}
       </div>
       {showDeleteModal && (
         <DeleteModal
@@ -216,9 +225,19 @@ export const transaksiColumns: ColumnDef<transactionListState>[] = [
     },
   },
   {
-    id: "status",
-    header: () => <HeaderCell labelKey="transaksiColumn.headers.status" />,
-    cell: ({ row }) => <StatusBadge value={row.original.transaction.status} />,
+    // Stage, bukan status. Status ikut turunan stage dan sering terbaca sama
+    // ("Draft" di dua kolom sekaligus), jadi yang ditampilkan cukup posisinya
+    // di alur.
+    id: "current_stage",
+    header: () => <HeaderCell labelKey="transaksiColumn.headers.stage" />,
+    cell: ({ row }) => (
+      <div className="flex flex-col items-start gap-1">
+        <span className="text-xs text-gray-700 dark:text-gray-300">
+          {formatStage(row.original.transaction.current_stage)}
+        </span>
+        <RevisionBadge show={row.original.transaction.needs_revision} />
+      </div>
+    ),
   },
   {
     id: "action",
@@ -226,7 +245,8 @@ export const transaksiColumns: ColumnDef<transactionListState>[] = [
     cell: ({ row }) => (
       <ActionButtons
         id={row.original.transaction.transaction_number}
-        status={row.original.transaction.status}
+        currentStage={row.original.transaction.current_stage}
+        createdBy={row.original.transaction.created_by}
       />
     ),
   },

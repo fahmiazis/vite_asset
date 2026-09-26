@@ -15,6 +15,20 @@ export interface DisposalAgreementItem {
   total_sale_value?: number | null
 }
 
+/** aset dari seluruh transaksi anggota, diratakan jadi satu daftar */
+export interface DisposalAgreementAsset {
+  disposal_asset_id: number
+  asset_id: number
+  asset_number: string
+  asset_name?: string | null
+  category_name?: string | null
+  branch_code?: string | null
+  disposal_type: string
+  disposal_reason: string | null
+  sale_value: number | null
+  transaction_number: string
+}
+
 export interface DisposalAgreement {
   id: number
   agreement_number: string
@@ -25,7 +39,9 @@ export interface DisposalAgreement {
   created_by: string
   created_by_name?: string | null
   total_items: number
+  total_assets: number
   items?: DisposalAgreementItem[]
+  assets?: DisposalAgreementAsset[]
   created_at: string
   updated_at: string
 }

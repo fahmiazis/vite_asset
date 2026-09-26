@@ -18,7 +18,9 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <Toaster />
       <RouterProvider router={router} />
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* Kiri bawah: bar aksi di halaman detail transaksi rata kanan bawah,
+          jadi tombol devtools di posisi default menutupinya. */}
+      <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-left" />
     </QueryClientProvider>
   );
 }

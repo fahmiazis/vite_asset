@@ -14,6 +14,13 @@ import type { approvalStatusState } from "../../../../models/transaction/approva
 import { getRolesFromToken } from "../../../../utils/auth"
 import { ProcessBudgetModal } from "../processBudgetModal"
 import { ExecuteAssetModal } from "../executeAssetModal"
+import { approvalRoleWithActor } from "../../../../utils/approval"
+import { RevisionDecisionModal } from "../../common/revisionDecisionModal"
+import { useMyProfile } from "../../../../hooks/query/auth/myProfile"
+import {
+  useCancelProcurement,
+  useReturnProcurementForRevision,
+} from "../../../../hooks/mutation/transaction/revision"
 import { GoodsReceiptModal } from "../goodsReceiptModal"
 import { useTranslation } from "react-i18next"
 import { useQueryClient } from "@tanstack/react-query"
@@ -227,6 +234,7 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
   const [showBudgetModal, setShowBudgetModal] = useState(false)
   const [showExecuteModal, setShowExecuteModal] = useState(false)
   const [showGRModal, setShowGRModal] = useState(false)
+  const [revisionMode, setRevisionMode] = useState<"revise" | "cancel" | null>(null)
 
   const totalUnit = items.reduce((sum, item) => sum + item.quantity, 0)
   const totalNilai = items.reduce((sum, item) => sum + item.total_price, 0)
@@ -250,11 +258,18 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
   }
 
   const lastStage = data?.data?.stages?.at(-1)?.to_stage
-  const isVerif = lastStage === "ASSET_VERIFICATION" && transaction?.status === "PENDING"
-  const isApprove = lastStage === "APPROVAL" && transaction?.status === "PENDING"
-  const isBudget = data.data.transaction.current_stage === "PROCESS_BUDGET"
-  const isExecute = data.data.transaction.current_stage === "EXECUTE_ASET"
-  const isGR = data.data.transaction.current_stage === "GR"
+
+  // Bolanya ada di user ini? Dihitung backend dari hak akses role terhadap
+  // route stage berjalan digabung cabang yang dia punya. Tombol aksi stage
+  // disembunyikan kalau bukan bagiannya, supaya user tidak menekan tombol yang
+  // sudah pasti ditolak middleware.
+  const waitingForMe = data?.data?.waiting_for_me ?? false
+
+  const isVerif = waitingForMe && lastStage === "ASSET_VERIFICATION" && transaction?.status === "PENDING"
+  const isApprove = waitingForMe && lastStage === "APPROVAL" && transaction?.status === "PENDING"
+  const isBudget = waitingForMe && data.data.transaction.current_stage === "PROCESS_BUDGET"
+  const isExecute = waitingForMe && data.data.transaction.current_stage === "EXECUTE_ASET"
+  const isGR = waitingForMe && data.data.transaction.current_stage === "GR"
 
   const { data: approvalData, isLoading: isLoadingApproval } = useApprovalStatus(transaction.transaction_number)
   const approvals = approvalData?.data?.approvals ?? []
@@ -262,6 +277,31 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
   const totalSteps = approvalData?.data?.total_steps ?? 0
 
   const userRoles = getRolesFromToken()
+
+  // Revisi dikembalikan approver step berjalan; pembatalan hanya oleh pengaju.
+  // Dua aksi berbeda pelaku, jadi tombolnya juga muncul untuk orang berbeda.
+  const { data: profile } = useMyProfile()
+  const isCreator =
+    !!profile?.data?.id && profile.data.id === transaction.created_by
+
+  const canCancel =
+    isCreator &&
+    ["DRAFT", "ASSET_VERIFICATION", "APPROVAL"].includes(
+      transaction.current_stage?.toUpperCase()
+    )
+
+  const closeRevision = () => setRevisionMode(null)
+
+  const returnForRevision = useReturnProcurementForRevision({
+    transactionNumber: transaction.transaction_number,
+    invalidateKeys: ["transaction-detail-with-stage", "transaction-list"],
+    onSuccess: closeRevision,
+  })
+  const cancelProcurement = useCancelProcurement({
+    transactionNumber: transaction.transaction_number,
+    invalidateKeys: ["transaction-detail-with-stage", "transaction-list"],
+    onSuccess: closeRevision,
+  })
   const pendingApproval = approvals.find((a: approvalStatusState) => a.status?.toLowerCase() === "pending")
   const canApprove = isApprove && !!pendingApproval && (
     userRoles.includes(pendingApproval.approver_role_name) ||
@@ -287,6 +327,24 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
       {showExecuteModal && <ExecuteAssetModal transactionNumber={transaction.transaction_number} onClose={() => setShowExecuteModal(false)} onSuccess={() => { }} />}
       {showBudgetModal && <ProcessBudgetModal transactionNumber={transaction.transaction_number} onClose={() => setShowBudgetModal(false)} />}
       {showApproveModal && <ApproveModal transactionNumber={transaction.transaction_number} transactionApprovalId={transaction.transaction_number} onClose={() => setShowApproveModal(false)} />}
+      {revisionMode && (
+        <RevisionDecisionModal
+          mode={revisionMode}
+          transactionNumber={transaction.transaction_number}
+          rows={items.map((item) => ({
+            id: item.id,
+            label: item.item_name,
+            sublabel: `${item.quantity} × ${item.branch_code ?? "-"}`,
+          }))}
+          isPending={returnForRevision.isPending || cancelProcurement.isPending}
+          onConfirm={({ notes, rowIds }) =>
+            revisionMode === "revise"
+              ? returnForRevision.mutate({ revision_notes: notes, row_ids: rowIds })
+              : cancelProcurement.mutate({ reason: notes })
+          }
+          onClose={closeRevision}
+        />
+      )}
       {showVerifyModal && <VerifyModal transactionNumber={transaction.transaction_number} items={items} onClose={() => setShowVerifyModal(false)} />}
       {showReviewModal && (
         <ReviewAttachmentModal
@@ -515,7 +573,9 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
                         <p className="text-xs font-semibold text-gray-800 dark:text-gray-100">
                           {approval.flow_step?.step_name ?? t("detailTransaction.approval.stepFallback", { index: index + 1 })}
                         </p>
-                        <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">{approval.approver_role_name}</p>
+                        <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">
+                          {approvalRoleWithActor(approval.approver_role_name, approval)}
+                        </p>
                       </div>
                       <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium border flex-shrink-0 ${badgeColor}`}>
                         <span className={`w-1.5 h-1.5 rounded-full ${dotColor}`} />
@@ -583,6 +643,22 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
           {isApprove && <button onClick={() => setShowApproveModal(true)} className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors">{t("detailTransaction.actions.approve")}</button>}
           {isBudget && <button onClick={() => setShowBudgetModal(true)} className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors">{t("detailTransaction.actions.processBudget")}</button>}
           {isExecute && <button onClick={() => setShowExecuteModal(true)} className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors">{t("detailTransaction.actions.executeAsset")}</button>}
+          {isApprove && (
+            <button
+              onClick={() => setRevisionMode("revise")}
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium border border-amber-300 dark:border-amber-700 text-amber-700 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/30 rounded-lg transition-colors mr-1.5"
+            >
+              {t("revisionDecision.revise.button")}
+            </button>
+          )}
+          {canCancel && (
+            <button
+              onClick={() => setRevisionMode("cancel")}
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium border border-red-300 dark:border-red-700 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors mr-1.5"
+            >
+              {t("revisionDecision.cancel.button")}
+            </button>
+          )}
           {isGR && <button onClick={() => setShowGRModal(true)} className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors">{t("detailTransaction.actions.goodsReceipt")}</button>}
         </div>
       </div>

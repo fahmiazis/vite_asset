@@ -12,18 +12,42 @@ function formatDateTime(value: string) {
   })
 }
 
+const EMPTY_FILTERS = { stage: "", start_date: "", end_date: "" }
+
+/** stage agreement — sama dengan models.StageAgreement* di backend */
+const STAGE_OPTIONS = ["APPROVAL_AGREEMENT", "FINISHED", "REJECTED"]
+
 export default function DisposalAgreementPage() {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const [search, setSearch] = useState("")
 
+  const [search, setSearch] = useState("")
+  const [filters, setFilters] = useState(EMPTY_FILTERS)
+
+  // Semua penyaringan dikerjakan server — daftarnya paginasi, jadi memfilter
+  // di klien hanya akan menyaring 25 baris yang kebetulan terambil.
   const { data, isLoading } = useDisposalAgreementList({
     page: 1,
     limit: 25,
     search: search.trim() || undefined,
+    stage: filters.stage || undefined,
+    start_date: filters.start_date || undefined,
+    end_date: filters.end_date || undefined,
   })
 
   const agreements = data?.data?.data ?? []
+  const hasFilter = !!(search.trim() || filters.stage || filters.start_date || filters.end_date)
+
+  const setFilter = (key: keyof typeof EMPTY_FILTERS, value: string) =>
+    setFilters((prev) => ({ ...prev, [key]: value }))
+
+  const resetAll = () => {
+    setFilters(EMPTY_FILTERS)
+    setSearch("")
+  }
+
+  const inputClass =
+    "px-3 py-2 text-sm border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
 
   // Header tabel sengaja selalu dirender — termasuk saat data kosong — supaya
   // halaman tidak terlihat "mati" dan user tetap tahu kolom apa yang ada.
@@ -40,17 +64,55 @@ export default function DisposalAgreementPage() {
     <>
       <Head label={t("disposalAgreement.title")} className="mb-4" />
 
-      <div className="flex items-center justify-between gap-3 mb-4">
+      <div className="flex flex-wrap items-center gap-2 mb-4">
         <input
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder={t("disposalAgreement.searchPlaceholder")}
-          className="px-4 py-2 text-sm border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 max-w-sm w-full"
+          className={`${inputClass} flex-1 min-w-[12rem] max-w-sm`}
         />
+
+        <select
+          value={filters.stage}
+          onChange={(e) => setFilter("stage", e.target.value)}
+          className={inputClass}
+        >
+          <option value="">{t("disposalAgreement.filter.allStages")}</option>
+          {STAGE_OPTIONS.map((stage) => (
+            <option key={stage} value={stage}>
+              {t(`disposalAgreement.stage.${stage}`, { defaultValue: stage })}
+            </option>
+          ))}
+        </select>
+
+        <input
+          type="date"
+          value={filters.start_date}
+          onChange={(e) => setFilter("start_date", e.target.value)}
+          title={t("disposalAgreement.filter.startDate")}
+          className={inputClass}
+        />
+        <input
+          type="date"
+          value={filters.end_date}
+          onChange={(e) => setFilter("end_date", e.target.value)}
+          title={t("disposalAgreement.filter.endDate")}
+          className={inputClass}
+        />
+
+        {hasFilter && (
+          <button
+            onClick={resetAll}
+            className="px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          >
+            {t("disposalAgreement.filter.reset")}
+          </button>
+        )}
+
         <button
-          onClick={() => navigate("/dashboard/disposal/agreement/create")}
-          className="flex-shrink-0 px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-colors"
+          onClick={() => navigate("/dashboard/disposal-agreement/create")}
+          className="ml-auto flex-shrink-0 px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-colors"
         >
           {t("disposalAgreement.create")}
         </button>
@@ -86,13 +148,13 @@ export default function DisposalAgreementPage() {
               <tr>
                 <td colSpan={columns.length} className="px-6 py-12 text-center">
                   <p className="text-sm text-gray-400">
-                    {search.trim()
+                    {hasFilter
                       ? t("disposalAgreement.emptySearch")
                       : t("disposalAgreement.empty")}
                   </p>
-                  {!search.trim() && (
+                  {!hasFilter && (
                     <button
-                      onClick={() => navigate("/dashboard/disposal/agreement/create")}
+                      onClick={() => navigate("/dashboard/disposal-agreement/create")}
                       className="mt-3 text-xs font-medium text-indigo-600 hover:text-indigo-700"
                     >
                       {t("disposalAgreement.create")}
@@ -105,7 +167,7 @@ export default function DisposalAgreementPage() {
                 <tr
                   key={agreement.id}
                   onClick={() =>
-                    navigate(`/dashboard/disposal/agreement/${agreement.agreement_number}`)
+                    navigate(`/dashboard/disposal-agreement/${agreement.agreement_number}`)
                   }
                   className="cursor-pointer transition-colors hover:bg-gray-50 dark:hover:bg-gray-800"
                 >

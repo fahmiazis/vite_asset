@@ -1,5 +1,7 @@
 import type { ColumnDef } from "@tanstack/react-table"
+import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
+import type { DisposalAsset } from "../../../models/disposal/detail"
 import type { disposalListState } from "../../../models/disposal/list"
 import {
   disposalStageLabel,
@@ -30,22 +32,32 @@ function DisposalTypeBadge({ value }: { value: string }) {
   )
 }
 
-// --- Transaction Status Badge ---
-function StatusBadge({ value }: { value: string }) {
-  const map: Record<string, { dot: string; bg: string }> = {
-    draft:      { dot: "bg-gray-400",   bg: "bg-gray-100 text-gray-600" },
-    pending:    { dot: "bg-yellow-400", bg: "bg-yellow-50 text-yellow-700" },
-    processing: { dot: "bg-blue-500",   bg: "bg-blue-50 text-blue-700" },
-    approved:   { dot: "bg-green-500",  bg: "bg-green-50 text-green-700" },
-    rejected:   { dot: "bg-red-500",    bg: "bg-red-50 text-red-600" },
-    completed:  { dot: "bg-blue-500",   bg: "bg-blue-50 text-blue-700" },
-    cancelled:  { dot: "bg-gray-400",   bg: "bg-gray-100 text-gray-600" },
-  }
-  const s = map[value?.toLowerCase()] ?? map["cancelled"]
+// --- Revision Badge ---
+/**
+ * Transaksi yang dikembalikan approver untuk diperbaiki kembali ke DRAFT, jadi
+ * di daftar tampilannya sama persis dengan draft biasa. Tanpa penanda ini
+ * pengaju tidak punya cara tahu ada yang harus dikerjakan.
+ */
+function RevisionBadge({ assets }: { assets: DisposalAsset[] }) {
+  const { t } = useTranslation()
+  const marked = assets.filter(
+    (asset) => asset.needs_revision && asset.status === "PENDING"
+  )
+  if (marked.length === 0) return null
+
+  // catatan approver ditaruh di tooltip supaya baris tabel tidak melebar
+  const notes = marked
+    .map((asset) => asset.revision_notes)
+    .filter(Boolean)
+    .join(" · ")
+
   return (
-    <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold ${s.bg}`}>
-      <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${s.dot}`} />
-      {value ?? "-"}
+    <span
+      title={notes || undefined}
+      className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 whitespace-nowrap"
+    >
+      <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+      {t("disposalList.needsRevision", { count: marked.length })}
     </span>
   )
 }
@@ -95,21 +107,16 @@ export const disposalColumns: ColumnDef<disposalListState>[] = [
     ),
   },
   {
-    accessorFn: (row) => row.transaction.status,
-    id: "status",
-    header: "STATUS",
-    cell: ({ row }) => (
-      <StatusBadge value={row.original.transaction.status} />
-    ),
-  },
-  {
     accessorFn: (row) => row.transaction.current_stage,
     id: "current_stage",
     header: "STAGE",
     cell: ({ row }) => (
-      <span className="text-xs text-gray1">
-        {disposalStageLabel(row.original.transaction.current_stage)}
-      </span>
+      <div className="flex flex-col items-start gap-1">
+        <span className="text-xs text-gray1">
+          {disposalStageLabel(row.original.transaction.current_stage)}
+        </span>
+        <RevisionBadge assets={row.original.assets} />
+      </div>
     ),
   },
   {

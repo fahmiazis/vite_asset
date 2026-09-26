@@ -22,7 +22,11 @@ export interface Transaction {
   transaction_type: string
   transaction_date: string
   status: string
+  /** dikirim backend (dto.TransactionResponse), sebelumnya tidak dideklarasikan */
+  current_stage: string
   notes: string
+  /** ada baris yang ditandai approver perlu diperbaiki */
+  needs_revision?: boolean
   created_by: string
   created_by_name: string | null
   approved_by: any

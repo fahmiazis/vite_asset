@@ -20,6 +20,23 @@ export interface SetDisposalSaleValuesPayload {
   notes?: string
 }
 
+/** nilai pemasukan per aset — diisi sebelum konfirmasi stage finance */
+export interface SetDisposalIncomeValuesPayload {
+  assets: Array<{ disposal_asset_id: number; income_value: number }>
+  notes?: string
+}
+
+/** data faktur per aset — diisi sebelum konfirmasi stage pajak */
+export interface SetDisposalInvoicesPayload {
+  assets: Array<{
+    disposal_asset_id: number
+    invoice_number: string
+    /** format YYYY-MM-DD */
+    invoice_date: string
+  }>
+  notes?: string
+}
+
 export interface RejectDisposalPayload {
   /** backend memvalidasi minimal 10 karakter */
   reason: string
@@ -57,12 +74,22 @@ export const executeDisposal = (
 ) => post("/execute", transactionNumber, payload)
 
 /** FINANCE → TAX (SELL only) */
+export const setDisposalIncomeValues = (
+  transactionNumber: string,
+  payload: SetDisposalIncomeValuesPayload
+) => post("/finance/set-income-values", transactionNumber, payload)
+
 export const confirmDisposalFinance = (
   transactionNumber: string,
   payload: DisposalNotesPayload
 ) => post("/finance/confirm", transactionNumber, payload)
 
 /** TAX → ASSET_DELETION (SELL only) */
+export const setDisposalInvoices = (
+  transactionNumber: string,
+  payload: SetDisposalInvoicesPayload
+) => post("/tax/set-invoices", transactionNumber, payload)
+
 export const confirmDisposalTax = (
   transactionNumber: string,
   payload: DisposalNotesPayload

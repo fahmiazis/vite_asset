@@ -1,7 +1,9 @@
 import type { ColumnDef } from "@tanstack/react-table"
+import { formatStage } from "../../../utils/stage"
 import { Link } from "react-router-dom"
 import type { listMutationDatas } from "../../../models/mutation/list"
 import { useTranslation } from "react-i18next"
+import { RevisionBadge } from "../common/revisionBadge"
 
 // helper format
 function formatDate(dateStr: string) {
@@ -56,25 +58,17 @@ export const mutationColumns = (
       ),
     },
     {
-      accessorFn: (row) => row.transaction.status,
-      id: "status",
-      header: t("label.mutation.status"),
-      cell: ({ row }) => {
-        const status = row.original.transaction.status
-
-        return (
-          <span
-            className={`px-2 py-1 text-xs font-medium rounded-full ${status === "approved"
-              ? "bg-green-100 text-green-800"
-              : status === "rejected"
-                ? "bg-red-100 text-red-800"
-                : "bg-yellow-100 text-yellow-800"
-              }`}
-          >
-            {t(`label.mutation.${status.toLowerCase()}`)}
+      accessorFn: (row) => row.transaction.current_stage,
+      id: "current_stage",
+      header: t("label.mutation.stage"),
+      cell: ({ row }) => (
+        <div className="flex flex-col items-start gap-1">
+          <span className="text-xs text-gray-700 dark:text-gray-300">
+            {formatStage(row.original.transaction.current_stage)}
           </span>
-        )
-      },
+          <RevisionBadge show={row.original.transaction.needs_revision} />
+        </div>
+      ),
     },
     {
       accessorFn: (row) => row.transaction.created_by_name ?? row.transaction.created_by,

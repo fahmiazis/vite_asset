@@ -4,6 +4,7 @@ import {
   disposalAgreementDetail,
   disposalAgreementList,
   eligibleDisposals,
+  type DisposalAgreementListParams,
 } from "../../../services/disposalAgreement"
 import type {
   DisposalAgreementDetailProps,
@@ -19,20 +20,9 @@ export const useEligibleDisposals = (enabled = true) =>
     enabled,
   })
 
-export const useDisposalAgreementList = (params: {
-  page: number
-  limit: number
-  stage?: string
-  search?: string
-}) =>
+export const useDisposalAgreementList = (params: DisposalAgreementListParams) =>
   useQuery<DisposalAgreementListProps>({
-    queryKey: [
-      "disposal-agreement-list",
-      params.page,
-      params.limit,
-      params.stage ?? "",
-      params.search ?? "",
-    ],
+    queryKey: ["disposal-agreement-list", params],
     queryFn: () => disposalAgreementList(params),
     placeholderData: (prev) => prev,
   })

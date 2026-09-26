@@ -14,12 +14,18 @@ export const eligibleDisposals = async (): Promise<EligibleDisposalsProps> => {
   return res.data
 }
 
-export const disposalAgreementList = async (params: {
+export interface DisposalAgreementListParams {
   page: number
   limit: number
   stage?: string
   search?: string
-}): Promise<DisposalAgreementListProps> => {
+  start_date?: string
+  end_date?: string
+}
+
+export const disposalAgreementList = async (
+  params: DisposalAgreementListParams
+): Promise<DisposalAgreementListProps> => {
   const res = await axiosPrivate.get(BASE, { params })
   return res.data
 }

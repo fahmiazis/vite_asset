@@ -48,7 +48,8 @@
       "action": "Action",
       "approved": "Approved",
       "rejected": "Rejected",
-      "pending": "Pending"
+      "pending": "Pending",
+      "stage": "Stage"
     }
   },
   "transaksiHeader": {
@@ -63,10 +64,13 @@
   "transaksiTable": {
     "tabs": {
       "all": "All",
-      "pending": "Pending",
-      "approved": "Approved",
-      "rejected": "Rejected",
-      "draft": "Draft"
+      "waiting": "Waiting for Me",
+      "draft": "Draft",
+      "verification": "Verification",
+      "approval": "Approval",
+      "process": "In Process",
+      "finished": "Finished",
+      "rejected": "Rejected"
     },
     "searchPlaceholder": "Search by asset name, PO number, or requester...",
     "noData": "No data available",
@@ -84,7 +88,8 @@
       "qty": "Qty",
       "totalValue": "Total Value",
       "status": "Status",
-      "action": "Action"
+      "action": "Action",
+      "stage": "Stage"
     },
     "status": {
       "approved": "Approved",
@@ -387,7 +392,10 @@
     "toast": {
       "success": "Disposal submitted successfully",
       "error": "Failed to submit disposal"
-    }
+    },
+    "revisionTitle": "Resubmit Revision",
+    "revisionInfo": "The assets marked for revision will be resubmitted and the approval starts again from the first step. The revision marks are cleared once this succeeds.",
+    "revisionSubmit": "Resubmit"
   },
   "removeAssetModal": {
     "title": "Remove Asset",
@@ -742,10 +750,19 @@
     "terminal": "Transaction is already {{stage}} — no further action.",
     "waitingApproval": "Approval already initiated — waiting for approvers ({{done}}/{{total}} steps done).",
     "submit": {
-      "button": "Submit Transaction"
+      "button": "Submit Transaction",
+      "revisionButton": "Resubmit Revision"
     },
     "saleValues": {
-      "button": "Enter Sale Value"
+      "button": "Enter Sale Value",
+      "title": "Enter Sale Value",
+      "info": "Enter the sale value for each asset. Once saved, the transaction moves to the Approval Request stage.",
+      "notesLabel": "Notes",
+      "notesPlaceholder": "Purchasing notes (optional)",
+      "confirm": "Save & Continue",
+      "noAssets": "No active assets in this transaction",
+      "invalid": "Sale value must be greater than 0",
+      "total": "Total sale value"
     },
     "approvalRequest": {
       "button": "Submit Approval Request",
@@ -768,14 +785,21 @@
     "finance": {
       "button": "Confirm Finance",
       "title": "Confirm Finance",
-      "info": "Once confirmed, the transaction moves to the Tax stage.",
-      "notesLabel": "Finance notes"
+      "info": "Every asset must already have its income filled. Once confirmed, the transaction moves to the Tax stage.",
+      "notesLabel": "Finance notes",
+      "incomeInvalid": "Income must be greater than 0",
+      "saleValueLabel": "Agreed sale value",
+      "difference": "Difference"
     },
     "tax": {
       "button": "Confirm Tax",
       "title": "Confirm Tax",
-      "info": "Once confirmed, the transaction moves to the Asset Deletion stage.",
-      "notesLabel": "Tax notes"
+      "info": "Every asset must already have its invoice filled. Once confirmed, the transaction moves to the Asset Deletion stage.",
+      "notesLabel": "Tax notes",
+      "invoiceNumberLabel": "Invoice number",
+      "invoiceNumberPlaceholder": "e.g. INV/2026/09/0001",
+      "invoiceDateLabel": "Invoice date",
+      "invoiceHint": "Required — after this stage the assets are deleted and the invoice can no longer be recorded here."
     },
     "assetDeletion": {
       "button": "Confirm Asset Deletion",
@@ -838,6 +862,23 @@
         "confirm": "Yes, Cancel",
         "placeholder": "Why is this cancelled? (min. 5 characters)"
       }
+    },
+    "incomeValues": {
+      "button": "Enter Income",
+      "title": "Enter Income per Asset",
+      "info": "Enter the income received for each asset. Saving does not move the stage — use Confirm Finance at the bottom once everything is filled.",
+      "notesLabel": "Finance notes",
+      "confirm": "Save",
+      "noAssets": "No active assets in this transaction",
+      "total": "Total income"
+    },
+    "invoices": {
+      "button": "Enter Invoice",
+      "title": "Enter Invoice per Asset",
+      "info": "Enter the invoice number and date for each asset. Saving does not move the stage — use Confirm Tax at the bottom once everything is filled.",
+      "notesLabel": "Tax notes",
+      "confirm": "Save",
+      "noAssets": "No active assets in this transaction"
     }
   },
   "disposalStagePanel": {
@@ -873,12 +914,21 @@
       "missing": "{{count}} not uploaded",
       "complete": "Complete",
       "incomplete": "Incomplete",
+      "uploaded": "Uploaded",
       "upload": "Upload",
       "noUploads": "No documents uploaded yet",
       "rejectionReason": "Rejection reason",
-      "review": "Review"
+      "review": "Review",
+      "noneWithStatus": "No documents with this status",
+      "view": "View"
     },
-    "nothingToShow": "Nothing to show for this stage yet"
+    "nothingToShow": "Nothing to show for this stage yet",
+    "tab": {
+      "ALL": "All",
+      "PENDING": "Pending",
+      "APPROVED": "Approved",
+      "REJECTED": "Rejected"
+    }
   },
   "disposalDocuments": {
     "title": "Documents",
@@ -889,7 +939,22 @@
   "disposalDetail": {
     "needsRevision": "Needs revision",
     "revisionNote": "Revision note",
-    "revisionBanner": "This transaction was returned for revision. Only the assets marked \"Needs revision\" can be changed, and no new assets can be added until it is submitted again."
+    "revisionBanner": "This transaction was returned for revision. Only the assets marked \"Needs revision\" can be changed, and no new assets can be added until it is submitted again.",
+    "info": {
+      "transactionType": "Transaction type",
+      "date": "Date",
+      "disposalType": "Disposal type",
+      "createdBy": "Created by",
+      "createdAt": "Created at",
+      "updatedAt": "Updated at",
+      "saleValue": "Sale value",
+      "incomeValue": "Income received",
+      "invoiceNumber": "Invoice number",
+      "invoiceDate": "Invoice date",
+      "requestNumber": "Request No.",
+      "agreementNumber": "Agreement No."
+    },
+    "revisionHowTo": "Once the marked assets are fixed, press “{{action}}” at the bottom of this page to mark the revision as done."
   },
   "disposalAgreement": {
     "title": "Disposal Agreement",
@@ -917,8 +982,6 @@
     "createdBy": "Created by",
     "createdAt": "Created at",
     "approvalProgress": "Approval progress",
-    "members": "Transactions in this agreement",
-    "membersHint": "Once the agreement is approved, each transaction continues on its own transaction number",
     "approvalStatus": "Approval Status",
     "rejectionReason": "Rejection reason",
     "stage": {
@@ -946,6 +1009,139 @@
       "status": "Status"
     },
     "emptySearch": "No agreement matches your search",
-    "viewDisposal": "Detail"
+    "viewDisposal": "Detail",
+    "assets": "Assets in this agreement",
+    "assetsHint": "All assets from the grouped transactions. Once approved, each transaction continues on its own transaction number.",
+    "noAssets": "No assets found",
+    "totalAssets": "Total assets",
+    "assetColumn": {
+      "no": "No",
+      "asset": "Asset",
+      "category": "Category",
+      "branch": "Branch",
+      "reason": "Disposal Reason",
+      "saleValue": "Sale Value",
+      "transaction": "Transaction"
+    },
+    "filter": {
+      "allStages": "All stages",
+      "startDate": "From date",
+      "endDate": "To date",
+      "reset": "Reset"
+    }
+  },
+  "assetCategory": {
+    "title": "Asset Category",
+    "createTitle": "Create Asset Category",
+    "updateTitle": "Edit Asset Category",
+    "create": "Create Category",
+    "save": "Save Changes",
+    "saving": "Saving...",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "active": "Active",
+    "inactive": "Inactive",
+    "searchPlaceholder": "Search code or name...",
+    "empty": "No asset category yet",
+    "emptySearch": "No category matches your search",
+    "codeHelper": "Short code, 2-50 characters. Saved in uppercase.",
+    "descriptionPlaceholder": "What kind of assets belong to this category...",
+    "inactiveWarning": "An inactive category is still readable, but avoid using it for new assets.",
+    "column": {
+      "no": "No",
+      "code": "Code",
+      "name": "Category Name",
+      "description": "Description",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "validation": {
+      "code": "Category code must be at least 2 characters",
+      "name": "Category name must be at least 2 characters",
+      "noChanges": "Nothing changed yet"
+    },
+    "deleteModal": {
+      "title": "Delete Category",
+      "desc": "Category \"{{name}}\" ({{code}}) will be deleted. Continue?",
+      "warning": "Assets and depreciation settings that reference this category will lose their reference. Deactivate it instead if it is still used by historical data.",
+      "confirm": "Yes, Delete",
+      "deleting": "Deleting...",
+      "cancel": "Cancel"
+    },
+    "toast": {
+      "updated": "Category updated",
+      "updateError": "Failed to update category",
+      "deleted": "Category deleted",
+      "deleteError": "Failed to delete category"
+    }
+  },
+  "mutationList": {
+    "title": "Asset Mutation",
+    "subtitle": "{{count}} mutations registered",
+    "create": "New Mutation"
+  },
+  "disposalList": {
+    "title": "Asset Disposal",
+    "subtitle": "{{count}} disposals registered",
+    "create": "New Disposal",
+    "tab": {
+      "all": "All",
+      "draft": "Draft",
+      "approval": "On Approval",
+      "process": "In Process",
+      "finished": "Finished",
+      "closed": "Closed",
+      "waiting": "Waiting for Me"
+    },
+    "needsRevision": "Needs revision ({{count}})",
+    "searchPlaceholder": "Search transaction no., note, or asset..."
+  },
+  "listStats": {
+    "total": "Total",
+    "draft": "Draft",
+    "onApproval": "On Approval",
+    "finished": "Finished",
+    "ofTotal": "{{percent}}% of total"
+  },
+  "table": {
+    "showData": "Show",
+    "showAll": "All"
+  },
+  "mutationDocuments": {
+    "title": "Documents",
+    "subtitle": "Supporting documents per asset for this mutation",
+    "empty": "No documents for this transaction yet",
+    "noConfig": "No document configuration for mutation yet"
+  },
+  "revisionDecision": {
+    "revise": {
+      "button": "Request Revision",
+      "title": "Return for Revision",
+      "info": "The transaction goes back to DRAFT with its content intact. Mark the rows that must be fixed — the submitter can only change those.",
+      "pickRows": "Rows that need fixing",
+      "noRows": "No rows available to mark",
+      "notesLabel": "Revision note",
+      "notesPlaceholder": "Explain what must be corrected...",
+      "confirm": "Return for Revision"
+    },
+    "cancel": {
+      "button": "Cancel Request",
+      "title": "Cancel Request",
+      "info": "The request is closed permanently. This is different from a rejection: cancelling is done by the submitter on their own request.",
+      "notesLabel": "Reason",
+      "notesPlaceholder": "Explain why this request is cancelled...",
+      "confirm": "Cancel Request"
+    },
+    "minChars": "At least {{min}} characters ({{current}}/{{min}})",
+    "processing": "Processing...",
+    "cancelButton": "Close",
+    "badge": "Needs revision"
+  },
+  "dateRange": {
+    "label": "Transaction date",
+    "from": "From date",
+    "to": "To date",
+    "reset": "Reset"
   }
 }

@@ -2,6 +2,7 @@ import { useState } from "react"
 import toast from "react-hot-toast"
 import { useQueryClient } from "@tanstack/react-query"
 import { useExecuteMutation } from "../../../hooks/mutation/mutation/executeMutation"
+import { useSingleSubmit } from "../../../hooks/useSingleSubmit"
 
 type ExecuteMutationModalProps = {
   transactionNumber: string
@@ -18,6 +19,8 @@ export function ExecuteMutationModal({
 
   const queryClient = useQueryClient()
   const { mutate: executeMutation, isPending } = useExecuteMutation(transactionNumber)
+
+  const guard = useSingleSubmit(isPending)
 
   const handleSubmit = () => {
     executeMutation(
@@ -127,7 +130,7 @@ export function ExecuteMutationModal({
           </button>
 
           <button
-            onClick={handleSubmit}
+            onClick={guard(handleSubmit)}
             disabled={isPending}
             className="
               flex-1 px-4 py-2 text-sm font-medium

@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next"
 import { useDisposalApprovalStatus } from "../../../hooks/query/disposal/approvalStatus"
 import type { DisposalApprovalKind } from "../../../services/disposal/approvalStatus"
+import { approvalRoleWithActor } from "../../../utils/approval"
 
 function ApprovalPill({ status }: { status: string }) {
   const { t } = useTranslation()
@@ -103,7 +104,9 @@ export function DisposalApprovalStatusPanel({
                     )}
                     {approval.flow_step?.step_name ?? approval.approver_role_name}
                   </p>
-                  <p className="text-xs text-gray-400 mt-0.5">{approval.approver_role_name}</p>
+                  <p className="text-xs text-gray-400 mt-0.5">
+                    {approvalRoleWithActor(approval.approver_role_name, approval)}
+                  </p>
                   {approval.notes && (
                     <p className="text-xs text-gray-500 dark:text-gray-400 italic mt-1">
                       "{approval.notes}"

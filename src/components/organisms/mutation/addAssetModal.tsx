@@ -3,6 +3,7 @@ import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 import { useAddAssetDraftMutation } from "../../../hooks/mutation/mutation/addAssetDraftMutation"
 import { useAssetList } from "../../../hooks/query/asset/list"
+import { useSingleSubmit } from "../../../hooks/useSingleSubmit"
 
 type AddAssetModalProps = {
   transactionNumber: string
@@ -26,6 +27,8 @@ export function AddAssetModal({
 
   const assets = assetData?.data?.data ?? []
   const selectedAsset = assets.find((a) => a.id === selectedAssetId)
+
+  const guard = useSingleSubmit(isPending)
 
   const handleSubmit = () => {
     if (!selectedAsset) {
@@ -168,7 +171,7 @@ export function AddAssetModal({
           </button>
 
           <button
-            onClick={handleSubmit}
+            onClick={guard(handleSubmit)}
             disabled={isPending || isLoadingAssets}
             className="flex-1 px-4 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >

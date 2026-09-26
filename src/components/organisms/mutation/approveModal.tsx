@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next"
 import { useQueryClient } from "@tanstack/react-query"
 import { useApproveTransactionApproval } from "../../../hooks/mutation/mutation/approve"
 import { useMutationApprovalStatus } from "../../../hooks/query/mutation/approvalStatus"
+import { useSingleSubmit } from "../../../hooks/useSingleSubmit"
 
 type ApproveModalProps = {
   transactionNumber: string
@@ -33,6 +34,8 @@ export function ApproveModal({
 
   const targetApprovalId =
     approvalData?.data.approvals[pendingIndex]?.id ?? ""
+
+  const guard = useSingleSubmit(isPending)
 
   const handleSubmit = () => {
     approve(
@@ -139,7 +142,7 @@ export function ApproveModal({
           </button>
 
           <button
-            onClick={handleSubmit}
+            onClick={guard(handleSubmit)}
             disabled={isPending || !targetApprovalId}
             className="flex-1 px-4 py-2.5 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >

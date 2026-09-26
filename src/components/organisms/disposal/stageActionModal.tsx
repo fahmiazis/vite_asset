@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from "react"
+import { useSingleSubmit } from "../../../hooks/useSingleSubmit"
 
 type Tone = "indigo" | "emerald" | "red"
 
@@ -64,6 +65,9 @@ export function StageActionModal({
 }: StageActionModalProps) {
   const [notes, setNotes] = useState("")
   const t = TONE[tone]
+
+  const guard = useSingleSubmit(isPending)
+  const handleConfirm = guard(() => onConfirm(notes))
 
   const notesTooShort =
     notesRequired && notes.trim().length < Math.max(notesMinLength, 1)
@@ -137,7 +141,7 @@ export function StageActionModal({
             Batal
           </button>
           <button
-            onClick={() => onConfirm(notes)}
+            onClick={handleConfirm}
             disabled={isPending || notesTooShort || confirmDisabled}
             className={`flex-1 px-4 py-2 text-sm font-medium text-white rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${t.btn}`}
           >

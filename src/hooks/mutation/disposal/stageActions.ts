@@ -8,8 +8,12 @@ import {
   initiateDisposalApprovalAgreement,
   initiateDisposalApprovalRequest,
   rejectDisposal,
+  setDisposalIncomeValues,
+  setDisposalInvoices,
   setDisposalSaleValues,
   type DisposalNotesPayload,
+  type SetDisposalIncomeValuesPayload,
+  type SetDisposalInvoicesPayload,
   type RejectDisposalPayload,
   type SetDisposalSaleValuesPayload,
 } from "../../../services/disposal/stageActions"
@@ -40,12 +44,19 @@ function createStageActionHook<TPayload>(
     return useMutation({
       mutationFn: (payload: TPayload) => action(transactionNumber, payload),
 
-      onSuccess: (data) => {
+      // Sengaja onSettled, bukan onSuccess: sebagian aksi stage menyimpan
+      // perubahan lalu gagal di langkah berikutnya (mis. stage sudah pindah
+      // tapi pembentukan approval gagal). Kalau hanya di-refresh saat sukses,
+      // halaman tetap menampilkan stage lama dan percobaan ulang pasti ditolak
+      // backend dengan pesan yang membingungkan.
+      onSettled: () => {
         queryClient.invalidateQueries({ queryKey: ["disposal-detail", transactionNumber] })
         queryClient.invalidateQueries({ queryKey: ["disposal-approval-status", transactionNumber] })
         queryClient.invalidateQueries({ queryKey: ["disposal-attachment-status", transactionNumber] })
         queryClient.invalidateQueries({ queryKey: ["disposal-list"] })
+      },
 
+      onSuccess: (data) => {
         toast.success(data?.message || successMessage)
         onSuccess?.()
       },
@@ -82,6 +93,18 @@ export const useExecuteDisposal = createStageActionHook<DisposalNotesPayload>(
   executeDisposal,
   "Disposal berhasil dieksekusi",
   "Gagal mengeksekusi disposal"
+)
+
+export const useSetDisposalIncomeValues = createStageActionHook<SetDisposalIncomeValuesPayload>(
+  setDisposalIncomeValues,
+  "Nilai pemasukan berhasil disimpan",
+  "Gagal menyimpan nilai pemasukan"
+)
+
+export const useSetDisposalInvoices = createStageActionHook<SetDisposalInvoicesPayload>(
+  setDisposalInvoices,
+  "Data faktur berhasil disimpan",
+  "Gagal menyimpan data faktur"
 )
 
 export const useConfirmDisposalFinance = createStageActionHook<DisposalNotesPayload>(

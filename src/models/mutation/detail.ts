@@ -8,6 +8,11 @@ export interface detailMutationState {
   transaction: Transaction
   assets: Asset[]
   stages: Stage[]
+  /**
+   * true kalau transaksi ini menunggu tindakan user yang sedang login.
+   * Dihitung backend dengan aturan yang sama dengan tab "Menunggu Saya".
+   */
+  waiting_for_me?: boolean
 }
 
 export interface Transaction {

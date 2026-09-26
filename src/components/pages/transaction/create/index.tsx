@@ -384,7 +384,7 @@ export default function CreateTransactionPage() {
 
   const { mutate, isPending } = useCreateProcurement({
     redirectOnSuccess: true,
-    redirectPath: '/dashboard/transaction',
+    redirectPath: '/dashboard/procurement',
   })
 
   const onSubmit = (data: ProcurementFormValues) => {

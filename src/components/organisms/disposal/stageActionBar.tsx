@@ -156,11 +156,24 @@ export function DisposalStageActionBar({
   // hanya aset aktif yang masuk akal untuk direvisi
   const revisableAssets = assets.filter((asset) => asset.status === "PENDING")
 
+  // Transaksi yang dikembalikan approver: tetap DRAFT, tetapi tombolnya diberi
+  // label berbeda karena dari sisi pengaju maknanya "perbaikan saya selesai",
+  // bukan "ajukan transaksi baru".
+  const hasPendingRevision = assets.some(
+    (asset) => asset.needs_revision && asset.status === "PENDING"
+  )
+
   // Aksi utama per stage
   const primaryAction = (() => {
     switch (stage) {
       case DISPOSAL_STAGE.DRAFT:
-        return { label: t("disposalAction.submit.button"), modal: "submit" as const, tone: "indigo" as const }
+        return {
+          label: hasPendingRevision
+            ? t("disposalAction.submit.revisionButton")
+            : t("disposalAction.submit.button"),
+          modal: "submit" as const,
+          tone: "indigo" as const,
+        }
       case DISPOSAL_STAGE.PURCHASING:
         return { label: t("disposalAction.saleValues.button"), modal: "sale-values" as const, tone: "indigo" as const }
       case DISPOSAL_STAGE.APPROVAL_REQUEST:
@@ -200,7 +213,11 @@ export function DisposalStageActionBar({
     <>
       {/* ── Modals ── */}
       {modal === "submit" && (
-        <SubmitDisposalModal transactionNumber={transactionNumber} onClose={close} />
+        <SubmitDisposalModal
+          transactionNumber={transactionNumber}
+          isRevision={hasPendingRevision}
+          onClose={close}
+        />
       )}
 
       {modal === "sale-values" && (
@@ -251,6 +268,8 @@ export function DisposalStageActionBar({
         />
       )}
 
+      {/* Nilai pemasukan & faktur diisi per aset dari section Daftar Aset —
+          tombol di bar ini benar-benar hanya meneruskan transaksinya. */}
       {modal === "finance" && (
         <StageActionModal
           title={t("disposalAction.finance.title")}

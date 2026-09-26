@@ -1,49 +1,39 @@
 import { useState } from "react"
-import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
-import { useQueryClient } from "@tanstack/react-query"
 import { useSubmitDisposal } from "../../../hooks/mutation/disposal/submitDraft"
 
 type SubmitDisposalModalProps = {
   transactionNumber: string
+  /**
+   * true kalau transaksi ini dikembalikan approver untuk diperbaiki. Aksinya
+   * sama — submit ulang — tapi kalimatnya dibedakan supaya pengaju yakin bahwa
+   * inilah cara menandai perbaikannya selesai.
+   */
+  isRevision?: boolean
   onClose: () => void
   onSuccess?: () => void
 }
 
 export function SubmitDisposalModal({
   transactionNumber,
+  isRevision = false,
   onClose,
   onSuccess,
 }: SubmitDisposalModalProps) {
   const [notes, setNotes] = useState("")
   const { t } = useTranslation()
-  const queryClient = useQueryClient()
 
+  // toast & invalidasi ditangani useSubmitDisposal — di sini cukup menutup
+  // dialognya, kalau tidak toast-nya muncul dua kali
   const { mutate: submitDisposal, isPending } = useSubmitDisposal({
     transactionNumber,
+    onSuccess: () => {
+      onSuccess?.()
+      onClose()
+    },
   })
 
-  const handleSubmit = () => {
-    submitDisposal(
-      { notes },
-      {
-        onSuccess: () => {
-          toast.success(t("submitDisposalModal.toast.success"))
-
-          queryClient.invalidateQueries({
-            queryKey: ["disposal", transactionNumber],
-          })
-
-          onSuccess?.()
-          onClose()
-        },
-
-        onError: () => {
-          toast.error(t("submitDisposalModal.toast.error"))
-        },
-      }
-    )
-  }
+  const handleSubmit = () => submitDisposal({ notes })
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-in fade-in duration-200">
@@ -53,7 +43,9 @@ export function SubmitDisposalModal({
         <div className="flex items-start justify-between px-5 py-4 border-b border-gray-100 dark:border-gray-800">
           <div className="min-w-0">
             <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
-              {t("submitDisposalModal.title")}
+              {isRevision
+                ? t("submitDisposalModal.revisionTitle")
+                : t("submitDisposalModal.title")}
             </h3>
             <p className="text-xs text-gray-400 mt-1 truncate">
               {transactionNumber}
@@ -80,7 +72,9 @@ export function SubmitDisposalModal({
               </svg>
             </div>
             <p className="text-xs text-indigo-700 dark:text-indigo-400 font-medium">
-              {t("submitDisposalModal.infoMessage")}
+              {isRevision
+                ? t("submitDisposalModal.revisionInfo")
+                : t("submitDisposalModal.infoMessage")}
             </p>
           </div>
 
@@ -127,7 +121,11 @@ export function SubmitDisposalModal({
             disabled={isPending}
             className="flex-1 px-4 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isPending ? t("submitDisposalModal.submitting") : t("submitDisposalModal.submit")}
+            {isPending
+              ? t("submitDisposalModal.submitting")
+              : isRevision
+                ? t("submitDisposalModal.revisionSubmit")
+                : t("submitDisposalModal.submit")}
           </button>
         </div>
       </div>

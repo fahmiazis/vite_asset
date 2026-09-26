@@ -184,7 +184,7 @@ export default function CreateDisposalAgreementPage() {
 
         <div className="flex gap-2 mt-4">
           <button
-            onClick={() => navigate("/dashboard/disposal/agreement")}
+            onClick={() => navigate("/dashboard/disposal-agreement")}
             disabled={createAgreement.isPending}
             className="flex-1 px-4 py-2.5 text-sm font-medium border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors disabled:opacity-50"
           >

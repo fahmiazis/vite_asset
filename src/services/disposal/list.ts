@@ -11,6 +11,10 @@ export interface DisposalListParams {
   created_by?: string
   start_date?: string
   end_date?: string
+  /** kata kunci: nomor transaksi, catatan, nomor/nama aset di dalamnya */
+  search?: string
+  /** true = hanya pengajuan yang menunggu tindakan user yang sedang login */
+  waiting_for_me?: boolean
 }
 
 export const disposalList = async (params: DisposalListParams): Promise<disposalListProps> => {
@@ -23,7 +27,7 @@ export const disposalList = async (params: DisposalListParams): Promise<disposal
 
   // hanya kirim filter yang terisi
   Object.entries(filters).forEach(([key, value]) => {
-    if (value) query.append(key, value)
+    if (value) query.append(key, String(value))
   })
 
   const res = await axiosPrivate.get(`/transactions/disposal?${query.toString()}`)

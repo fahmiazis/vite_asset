@@ -5,6 +5,7 @@ import Head from '../../../molecules/head'
 import { useCreateMenu } from '../../../../hooks/mutation/menu/useCreateMenus'
 import { useMenuList } from '../../../../hooks/query/menu/list'
 import { IconPicker } from '../../../organisms/menu/iconPicker'
+import { buildMenuParentOptions } from '../../../../utils/menuParent'
 
 /**
  * Empat bentuk menu (nesting maksimal 1 level):
@@ -56,15 +57,19 @@ export default function CreateMenu() {
     const { data: menuListData } = useMenuList()
     const { mutate: createMenu, isPending } = useCreateMenu()
 
-    // Kandidat induk: hanya menu level atas (backend membatasi nesting 1 level)
-    const parentOptions = useMemo(
-        () => (menuListData?.data ?? []).filter((m) => !m.parent_id),
-        [menuListData]
-    )
-
     const isGroup = kind === 'group'
     const isChild = kind === 'child'
     const isPermission = kind === 'permission'
+
+    // Menu biasa hanya boleh menempel di level atas; menu hak akses tidak
+    // tampil di sidebar sehingga boleh menempel di sub menu juga
+    const parentOptions = useMemo(
+        () =>
+            buildMenuParentOptions(menuListData?.data ?? [], {
+                allowSubMenu: isPermission,
+            }),
+        [menuListData, isPermission]
+    )
     // grup & permission-only tidak membuka halaman
     const needsPath = !isGroup && !isPermission
 
@@ -145,7 +150,8 @@ export default function CreateMenu() {
                 {(isChild || isPermission) && (
                     <div>
                         <label className={labelClass}>
-                            Grup Induk{isChild && <span className='text-red-500'> *</span>}
+                            {isPermission ? 'Menu Induk' : 'Grup Induk'}
+                            {isChild && <span className='text-red-500'> *</span>}
                         </label>
                         <select
                             value={parentId}
@@ -154,13 +160,19 @@ export default function CreateMenu() {
                             className={inputClass}
                         >
                             <option value=''>— Pilih grup —</option>
-                            {parentOptions.map((m) => (
-                                <option key={m.id} value={m.id}>
-                                    {m.name}
-                                    {!m.path ? ' (grup)' : ''}
+                            {parentOptions.map((option) => (
+                                <option key={option.id} value={option.id}>
+                                    {option.label}
                                 </option>
                             ))}
                         </select>
+                        {isPermission && (
+                            <p className='text-xs text-gray-400 mt-1'>
+                                Opsional. Menu hak akses boleh menempel pada menu
+                                mana pun, termasuk sub menu — dia tidak tampil di
+                                sidebar jadi tidak menambah kedalaman.
+                            </p>
+                        )}
                         {parentOptions.length === 0 && (
                             <p className='text-xs text-amber-600 dark:text-amber-400 mt-1'>
                                 Belum ada menu level atas. Buat Grup Menu terlebih dahulu.

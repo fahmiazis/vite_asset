@@ -9,6 +9,7 @@ import type { VerifyProcurementItem } from "../../../services/transaction/verif"
 
 import { useVerifyProcurement } from "../../../hooks/mutation/transaction/verify"
 import { useInitiateApproval } from "../../../hooks/mutation/transaction/initiateApproval"
+import { useSingleSubmit } from "../../../hooks/useSingleSubmit"
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -108,6 +109,8 @@ export function VerifyModal({
   const hasUnselected = verifyItems.some(
     (item) => !item.item_type
   )
+
+  const guard = useSingleSubmit(isPending)
 
   const handleSubmit = () => {
     const payload: VerifyProcurementItem[] = verifyItems.map(
@@ -336,7 +339,7 @@ export function VerifyModal({
           </button>
 
           <button
-            onClick={handleSubmit}
+            onClick={guard(handleSubmit)}
             disabled={loading || hasUnselected}
             className="flex-1 px-4 py-2.5 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >

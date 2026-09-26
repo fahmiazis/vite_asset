@@ -8,6 +8,8 @@ export interface disposalDetailState {
   transaction: Transaction
   assets: DisposalAsset[]
   stages: DisposalStageHistory[]
+  /** true kalau stage berjalan menunggu tindakan user yang sedang login */
+  waiting_for_me?: boolean
 }
 
 export interface Transaction {
@@ -41,6 +43,11 @@ export interface DisposalAsset {
   disposal_type: string
   disposal_reason: string | null
   sale_value: number | null
+  /** diisi finance per aset di stage FINANCE */
+  income_value?: number | null
+  /** diisi tim pajak per aset di stage TAX */
+  invoice_number?: string | null
+  invoice_date?: string | null
   document_number: string | null
   notes: string | null
   status: "PENDING" | "DELETED" | "CANCELLED" | string
