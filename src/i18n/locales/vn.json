@@ -2017,5 +2017,8 @@
   },
   "depreciationSetting": {
     "defaultInfo": "Áp dụng cho mọi tài sản không có cấu hình ASSET hoặc CATEGORY. Chỉ được kích hoạt một cấu hình DEFAULT."
+  },
+  "app": {
+    "name": "Asset Management System"
   }
 }

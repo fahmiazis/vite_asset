@@ -1,5 +1,6 @@
 import { Cancel01Icon } from 'hugeicons-react';
 import SidebarContent from './content';
+import SidebarBrand from './brand';
 
 interface MobileSidebarState {
     isOpen: boolean;
@@ -16,7 +17,7 @@ export default function MobileSidebar({
         >
             <div className='p-4 relative'>
                 <Cancel01Icon onClick={() => setIsOpen(false)} className="cursor-pointer text-white text-lg mb-4 absolute right-4" />
-                <h4 className='text-3xl mt-6 font-bold'>Assets</h4>
+                <SidebarBrand className='mt-6 mb-2' />
                 <section className='flex flex-col gap-4 max-h-[90vh] overflow-y-scroll hide-scrollbar'>
                     <SidebarContent className='h-[65vh]'/>
                 </section>

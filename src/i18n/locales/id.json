@@ -2017,5 +2017,8 @@
   },
   "depreciationSetting": {
     "defaultInfo": "Dipakai semua aset yang tidak punya setting ASSET maupun CATEGORY. Hanya boleh satu setting DEFAULT yang aktif."
+  },
+  "app": {
+    "name": "Asset Management System"
   }
 }

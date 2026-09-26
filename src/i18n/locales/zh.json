@@ -2017,5 +2017,8 @@
   },
   "depreciationSetting": {
     "defaultInfo": "适用于所有没有 ASSET 或 CATEGORY 设置的资产。只能启用一个 DEFAULT 设置。"
+  },
+  "app": {
+    "name": "Asset Management System"
   }
 }

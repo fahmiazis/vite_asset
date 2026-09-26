@@ -2017,5 +2017,8 @@
   },
   "depreciationSetting": {
     "defaultInfo": "Used by every asset that has no ASSET or CATEGORY setting. Only one DEFAULT setting can be active."
+  },
+  "app": {
+    "name": "Asset Management System"
   }
 }
