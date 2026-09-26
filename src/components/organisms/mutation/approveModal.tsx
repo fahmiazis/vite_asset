@@ -4,6 +4,8 @@ import { useTranslation } from "react-i18next"
 import { useQueryClient } from "@tanstack/react-query"
 import { useApproveTransactionApproval } from "../../../hooks/mutation/mutation/approve"
 import { useMutationApprovalStatus } from "../../../hooks/query/mutation/approvalStatus"
+import { useSingleSubmit } from "../../../hooks/useSingleSubmit"
+import { withStageEmail } from "../../../stores/stageEmailStore"
 
 type ApproveModalProps = {
   transactionNumber: string
@@ -20,7 +22,7 @@ export function ApproveModal({
   const { t } = useTranslation()
   const queryClient = useQueryClient()
 
-  const { mutate: approve, isPending } =
+  const { mutateAsync: approve, isPending } =
     useApproveTransactionApproval(transactionNumber)
 
   const { data: approvalData } =
@@ -34,8 +36,10 @@ export function ApproveModal({
   const targetApprovalId =
     approvalData?.data.approvals[pendingIndex]?.id ?? ""
 
-  const handleSubmit = () => {
-    approve(
+  const guard = useSingleSubmit(isPending)
+
+  const handleSubmit = () =>
+    withStageEmail({ transactionType: "mutation", transactionNumber, action: "proceed" }, () => approve(
       {
         transaction_approval_id: targetApprovalId,
         notes,
@@ -55,8 +59,7 @@ export function ApproveModal({
           toast.error(t("approveModal.toast.error"))
         },
       }
-    )
-  }
+    ))
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-in fade-in duration-200">
@@ -139,7 +142,7 @@ export function ApproveModal({
           </button>
 
           <button
-            onClick={handleSubmit}
+            onClick={guard(handleSubmit)}
             disabled={isPending || !targetApprovalId}
             className="flex-1 px-4 py-2.5 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >

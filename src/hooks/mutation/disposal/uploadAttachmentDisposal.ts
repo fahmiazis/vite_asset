@@ -23,12 +23,9 @@ export function useUploadDisposalAttachment({
         }) => uploadDisposalAttachment(params, payload),
 
         onSuccess: () => {
-            queryClient.invalidateQueries({
-                queryKey: ["transaction-detail-with-stage"],
-            })
-            queryClient.invalidateQueries({
-                queryKey: ["attachments"],
-            })
+            // prefix match — refresh detail & status attachment disposal manapun
+            queryClient.invalidateQueries({ queryKey: ["disposal-detail"] })
+            queryClient.invalidateQueries({ queryKey: ["disposal-attachment-status"] })
 
             toast.success("Attachment uploaded successfully")
             onSuccess?.()

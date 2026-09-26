@@ -1,0 +1,162 @@
+import { useEffect, useState } from "react"
+import { useTranslation } from "react-i18next"
+import toast from "react-hot-toast"
+import { useAttachmentSettingList } from "../../../hooks/query/attachmentSetting/list"
+import { useUploadMutationAttachment } from "../../../hooks/mutation/mutation/uploadAttachment"
+import { useSingleSubmit } from "../../../hooks/useSingleSubmit"
+import { FileUploadField } from "../transaction/detail"
+
+interface AttachmentFileState {
+  id: number
+  name: string
+  description: string
+  is_required: boolean
+  file: File | null
+}
+
+interface AddMutationAttachmentModalProps {
+  transactionNumber: string
+  /** ID baris transaction_mutation_assets (asset.id), BUKAN asset_id */
+  transactionMutationAssetId: string
+  assetNumber?: string
+  onConfirm: () => void
+  onCancel: () => void
+}
+
+/**
+ * Unggah dokumen satu aset mutasi.
+ *
+ * Konfigurasi dokumennya diambil dari master attachment bertipe "mutation".
+ * Tidak difilter per stage seperti disposal, karena dokumen mutasi memang tidak
+ * dipisah per stage.
+ */
+export default function AddMutationAttachmentModal({
+  transactionNumber,
+  transactionMutationAssetId,
+  assetNumber,
+  onConfirm,
+  onCancel,
+}: AddMutationAttachmentModalProps) {
+  const { t } = useTranslation()
+  const [attachments, setAttachments] = useState<AttachmentFileState[]>([])
+
+  const { data: attachSetting, isLoading } = useAttachmentSettingList("mutation")
+  const { mutateAsync: uploadAttachment, isPending: isUploading } =
+    useUploadMutationAttachment()
+  const guard = useSingleSubmit(isUploading)
+
+  useEffect(() => {
+    if (!attachSetting?.data) return
+
+    setAttachments(
+      attachSetting.data
+        .filter((item) => item.is_active)
+        .map((item) => ({
+          id: item.id,
+          name: item.attachment_type,
+          description: item.description,
+          is_required: item.is_required,
+          file: null,
+        }))
+    )
+  }, [attachSetting])
+
+  const handleFileChange = (id: number, file: File | null) =>
+    setAttachments((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, file } : item))
+    )
+
+  const hasMissingRequired = attachments.some((item) => item.is_required && !item.file)
+  const hasAnyFile = attachments.some((item) => item.file)
+
+  const handleSubmit = async () => {
+    try {
+      const filesToUpload = attachments.filter((item) => item.file)
+      await Promise.all(
+        filesToUpload.map((item) =>
+          uploadAttachment({
+            params: { transaction_number: transactionNumber },
+            payload: {
+              transaction_mutation_asset_id: transactionMutationAssetId,
+              attachment_config_id: String(item.id),
+              file: item.file!,
+            },
+          })
+        )
+      )
+      toast.success(t("attachment.uploadSuccess"))
+      onConfirm()
+    } catch {
+      toast.error(t("attachment.uploadError"))
+    }
+  }
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+      <div className="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-xl shadow-xl p-6 w-full max-w-md mx-4">
+        <div className="flex items-center justify-center w-12 h-12 rounded-full bg-indigo-100 dark:bg-indigo-900/40 mx-auto mb-4">
+          <svg className="w-6 h-6 text-indigo-600 dark:text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+          </svg>
+        </div>
+        <h3 className="text-center text-base font-semibold text-gray-900 dark:text-white mb-1">
+          {t("attachment.modal.title")}
+        </h3>
+        <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-1">
+          {t("attachment.modal.desc")}
+        </p>
+        {assetNumber && (
+          <p className="text-center text-xs text-gray-400 mb-5">
+            {t("reviewAttachmentModal.asset")}{" "}
+            <span className="font-mono">{assetNumber}</span>
+          </p>
+        )}
+
+        <div className="space-y-4 max-h-80 overflow-y-auto pr-1">
+          {isLoading ? (
+            <div className="flex items-center justify-center py-8">
+              <div className="w-6 h-6 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+            </div>
+          ) : attachments.length === 0 ? (
+            <p className="text-center text-sm text-gray-400 dark:text-gray-600 py-6">
+              {t("mutationDocuments.noConfig")}
+            </p>
+          ) : (
+            attachments.map((item) => (
+              <div key={item.id}>
+                <FileUploadField
+                  label={`${item.name}${item.is_required ? " *" : ""}`}
+                  file={item.file}
+                  onChange={(file) => handleFileChange(item.id, file)}
+                  onRemove={() => handleFileChange(item.id, null)}
+                />
+                {item.description && (
+                  <p className="mt-1 text-xs text-gray-400 dark:text-gray-500">
+                    {item.description}
+                  </p>
+                )}
+              </div>
+            ))
+          )}
+        </div>
+
+        <div className="flex gap-3 mt-5">
+          <button
+            onClick={onCancel}
+            disabled={isUploading}
+            className="flex-1 px-4 py-2 text-sm font-medium border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-50"
+          >
+            {t("attachment.modal.cancel")}
+          </button>
+          <button
+            onClick={guard(handleSubmit)}
+            disabled={isUploading || hasMissingRequired || !hasAnyFile}
+            className="flex-1 px-4 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors disabled:opacity-50"
+          >
+            {isUploading ? t("attachment.modal.uploading") : t("attachment.modal.submit")}
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}

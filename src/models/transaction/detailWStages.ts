@@ -8,6 +8,11 @@ export interface detailTransactionWStageState {
   transaction: Transaction
   items: Item[]
   stages: Stage[]
+  /**
+   * true kalau transaksi ini menunggu tindakan user yang sedang login.
+   * Dihitung backend dengan aturan yang sama dengan tab "Menunggu Saya".
+   */
+  waiting_for_me?: boolean
 }
 
 export interface Transaction {
@@ -20,6 +25,7 @@ export interface Transaction {
   io_number: any
   notes: string
   created_by: string
+  created_by_name: string | null
   approved_by: any
   approved_at: any
   created_at: string

@@ -11,19 +11,31 @@ import {
   type ColumnFiltersState,
 } from "@tanstack/react-table"
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
 import { mutationColumns } from "./column"
 import type { listMutationDatas } from "../../../models/mutation/list"
 import { SearchingIcon } from "hugeicons-react"
 import { useTranslation } from "react-i18next"
+import {
+  DateRangeFilter,
+  type DateRangeValue,
+} from "../common/dateRangeFilter"
 
 interface Props {
   data: listMutationDatas[]
   isLoading?: boolean
+  /** filter tanggal transaksi — ikut baris filter, sama dengan /disposal */
+  dateRange: DateRangeValue
+  onDateRangeChange: (range: DateRangeValue) => void
+  onResetFilters: () => void
 }
 
-export function MutationTable({ data, isLoading }: Props) {
-  const navigate = useNavigate()
+export function MutationTable({
+  data,
+  isLoading,
+  dateRange,
+  onDateRangeChange,
+  onResetFilters,
+}: Props) {
   const { t } = useTranslation()
 
   const [sorting, setSorting] = useState<SortingState>([])
@@ -63,9 +75,9 @@ export function MutationTable({ data, isLoading }: Props) {
 
   return (
     <div className="space-y-0 mt-4">
-      {/* Search + Create */}
-      <div className="flex items-center justify-between gap-3 pb-3">
-        <div className="relative max-w-md w-full">
+      {/* Tombol buat baru ada di header halaman — tidak diulang di sini */}
+      <div className="flex flex-wrap items-center gap-2 pb-3">
+        <div className="relative max-w-md flex-1 min-w-[220px]">
           <SearchingIcon
             size={14}
             className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500"
@@ -80,11 +92,13 @@ export function MutationTable({ data, isLoading }: Props) {
           />
         </div>
 
+        <DateRangeFilter {...dateRange} onChange={onDateRangeChange} />
+
         <button
-          onClick={() => navigate("/dashboard/mutation/create")}
-          className="flex items-center gap-1.5 px-3 py-2 text-xs font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors whitespace-nowrap"
+          onClick={onResetFilters}
+          className="px-3 py-2 text-sm text-gray-500 hover:text-gray-800 dark:hover:text-gray-200 underline underline-offset-2"
         >
-          + {t("label.mutation.create")}
+          {t("dateRange.reset")}
         </button>
       </div>
 

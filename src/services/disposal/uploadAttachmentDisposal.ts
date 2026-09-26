@@ -11,6 +11,7 @@ export interface UploadDisposalAttachmentParams {
 }
 
 export interface UploadDisposalAttachmentPayload {
+    /** ID baris transaction_disposal_assets (asset.id pada response detail), BUKAN asset_id */
     transaction_disposal_asset_id: string
     attachment_config_id: string
     stage: string
@@ -33,7 +34,6 @@ export const uploadDisposalAttachment = async (
         {
             params: {
                 transaction_number: params.transaction_number,
-                stage: "DRAFT"
             },
             headers: {
                 "Content-Type": "multipart/form-data",

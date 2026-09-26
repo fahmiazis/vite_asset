@@ -12,6 +12,7 @@ import { useState } from 'react'
 import type { roleListState } from '../../../models/roles/list'
 import { roleColumns } from './columns'
 import { useNavigate } from 'react-router-dom'
+import { PageSizeSelect, usePageSize } from '../../molecules/table/pageSize'
 
 interface RoleTableProps {
   data: roleListState[]
@@ -47,6 +48,8 @@ const navigate = useNavigate()
     },
   })
 
+  const { mode: pageSizeMode, setMode: setPageSizeMode } = usePageSize(table)
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -71,8 +74,12 @@ const navigate = useNavigate()
             className="px-4 py-2 border border-gray-900 dark:border-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-sm"
           />
         </div>
-        <button onClick={()=>navigate('/dashboard/role/create')}>Create</button>
-        {/* <Links href={'/dashboard/role/create'} children={'Create'} className='px-4'/> */}
+        <button
+          onClick={() => navigate('/dashboard/role/create')}
+          className="px-4 py-2 text-xs font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        >
+          + Buat Role
+        </button>
       </section>
 
       {/* Table */}
@@ -129,8 +136,10 @@ const navigate = useNavigate()
       </div>
 
       {/* Pagination */}
-      <div className="flex items-center justify-between">
-        <div className="text-xs">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center gap-4">
+          <PageSizeSelect value={pageSizeMode} onChange={setPageSizeMode} />
+          <div className="text-xs">
           Show{' '}
           <span className="font-medium">
             {table.getState().pagination.pageIndex *
@@ -150,6 +159,7 @@ const navigate = useNavigate()
             {table.getFilteredRowModel().rows.length}
           </span>{' '}
           data
+          </div>
         </div>
 
         <div className="flex items-center gap-2">

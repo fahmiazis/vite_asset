@@ -1,5 +1,6 @@
 export interface CreateMenuRequest {
   name: string;
+  menu_type?: string;
   path: string;
   route_path: string;
   status: string;

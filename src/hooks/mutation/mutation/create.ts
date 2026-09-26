@@ -15,7 +15,7 @@ export function useCreateMutation({
   onSuccess,
   onError,
   redirectOnSuccess = false,
-  redirectPath = '/dashboard/transactions',
+  redirectPath = '/dashboard/mutation',
 }: UseCreateMutationParams = {}) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();

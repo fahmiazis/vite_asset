@@ -1,47 +1,38 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { toast } from "react-hot-toast"
-import { reviewDisposalAttachment, type ReviewDisposalAttachmentParams, type ReviewDisposalAttachmentPayload } from "../../../services/disposal/reviewAttchment"
+import {
+  reviewDisposalAttachment,
+  type ReviewDisposalAttachmentPayload,
+} from "../../../services/disposal/reviewAttachment"
 
-interface UseReviewDisposalAttachmentOptions {
-    onSuccess?: () => void
-    onError?: (error: Error) => void
+interface UseReviewDisposalAttachmentParams {
+  onSuccess?: () => void
+  onError?: (error: Error) => void
 }
 
 export function useReviewDisposalAttachment({
-    onSuccess,
-    onError,
-}: UseReviewDisposalAttachmentOptions = {}) {
-    const queryClient = useQueryClient()
+  onSuccess,
+  onError,
+}: UseReviewDisposalAttachmentParams = {}) {
+  const queryClient = useQueryClient()
 
-    return useMutation({
-        mutationFn: ({
-            params,
-            payload,
-        }: {
-            params: ReviewDisposalAttachmentParams
-            payload: ReviewDisposalAttachmentPayload
-        }) => reviewDisposalAttachment(params, payload),
+  return useMutation({
+    mutationFn: ({ id, payload }: { id: number; payload: ReviewDisposalAttachmentPayload }) =>
+      reviewDisposalAttachment(id, payload),
 
-        onSuccess: () => {
-            queryClient.invalidateQueries({
-                queryKey: ["transaction-detail-with-stage"],
-            })
-            queryClient.invalidateQueries({
-                queryKey: ["attachments"],
-            })
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["disposal-detail"] })
+      queryClient.invalidateQueries({ queryKey: ["disposal-attachment-status"] })
 
-            toast.success("Attachment reviewed successfully")
-            onSuccess?.()
-        },
+      toast.success(data?.message || "Review dokumen tersimpan")
+      onSuccess?.()
+    },
 
-        onError: (error: any) => {
-            const errorMessage =
-                error.response?.data?.message ||
-                error.message ||
-                "Failed to review attachment"
-
-            toast.error(errorMessage)
-            onError?.(error)
-        },
-    })
+    onError: (error: any) => {
+      const errorMessage =
+        error.response?.data?.message || error.message || "Gagal mereview dokumen"
+      toast.error(errorMessage)
+      onError?.(error)
+    },
+  })
 }

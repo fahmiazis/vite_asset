@@ -48,7 +48,8 @@
       "action": "Action",
       "approved": "Approved",
       "rejected": "Rejected",
-      "pending": "Pending"
+      "pending": "Pending",
+      "stage": "Stage"
     }
   },
   "transaksiHeader": {
@@ -63,10 +64,13 @@
   "transaksiTable": {
     "tabs": {
       "all": "All",
-      "pending": "Pending",
-      "approved": "Approved",
-      "rejected": "Rejected",
-      "draft": "Draft"
+      "waiting": "Waiting for Me",
+      "draft": "Draft",
+      "verification": "Verification",
+      "approval": "Approval",
+      "process": "In Process",
+      "finished": "Finished",
+      "rejected": "Rejected"
     },
     "searchPlaceholder": "Search by asset name, PO number, or requester...",
     "noData": "No data available",
@@ -84,7 +88,8 @@
       "qty": "Qty",
       "totalValue": "Total Value",
       "status": "Status",
-      "action": "Action"
+      "action": "Action",
+      "stage": "Stage"
     },
     "status": {
       "approved": "Approved",
@@ -262,7 +267,13 @@
     "rejectedSuccess": "Attachment rejected",
     "reviewFailed": "Failed to save review",
     "zoomIn": "Zoom in",
-    "zoomOut": "Zoom out"
+    "zoomOut": "Zoom out",
+    "download": "Download",
+    "noPreview": "Preview is only available for images and PDF. Use download to open this file.",
+    "loadError": "Failed to load the file. It may have been removed from the server.",
+    "documentType": "Document type",
+    "asset": "Asset",
+    "uploadedBy": "Uploaded by"
   },
   "verifyModal": {
     "title": "Verify Transaction",
@@ -371,7 +382,7 @@
   },
   "submitDisposalModal": {
     "title": "Submit Transaction",
-    "infoMessage": "Transaction will be sent for approval process. Make sure all data is correct.",
+    "infoMessage": "The transaction will be submitted and the approval request is created right away. Make sure all data is correct.",
     "notes": "Notes",
     "optional": "optional",
     "notesPlaceholder": "Add notes for the approval process...",
@@ -381,7 +392,10 @@
     "toast": {
       "success": "Disposal submitted successfully",
       "error": "Failed to submit disposal"
-    }
+    },
+    "revisionTitle": "Resubmit Revision",
+    "revisionInfo": "The assets marked for revision will be resubmitted and the approval starts again from the first step. The revision marks are cleared once this succeeds.",
+    "revisionSubmit": "Resubmit"
   },
   "removeAssetModal": {
     "title": "Remove Asset",
@@ -411,7 +425,12 @@
     "toast": {
       "noAsset": "Please select an asset first",
       "noReason": "Disposal reason is required"
-    }
+    },
+    "searchPlaceholder": "Search asset number or name...",
+    "assetEmpty": "No eligible assets found",
+    "filterHint": "Showing available assets in branch {{branch}} only",
+    "moreResults": "{{count}} matches, refine your search",
+    "noHomebase": "Your account has no active homebase branch, so assets cannot be filtered. Set it first on the branch page."
   },
   "addAssetMutationModal": {
     "title": "Add Asset",
@@ -538,6 +557,771 @@
     },
     "uploadSuccess": "Attachments uploaded successfully.",
     "uploadError": "Failed to upload attachments."
+  },
+  "disposalStage": {
+    "sectionTitle": "Stage Progress",
+    "rejected": "Rejected",
+    "stage": {
+      "DRAFT": "Draft",
+      "PURCHASING": "Purchasing",
+      "APPROVAL_REQUEST": "Approval Request",
+      "APPROVAL_AGREEMENT": "Approval Agreement",
+      "EXECUTE": "Execute",
+      "FINANCE": "Finance",
+      "TAX": "Tax",
+      "ASSET_DELETION": "Asset Deletion",
+      "FINISHED": "Finished",
+      "REJECTED": "Rejected",
+      "CANCELLED": "Cancelled"
+    },
+    "type": {
+      "DISPOSE": "Dispose",
+      "SELL": "Sell"
+    },
+    "openDetail": "Open {{stage}} status"
+  },
+  "approvalDetail": {
+    "title": "Approval Flow Detail",
+    "loading": "Loading data...",
+    "yes": "Yes",
+    "no": "No",
+    "info": {
+      "flowCode": "Flow Code",
+      "approvalWay": "Approval Way",
+      "assignmentType": "Assignment Type",
+      "stepCount": "Total Steps",
+      "status": "Status",
+      "active": "Active",
+      "inactive": "Inactive",
+      "customizable": "Customizable",
+      "description": "Description"
+    },
+    "step": {
+      "no": "No",
+      "order": "Step Order",
+      "name": "Step Name",
+      "role": "Step Role",
+      "roleName": "Role Name",
+      "type": "Type",
+      "category": "Category",
+      "approvalWay": "Approval Way",
+      "structure": "Structure",
+      "isRequired": "Required",
+      "canSkip": "Can Skip",
+      "isVisible": "Visible",
+      "action": "Action",
+      "update": "Update",
+      "delete": "Delete",
+      "create": "Create Step",
+      "reorder": "Reorder",
+      "search": "Search Flow Step...",
+      "empty": "No flow step data"
+    },
+    "editModal": {
+      "title": "Edit Approval Step",
+      "subtitle": "Changing step: {{name}}",
+      "save": "Save Changes",
+      "saving": "Saving...",
+      "cancel": "Cancel"
+    },
+    "deleteModal": {
+      "title": "Delete Step",
+      "desc": "Step \"{{name}}\" will be removed from this flow. Continue?",
+      "confirm": "Yes, Delete",
+      "deleting": "Deleting...",
+      "cancel": "Cancel"
+    },
+    "reorderModal": {
+      "title": "Approval Step",
+      "subtitle": "Drag to reorder the approval steps",
+      "save": "Save",
+      "saving": "Saving...",
+      "stepBadge": "Step {{order}}"
+    },
+    "pagination": {
+      "show": "Show",
+      "until": "Until",
+      "from": "From",
+      "data": "data",
+      "page": "Page",
+      "of": "From"
+    },
+    "toast": {
+      "updateSuccess": "Approval step updated",
+      "updateError": "Failed to update approval step",
+      "deleteSuccess": "Approval step deleted",
+      "deleteError": "Failed to delete approval step"
+    },
+    "createStep": {
+      "title": "Create Step",
+      "submit": "Create Step",
+      "creating": "Creating..."
+    }
+  },
+  "approvalList": {
+    "title": "Approval Flow",
+    "loading": "Loading data...",
+    "search": "Search approval flow...",
+    "create": "Create",
+    "empty": "No data available",
+    "viewDetail": "View Details",
+    "no": "No",
+    "flowCode": "Flow Code",
+    "flowName": "Flow Name",
+    "assignmentType": "Assignment Type",
+    "assignedUser": "Assigned User",
+    "status": "Status",
+    "createdAt": "Created At",
+    "action": "Action",
+    "active": "Active",
+    "inactive": "Inactive",
+    "pagination": {
+      "showing": "Showing",
+      "to": "to",
+      "of": "of",
+      "entries": "entries",
+      "page": "Page",
+      "ofPage": "of"
+    },
+    "deleteModal": {
+      "title": "Delete Approval Flow",
+      "desc": "Flow \"{{name}}\" ({{code}}) will be deleted. Continue?",
+      "warning": "Transactions that are mid-approval on this flow keep referencing it. Creating the same code again later restores this flow along with its steps.",
+      "confirm": "Yes, Delete",
+      "deleting": "Deleting...",
+      "cancel": "Cancel",
+      "success": "Approval flow deleted",
+      "error": "Failed to delete approval flow"
+    },
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "approvalCreate": {
+    "title": "Create Approval Flow",
+    "flowCode": "Flow Code",
+    "flowCodePlaceholder": "Select flow code...",
+    "flowCodeHelper": "The code is read by the backend to find the flow automatically — pick the one matching the module.",
+    "flowCodeUsed": "already used",
+    "flowName": "Flow Name",
+    "approvalWay": "Approval Way",
+    "assignmentType": "Assignment Type",
+    "assignedUser": "Assigned User",
+    "assignedUserPlaceholder": "Select user...",
+    "assignedUserHelper": "Only used when assignment type is User Specific.",
+    "creatorRoles": "Allowed Creator Roles",
+    "creatorRolesPlaceholder": "Select roles...",
+    "description": "Description",
+    "descriptionPlaceholder": "Enter description...",
+    "descriptionHelper": "Maximum 500 characters",
+    "note": "Note:",
+    "noteDesc": "The following values are set automatically:",
+    "submit": "Create Approval Flow",
+    "creating": "Creating...",
+    "cancel": "Cancel",
+    "validation": {
+      "flowCode": "Flow Code is required",
+      "flowCodeDuplicate": "This flow code already exists for branch ALL",
+      "flowName": "Flow Name is required",
+      "approvalWay": "Approval Way is required",
+      "assignmentType": "Assignment Type is required",
+      "assignedUser": "Assigned User is required for User Specific",
+      "creatorRoles": "At least one Allowed Creator Role is required",
+      "description": "Description is required"
+    }
+  },
+  "approvalEdit": {
+    "title": "Edit Approval Flow",
+    "submit": "Save Changes",
+    "saving": "Saving...",
+    "flowCodeLocked": "Flow code cannot be changed — the backend uses it to find this flow automatically.",
+    "descriptionHelper": "Maximum 500 characters. Cannot be emptied — the backend treats a blank value as \"no change\".",
+    "isActive": "Active",
+    "isCustomizable": "Customizable",
+    "inactiveWarning": "An inactive flow is rejected when a transaction tries to start its approval.",
+    "noChanges": "Nothing changed yet",
+    "toast": {
+      "success": "Approval flow updated",
+      "error": "Failed to update approval flow"
+    }
+  },
+  "disposalAction": {
+    "submitLabel": "Submit",
+    "confirmLabel": "Confirm",
+    "terminal": "Transaction is already {{stage}} — no further action.",
+    "waitingApproval": "Approval already initiated — waiting for approvers ({{done}}/{{total}} steps done).",
+    "submit": {
+      "button": "Submit Transaction",
+      "revisionButton": "Resubmit Revision"
+    },
+    "saleValues": {
+      "button": "Enter Sale Value",
+      "title": "Enter Sale Value",
+      "info": "Enter the sale value for each asset. Once saved, the transaction moves to the Approval Request stage.",
+      "notesLabel": "Notes",
+      "notesPlaceholder": "Purchasing notes (optional)",
+      "confirm": "Save & Continue",
+      "noAssets": "No active assets in this transaction",
+      "invalid": "Sale value must be greater than 0",
+      "total": "Total sale value"
+    },
+    "approvalRequest": {
+      "button": "Submit Approval Request",
+      "title": "Submit Approval Request",
+      "info": "Normally the approval request is created automatically when the draft is submitted. Use this only if this transaction has no approval records yet. The DISPOSAL_APPROVAL_REQUEST flow will be applied."
+    },
+    "approvalAgreement": {
+      "button": "Submit Approval Agreement",
+      "title": "Submit Approval Agreement",
+      "info": "The DISPOSAL_APPROVAL_AGREEMENT flow will be applied. Once approved, the transaction moves to the Execute stage."
+    },
+    "execute": {
+      "button": "Execute Disposal",
+      "title": "Execute Disposal",
+      "confirm": "Execute",
+      "info": "Make sure the disposal / sale documents are uploaded at the Execute stage before continuing.",
+      "notesLabel": "Execution notes",
+      "notesPlaceholder": "Notes on carrying out the disposal"
+    },
+    "finance": {
+      "button": "Confirm Finance",
+      "title": "Confirm Finance",
+      "info": "Every asset must already have its income filled. Once confirmed, the transaction moves to the Tax stage.",
+      "notesLabel": "Finance notes",
+      "incomeInvalid": "Income must be greater than 0",
+      "saleValueLabel": "Agreed sale value",
+      "difference": "Difference"
+    },
+    "tax": {
+      "button": "Confirm Tax",
+      "title": "Confirm Tax",
+      "info": "Every asset must already have its invoice filled. Once confirmed, the transaction moves to the Asset Deletion stage.",
+      "notesLabel": "Tax notes",
+      "invoiceNumberLabel": "Invoice number",
+      "invoiceNumberPlaceholder": "e.g. INV/2026/09/0001",
+      "invoiceDateLabel": "Invoice date",
+      "invoiceHint": "Required — after this stage the assets are deleted and the invoice can no longer be recorded here."
+    },
+    "assetDeletion": {
+      "button": "Confirm Asset Deletion",
+      "title": "Confirm Asset Deletion",
+      "confirm": "Delete & Finish",
+      "info": "The assets will be removed from the active list and a deletion document number will be generated. This finishes the transaction.",
+      "notesLabel": "Deletion notes"
+    },
+    "reject": {
+      "button": "Reject",
+      "title": "Reject Disposal",
+      "info": "The transaction moves to the Rejected stage and the assets return to their previous status. This cannot be undone.",
+      "notesLabel": "Rejection reason",
+      "notesPlaceholder": "Explain the reason for rejection"
+    },
+    "step": {
+      "approve": "Approve",
+      "reject": "Reject",
+      "revise": "Revise",
+      "notesRequired": "Reason",
+      "notesOptional": "Notes (optional)",
+      "cancelButton": "Cancel",
+      "processing": "Processing...",
+      "approveModal": {
+        "title": "Approve This Step",
+        "desc": "Step: {{step}}",
+        "confirm": "Approve",
+        "placeholder": "Add a note for this approval..."
+      },
+      "rejectModal": {
+        "title": "Reject This Step",
+        "desc": "The transaction will be rejected and the assets released. This cannot be undone.",
+        "confirm": "Reject",
+        "placeholder": "Explain why this is rejected (min. 5 characters)"
+      },
+      "reviseModal": {
+        "title": "Return for Revision",
+        "desc": "The transaction goes back to DRAFT so the creator can fix it and submit again. Approvals recorded so far are cleared; assets and uploaded documents stay.",
+        "confirm": "Return for Revision",
+        "placeholder": "What needs to be fixed? (min. 5 characters)"
+      },
+      "toast": {
+        "approveSuccess": "Step approved",
+        "approveError": "Failed to approve this step",
+        "rejectSuccess": "Transaction rejected",
+        "rejectError": "Failed to reject this step",
+        "reviseSuccess": "Transaction returned to draft",
+        "reviseError": "Failed to return this transaction"
+      },
+      "pickAssets": "Assets to fix",
+      "pickAssetsHint": "Only the assets you tick can be changed by the submitter. The transaction as a whole still returns to DRAFT."
+    },
+    "cancelRequest": {
+      "button": "Cancel Request",
+      "success": "Transaction cancelled",
+      "error": "Failed to cancel this transaction",
+      "modal": {
+        "title": "Cancel This Request",
+        "desc": "You are cancelling your own submission. The transaction ends as CANCELLED and the assets are released. This cannot be undone.",
+        "confirm": "Yes, Cancel",
+        "placeholder": "Why is this cancelled? (min. 5 characters)"
+      }
+    },
+    "incomeValues": {
+      "button": "Enter Income",
+      "title": "Enter Income per Asset",
+      "info": "Enter the income received for each asset. Saving does not move the stage — use Confirm Finance at the bottom once everything is filled.",
+      "notesLabel": "Finance notes",
+      "confirm": "Save",
+      "noAssets": "No active assets in this transaction",
+      "total": "Total income"
+    },
+    "invoices": {
+      "button": "Enter Invoice",
+      "title": "Enter Invoice per Asset",
+      "info": "Enter the invoice number and date for each asset. Saving does not move the stage — use Confirm Tax at the bottom once everything is filled.",
+      "notesLabel": "Tax notes",
+      "confirm": "Save",
+      "noAssets": "No active assets in this transaction"
+    }
+  },
+  "disposalStagePanel": {
+    "showing": "Showing status for stage: {{stage}}",
+    "currentStage": "Current stage",
+    "approvalTitle": "Approval Status",
+    "stepsDone": "{{done}}/{{total}} steps done",
+    "notInitiated": "Approval flow has not been initiated",
+    "initiate": "Submit for Approval",
+    "initiating": "Submitting...",
+    "noSteps": "No approval steps yet",
+    "documentsTitle": "Documents — {{stage}}",
+    "documentsHint": "Document completeness decides whether the transaction can move to the next stage",
+    "allComplete": "All assets complete",
+    "someIncomplete": "Some assets incomplete",
+    "noDocuments": "No document data for this stage",
+    "historyTitle": "Entered this stage",
+    "approvalStatus": {
+      "APPROVED": "Approved",
+      "PENDING": "Pending",
+      "REJECTED": "Rejected",
+      "SKIPPED": "Skipped"
+    },
+    "attachmentStatus": {
+      "APPROVED": "Approved",
+      "PENDING": "Awaiting review",
+      "REJECTED": "Rejected"
+    },
+    "card": {
+      "approvedOf": "{{done}}/{{total}} approved",
+      "pending": "{{count}} awaiting",
+      "rejected": "{{count}} rejected",
+      "missing": "{{count}} not uploaded",
+      "complete": "Complete",
+      "incomplete": "Incomplete",
+      "uploaded": "Uploaded",
+      "upload": "Upload",
+      "noUploads": "No documents uploaded yet",
+      "rejectionReason": "Rejection reason",
+      "review": "Review",
+      "noneWithStatus": "No documents with this status",
+      "view": "View"
+    },
+    "nothingToShow": "Nothing to show for this stage yet",
+    "tab": {
+      "ALL": "All",
+      "PENDING": "Pending",
+      "APPROVED": "Approved",
+      "REJECTED": "Rejected"
+    }
+  },
+  "disposalDocuments": {
+    "title": "Documents",
+    "subtitle": "All documents across stages, grouped by stage",
+    "summary": "{{approved}}/{{required}} approved",
+    "empty": "No documents configured for this transaction yet"
+  },
+  "disposalDetail": {
+    "needsRevision": "Needs revision",
+    "revisionNote": "Revision note",
+    "revisionBanner": "This transaction was returned for revision. Only the assets marked \"Needs revision\" can be changed, and no new assets can be added until it is submitted again.",
+    "info": {
+      "transactionType": "Transaction type",
+      "date": "Date",
+      "disposalType": "Disposal type",
+      "createdBy": "Created by",
+      "createdAt": "Created at",
+      "updatedAt": "Updated at",
+      "saleValue": "Sale value",
+      "incomeValue": "Income received",
+      "invoiceNumber": "Invoice number",
+      "invoiceDate": "Invoice date",
+      "requestNumber": "Request No.",
+      "agreementNumber": "Agreement No."
+    },
+    "revisionHowTo": "Once the marked assets are fixed, press “{{action}}” at the bottom of this page to mark the revision as done."
+  },
+  "disposalAgreement": {
+    "title": "Disposal Agreement",
+    "createTitle": "Create Disposal Agreement",
+    "detailTitle": "Agreement Detail",
+    "create": "Create Agreement",
+    "searchPlaceholder": "Search agreement number...",
+    "empty": "No agreements yet",
+    "totalItems": "{{count}} transactions",
+    "eligibleTitle": "Eligible transactions",
+    "eligibleHint": "Disposals that already passed approval request and are not in an active agreement yet",
+    "noEligible": "No transactions are eligible right now",
+    "selectAll": "Select all",
+    "unselectAll": "Unselect all",
+    "assetCount": "{{count}} assets",
+    "notes": "Notes",
+    "optional": "optional",
+    "notesPlaceholder": "Notes for the approvers...",
+    "summary": "{{transactions}} transactions · {{assets}} assets · {{branches}} branches selected",
+    "submit": "Submit Agreement",
+    "submitting": "Submitting...",
+    "cancel": "Cancel",
+    "agreementNumber": "Agreement number",
+    "totalTransactions": "Total transactions",
+    "createdBy": "Created by",
+    "createdAt": "Created at",
+    "approvalProgress": "Approval progress",
+    "approvalStatus": "Approval Status",
+    "rejectionReason": "Rejection reason",
+    "stage": {
+      "APPROVAL_AGREEMENT": "Waiting approval",
+      "FINISHED": "Approved",
+      "REJECTED": "Rejected"
+    },
+    "validation": {
+      "pickAtLeastOne": "Pick at least one transaction"
+    },
+    "toast": {
+      "created": "Agreement created",
+      "createError": "Failed to create agreement",
+      "approved": "Step approved",
+      "approveError": "Failed to approve",
+      "rejected": "Agreement rejected",
+      "rejectError": "Failed to reject",
+      "revised": "Disposal returned for revision",
+      "reviseError": "Failed to return disposal for revision"
+    },
+    "column": {
+      "no": "No",
+      "number": "Agreement Number",
+      "items": "Transactions",
+      "createdBy": "Created By",
+      "createdAt": "Created At",
+      "status": "Status"
+    },
+    "emptySearch": "No agreement matches your search",
+    "viewDisposal": "Detail",
+    "assets": "Assets in this agreement",
+    "assetsHint": "All assets from the grouped transactions. Once approved, each transaction continues on its own transaction number.",
+    "noAssets": "No assets found",
+    "totalAssets": "Total assets",
+    "assetColumn": {
+      "no": "No",
+      "asset": "Asset",
+      "category": "Category",
+      "branch": "Branch",
+      "reason": "Disposal Reason",
+      "saleValue": "Sale Value",
+      "transaction": "Transaction"
+    },
+    "filter": {
+      "allStages": "All stages",
+      "startDate": "From date",
+      "endDate": "To date",
+      "reset": "Reset"
+    },
+    "revise": {
+      "button": "Request Revision",
+      "info": "The selected disposals leave this agreement and return to DRAFT for their creators to fix, then go through approval request again. The remaining members stay in this agreement and its approval continues.",
+      "pickMembers": "Disposals to return",
+      "keepOne": "At least one disposal must remain — use Reject to return all of them.",
+      "assets": "{{count}} assets"
+    }
+  },
+  "assetCategory": {
+    "title": "Asset Category",
+    "createTitle": "Create Asset Category",
+    "updateTitle": "Edit Asset Category",
+    "create": "Create Category",
+    "save": "Save Changes",
+    "saving": "Saving...",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "active": "Active",
+    "inactive": "Inactive",
+    "searchPlaceholder": "Search code or name...",
+    "empty": "No asset category yet",
+    "emptySearch": "No category matches your search",
+    "codeHelper": "Short code, 2-50 characters. Saved in uppercase.",
+    "descriptionPlaceholder": "What kind of assets belong to this category...",
+    "inactiveWarning": "An inactive category is still readable, but avoid using it for new assets.",
+    "column": {
+      "no": "No",
+      "code": "Code",
+      "name": "Category Name",
+      "description": "Description",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "validation": {
+      "code": "Category code must be at least 2 characters",
+      "name": "Category name must be at least 2 characters",
+      "noChanges": "Nothing changed yet"
+    },
+    "deleteModal": {
+      "title": "Delete Category",
+      "desc": "Category \"{{name}}\" ({{code}}) will be deleted. Continue?",
+      "warning": "Assets and depreciation settings that reference this category will lose their reference. Deactivate it instead if it is still used by historical data.",
+      "confirm": "Yes, Delete",
+      "deleting": "Deleting...",
+      "cancel": "Cancel"
+    },
+    "toast": {
+      "updated": "Category updated",
+      "updateError": "Failed to update category",
+      "deleted": "Category deleted",
+      "deleteError": "Failed to delete category"
+    }
+  },
+  "mutationList": {
+    "title": "Asset Mutation",
+    "subtitle": "{{count}} mutations registered",
+    "create": "New Mutation"
+  },
+  "disposalList": {
+    "title": "Asset Disposal",
+    "subtitle": "{{count}} disposals registered",
+    "create": "New Disposal",
+    "tab": {
+      "all": "All",
+      "draft": "Draft",
+      "approval": "On Approval",
+      "process": "In Process",
+      "finished": "Finished",
+      "closed": "Closed",
+      "waiting": "Waiting for Me"
+    },
+    "needsRevision": "Needs revision ({{count}})",
+    "searchPlaceholder": "Search transaction no., note, or asset..."
+  },
+  "listStats": {
+    "total": "Total",
+    "draft": "Draft",
+    "onApproval": "On Approval",
+    "finished": "Finished",
+    "ofTotal": "{{percent}}% of total"
+  },
+  "table": {
+    "showData": "Show",
+    "showAll": "All"
+  },
+  "mutationDocuments": {
+    "title": "Documents",
+    "subtitle": "Supporting documents per asset for this mutation",
+    "empty": "No documents for this transaction yet",
+    "noConfig": "No document configuration for mutation yet"
+  },
+  "revisionDecision": {
+    "revise": {
+      "button": "Request Revision",
+      "title": "Return for Revision",
+      "info": "The transaction goes back to DRAFT with its content intact. Mark the rows that must be fixed — the submitter can only change those.",
+      "pickRows": "Rows that need fixing",
+      "noRows": "No rows available to mark",
+      "notesLabel": "Revision note",
+      "notesPlaceholder": "Explain what must be corrected...",
+      "confirm": "Return for Revision"
+    },
+    "cancel": {
+      "button": "Cancel Request",
+      "title": "Cancel Request",
+      "info": "The request is closed permanently. This is different from a rejection: cancelling is done by the submitter on their own request.",
+      "notesLabel": "Reason",
+      "notesPlaceholder": "Explain why this request is cancelled...",
+      "confirm": "Cancel Request"
+    },
+    "minChars": "At least {{min}} characters ({{current}}/{{min}})",
+    "processing": "Processing...",
+    "cancelButton": "Close",
+    "badge": "Needs revision"
+  },
+  "dateRange": {
+    "label": "Transaction date",
+    "from": "From date",
+    "to": "To date",
+    "reset": "Reset"
+  },
+  "stageEmail": {
+    "title": "Send Notification Email",
+    "preparing": "Preparing email...",
+    "invalidEmail": "Invalid email format",
+    "remove": "Remove",
+    "minOne": "At least 1 recipient",
+    "addPlaceholder": "Type an email and press Enter",
+    "sent": "Email sent",
+    "resendLater": "You can resend the email later from Email Setting → Log",
+    "mailerNotConfigured": "SMTP is not configured on the server yet. The action still runs; the email will be logged as failed and can be resent from the Log tab.",
+    "failedTitle": "The action succeeded, but the email failed to send",
+    "failedHint": "Resend now, or later from Email Setting → Log.",
+    "subject": "Subject",
+    "subjectLocked": "Locked by template",
+    "to": "To",
+    "cc": "CC",
+    "noAutoRecipients": "No users were found automatically — add the email manually.",
+    "body": "Message",
+    "additional": "Additional Message",
+    "optional": "optional",
+    "additionalPlaceholder": "Appended below the email body",
+    "close": "Close",
+    "cancel": "Cancel",
+    "resend": "Resend",
+    "running": "Processing action...",
+    "sending": "Sending email...",
+    "confirm": "Send & Continue",
+    "showPreview": "Preview email",
+    "hidePreview": "Hide preview",
+    "autoContent": "Request details and the asset list are added to the email automatically."
+  },
+  "emailSetting": {
+    "title": "Email Setting",
+    "tab": {
+      "template": "Template",
+      "log": "Log"
+    },
+    "action": {
+      "proceed": "Proceed / Submit",
+      "reject": "Reject",
+      "revise": "Revise",
+      "cancel": "Cancel request"
+    },
+    "back": "Back",
+    "loading": "Loading...",
+    "notFound": "Template not found",
+    "cancel": "Cancel",
+    "saving": "Saving...",
+    "save": "Save",
+    "create": "Create",
+    "edit": "Edit",
+    "deleting": "Deleting...",
+    "active": "Active",
+    "inactive": "Inactive",
+    "empty": "No data",
+    "searchTemplate": "Search subject, stage, role...",
+    "allTransactionTypes": "All transaction types",
+    "delete": {
+      "title": "Delete Email Template",
+      "message": "Delete template \"{{label}}\"? This cannot be undone.",
+      "confirm": "Delete",
+      "button": "Delete"
+    },
+    "toast": {
+      "created": "Template created",
+      "createFailed": "Failed to create template",
+      "updated": "Template updated",
+      "updateFailed": "Failed to update template",
+      "deleted": "Template deleted",
+      "deleteFailed": "Failed to delete template"
+    },
+    "column": {
+      "no": "No",
+      "transactionType": "Transaction Type",
+      "stage": "Stage",
+      "action": "Action",
+      "subject": "Subject",
+      "ccRoles": "CC Roles",
+      "status": "Status",
+      "actions": "Action"
+    },
+    "form": {
+      "createTitle": "Create Email Template",
+      "editTitle": "Edit Email Template",
+      "transactionType": "Transaction Type",
+      "transactionTypePlaceholder": "Select transaction type...",
+      "stage": "Stage",
+      "stagePlaceholder": "Select stage...",
+      "stageHelper": "The stage the transaction is in when the action is taken.",
+      "action": "Action",
+      "toInfoTitle": "The To recipients are not configured here",
+      "toInfo": {
+        "proceed": "They are filled automatically with users who have access to the next stage (or the next approval step) in the same branch as the request.",
+        "reject": "They are filled automatically with the creator of the request.",
+        "revise": "They are filled automatically with the creator of the request.",
+        "cancel": "They are filled automatically with users currently handling the request at this stage."
+      },
+      "subject": "Subject",
+      "subjectPlaceholder": "e.g. [0001/IX/2026-DPSL] Waiting for your approval",
+      "subjectHelper": "Locked in the email dialog — users cannot change it.",
+      "body": "Message",
+      "bodyPlaceholder": "Write the message for the recipients...",
+      "bodyHelper": "Only the message. The header, request details, asset list, and the \"Open transaction\" button are added automatically. Users can add an extra message when sending.",
+      "placeholders": "Placeholders (inserted into {{field}}):",
+      "ccRoles": "CC by Role",
+      "ccRolesHelper": "Users with these roles in the same branch as the request are added to CC automatically.",
+      "active": "Active",
+      "errors": {
+        "transactionType": "Transaction type is required",
+        "stage": "Stage is required",
+        "subject": "Subject is required",
+        "body": "Body is required",
+        "ccRoles": "Select at least 1 CC role"
+      },
+      "toInfoAgreement": {
+        "proceed": "Filled automatically: when created → approvers of the first step; when a step is approved → approvers of the next step; after the last step → the agreement creator and the creators of each member disposal. Approvers must have access to ALL member branches.",
+        "reject": "Filled automatically with the agreement creator.",
+        "revise": "Filled automatically with the creators of the returned disposals and the agreement creator."
+      },
+      "ccRolesHelperAgreement": "Users with these roles who have access to ANY of the agreement's member branches are added to CC automatically. For revisions, only the branches of the returned disposals count."
+    },
+    "placeholder": {
+      "transaction_number": "Transaction number",
+      "transaction_type": "Transaction type",
+      "stage": "Stage when the action is taken",
+      "next_stage": "Destination stage",
+      "action": "Action",
+      "creator_name": "Request creator",
+      "sender_name": "User who sends the email",
+      "branch_code": "Request branch code",
+      "link": "Link to the transaction detail",
+      "date": "Sent date & time"
+    },
+    "log": {
+      "search": "Search transaction number...",
+      "empty": "No email log",
+      "resendFailed": "Failed to resend email",
+      "attempts": "Attempts: {{count}}",
+      "status": {
+        "FAILED": "Failed",
+        "SENT": "Sent",
+        "all": "All"
+      },
+      "column": {
+        "time": "Time",
+        "transaction": "Transaction",
+        "stageAction": "Stage / Action",
+        "subject": "Subject",
+        "recipients": "Recipients",
+        "sender": "Sender",
+        "status": "Status"
+      }
+    }
+  },
+  "notification": {
+    "title": "Awaiting Your Action",
+    "count": "{{count}} requests",
+    "loading": "Loading...",
+    "error": "Failed to load notifications",
+    "emptyTitle": "You're all caught up",
+    "emptyHint": "No requests are waiting for your action.",
+    "more": "Showing {{shown}} of {{total}} — open each module's \"Waiting for Me\" tab for the rest.",
+    "type": {
+      "procurement": "Procurement",
+      "mutation": "Mutation",
+      "disposal": "Disposal",
+      "disposal_agreement": "Disposal Agreement"
+    },
+    "createAgreement": "Create agreement"
   },
   "stockOpnamePage": {
     "title": "Stock Opname",

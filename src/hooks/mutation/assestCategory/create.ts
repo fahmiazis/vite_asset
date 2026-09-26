@@ -15,7 +15,9 @@ export function useCreateAssetsCategory({
   onSuccess,
   onError,
   redirectOnSuccess = false,
-  redirectPath = '/dashboard/assets-category',
+  // FIX: rutenya '/dashboard/asset-category' (lihat routers/index.tsx),
+  // bukan 'assets-category' — redirect lama selalu mendarat di halaman 404
+  redirectPath = '/dashboard/asset-category',
 }: UseCreateAssetsCategoryParams = {}) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -24,7 +26,8 @@ export function useCreateAssetsCategory({
     mutationFn: (payload: CreateAssetsCategoryPayload) => createAssetsCategory(payload),
 
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['assets-category'] });
+      // FIX: key daftar kategori adalah 'assets-category-list'
+      queryClient.invalidateQueries({ queryKey: ['assets-category-list'] });
       toast.success(data.message || 'Asset category created successfully');
 
       if (redirectOnSuccess) {

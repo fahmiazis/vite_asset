@@ -8,6 +8,7 @@ import MainPage from '../components/pages/dashboard'
 import CreateUsers from '../components/pages/user/create'
 import RolePage from '../components/pages/role'
 import CreateRole from '../components/pages/role/create'
+import RoleDetailPage from '../components/pages/role/detail'
 import NotFound from '../components/pages/notFound'
 import Forbidden from '../components/pages/forbidden'
 import BranchPage from '../components/pages/branch'
@@ -22,9 +23,14 @@ import CreateApproval from '../components/pages/approval/create'
 import ApprovalPage from '../components/pages/approval'
 import ApprovalFlowDetail from '../components/pages/approval/detail'
 import CreateStepApproval from '../components/pages/approval/detail/createStep'
+import EditApprovalFlow from '../components/pages/approval/edit'
+import DisposalAgreementPage from '../components/pages/disposalAgreement'
+import CreateDisposalAgreementPage from '../components/pages/disposalAgreement/create'
+import DisposalAgreementDetailPage from '../components/pages/disposalAgreement/detail'
 import UpdateMenuPage from '../components/pages/menu/update'
 import AssetsCategoryPage from '../components/pages/assetsCategory'
 import CreateAssetsCategory from '../components/pages/assetsCategory/create'
+import UpdateAssetsCategory from '../components/pages/assetsCategory/update'
 
 // guard route
 import ProtectedRoute from '../components/organisms/guard/protectedRoute'
@@ -39,11 +45,12 @@ import EditTransactionPage from '../components/pages/transaction/update'
 import CreateDepre from '../components/pages/depretiation/create'
 import DetailDeprePage from '../components/pages/depretiation/detail'
 import UpdateDepreciationPage from '../components/pages/depretiation/update'
-import HomebasePage from '../components/pages/homebase'
-import CreateHomeBasePage from '../components/pages/homebase/create'
 import AttachmentSettingPage from '../components/pages/settingAttachment'
 import DetailAttachmentSettingPage from '../components/pages/settingAttachment/detail'
 import CreateAttachmentSettingPage from '../components/pages/settingAttachment/create'
+import EmailSettingPage from '../components/pages/settingEmail'
+import CreateEmailSettingPage from '../components/pages/settingEmail/create'
+import DetailEmailSettingPage from '../components/pages/settingEmail/detail'
 import MutationPage from '../components/pages/mutation'
 import CreateMutationPage from '../components/pages/mutation/create'
 import MutationDetailPage from '../components/pages/mutation/detail'
@@ -133,20 +140,29 @@ export const router = createBrowserRouter([
             element: <DetailAssetsPage />,
           },
           {
-            path: 'homebase',
-            element: <HomebasePage />,
-          },
-          {
-            path: 'homebase/create',
-            element: <CreateHomeBasePage />,
-          },
-          {
             path: 'disposal',
             element: <DisposalPage />,
           },
           {
             path: 'disposal/create',
             element: <DisposalFormPage />,
+          },
+          // Kesepakatan disposal — sengaja SEJAJAR dengan disposal, bukan
+          // di bawahnya ('disposal-agreement', bukan 'disposal/agreement').
+          // Sidebar menandai menu aktif dengan pencocokan awalan
+          // (`pathname.startsWith(path + "/")`), jadi path bersarang membuat
+          // menu Disposal ikut tersorot saat halaman agreement dibuka.
+          {
+            path: 'disposal-agreement',
+            element: <DisposalAgreementPage />,
+          },
+          {
+            path: 'disposal-agreement/create',
+            element: <CreateDisposalAgreementPage />,
+          },
+          {
+            path: 'disposal-agreement/*',
+            element: <DisposalAgreementDetailPage />,
           },
           {
             path: 'disposal/*',
@@ -193,19 +209,31 @@ export const router = createBrowserRouter([
             element: <DetailAttachmentSettingPage />,
           },
           {
-            path: 'transaction',
+            path: 'setting-email',
+            element: <EmailSettingPage />,
+          },
+          {
+            path: 'setting-email/create',
+            element: <CreateEmailSettingPage />,
+          },
+          {
+            path: 'setting-email/:id',
+            element: <DetailEmailSettingPage />,
+          },
+          {
+            path: 'procurement',
             element: <TransactionPage />,
           },
           {
-            path: 'transaction/*',
+            path: 'procurement/*',
             element: <DetailTransaction />,
           },
           {
-            path: 'transaction/update/*',
+            path: 'procurement/update/*',
             element: <EditTransactionPage />,
           },
           {
-            path: 'transaction/create',
+            path: 'procurement/create',
             element: <CreateTransactionPage />,
           },
           {
@@ -233,6 +261,10 @@ export const router = createBrowserRouter([
             element: <CreateAssetsCategory />,
           },
           {
+            path: 'asset-category/:id/update',
+            element: <UpdateAssetsCategory />,
+          },
+          {
             path: 'branch',
             element: <BranchPage />,
           },
@@ -251,6 +283,10 @@ export const router = createBrowserRouter([
           {
             path: 'role/create',
             element: <CreateRole />,
+          },
+          {
+            path: 'role/:id',
+            element: <RoleDetailPage />,
           },
           {
             path: 'user',
@@ -279,6 +315,10 @@ export const router = createBrowserRouter([
           {
             path: 'approval/:id',
             element: <ApprovalFlowDetail />,
+          },
+          {
+            path: 'approval/:id/edit',
+            element: <EditApprovalFlow />,
           },
           {
             path: 'approval/:id/create-step',

@@ -17,6 +17,7 @@ export interface Transaction {
   status: string
   notes: string
   created_by: string
+  created_by_name: string | null
   approved_by: any
   approved_at: any
   created_at: string

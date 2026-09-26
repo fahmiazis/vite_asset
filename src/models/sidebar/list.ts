@@ -6,11 +6,14 @@ export interface sidebarListProps {
 
 export interface sidebarListState {
   id: string
-  parent_id: any
+  parent_id: string | null
   name: string
-  path: string
-  icon_name: any
+  menu_type?: string
+  /** bisa null untuk menu yang hanya jadi grup sub menu */
+  path: string | null
+  icon_name: string | null
   order_index: number
   status: string
-  permissions: string[]
+  permissions?: string[]
+  children?: sidebarListState[]
 }

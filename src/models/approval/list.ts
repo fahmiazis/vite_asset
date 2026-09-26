@@ -11,6 +11,8 @@ export interface approvalListState {
   approval_way: string
   assignment_type: string
   assigned_user_id: string
+  /** diisi backend hanya kalau relasi AssignedUser ikut di-preload */
+  assigned_username?: string | null
   is_customizable: boolean
   allowed_creator_roles: string
   is_custom: boolean

@@ -4,6 +4,8 @@ import { useTranslation } from "react-i18next"
 import { useQueryClient } from "@tanstack/react-query"
 import { useSubmitDraftMutation } from "../../../hooks/mutation/mutation/submitDraftMutation"
 import { useInitiateApprovalMutation } from "../../../hooks/mutation/mutation/initiateApprovalMutation"
+import { useSingleSubmit } from "../../../hooks/useSingleSubmit"
+import { withStageEmail } from "../../../stores/stageEmailStore"
 
 type SubmitMutationModalProps = {
   transactionNumber: string
@@ -20,13 +22,15 @@ export function SubmitMutationModal({
   const { t } = useTranslation()
   const queryClient = useQueryClient()
 
-  const { mutate: submitMutation, isPending: isSubmitting }   = useSubmitDraftMutation(transactionNumber)
+  const { mutateAsync: submitMutation, isPending: isSubmitting } = useSubmitDraftMutation(transactionNumber)
   const { mutate: initiateApproval, isPending: isInitiating } = useInitiateApprovalMutation(transactionNumber)
 
   const isPending = isSubmitting || isInitiating
 
-  const handleSubmit = () => {
-    submitMutation(
+  const guard = useSingleSubmit(isPending)
+
+  const handleSubmit = () =>
+    withStageEmail({ transactionType: "mutation", transactionNumber, action: "proceed" }, () => submitMutation(
       { notes: notes.trim() },
       {
         onSuccess: () => {
@@ -50,8 +54,7 @@ export function SubmitMutationModal({
           toast.error(t("submitMutationModal.toast.errorSubmit"))
         },
       }
-    )
-  }
+    ))
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-in fade-in duration-200">
@@ -127,7 +130,7 @@ export function SubmitMutationModal({
           </button>
 
           <button
-            onClick={handleSubmit}
+            onClick={guard(handleSubmit)}
             disabled={isPending}
             className="flex-1 px-4 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >

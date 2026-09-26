@@ -454,7 +454,7 @@ export default function EditTransactionPage() {
 
     const { mutate, isPending } = useUpdateProcurement({
         redirectOnSuccess: true,
-        redirectPath: "/dashboard/transaction",
+        redirectPath: "/dashboard/procurement",
     })
 
     const onSubmit = (data: ProcurementFormValues) => {

@@ -4,7 +4,6 @@ import { Link } from "react-router-dom"
 import type { attachmentSettingState } from "../../../models/attachmentSetting/list"
 import toast from "react-hot-toast"
 import { Textareas } from "../../molecules/input/textAreas"
-import { InputToggle } from "../../molecules/input/inputTogle"
 import { useUpdateAttachmentSetting } from "../../../hooks/mutation/attachSetting/update"
 import { useDeleteAttachmentSetting } from "../../../hooks/mutation/attachSetting/delete"
 
@@ -17,23 +16,33 @@ export function ToggleRow({
     value: boolean
     onChange: (val: boolean) => void
 }) {
+    // Switch sederhana, sewarna dengan kontrol lain di aplikasi.
+    // Sebelumnya memakai InputToggle bergaya "cyber" (glow, partikel, label
+    // ON/OFF, ikon panah berputar) yang tampil mencolok sendiri — dan karena
+    // id-nya selalu sama, dua toggle dalam satu halaman saling bertukar saat
+    // diklik.
     return (
-        <div className="flex items-center justify-between">
-
+        <label className="flex items-center justify-between gap-4 cursor-pointer">
             <div>
                 <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
                     {label}
                 </p>
                 <p className="text-xs text-gray-400">
-                    {value ? "Enabled" : "Disabled"}
+                    {value ? "Aktif" : "Nonaktif"}
                 </p>
             </div>
 
-            <InputToggle
-                checked={value}
-                onChange={onChange}
-            />
-        </div>
+            <span className="relative inline-flex flex-shrink-0">
+                <input
+                    type="checkbox"
+                    className="sr-only peer"
+                    checked={value}
+                    onChange={(e) => onChange(e.target.checked)}
+                />
+                <span className="w-11 h-6 bg-gray-200 dark:bg-gray-700 rounded-full peer peer-checked:bg-indigo-600 peer-focus:ring-4 peer-focus:ring-indigo-300 dark:peer-focus:ring-indigo-800 transition-colors" />
+                <span className="absolute top-[2px] left-[2px] w-5 h-5 bg-white border border-gray-300 dark:border-gray-600 rounded-full transition-transform peer-checked:translate-x-full peer-checked:border-white" />
+            </span>
+        </label>
     )
 }
 

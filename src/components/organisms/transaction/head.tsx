@@ -50,7 +50,7 @@ export default function TransaksiHeader({
         </button>
 
         <Links
-          href="/dashboard/transaction/create"
+          href="/dashboard/procurement/create"
           className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-md hover:opacity-80 transition-opacity whitespace-nowrap"
         >
           <PlusSignIcon size={14} />

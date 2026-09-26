@@ -53,7 +53,11 @@ export const Selects = forwardRef<HTMLSelectElement, SelectProps>(
         <label
           className={
             labelClassName ||
-            'block text-lg font-medium mb-1 md:mb-2 text-gray-700 dark:text-gray-300'
+            // text-sm supaya sejajar dengan <Inputs>. Sebelumnya text-lg,
+            // sehingga select selalu turun beberapa piksel ketika disandingkan
+            // dengan input biasa — beberapa halaman sudah menambalnya sendiri
+            // lewat labelClassName.
+            'block text-sm font-medium mb-1 md:mb-2 text-gray-700 dark:text-gray-300'
           }
         >
           {label}
@@ -72,7 +76,7 @@ export const Selects = forwardRef<HTMLSelectElement, SelectProps>(
               error ? `${label}-error` : helperText ? `${label}-helper` : undefined
             }
             className={`
-              w-full px-4 py-2 border rounded-lg
+              w-full px-4 py-2 text-sm border rounded-lg
               appearance-none cursor-pointer
               transition-colors duration-200
               text-gray-800 dark:text-gray-100

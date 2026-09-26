@@ -8,6 +8,7 @@ export interface detailMenuState {
   id: string
   parent_id: any
   name: string
+  menu_type: string
   path: string
   route_path: string
   icon_name: string
@@ -20,6 +21,7 @@ export interface Children {
   id: string
   parent_id: string
   name: string
+  menu_type: string
   path: string
   route_path: string
   icon_name?: string

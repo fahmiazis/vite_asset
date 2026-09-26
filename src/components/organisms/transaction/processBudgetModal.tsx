@@ -4,6 +4,8 @@ import { useTranslation } from "react-i18next"
 import { useQueryClient } from "@tanstack/react-query"
 
 import { useProcessBudget } from "../../../hooks/mutation/transaction/processBudget"
+import { useSingleSubmit } from "../../../hooks/useSingleSubmit"
+import { withStageEmail } from "../../../stores/stageEmailStore"
 
 type ProcessBudgetModalProps = {
     transactionNumber: string
@@ -22,11 +24,14 @@ export function ProcessBudgetModal({
 
     const queryClient = useQueryClient()
 
-    const { mutate: processBudget, isPending } =
+    const { mutateAsync: processBudget, isPending } =
         useProcessBudget(transactionNumber)
 
-    const handleSubmit = () => {
-        processBudget(
+    const guard = useSingleSubmit(isPending)
+
+    const handleSubmit = () =>
+        withStageEmail({ transactionType: "procurement", transactionNumber, action: "proceed" }, () =>
+            processBudget(
             { notes },
             {
                 onSuccess: () => {
@@ -47,8 +52,8 @@ export function ProcessBudgetModal({
                     toast.error(t("processBudget.error"))
                 },
             }
+            )
         )
-    }
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-in fade-in duration-200">
@@ -141,7 +146,7 @@ export function ProcessBudgetModal({
                     </button>
 
                     <button
-                        onClick={handleSubmit}
+                        onClick={guard(handleSubmit)}
                         disabled={isPending}
                         className="
                             flex-1

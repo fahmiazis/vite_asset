@@ -1,5 +1,7 @@
 import type { ColumnDef } from "@tanstack/react-table"
+import { Link } from "react-router-dom"
 import type { Children } from "../../../../models/menu/detail"
+import { MENU_TYPE, menuTypeOf } from "../../../../utils/menu/menuType"
 
 export const menuChildrenColumns: ColumnDef<Children>[] = [
     {
@@ -14,20 +16,35 @@ export const menuChildrenColumns: ColumnDef<Children>[] = [
         cell: ({ row }) => <div className="font-medium">{row.getValue('name')}</div>,
     },
     {
+        id: 'menu_type',
+        header: 'Tipe',
+        cell: ({ row }) => {
+            const t = menuTypeOf(row.original.menu_type)
+            return (
+                <span
+                    className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${MENU_TYPE[t].cls}`}
+                    title={MENU_TYPE[t].desc}
+                >
+                    {MENU_TYPE[t].short}
+                </span>
+            )
+        },
+    },
+    {
         accessorKey: 'path',
         header: 'Path',
         cell: ({ row }) => (
             <div className="font-mono text-xs text-gray-600 dark:text-gray-400">
-                {row.getValue('path')}
+                {row.getValue('path') || '-'}
             </div>
         ),
     },
     {
-        accessorKey: 'icon_name',
-        header: 'Icon',
+        accessorKey: 'route_path',
+        header: 'Route Path',
         cell: ({ row }) => (
-            <div className="text-xs text-gray-600 dark:text-gray-400">
-                {row.getValue('icon_name') || '-'}
+            <div className="font-mono text-xs text-gray-600 dark:text-gray-400">
+                {row.original.route_path || '-'}
             </div>
         ),
     },
@@ -46,5 +63,18 @@ export const menuChildrenColumns: ColumnDef<Children>[] = [
                 </span>
             )
         },
+    },
+    {
+        id: 'aksi',
+        header: 'Aksi',
+        cell: ({ row }) => (
+            <Link
+                to={`/dashboard/menu/update/${row.original.id}`}
+                className="px-3 py-1 text-xs font-medium border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors whitespace-nowrap"
+            >
+                Edit
+            </Link>
+        ),
+        size: 80,
     },
 ]

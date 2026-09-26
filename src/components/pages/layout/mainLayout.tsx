@@ -6,6 +6,7 @@ import Cookies from "js-cookie";
 import sidebarStore from "../../../stores/useSidebarLayout";
 import SideBar2 from "../../organisms/layout/sidebar";
 import Navbar from "../../organisms/layout/navbar";
+import { StageEmailHost } from "../../organisms/common/stageEmailDialog";
 
 export default function MainLayout() {
   const { isActive } = sidebarStore();
@@ -23,6 +24,9 @@ export default function MainLayout() {
 
   return (
     <div className="flex h-screen w-full overflow-hidden">
+      {/* Dialog email sebelum aksi stage — lihat stores/stageEmailStore.ts */}
+      <StageEmailHost />
+
       {/* Sidebar */}
       <aside
         className={`h-full bg-blue-50 dark:bg-gray-900 text-white z-10

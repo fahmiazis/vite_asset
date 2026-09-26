@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom'
 import DeleteModals from '../modals/deleteModals'
 import { useDeleteModalStore } from '../../../stores/useDeleteModal'
 import { useDeleteUser } from '../../../hooks/mutation/user/useDeleteUser'
+import { PageSizeSelect, usePageSize } from '../../molecules/table/pageSize'
 
 interface UserTableProps {
   data: userListState[]
@@ -56,6 +57,8 @@ export function UserTable({ data, isLoading }: UserTableProps) {
       },
     },
   })
+
+  const { mode: pageSizeMode, setMode: setPageSizeMode } = usePageSize(table)
 
   if (isLoading) {
     return (
@@ -152,8 +155,10 @@ export function UserTable({ data, isLoading }: UserTableProps) {
       </div>
 
       {/* Pagination */}
-      <div className="flex items-center justify-between">
-        <div className="text-xs">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center gap-4">
+          <PageSizeSelect value={pageSizeMode} onChange={setPageSizeMode} />
+          <div className="text-xs">
           Show{' '}
           <span className="font-medium">
             {table.getState().pagination.pageIndex *
@@ -173,6 +178,7 @@ export function UserTable({ data, isLoading }: UserTableProps) {
             {table.getFilteredRowModel().rows.length}
           </span>{' '}
           data
+          </div>
         </div>
 
         <div className="flex items-center gap-2">

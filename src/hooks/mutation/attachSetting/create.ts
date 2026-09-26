@@ -13,7 +13,9 @@ export function useCreateAttachmentSetting() {
 
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["attachment-setting-list"] })
-            navigate("/dashboard/attachment-setting")
+            // FIX: rutenya '/dashboard/setting-attachment' (lihat routers/index.tsx),
+            // bukan 'attachment-setting' — redirect lama selalu mendarat di 404
+            navigate("/dashboard/setting-attachment")
         },
     })
 }

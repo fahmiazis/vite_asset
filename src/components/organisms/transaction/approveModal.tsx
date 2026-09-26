@@ -6,6 +6,8 @@ import { useQueryClient } from "@tanstack/react-query"
 
 import { useApproveTransaction } from "../../../hooks/mutation/transaction/approveTransaction"
 import { useApprovalStatus } from "../../../hooks/query/transaction/approvalStatus"
+import { useSingleSubmit } from "../../../hooks/useSingleSubmit"
+import { withStageEmail } from "../../../stores/stageEmailStore"
 
 type ApproveModalProps = {
   transactionNumber: string
@@ -26,7 +28,7 @@ export function ApproveModal({
 
   const queryClient = useQueryClient()
 
-  const { mutate: approve, isPending } =
+  const { mutateAsync: approve, isPending } =
     useApproveTransaction(transactionNumber)
 
   const { data: approvalId } =
@@ -40,8 +42,10 @@ export function ApproveModal({
   const targetApprovalId =
     approvalId?.data.approvals[pendingIndex]?.id ?? ""
 
-  const handleSubmit = () => {
-    approve(
+  const guard = useSingleSubmit(isPending)
+
+  const handleSubmit = () =>
+    withStageEmail({ transactionType: "procurement", transactionNumber, action: "proceed" }, () => approve(
       {
         transaction_approval_id: targetApprovalId,
         notes,
@@ -69,8 +73,7 @@ export function ApproveModal({
           )
         },
       }
-    )
-  }
+    ))
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-in fade-in duration-200">
@@ -190,7 +193,7 @@ export function ApproveModal({
           </button>
 
           <button
-            onClick={handleSubmit}
+            onClick={guard(handleSubmit)}
             disabled={isPending}
             className="flex-1 px-4 py-2.5 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >

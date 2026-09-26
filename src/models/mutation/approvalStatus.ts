@@ -50,8 +50,12 @@ export interface Approval {
   status_view: string
   approved_at: any
   approved_by: any
+  /** fullname pemberi persetujuan — hanya terisi kalau sudah approved */
+  approved_by_name?: string | null
   rejected_at: any
   rejected_by: any
+  /** fullname penolak — hanya terisi kalau sudah rejected */
+  rejected_by_name?: string | null
   notes: any
   metadata: any
   created_at: string

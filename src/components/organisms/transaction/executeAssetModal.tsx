@@ -4,6 +4,8 @@ import { useTranslation } from "react-i18next"
 import { useQueryClient } from "@tanstack/react-query"
 
 import { useExecuteAsset } from "../../../hooks/mutation/transaction/executeAsset"
+import { useSingleSubmit } from "../../../hooks/useSingleSubmit"
+import { withStageEmail } from "../../../stores/stageEmailStore"
 
 type ExecuteAssetModalProps = {
     transactionNumber: string
@@ -22,11 +24,14 @@ export function ExecuteAssetModal({
 
     const queryClient = useQueryClient()
 
-    const { mutate: executeAsset, isPending } =
+    const { mutateAsync: executeAsset, isPending } =
         useExecuteAsset(transactionNumber)
 
-    const handleSubmit = () => {
-        executeAsset(
+    const guard = useSingleSubmit(isPending)
+
+    const handleSubmit = () =>
+        withStageEmail({ transactionType: "procurement", transactionNumber, action: "proceed" }, () =>
+            executeAsset(
             { notes },
             {
                 onSuccess: () => {
@@ -47,8 +52,8 @@ export function ExecuteAssetModal({
                     toast.error(t("executeAsset.error"))
                 },
             }
+            )
         )
-    }
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-in fade-in duration-200">
@@ -141,7 +146,7 @@ export function ExecuteAssetModal({
                     </button>
 
                     <button
-                        onClick={handleSubmit}
+                        onClick={guard(handleSubmit)}
                         disabled={isPending}
                         className="
                             flex-1

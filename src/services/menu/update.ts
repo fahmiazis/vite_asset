@@ -2,6 +2,7 @@ import { axiosPrivate } from "../../libs/instance";
 
 export interface UpdateMenuPayload {
     name: string
+    menu_type?: string
     parent_id?: string | null
     path: string
     route_path: string

@@ -8,39 +8,39 @@ interface UseAssignMenusParams {
   roleId: string;
   onSuccess?: () => void;
   onError?: (error: Error) => void;
+  /** default true supaya halaman assign lama tetap berperilaku sama */
+  redirectOnSuccess?: boolean;
+  redirectPath?: string;
 }
 
 export function useAssignMenus({
   roleId,
   onSuccess,
-  onError
+  onError,
+  redirectOnSuccess = true,
+  redirectPath = '/dashboard/menu',
 }: UseAssignMenusParams) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   return useMutation({
-
     mutationFn: (payload: AssignMenusRequest) =>
       roleService.assignMenusToRole(roleId, payload),
 
     onSuccess: (data) => {
-      // Invalidate related queries
-      queryClient.invalidateQueries({
-        queryKey: ['role-menus', roleId]
-      });
-      queryClient.invalidateQueries({
-        queryKey: ['roles']
-      });
+      queryClient.invalidateQueries({ queryKey: ['role-menus', roleId] });
+      queryClient.invalidateQueries({ queryKey: ['role-list'] });
+      // hak akses berubah → sidebar user yang memakai role ini ikut berubah
+      queryClient.invalidateQueries({ queryKey: ['sidebar-list'] });
 
-      // Show success notification
       toast.success(data.message || 'Menus assigned successfully');
-      navigate('/dashboard/menu');
-      // Custom success callback
+
+      if (redirectOnSuccess) navigate(redirectPath);
+
       onSuccess?.();
     },
 
     onError: (error: any) => {
-      // Show error notification
       const errorMessage =
         error.response?.data?.message ||
         error.message ||
@@ -48,7 +48,6 @@ export function useAssignMenus({
 
       toast.error(errorMessage);
 
-      // Custom error callback
       onError?.(error);
     },
   });

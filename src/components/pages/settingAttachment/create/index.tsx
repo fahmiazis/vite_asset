@@ -1,10 +1,17 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Inputs } from "../../../molecules/input/inputs"
+import { Selects } from "../../../molecules/input/selects"
 import { ToggleRow } from "../../../organisms/attachmentSetting/column"
 import { useCreateAttachmentSetting } from "../../../../hooks/mutation/attachSetting/create"
+import { useBranchList } from "../../../../hooks/query/branch/list"
 import toast from "react-hot-toast"
 import { Textareas } from "../../../molecules/input/textAreas"
+import {
+  ATTACHMENT_ALL,
+  attachmentStageOptions,
+  attachmentTransactionTypes,
+} from "../../../../constans/attachment"
 
 export default function CreateAttachmentSettingPage() {
   const navigate = useNavigate()
@@ -12,25 +19,49 @@ export default function CreateAttachmentSettingPage() {
 
   const [form, setForm] = useState({
     transaction_type: "",
-    stage: "",
-    branch_code: "",
+    stage: ATTACHMENT_ALL,
+    branch_code: ATTACHMENT_ALL,
     attachment_type: "",
     description: "",
     is_required: false,
     is_active: true,
   })
 
+  const { data: branchData, isLoading: isLoadingBranches } = useBranchList()
+
+  // ALL berarti berlaku untuk semua cabang — itu nilai yang dipakai backend,
+  // bukan sekadar label kosong
+  const branchOptions = [
+    { id: ATTACHMENT_ALL, value: ATTACHMENT_ALL, label: "ALL — semua cabang" },
+    ...(branchData?.data ?? []).map((branch) => ({
+      id: branch.branch_code,
+      value: branch.branch_code,
+      label: `${branch.branch_code} — ${branch.branch_name}`,
+    })),
+  ]
+
+  const stageOptions = attachmentStageOptions(form.transaction_type)
+
   const handleChange = (key: string, value: any) => {
     setForm((prev) => ({ ...prev, [key]: value }))
   }
 
+  // ganti jenis transaksi → stage lamanya belum tentu ada di alur baru
+  const handleTransactionTypeChange = (value: string) => {
+    setForm((prev) => ({ ...prev, transaction_type: value, stage: ATTACHMENT_ALL }))
+  }
+
   const handleSubmit = () => {
-    if (!form.transaction_type || !form.attachment_type) {
-      toast.error("Please fill required fields")
+    if (!form.transaction_type) {
+      toast.error("Jenis transaksi wajib dipilih")
+      return
+    }
+    if (!form.attachment_type.trim()) {
+      toast.error("Jenis dokumen wajib diisi")
       return
     }
 
-    mutate(form, {
+    mutate({ ...form, attachment_type: form.attachment_type.trim().toUpperCase() }, {
       onSuccess: () => {
         toast.success("Created successfully")
       },
@@ -61,28 +92,46 @@ export default function CreateAttachmentSettingPage() {
         {/* Inputs */}
         <div className="grid grid-cols-2 gap-4">
 
-          <Inputs
+          <Selects
             label="Transaction Type"
             value={form.transaction_type}
-            onChange={(v) => handleChange("transaction_type", v)}
+            onChange={handleTransactionTypeChange}
+            options={attachmentTransactionTypes}
+            placeholder="Pilih jenis transaksi..."
+            required
           />
 
-          <Inputs
+          <Selects
             label="Stage"
             value={form.stage}
             onChange={(v) => handleChange("stage", v)}
+            options={stageOptions}
+            placeholder="Pilih stage..."
+            helperText={
+              form.transaction_type && form.transaction_type !== ATTACHMENT_ALL
+                ? "Daftar stage mengikuti alur transaksi yang dipilih."
+                : "Pilih jenis transaksi dulu untuk melihat stage-nya."
+            }
+            required
           />
 
-          <Inputs
+          <Selects
             label="Branch Code"
             value={form.branch_code}
             onChange={(v) => handleChange("branch_code", v)}
+            options={branchOptions}
+            placeholder="Pilih cabang..."
+            disabled={isLoadingBranches}
+            required
           />
 
           <Inputs
             label="Attachment Type"
             value={form.attachment_type}
             onChange={(v) => handleChange("attachment_type", v)}
+            placeholder="mis. SURAT_PENGAJUAN"
+            helperText="Nama jenis dokumen, bebas diisi. Disimpan dalam huruf kapital."
+            required
           />
 
         </div>
