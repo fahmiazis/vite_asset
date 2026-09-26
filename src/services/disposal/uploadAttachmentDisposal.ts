@@ -1,6 +1,6 @@
 import { axiosPrivate } from "../../libs/instance";
 
-interface UploadDisposalAttachmentResponse {
+export interface UploadDisposalAttachmentResponse {
     data: any
     message: string
     status: string

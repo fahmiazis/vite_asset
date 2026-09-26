@@ -1322,5 +1322,434 @@
       "disposal_agreement": "Disposal Agreement"
     },
     "createAgreement": "创建 agreement"
+  },
+  "stockOpnamePage": {
+    "title": "库存盘点",
+    "createButton": "+ 新建库存盘点",
+    "reportButton": "报表",
+    "configButton": "配置"
+  },
+  "stockOpnameConfigPage": {
+    "title": "库存盘点配置",
+    "subtitle": "设置每月库存盘点提交日期窗口",
+    "back": "返回",
+    "windowSectionTitle": "提交窗口",
+    "startDayLabel": "开始日期",
+    "endDayLabel": "结束日期",
+    "hint": "库存盘点仍可随时提交——此窗口仅用于标记提交是否按时（显示在详情页）。",
+    "wrapHint": "结束日期小于开始日期，此窗口会自动跨到下个月。",
+    "save": "保存",
+    "saving": "保存中...",
+    "lastUpdated": "最后更新",
+    "notYetUpdated": "尚未更新",
+    "borrowDocSectionTitle": "借用文件（借出状态）",
+    "allowedFormatsLabel": "接受的文件格式",
+    "formatPdf": "PDF",
+    "formatWord": "Word (.doc/.docx)",
+    "formatPhoto": "照片 (JPEG/PNG/WEBP)",
+    "noFormatSelected": "至少选择一种文件格式",
+    "borrowDocRequiredLabel": "必填",
+    "borrowDocRequiredHint": "关闭后，状态为借出的资产仍可在没有文件的情况下保存/提交——该字段在表单中变为可选。"
+  },
+  "createStockOpnamePage": {
+    "title": "新建库存盘点",
+    "subtitle": "创建库存盘点草稿，草稿保存后再添加资产",
+    "dateLabel": "盘点日期",
+    "notesLabel": "备注",
+    "notesPlaceholder": "例如：Bandung Barat 仓库第三季度例行盘点",
+    "cancel": "取消",
+    "submit": "保存草稿",
+    "submitting": "保存中..."
+  },
+  "stockOpnameStepper": {
+    "submit": "提交",
+    "approval": "审批",
+    "execute": "执行",
+    "done": "完成"
+  },
+  "stockOpnameDetail": {
+    "transactionNumber": "交易编号",
+    "opnameDate": "盘点日期",
+    "createdBy": "创建人",
+    "createdAt": "创建时间",
+    "updatedAt": "更新时间",
+    "submissionStatus": "提交状态",
+    "onSchedule": "按时提交",
+    "lateSchedule": "逾期提交",
+    "notes": "备注",
+    "assetList": "资产清单",
+    "assets": "项资产",
+    "noAssets": "尚未添加资产",
+    "systemData": "系统数据",
+    "foundResult": "盘点结果",
+    "condition": "状态",
+    "physicalStatus": "实物状态",
+    "assetStatus": "资产状态",
+    "fillFinding": "填写盘点结果",
+    "editFinding": "编辑盘点结果",
+    "approvalNotInitiated": "此交易尚未提交审批。",
+    "initiateApproval": "提交审批",
+    "initiating": "提交中...",
+    "toastInitiateSuccess": "审批提交成功",
+    "toastInitiateError": "提交审批失败",
+    "stageHistory": "阶段记录",
+    "noStageHistory": "暂无阶段记录",
+    "by": "由",
+    "submitStockOpname": "提交库存盘点",
+    "approve": "批准",
+    "execute": "执行库存盘点",
+    "reject": "拒绝",
+    "downloadTemplate": "下载Excel模板",
+    "uploadTemplate": "上传Excel结果",
+    "tableNo": "序号",
+    "tableAsset": "资产",
+    "tableCategory": "类别",
+    "tableNotes": "备注",
+    "tableAction": "操作",
+    "tableShowing": "显示",
+    "tableOf": "共",
+    "tablePageSize": "每页行数:",
+    "fillDataButton": "完善数据"
+  },
+  "stockOpnameFindingModal": {
+    "title": "填写盘点结果",
+    "physicalStatus": "实物状态",
+    "physicalStatusPlaceholder": "选择实物状态",
+    "physicalStatusOptions": {
+      "exists": "存在",
+      "missing": "遗失",
+      "borrowed": "借出"
+    },
+    "borrowDocument": "借用文件",
+    "borrowDocumentHint": "PDF,状态为借出时必填",
+    "borrowDocumentPlaceholder": "选择PDF文件",
+    "borrowDocumentUploading": "上传中...",
+    "condition": "状态",
+    "conditionPlaceholder": "选择状态",
+    "conditionOptions": {
+      "good": "良好",
+      "fair": "尚可",
+      "poor": "较差",
+      "broken": "严重损坏",
+      "na": "不适用"
+    },
+    "assetStatus": "资产状态",
+    "assetStatusHint": "（可选，如有变更请填写）",
+    "assetStatusOptions": {
+      "unchanged": "不变更",
+      "active": "启用",
+      "inactive": "停用",
+      "maintenance": "维护中",
+      "retired": "已报废"
+    },
+    "notes": "备注",
+    "optional": "可选",
+    "notesPlaceholder": "例如：设备外壳发现刮痕",
+    "cancel": "取消",
+    "submit": "保存结果",
+    "submitting": "保存中...",
+    "toast": {
+      "required": "实物状态和状态为必填项",
+      "borrowDocumentRequired": "状态为借出时必须上传借用文件(PDF)"
+    }
+  },
+  "submitStockOpnameModal": {
+    "title": "提交库存盘点",
+    "warningMessage": "提交后草稿将无法再编辑，并会立即提交审批。",
+    "notes": "备注",
+    "optional": "可选",
+    "notesPlaceholder": "例如：仓库所有设备已检查完毕",
+    "cancel": "取消",
+    "submit": "提交",
+    "saving": "保存中...",
+    "initiating": "提交审批中...",
+    "toast": {
+      "success": "库存盘点提交并已发起审批",
+      "errorSubmit": "提交库存盘点失败",
+      "errorInitiate": "提交成功，但发起审批失败"
+    }
+  },
+  "approveStockOpnameModal": {
+    "title": "批准库存盘点",
+    "confirmationTitle": "审批确认",
+    "confirmationDescription": "所有步骤批准后，库存盘点将自动进入执行阶段。",
+    "notes": "备注",
+    "optional": "可选",
+    "notesPlaceholder": "审批备注...",
+    "cancel": "取消",
+    "approve": "批准",
+    "approving": "审批中...",
+    "toast": {
+      "success": "审批成功",
+      "error": "审批失败"
+    },
+    "stepFallback": "审批步骤"
+  },
+  "executeStockOpnameModal": {
+    "title": "执行库存盘点",
+    "infoMessage": "盘点结果将写入资产数据（状态、实物状态、资产状态），且无法再更改。",
+    "notes": "备注",
+    "optional": "可选",
+    "notesPlaceholder": "执行备注...",
+    "cancel": "取消",
+    "submit": "执行",
+    "submitting": "执行中...",
+    "toast": {
+      "success": "库存盘点执行成功",
+      "error": "执行库存盘点失败"
+    }
+  },
+  "rejectStockOpnameModal": {
+    "title": "拒绝库存盘点",
+    "warningMessage": "库存盘点将被拒绝且无法继续。",
+    "reasonLabel": "拒绝原因",
+    "reasonPlaceholder": "请说明拒绝原因（至少10个字符）",
+    "reasonTooShort": "原因至少需要 {{min}} 个字符（{{current}}/{{min}}）",
+    "cancel": "取消",
+    "confirm": "是的，拒绝",
+    "rejecting": "拒绝中...",
+    "toast": {
+      "success": "库存盘点已拒绝",
+      "error": "拒绝库存盘点失败"
+    }
+  },
+  "stockOpnameReportPage": {
+    "title": "库存盘点报表",
+    "backToList": "返回列表",
+    "view": "视图",
+    "dashboard": "仪表盘",
+    "detailReport": "详细报表",
+    "period": "期间",
+    "go": "查询",
+    "plant": "厂区",
+    "allPlant": "全部",
+    "assetUnit": "项资产",
+    "downloading": "下载中...",
+    "downloadReport": "下载报表",
+    "loading": "报表加载中...",
+    "stats": {
+      "totalAsset": "资产总数",
+      "finish": "已完成",
+      "done": "已完成",
+      "inProgress": "进行中",
+      "belumSubmit": "未提交",
+      "rejected": "已驳回",
+      "revisi": "待修订",
+      "disposal": "已处置",
+      "acquisVal": "购置价值",
+      "bookVal": "账面价值"
+    },
+    "charts": {
+      "statusPerGrouping": "按分组统计状态",
+      "physicalVsSystem": "实物与系统对比",
+      "statusFisik": "实物状态",
+      "statusSap": "系统状态",
+      "ada": "存在",
+      "tidakAda": "不存在",
+      "conditionSummary": "资产状况",
+      "baik": "良好",
+      "rusak": "损坏",
+      "belumIsi": "未填写",
+      "statusSubmit": "提交状态",
+      "ungrouped": "未分组"
+    },
+    "rekap": {
+      "label": "汇总",
+      "unitInfo": "数量 / 说明",
+      "unsupported": "暂不支持",
+      "unit": "项",
+      "areaClear": "已核对区域",
+      "areaNotClear": "未核对区域",
+      "totalArea": "全国区域总数",
+      "costCenterTitle": "各成本中心资产价值（前10名）",
+      "noData": "暂无数据"
+    }
+  },
+  "stockOpnameTemplateModal": {
+    "title": "上传盘点结果（Excel）",
+    "description": "上传已填写的excel文件以批量更新所有资产的盘点结果。",
+    "fileLabel": "Excel 文件",
+    "chooseFile": "选择文件",
+    "noFileChosen": "未选择文件",
+    "cancel": "取消",
+    "submit": "上传并处理",
+    "uploading": "处理中...",
+    "toastDownloadError": "模板下载失败",
+    "toastUploadRequireFile": "请先选择excel文件",
+    "resultTitle": "上传结果",
+    "updatedCount": "已更新",
+    "failedCount": "失败",
+    "errorsTitle": "错误详情",
+    "errorRow": "行",
+    "close": "关闭"
+  },
+  "stockOpnameFillPage": {
+    "title": "完善数据",
+    "subtitle": "直接在表格中填写盘点结果，每隔几秒自动保存",
+    "back": "返回",
+    "notDraft": "只有在草稿状态下才能完善数据",
+    "saveNow": "立即保存",
+    "statusSaving": "保存中...",
+    "statusSaved": "已保存",
+    "statusErrorSuffix": "项资产保存失败",
+    "statusIdle": "尚无更改",
+    "lastSaved": "最后保存于",
+    "secondsAgo": "秒前",
+    "justNow": "刚刚",
+    "columnNo": "序号",
+    "columnAsset": "资产",
+    "columnCategory": "类别",
+    "columnPhysicalStatus": "实物状态",
+    "columnCondition": "状态",
+    "columnAssetStatus": "资产状态",
+    "columnNotes": "备注",
+    "columnBorrowDocument": "借用文件",
+    "selectPlaceholder": "-",
+    "notesPlaceholder": "备注...",
+    "unsavedBadge": "未保存",
+    "searchPlaceholder": "搜索资产名称或编号...(Ctrl+F)",
+    "searchNoResults": "没有匹配的资产"
+  },
+  "guidePage": {
+    "title": "使用指南",
+    "subtitle": "选择你想了解的模块",
+    "modules": {
+      "stockOpname": {
+        "title": "Stock Opname",
+        "description": "如何创建、填写、提交、审批和执行盘点"
+      }
+    }
+  },
+  "guideStockOpname": {
+    "back": "返回",
+    "title": "Stock Opname 使用指南",
+    "subtitle": "使用 Stock Opname 所需了解的一切，从创建草稿到查看报告",
+    "toc": "目录",
+    "sections": {
+      "overview": {
+        "title": "Stock Opname 流程",
+        "summary": "Stock opname 是对分支机构资产进行实物盘点，并与系统记录进行比对。流程如下：",
+        "steps": [
+          "草稿 — 所有资产自动加入，你填写盘点结果",
+          "审批 — 按分支机构的审批流程等待审批",
+          "执行 — 盘点结果被应用到资产数据",
+          "完成 — 资产数据已更新，无法再修改"
+        ],
+        "tip": "在审批或执行阶段如有问题，可以驳回该盘点。"
+      },
+      "createDraft": {
+        "title": "1. 创建新的 Stock Opname",
+        "summary": "打开 Stock Opname 菜单，点击\"创建 Stock Opname\"。",
+        "steps": [
+          "盘点日期始终为当天 — 无法手动修改",
+          "如需要可填写备注（可选），然后保存",
+          "保存后，你所在分支的所有资产会自动加入列表 — 无需逐个添加"
+        ],
+        "tip": "已取消\"一个资产只能同时属于一个进行中盘点\"的限制 — 你可以随时创建新盘点，即使该分支已有另一个进行中的盘点，或在同一天内。"
+      },
+      "fillSingle": {
+        "title": "2. 填写盘点结果 — 逐个填写",
+        "summary": "适合只需更新少数资产的情况。",
+        "steps": [
+          "在详情页面找到要盘点的资产",
+          "点击\"填写盘点结果\"（已填写过则显示\"编辑盘点结果\"）",
+          "上传实物证明照片 — 提交盘点前每个资产都必须上传",
+          "选择实物状态：存在 / 遗失 / 借出",
+          "如果选择\"借出\"，还需上传借用文件 — 接受的格式（PDF/Word/照片）及是否必填由管理员在配置页面设置",
+          "选择状态 — 如果实物状态为\"遗失\"或\"借出\"，状态会自动锁定为\"不适用\"",
+          "如有变更填写资产状态，需要时填写备注",
+          "点击\"保存结果\""
+        ]
+      },
+      "fillGrid": {
+        "title": "3. 填写盘点结果 — 完善数据（批量填写）",
+        "summary": "适合连续盘点大量资产，无需反复打开关闭弹窗。",
+        "steps": [
+          "在详情页面点击\"完善数据\"",
+          "打开类似 excel 的全屏表格 — 每行一个资产，可直接在单元格中编辑",
+          "点击照片列的相机图标上传实物证明照片 — 每个资产都必须上传",
+          "如果实物状态选择\"借出\"，会出现借用文件列 — 点击其图标上传",
+          "直接输入即可，无需每次点击保存 — 每 8 秒自动保存一次",
+          "查看右上角的小图标了解保存状态（保存中.../已保存）",
+          "不想等？点击\"立即保存\"",
+          "资产太多？按 Ctrl+F（Mac 上是 Cmd+F）按名称或编号快速搜索"
+        ],
+        "tip": "保存失败的行（例如实物状态/状态组合无效，或状态为借出但尚未上传借用文件）会显示一个小红点 — 悬停查看原因。"
+      },
+      "fillExcel": {
+        "title": "4. 填写盘点结果 — 通过 Excel",
+        "summary": "适合离线操作，或发给现场盘点的其他人员。",
+        "steps": [
+          "点击\"下载Excel模板\" — 获取包含此次盘点所有资产的excel文件",
+          "填写实物状态、状态、资产状态、备注等列",
+          "保存文件后，点击\"上传Excel结果\"并选择已填写的文件",
+          "系统会处理每一行 — 有效的立即保存，无效的会告知具体行号和原因"
+        ]
+      },
+      "submitApproval": {
+        "title": "5. 提交与审批",
+        "summary": "所有资产都填写了盘点结果后，就可以提交了。",
+        "steps": [
+          "在详情页面点击\"提交盘点\"",
+          "盘点进入审批阶段，按分支机构的审批流程进行",
+          "在\"审批状态\"中查看进度 — 了解谁需要审批以及哪些已完成/待处理"
+        ],
+        "tip": "如果有资产满足以下情况，提交会被拒绝：实物状态/状态未填写、尚未上传实物证明照片，或（状态为借出且配置要求必填时）尚未上传借用文件。"
+      },
+      "execute": {
+        "title": "6. 执行",
+        "summary": "所有审批步骤完成后，盘点进入执行阶段。",
+        "steps": [
+          "有权限的角色（例如资产负责人）点击\"执行盘点\"",
+          "系统将所有盘点结果应用到资产数据（状态、实物状态、资产状态）",
+          "此后盘点状态变为\"已完成\"，数据无法再修改"
+        ]
+      },
+      "reject": {
+        "title": "7. 驳回",
+        "summary": "如果审批或执行阶段出现问题，可以驳回该盘点。",
+        "steps": [
+          "在详情页面点击\"驳回\"",
+          "填写驳回原因（必填，至少10个字符）",
+          "已驳回的盘点无法继续 — 如仍需要，请创建新草稿"
+        ]
+      },
+      "report": {
+        "title": "8. 报表",
+        "summary": "查看按周期和分支机构划分的盘点结果汇总。",
+        "steps": [
+          "打开 Stock Opname → 报表",
+          "选择月份、年份和分支机构（或全部分支）",
+          "在仪表盘查看摘要，或打开\"详情\"查看完整汇总表",
+          "点击\"导出\"以excel格式下载报表"
+        ]
+      },
+      "config": {
+        "title": "9. 库存盘点设置",
+        "summary": "部分盘点规则可在配置页面设置 — 通过库存盘点列表页面的\"配置\"按钮进入。",
+        "steps": [
+          "提交窗口 — 设置每月开始和结束日期，用于标记提交是否\"按时\"（盘点仍可随时提交，此设置仅影响详情页面显示的状态）",
+          "借用文件格式 — 勾选借出状态资产接受的文件格式：PDF、Word 和/或照片",
+          "必填 — 开启/关闭借出状态资产是否必须上传借用文件",
+          "点击\"保存\"以应用更改"
+        ],
+        "tip": "盘点提交后，详情页面会根据提交时生效的提交窗口显示\"按时提交\"或\"逾期提交\"状态。"
+      }
+    }
+  },
+  "stockOpnamePhoto": {
+    "label": "实物证明照片",
+    "uploadCta": "上传照片",
+    "hint": "JPEG格式，最大2MB，相机原图（非聊天转发压缩图），10天内拍摄",
+    "capturedOn": "拍摄于",
+    "clickToReplace": "点击更换",
+    "uploadTooltip": "尚无照片 — 点击上传"
+  },
+  "stockOpnameBorrowDocument": {
+    "label": "借用文件",
+    "uploadCta": "上传文件",
+    "hint": "PDF格式，状态为借出的资产必填",
+    "clickToReplace": "点击更换",
+    "uploadTooltip": "尚无文件 — 点击上传"
   }
 }

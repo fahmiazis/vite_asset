@@ -65,7 +65,7 @@ const BudgetChart = ({
         )}
       </div>
 
-      <div className="flex items-center justify-between gap-12">
+      <div className="flex items-center justify-between gap-6 flex-wrap">
         {/* Legend */}
         <div className="flex flex-col gap-3">
           {categories.map((category, index) => (
@@ -80,7 +80,7 @@ const BudgetChart = ({
         </div>
 
         {/* Donut Chart */}
-        <div className="relative flex-shrink-0">
+        <div className="relative flex-shrink-0 pt-6 pr-4">
           <ResponsiveContainer width={280} height={280}>
             <PieChart>
               <Pie
@@ -101,7 +101,7 @@ const BudgetChart = ({
           </ResponsiveContainer>
 
           {/* Center Text */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <div className="absolute inset-0 top-6 flex flex-col items-center justify-center">
             <div className="text-xs text-gray-400 dark:text-zinc-500 mb-1">Total for month</div>
             <div className="flex items-baseline">
               <span className="text-lg font-bold text-gray-900 dark:text-zinc-50">{whole}</span>
@@ -111,10 +111,11 @@ const BudgetChart = ({
           {/* Tooltip for highlighted category */}
           {highlightedCategory && (
             <div className="
-              absolute -top-3 -right-1
+              absolute top-0 right-0
               bg-white dark:bg-zinc-900
               border border-gray-100 dark:border-zinc-800
               rounded-xl shadow-lg px-3 py-2
+              whitespace-nowrap
             ">
               <div className="text-xs text-gray-500 dark:text-zinc-400">{highlightedCategory.percentage}%</div>
               <div className="text-xs font-semibold text-gray-900 dark:text-zinc-50">

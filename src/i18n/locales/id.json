@@ -1322,5 +1322,434 @@
       "disposal_agreement": "Disposal Agreement"
     },
     "createAgreement": "Buat agreement"
+  },
+  "stockOpnamePage": {
+    "title": "Stock Opname",
+    "createButton": "+ Buat Stock Opname",
+    "reportButton": "Report",
+    "configButton": "Config"
+  },
+  "stockOpnameConfigPage": {
+    "title": "Config Stock Opname",
+    "subtitle": "Atur jendela tanggal submit stock opname tiap bulan",
+    "back": "Kembali",
+    "windowSectionTitle": "Jendela Submit",
+    "startDayLabel": "Tanggal Mulai",
+    "endDayLabel": "Tanggal Akhir",
+    "hint": "Stock opname tetap bisa disubmit kapan saja — jendela ini cuma dipakai buat menandai apakah submit-nya tepat jadwal atau enggak (tampil di halaman detail).",
+    "wrapHint": "Tanggal akhir lebih kecil dari tanggal mulai, jadi jendela ini otomatis nyambung ke bulan berikutnya.",
+    "save": "Simpan",
+    "saving": "Menyimpan...",
+    "lastUpdated": "Terakhir diubah",
+    "notYetUpdated": "Belum pernah diubah",
+    "borrowDocSectionTitle": "Dokumen Peminjaman (status Dipinjam)",
+    "allowedFormatsLabel": "Format File yang Diterima",
+    "formatPdf": "PDF",
+    "formatWord": "Word (.doc/.docx)",
+    "formatPhoto": "Foto (JPEG/PNG/WEBP)",
+    "noFormatSelected": "Pilih minimal 1 format file",
+    "borrowDocRequiredLabel": "Wajib diisi",
+    "borrowDocRequiredHint": "Kalau dimatikan, aset berstatus Dipinjam tetap bisa disimpan/disubmit tanpa dokumen — field-nya jadi opsional di form."
+  },
+  "createStockOpnamePage": {
+    "title": "Buat Stock Opname",
+    "subtitle": "Buat draft stock opname, aset akan ditambahkan setelah draft tersimpan",
+    "dateLabel": "Tanggal Opname",
+    "notesLabel": "Catatan",
+    "notesPlaceholder": "Contoh: Opname rutin Q3 gudang Bandung Barat",
+    "cancel": "Batal",
+    "submit": "Simpan Draft",
+    "submitting": "Menyimpan..."
+  },
+  "stockOpnameStepper": {
+    "submit": "Submit",
+    "approval": "Approval",
+    "execute": "Eksekusi",
+    "done": "Selesai"
+  },
+  "stockOpnameDetail": {
+    "transactionNumber": "Nomor Transaksi",
+    "opnameDate": "Tanggal Opname",
+    "createdBy": "Dibuat Oleh",
+    "createdAt": "Dibuat Pada",
+    "updatedAt": "Diupdate Pada",
+    "submissionStatus": "Status Submit",
+    "onSchedule": "Tepat Jadwal",
+    "lateSchedule": "Di Luar Jadwal",
+    "notes": "Catatan",
+    "assetList": "Daftar Aset",
+    "assets": "aset",
+    "noAssets": "Belum ada aset yang ditambahkan",
+    "systemData": "Data Sistem",
+    "foundResult": "Hasil Temuan",
+    "condition": "Kondisi",
+    "physicalStatus": "Status Fisik",
+    "assetStatus": "Status Aset",
+    "fillFinding": "Isi Temuan",
+    "editFinding": "Edit Temuan",
+    "approvalNotInitiated": "Approval belum diajukan untuk transaksi ini.",
+    "initiateApproval": "Ajukan Approval",
+    "initiating": "Mengajukan...",
+    "toastInitiateSuccess": "Approval berhasil diajukan",
+    "toastInitiateError": "Gagal mengajukan approval",
+    "stageHistory": "Riwayat Stage",
+    "noStageHistory": "Belum ada riwayat stage",
+    "by": "oleh",
+    "submitStockOpname": "Submit Stock Opname",
+    "approve": "Approve",
+    "execute": "Eksekusi Stock Opname",
+    "reject": "Tolak",
+    "downloadTemplate": "Download Template Excel",
+    "uploadTemplate": "Upload Hasil Excel",
+    "tableNo": "No",
+    "tableAsset": "Aset",
+    "tableCategory": "Kategori",
+    "tableNotes": "Catatan",
+    "tableAction": "Aksi",
+    "tableShowing": "Menampilkan",
+    "tableOf": "dari",
+    "tablePageSize": "Baris/hal:",
+    "fillDataButton": "Lengkapi Data"
+  },
+  "stockOpnameFindingModal": {
+    "title": "Isi Temuan Fisik",
+    "physicalStatus": "Status Fisik",
+    "physicalStatusPlaceholder": "Pilih status fisik",
+    "physicalStatusOptions": {
+      "exists": "Ada",
+      "missing": "Tidak Ada",
+      "borrowed": "Dipinjam"
+    },
+    "borrowDocument": "Dokumen Peminjaman",
+    "borrowDocumentHint": "PDF, wajib diisi untuk aset yang sedang dipinjam",
+    "borrowDocumentPlaceholder": "Pilih file PDF",
+    "borrowDocumentUploading": "Mengupload...",
+    "condition": "Kondisi",
+    "conditionPlaceholder": "Pilih kondisi",
+    "conditionOptions": {
+      "good": "Baik",
+      "fair": "Cukup",
+      "poor": "Kurang",
+      "broken": "Rusak Berat",
+      "na": "Tidak Ada"
+    },
+    "assetStatus": "Status Aset",
+    "assetStatusHint": "(opsional, isi jika berubah)",
+    "assetStatusOptions": {
+      "unchanged": "Tidak diubah",
+      "active": "Aktif",
+      "inactive": "Tidak Aktif",
+      "maintenance": "Maintenance",
+      "retired": "Retired"
+    },
+    "notes": "Catatan",
+    "optional": "opsional",
+    "notesPlaceholder": "Contoh: Ditemukan lecet pada bodi unit",
+    "cancel": "Batal",
+    "submit": "Simpan Temuan",
+    "submitting": "Menyimpan...",
+    "toast": {
+      "required": "Status fisik dan kondisi wajib diisi",
+      "borrowDocumentRequired": "Dokumen peminjaman (PDF) wajib diupload untuk status Dipinjam"
+    }
+  },
+  "submitStockOpnameModal": {
+    "title": "Submit Stock Opname",
+    "warningMessage": "Setelah disubmit, draft tidak bisa diubah lagi dan akan langsung diajukan untuk approval.",
+    "notes": "Catatan",
+    "optional": "opsional",
+    "notesPlaceholder": "Contoh: Sudah dicek semua unit di gudang",
+    "cancel": "Batal",
+    "submit": "Submit",
+    "saving": "Menyimpan...",
+    "initiating": "Mengajukan approval...",
+    "toast": {
+      "success": "Stock opname berhasil disubmit dan diajukan untuk approval",
+      "errorSubmit": "Gagal mensubmit stock opname",
+      "errorInitiate": "Submit berhasil, tapi gagal mengajukan approval"
+    }
+  },
+  "approveStockOpnameModal": {
+    "title": "Approve Stock Opname",
+    "confirmationTitle": "Konfirmasi Persetujuan",
+    "confirmationDescription": "Setelah semua step disetujui, stock opname akan otomatis pindah ke tahap eksekusi.",
+    "notes": "Catatan",
+    "optional": "opsional",
+    "notesPlaceholder": "Catatan approval...",
+    "cancel": "Batal",
+    "approve": "Approve",
+    "approving": "Menyetujui...",
+    "toast": {
+      "success": "Approval berhasil disetujui",
+      "error": "Gagal menyetujui approval"
+    },
+    "stepFallback": "Step approval"
+  },
+  "executeStockOpnameModal": {
+    "title": "Eksekusi Stock Opname",
+    "infoMessage": "Hasil temuan akan ditulis ke data aset (kondisi, status fisik, status aset) dan tidak bisa diubah lagi.",
+    "notes": "Catatan",
+    "optional": "opsional",
+    "notesPlaceholder": "Catatan eksekusi...",
+    "cancel": "Batal",
+    "submit": "Eksekusi",
+    "submitting": "Mengeksekusi...",
+    "toast": {
+      "success": "Stock opname berhasil dieksekusi",
+      "error": "Gagal mengeksekusi stock opname"
+    }
+  },
+  "rejectStockOpnameModal": {
+    "title": "Tolak Stock Opname",
+    "warningMessage": "Stock opname akan ditolak dan tidak bisa dilanjutkan lagi.",
+    "reasonLabel": "Alasan Penolakan",
+    "reasonPlaceholder": "Jelaskan alasan penolakan (minimal 10 karakter)",
+    "reasonTooShort": "Alasan minimal {{min}} karakter ({{current}}/{{min}})",
+    "cancel": "Batal",
+    "confirm": "Ya, Tolak",
+    "rejecting": "Menolak...",
+    "toast": {
+      "success": "Stock opname berhasil ditolak",
+      "error": "Gagal menolak stock opname"
+    }
+  },
+  "stockOpnameReportPage": {
+    "title": "Report Stock Opname",
+    "backToList": "Kembali ke daftar",
+    "view": "Tampilan",
+    "dashboard": "Dashboard",
+    "detailReport": "Detail Report",
+    "period": "Periode",
+    "go": "Go",
+    "plant": "Plant",
+    "allPlant": "Semua",
+    "assetUnit": "aset",
+    "downloading": "Mengunduh...",
+    "downloadReport": "Download Report",
+    "loading": "Memuat laporan...",
+    "stats": {
+      "totalAsset": "Total Aset",
+      "finish": "Finish",
+      "done": "selesai",
+      "inProgress": "In Progress",
+      "belumSubmit": "Belum Submit",
+      "rejected": "Rejected",
+      "revisi": "Revisi",
+      "disposal": "Disposal",
+      "acquisVal": "Acquis Val",
+      "bookVal": "Book Val"
+    },
+    "charts": {
+      "statusPerGrouping": "Status per grouping",
+      "physicalVsSystem": "Status fisik vs SAP",
+      "statusFisik": "Status Fisik",
+      "statusSap": "Status SAP",
+      "ada": "Ada",
+      "tidakAda": "Tidak Ada",
+      "conditionSummary": "Kondisi aset",
+      "baik": "Baik",
+      "rusak": "Rusak",
+      "belumIsi": "Belum Isi",
+      "statusSubmit": "Status submit",
+      "ungrouped": "Belum Dikelompokkan"
+    },
+    "rekap": {
+      "label": "Rekapitulasi",
+      "unitInfo": "Unit / Info",
+      "unsupported": "belum didukung",
+      "unit": "unit",
+      "areaClear": "Area Clear",
+      "areaNotClear": "Area Tidak Clear",
+      "totalArea": "Total Area Nasional",
+      "costCenterTitle": "Nilai aset per cost center (top 10)",
+      "noData": "Tidak ada data"
+    }
+  },
+  "stockOpnameTemplateModal": {
+    "title": "Upload Hasil Temuan (Excel)",
+    "description": "Upload file excel yang sudah diisi untuk update temuan semua aset sekaligus.",
+    "fileLabel": "File Excel",
+    "chooseFile": "Pilih file",
+    "noFileChosen": "Belum ada file dipilih",
+    "cancel": "Batal",
+    "submit": "Upload & Proses",
+    "uploading": "Memproses...",
+    "toastDownloadError": "Gagal mengunduh template",
+    "toastUploadRequireFile": "Pilih file excel terlebih dahulu",
+    "resultTitle": "Hasil Upload",
+    "updatedCount": "Berhasil diupdate",
+    "failedCount": "Gagal",
+    "errorsTitle": "Detail Error",
+    "errorRow": "Baris",
+    "close": "Tutup"
+  },
+  "stockOpnameFillPage": {
+    "title": "Lengkapi Data",
+    "subtitle": "Isi data temuan langsung di tabel, tersimpan otomatis tiap beberapa detik",
+    "back": "Kembali",
+    "notDraft": "Lengkapi data cuma bisa dilakukan selama stock opname masih berstatus draft",
+    "saveNow": "Simpan Sekarang",
+    "statusSaving": "Menyimpan...",
+    "statusSaved": "Tersimpan",
+    "statusErrorSuffix": "asset gagal disimpan",
+    "statusIdle": "Belum ada perubahan",
+    "lastSaved": "Terakhir tersimpan",
+    "secondsAgo": "detik lalu",
+    "justNow": "baru saja",
+    "columnNo": "No",
+    "columnAsset": "Aset",
+    "columnCategory": "Kategori",
+    "columnPhysicalStatus": "Status Fisik",
+    "columnCondition": "Kondisi",
+    "columnAssetStatus": "Status Aset",
+    "columnNotes": "Catatan",
+    "columnBorrowDocument": "Dok. Peminjaman",
+    "selectPlaceholder": "-",
+    "notesPlaceholder": "Catatan...",
+    "unsavedBadge": "belum tersimpan",
+    "searchPlaceholder": "Cari nama atau nomor asset... (Ctrl+F)",
+    "searchNoResults": "Gak ada asset yang cocok"
+  },
+  "guidePage": {
+    "title": "Panduan Penggunaan",
+    "subtitle": "Pilih modul yang mau dipelajari cara pakainya",
+    "modules": {
+      "stockOpname": {
+        "title": "Stock Opname",
+        "description": "Cara bikin, isi, submit, sampai approval & eksekusi stock opname"
+      }
+    }
+  },
+  "guideStockOpname": {
+    "back": "Kembali",
+    "title": "Panduan Stock Opname",
+    "subtitle": "Semua yang perlu kamu tau buat pakai fitur Stock Opname, dari bikin draft sampai laporan",
+    "toc": "Daftar Isi",
+    "sections": {
+      "overview": {
+        "title": "Alur Stock Opname",
+        "summary": "Stock opname itu proses ngecek kondisi fisik aset di branch kamu, dibandingin sama data yang tercatat di sistem. Alurnya urut kayak gini:",
+        "steps": [
+          "Draft — asset otomatis masuk semua, kamu isi hasil ceknya",
+          "Approval — nunggu disetujui sesuai alur approval branch kamu",
+          "Eksekusi — hasil temuan diterapkan ke data aset",
+          "Selesai — data aset udah keupdate, gak bisa diubah lagi"
+        ],
+        "tip": "Stock opname bisa ditolak (Reject) di tahap Approval atau Eksekusi kalau ada masalah."
+      },
+      "createDraft": {
+        "title": "1. Bikin Stock Opname Baru",
+        "summary": "Buka menu Stock Opname, lalu klik \"Buat Stock Opname\".",
+        "steps": [
+          "Tanggal opname otomatis diisi hari ini — gak perlu (dan gak bisa) diubah manual",
+          "Isi catatan kalau perlu (opsional), lalu simpan",
+          "Begitu tersimpan, SEMUA asset di branch homebase kamu otomatis masuk ke daftar — gak perlu nambahin satu-satu"
+        ],
+        "tip": "Gak ada lagi batasan \"satu asset cuma boleh di satu stock opname aktif\" — kamu bisa bikin stock opname baru kapan aja, termasuk buat branch yang masih ada stock opname lain yang berjalan atau di hari yang sama."
+      },
+      "fillSingle": {
+        "title": "2. Isi Hasil Cek — Satu Per Satu",
+        "summary": "Paling cocok kalau cuma mau update beberapa asset aja.",
+        "steps": [
+          "Di halaman detail stock opname, cari asset yang mau dicek",
+          "Klik tombol \"Isi Temuan\" (atau \"Edit Temuan\" kalau udah pernah diisi)",
+          "Upload Foto Bukti Fisik — wajib buat tiap asset sebelum stock opname bisa disubmit",
+          "Pilih Status Fisik: Ada / Tidak Ada / Dipinjam",
+          "Kalau pilih \"Dipinjam\", upload juga Dokumen Peminjaman — format yang diterima (PDF/Word/Foto) dan wajib-tidaknya diatur admin di halaman Config",
+          "Pilih Kondisi — kalau Status Fisik-nya \"Tidak Ada\" atau \"Dipinjam\", Kondisi otomatis kekunci ke \"Tidak Ada\" juga",
+          "Isi Status Aset kalau ada perubahan, dan Catatan kalau perlu",
+          "Klik \"Simpan Temuan\""
+        ]
+      },
+      "fillGrid": {
+        "title": "3. Isi Hasil Cek — Lengkapi Data (banyak asset sekaligus)",
+        "summary": "Paling cocok kalau mau ngecek banyak asset berturut-turut tanpa buka-tutup popup.",
+        "steps": [
+          "Di halaman detail, klik tombol \"Lengkapi Data\"",
+          "Kebuka tampilan layar penuh mirip excel — tiap baris satu asset, kolomnya bisa diisi langsung",
+          "Klik ikon kamera di kolom Foto buat upload Foto Bukti Fisik — wajib diisi tiap asset",
+          "Kalau Status Fisik diisi \"Dipinjam\", muncul kolom Dokumen Peminjaman — klik ikon dokumennya buat upload",
+          "Ketik aja, gak perlu klik simpan tiap kali — otomatis tersimpan sendiri tiap 8 detik",
+          "Lihat indikator kecil di pojok kanan atas buat tau status simpannya (Menyimpan... / Tersimpan)",
+          "Kalau gak mau nunggu, klik \"Simpan Sekarang\"",
+          "Asset-nya banyak? Tekan Ctrl+F (Cmd+F di Mac) buat cari cepat berdasarkan nama atau nomor asset"
+        ],
+        "tip": "Kalau ada baris yang gagal tersimpan (misal kombinasi Status Fisik/Kondisi gak valid, atau status Dipinjam tapi dokumen peminjaman belum diupload), bakal ada titik merah kecil di baris itu — arahkan kursor buat lihat kenapa."
+      },
+      "fillExcel": {
+        "title": "4. Isi Hasil Cek — Lewat Excel",
+        "summary": "Cocok buat kerja offline, atau kirim ke orang lain yang bantu ngecek di lapangan.",
+        "steps": [
+          "Klik \"Download Template\" — dapet file excel isinya semua asset di stock opname ini",
+          "Isi kolom Status Fisik, Kondisi, Status Aset, dan Catatan sesuai hasil cek",
+          "Simpan filenya, lalu klik \"Upload Hasil\" dan pilih file yang udah diisi",
+          "Sistem bakal proses semua baris — yang bener langsung kesimpen, yang salah dikasih tau baris mana & kenapa"
+        ]
+      },
+      "submitApproval": {
+        "title": "5. Submit & Approval",
+        "summary": "Kalau semua asset udah ada hasil temuannya, saatnya submit.",
+        "steps": [
+          "Klik \"Submit Stock Opname\" di halaman detail",
+          "Stock opname masuk tahap Approval, jalan sesuai alur persetujuan yang diatur buat branch kamu",
+          "Cek progress-nya di bagian \"Status Approval\" — kelihatan siapa aja yang harus approve dan mana yang udah/belum"
+        ],
+        "tip": "Submit bakal ditolak kalau ada asset yang: belum diisi Status Fisik/Kondisi, belum diupload Foto Bukti Fisik-nya, atau (kalau statusnya Dipinjam & lagi diwajibkan di Config) belum diupload Dokumen Peminjaman."
+      },
+      "execute": {
+        "title": "6. Eksekusi",
+        "summary": "Setelah semua approval selesai, stock opname masuk tahap Eksekusi.",
+        "steps": [
+          "Role yang berwenang (misal PIC Asset) klik \"Eksekusi Stock Opname\"",
+          "Sistem nerapin semua hasil temuan ke data asset (kondisi, status fisik, status asset)",
+          "Setelah ini stock opname-nya \"Selesai\" dan datanya udah gak bisa diubah lagi"
+        ]
+      },
+      "reject": {
+        "title": "7. Tolak (Reject)",
+        "summary": "Kalau ada masalah pas Approval atau Eksekusi, stock opname bisa ditolak.",
+        "steps": [
+          "Klik \"Tolak\" di halaman detail",
+          "Isi alasan penolakan (wajib, minimal 10 karakter)",
+          "Stock opname yang udah ditolak gak bisa dilanjutin lagi — kalau masih perlu, bikin draft baru"
+        ]
+      },
+      "report": {
+        "title": "8. Laporan",
+        "summary": "Buat lihat rekap hasil stock opname per periode dan branch.",
+        "steps": [
+          "Buka menu Stock Opname → Laporan",
+          "Pilih bulan, tahun, dan branch (atau semua branch)",
+          "Lihat ringkasan di dashboard, atau buka \"Detail\" buat tabel rekap lengkap",
+          "Klik \"Export\" buat download laporan dalam bentuk excel"
+        ]
+      },
+      "config": {
+        "title": "9. Pengaturan Stock Opname",
+        "summary": "Beberapa aturan stock opname bisa diatur lewat halaman Config — diakses lewat tombol \"Config\" di halaman daftar Stock Opname.",
+        "steps": [
+          "Jendela Submit — atur tanggal mulai & akhir tiap bulan buat nandain submit yang \"tepat jadwal\" (stock opname tetap bisa disubmit kapan aja, ini cuma nentuin status di halaman detail)",
+          "Format Dokumen Peminjaman — centang format file yang diterima buat aset berstatus Dipinjam: PDF, Word, dan/atau Foto",
+          "Wajib Diisi — nyalain/matiin apakah Dokumen Peminjaman wajib diupload buat aset berstatus Dipinjam",
+          "Klik \"Simpan\" buat nerapin perubahan"
+        ],
+        "tip": "Setelah stock opname disubmit, halaman detail bakal nampilin status \"Tepat Jadwal\" atau \"Di Luar Jadwal\" sesuai Jendela Submit yang lagi aktif pas submit dilakukan."
+      }
+    }
+  },
+  "stockOpnamePhoto": {
+    "label": "Foto Bukti Fisik",
+    "uploadCta": "Upload Foto",
+    "hint": "JPEG, maks 2MB, foto asli kamera (bukan hasil forward chat), diambil maks 10 hari lalu",
+    "capturedOn": "Diambil",
+    "clickToReplace": "klik buat ganti",
+    "uploadTooltip": "Belum ada foto — klik buat upload"
+  },
+  "stockOpnameBorrowDocument": {
+    "label": "Dokumen Peminjaman",
+    "uploadCta": "Upload Dokumen",
+    "hint": "PDF, wajib untuk aset berstatus Dipinjam",
+    "clickToReplace": "klik buat ganti",
+    "uploadTooltip": "Belum ada dokumen — klik buat upload"
   }
 }

@@ -106,6 +106,14 @@ export const disposalColumns: ColumnDef<disposalListState>[] = [
       <DisposalTypeBadge value={row.original.transaction.disposal_type} />
     ),
   },
+  // {
+  //   accessorFn: (row) => row.transaction.status,
+  //   id: "status",
+  //   header: "STATUS",
+  //   cell: ({ row }) => (
+  //     <StatusBadge value={row.original.transaction.status} />
+  //   ),
+  // },
   {
     accessorFn: (row) => row.transaction.current_stage,
     id: "current_stage",

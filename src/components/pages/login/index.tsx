@@ -14,6 +14,7 @@ const LoginPage = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
+    const [errorMsg, setErrorMsg] = useState("");
 
     const features = [
         t("label.loginPage.featureTracking"),
@@ -36,6 +37,7 @@ const LoginPage = () => {
 
         try {
             setLoading(true);
+            setErrorMsg("");
 
             const res = await axiosPublic.post("/auth/login", {
                 username,
@@ -78,7 +80,9 @@ const LoginPage = () => {
 
             navigate("/dashboard", { replace: true });
         } catch (error) {
-            toast.error(t("label.loginPage.invalidCredential"));
+            const errMsg = t("label.loginPage.invalidCredential");
+            setErrorMsg(errMsg);
+            toast.error(errMsg);
             console.error(error);
         } finally {
             setLoading(false);
@@ -169,9 +173,13 @@ const LoginPage = () => {
                             </label>
 
                             <input
+                                data-cy="login-email"
                                 type="text"
                                 value={username}
-                                onChange={(e) => setUsername(e.target.value)}
+                                onChange={(e) => {
+                                    setUsername(e.target.value);
+                                    setErrorMsg("");
+                                }}
                                 onKeyDown={handleKeyDown}
                                 placeholder={t("label.loginPage.usernamePlaceholder")}
                                 className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500"
@@ -185,11 +193,14 @@ const LoginPage = () => {
                             </label>
 
                             <div className="relative">
-
                                 <input
+                                    data-cy="login-password"
                                     type={showPassword ? "text" : "password"}
                                     value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    onChange={(e) => {
+                                        setPassword(e.target.value);
+                                        setErrorMsg("");
+                                    }}
                                     onKeyDown={handleKeyDown}
                                     placeholder={t("label.loginPage.passwordPlaceholder")}
                                     className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500"
@@ -197,9 +208,7 @@ const LoginPage = () => {
 
                                 <button
                                     type="button"
-                                    onClick={() =>
-                                        setShowPassword(!showPassword)
-                                    }
+                                    onClick={() => setShowPassword(!showPassword)}
                                     className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
                                 >
                                     {showPassword ? (
@@ -211,8 +220,16 @@ const LoginPage = () => {
                             </div>
                         </div>
 
+                        {/* Error message */}
+                        {errorMsg && (
+                            <p data-cy="login-error" className="text-red-500 text-sm">
+                                {errorMsg}
+                            </p>
+                        )}
+
                         {/* Button */}
                         <button
+                            data-cy="login-submit"
                             onClick={handleSubmit}
                             disabled={loading}
                             className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 disabled:opacity-70 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-sm"

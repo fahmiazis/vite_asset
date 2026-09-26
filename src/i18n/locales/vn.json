@@ -1322,5 +1322,434 @@
       "disposal_agreement": "Disposal Agreement"
     },
     "createAgreement": "Tạo agreement"
+  },
+  "stockOpnamePage": {
+    "title": "Kiểm Kê Tài Sản",
+    "createButton": "+ Tạo Kiểm Kê Tài Sản",
+    "reportButton": "Báo cáo",
+    "configButton": "Cấu Hình"
+  },
+  "stockOpnameConfigPage": {
+    "title": "Cấu Hình Kiểm Kê Tài Sản",
+    "subtitle": "Thiết lập khung ngày nộp kiểm kê tài sản hàng tháng",
+    "back": "Quay Lại",
+    "windowSectionTitle": "Khung Thời Gian Nộp",
+    "startDayLabel": "Ngày Bắt Đầu",
+    "endDayLabel": "Ngày Kết Thúc",
+    "hint": "Kiểm kê tài sản vẫn có thể được nộp bất cứ lúc nào — khung thời gian này chỉ dùng để đánh dấu việc nộp có đúng hạn hay không (hiển thị ở trang chi tiết).",
+    "wrapHint": "Ngày kết thúc nhỏ hơn ngày bắt đầu, nên khung này tự động kéo dài sang tháng sau.",
+    "save": "Lưu",
+    "saving": "Đang lưu...",
+    "lastUpdated": "Cập nhật lần cuối",
+    "notYetUpdated": "Chưa từng cập nhật",
+    "borrowDocSectionTitle": "Tài Liệu Mượn (trạng thái Đang mượn)",
+    "allowedFormatsLabel": "Định Dạng File Được Chấp Nhận",
+    "formatPdf": "PDF",
+    "formatWord": "Word (.doc/.docx)",
+    "formatPhoto": "Ảnh (JPEG/PNG/WEBP)",
+    "noFormatSelected": "Chọn ít nhất 1 định dạng file",
+    "borrowDocRequiredLabel": "Bắt buộc",
+    "borrowDocRequiredHint": "Khi tắt, tài sản có trạng thái Đang mượn vẫn có thể lưu/nộp mà không cần tài liệu — trường này trở thành tùy chọn trong biểu mẫu."
+  },
+  "createStockOpnamePage": {
+    "title": "Tạo Kiểm Kê Tài Sản",
+    "subtitle": "Tạo bản nháp kiểm kê tài sản, tài sản sẽ được thêm sau khi lưu bản nháp",
+    "dateLabel": "Ngày Kiểm Kê",
+    "notesLabel": "Ghi Chú",
+    "notesPlaceholder": "vd. Kiểm kê định kỳ Q3 kho Bandung Barat",
+    "cancel": "Hủy",
+    "submit": "Lưu Bản Nháp",
+    "submitting": "Đang lưu..."
+  },
+  "stockOpnameStepper": {
+    "submit": "Gửi",
+    "approval": "Phê Duyệt",
+    "execute": "Thực Thi",
+    "done": "Hoàn Tất"
+  },
+  "stockOpnameDetail": {
+    "transactionNumber": "Số Giao Dịch",
+    "opnameDate": "Ngày Kiểm Kê",
+    "createdBy": "Người Tạo",
+    "createdAt": "Ngày Tạo",
+    "updatedAt": "Cập Nhật Lúc",
+    "submissionStatus": "Trạng Thái Nộp",
+    "onSchedule": "Đúng Hạn",
+    "lateSchedule": "Trễ Hạn",
+    "notes": "Ghi Chú",
+    "assetList": "Danh Sách Tài Sản",
+    "assets": "tài sản",
+    "noAssets": "Chưa có tài sản nào được thêm",
+    "systemData": "Dữ Liệu Hệ Thống",
+    "foundResult": "Kết Quả Kiểm Kê",
+    "condition": "Tình Trạng",
+    "physicalStatus": "Trạng Thái Vật Lý",
+    "assetStatus": "Trạng Thái Tài Sản",
+    "fillFinding": "Nhập Kết Quả",
+    "editFinding": "Sửa Kết Quả",
+    "approvalNotInitiated": "Chưa gửi phê duyệt cho giao dịch này.",
+    "initiateApproval": "Gửi Phê Duyệt",
+    "initiating": "Đang gửi...",
+    "toastInitiateSuccess": "Gửi phê duyệt thành công",
+    "toastInitiateError": "Không thể gửi phê duyệt",
+    "stageHistory": "Lịch Sử Giai Đoạn",
+    "noStageHistory": "Chưa có lịch sử giai đoạn",
+    "by": "bởi",
+    "submitStockOpname": "Gửi Kiểm Kê Tài Sản",
+    "approve": "Phê Duyệt",
+    "execute": "Thực Thi Kiểm Kê",
+    "reject": "Từ Chối",
+    "downloadTemplate": "Tải Mẫu Excel",
+    "uploadTemplate": "Tải Lên Kết Quả Excel",
+    "tableNo": "STT",
+    "tableAsset": "Tài Sản",
+    "tableCategory": "Danh Mục",
+    "tableNotes": "Ghi Chú",
+    "tableAction": "Hành Động",
+    "tableShowing": "Hiển thị",
+    "tableOf": "trong số",
+    "tablePageSize": "Số dòng/trang:",
+    "fillDataButton": "Hoàn Thiện Dữ Liệu"
+  },
+  "stockOpnameFindingModal": {
+    "title": "Nhập Kết Quả Kiểm Tra Thực Tế",
+    "physicalStatus": "Trạng Thái Vật Lý",
+    "physicalStatusPlaceholder": "Chọn trạng thái vật lý",
+    "physicalStatusOptions": {
+      "exists": "Còn",
+      "missing": "Mất",
+      "borrowed": "Đang mượn"
+    },
+    "borrowDocument": "Tài liệu mượn",
+    "borrowDocumentHint": "PDF, bắt buộc đối với tài sản đang được mượn",
+    "borrowDocumentPlaceholder": "Chọn file PDF",
+    "borrowDocumentUploading": "Đang tải lên...",
+    "condition": "Tình Trạng",
+    "conditionPlaceholder": "Chọn tình trạng",
+    "conditionOptions": {
+      "good": "Tốt",
+      "fair": "Khá",
+      "poor": "Kém",
+      "broken": "Hư Hỏng Nặng",
+      "na": "Không Áp Dụng"
+    },
+    "assetStatus": "Trạng Thái Tài Sản",
+    "assetStatusHint": "(tùy chọn, điền nếu có thay đổi)",
+    "assetStatusOptions": {
+      "unchanged": "Không thay đổi",
+      "active": "Đang Hoạt Động",
+      "inactive": "Ngừng Hoạt Động",
+      "maintenance": "Bảo Trì",
+      "retired": "Ngừng Sử Dụng"
+    },
+    "notes": "Ghi Chú",
+    "optional": "tùy chọn",
+    "notesPlaceholder": "vd. Phát hiện trầy xước trên thân thiết bị",
+    "cancel": "Hủy",
+    "submit": "Lưu Kết Quả",
+    "submitting": "Đang lưu...",
+    "toast": {
+      "required": "Trạng thái vật lý và tình trạng là bắt buộc",
+      "borrowDocumentRequired": "Tài liệu mượn (PDF) là bắt buộc đối với trạng thái Đang mượn"
+    }
+  },
+  "submitStockOpnameModal": {
+    "title": "Gửi Kiểm Kê Tài Sản",
+    "warningMessage": "Sau khi gửi, bản nháp không thể chỉnh sửa và sẽ được gửi phê duyệt ngay lập tức.",
+    "notes": "Ghi Chú",
+    "optional": "tùy chọn",
+    "notesPlaceholder": "vd. Đã kiểm tra tất cả thiết bị trong kho",
+    "cancel": "Hủy",
+    "submit": "Gửi",
+    "saving": "Đang lưu...",
+    "initiating": "Đang gửi phê duyệt...",
+    "toast": {
+      "success": "Gửi kiểm kê và phê duyệt thành công",
+      "errorSubmit": "Không thể gửi kiểm kê tài sản",
+      "errorInitiate": "Gửi thành công, nhưng không thể gửi phê duyệt"
+    }
+  },
+  "approveStockOpnameModal": {
+    "title": "Phê Duyệt Kiểm Kê Tài Sản",
+    "confirmationTitle": "Xác Nhận Phê Duyệt",
+    "confirmationDescription": "Sau khi tất cả các bước được phê duyệt, kiểm kê tài sản sẽ tự động chuyển sang giai đoạn thực thi.",
+    "notes": "Ghi Chú",
+    "optional": "tùy chọn",
+    "notesPlaceholder": "Ghi chú phê duyệt...",
+    "cancel": "Hủy",
+    "approve": "Phê Duyệt",
+    "approving": "Đang phê duyệt...",
+    "toast": {
+      "success": "Phê duyệt thành công",
+      "error": "Không thể phê duyệt"
+    },
+    "stepFallback": "Bước phê duyệt"
+  },
+  "executeStockOpnameModal": {
+    "title": "Thực Thi Kiểm Kê Tài Sản",
+    "infoMessage": "Kết quả kiểm kê sẽ được ghi vào dữ liệu tài sản (tình trạng, trạng thái vật lý, trạng thái tài sản) và không thể thay đổi được nữa.",
+    "notes": "Ghi Chú",
+    "optional": "tùy chọn",
+    "notesPlaceholder": "Ghi chú thực thi...",
+    "cancel": "Hủy",
+    "submit": "Thực Thi",
+    "submitting": "Đang thực thi...",
+    "toast": {
+      "success": "Thực thi kiểm kê tài sản thành công",
+      "error": "Không thể thực thi kiểm kê tài sản"
+    }
+  },
+  "rejectStockOpnameModal": {
+    "title": "Từ Chối Kiểm Kê Tài Sản",
+    "warningMessage": "Kiểm kê tài sản sẽ bị từ chối và không thể tiếp tục.",
+    "reasonLabel": "Lý Do Từ Chối",
+    "reasonPlaceholder": "Giải thích lý do từ chối (tối thiểu 10 ký tự)",
+    "reasonTooShort": "Lý do phải có ít nhất {{min}} ký tự ({{current}}/{{min}})",
+    "cancel": "Hủy",
+    "confirm": "Có, Từ Chối",
+    "rejecting": "Đang từ chối...",
+    "toast": {
+      "success": "Từ chối kiểm kê tài sản thành công",
+      "error": "Không thể từ chối kiểm kê tài sản"
+    }
+  },
+  "stockOpnameReportPage": {
+    "title": "Báo Cáo Kiểm Kê Tài Sản",
+    "backToList": "Quay lại danh sách",
+    "view": "Chế độ xem",
+    "dashboard": "Tổng quan",
+    "detailReport": "Báo cáo chi tiết",
+    "period": "Kỳ báo cáo",
+    "go": "Xem",
+    "plant": "Chi nhánh",
+    "allPlant": "Tất cả",
+    "assetUnit": "tài sản",
+    "downloading": "Đang tải xuống...",
+    "downloadReport": "Tải báo cáo",
+    "loading": "Đang tải báo cáo...",
+    "stats": {
+      "totalAsset": "Tổng tài sản",
+      "finish": "Hoàn tất",
+      "done": "hoàn tất",
+      "inProgress": "Đang xử lý",
+      "belumSubmit": "Chưa nộp",
+      "rejected": "Bị từ chối",
+      "revisi": "Cần chỉnh sửa",
+      "disposal": "Đã thanh lý",
+      "acquisVal": "Giá trị mua sắm",
+      "bookVal": "Giá trị sổ sách"
+    },
+    "charts": {
+      "statusPerGrouping": "Trạng thái theo nhóm",
+      "physicalVsSystem": "Thực tế so với hệ thống",
+      "statusFisik": "Trạng thái thực tế",
+      "statusSap": "Trạng thái hệ thống",
+      "ada": "Có",
+      "tidakAda": "Không có",
+      "conditionSummary": "Tình trạng tài sản",
+      "baik": "Tốt",
+      "rusak": "Hư hỏng",
+      "belumIsi": "Chưa nhập",
+      "statusSubmit": "Trạng thái nộp",
+      "ungrouped": "Chưa phân nhóm"
+    },
+    "rekap": {
+      "label": "Bảng tổng hợp",
+      "unitInfo": "Số lượng / Thông tin",
+      "unsupported": "chưa hỗ trợ",
+      "unit": "đơn vị",
+      "areaClear": "Khu vực đã khớp",
+      "areaNotClear": "Khu vực chưa khớp",
+      "totalArea": "Tổng số khu vực toàn quốc",
+      "costCenterTitle": "Giá trị tài sản theo trung tâm chi phí (top 10)",
+      "noData": "Không có dữ liệu"
+    }
+  },
+  "stockOpnameTemplateModal": {
+    "title": "Tải Lên Kết Quả Kiểm Tra (Excel)",
+    "description": "Tải lên file excel đã điền để cập nhật tất cả kết quả kiểm tra tài sản cùng lúc.",
+    "fileLabel": "File Excel",
+    "chooseFile": "Chọn file",
+    "noFileChosen": "Chưa chọn file",
+    "cancel": "Hủy",
+    "submit": "Tải Lên & Xử Lý",
+    "uploading": "Đang xử lý...",
+    "toastDownloadError": "Tải mẫu thất bại",
+    "toastUploadRequireFile": "Vui lòng chọn file excel trước",
+    "resultTitle": "Kết Quả Tải Lên",
+    "updatedCount": "Đã cập nhật",
+    "failedCount": "Thất bại",
+    "errorsTitle": "Chi Tiết Lỗi",
+    "errorRow": "Dòng",
+    "close": "Đóng"
+  },
+  "stockOpnameFillPage": {
+    "title": "Hoàn Thiện Dữ Liệu",
+    "subtitle": "Điền kết quả kiểm tra trực tiếp trên bảng, tự động lưu mỗi vài giây",
+    "back": "Quay Lại",
+    "notDraft": "Chỉ có thể hoàn thiện dữ liệu khi stock opname còn ở trạng thái nháp",
+    "saveNow": "Lưu Ngay",
+    "statusSaving": "Đang lưu...",
+    "statusSaved": "Đã lưu",
+    "statusErrorSuffix": "tài sản lưu thất bại",
+    "statusIdle": "Chưa có thay đổi",
+    "lastSaved": "Lần lưu cuối",
+    "secondsAgo": "giây trước",
+    "justNow": "vừa xong",
+    "columnNo": "STT",
+    "columnAsset": "Tài Sản",
+    "columnCategory": "Danh Mục",
+    "columnPhysicalStatus": "Trạng Thái Vật Lý",
+    "columnCondition": "Tình Trạng",
+    "columnAssetStatus": "Trạng Thái Tài Sản",
+    "columnNotes": "Ghi Chú",
+    "columnBorrowDocument": "Tài Liệu Mượn",
+    "selectPlaceholder": "-",
+    "notesPlaceholder": "Ghi chú...",
+    "unsavedBadge": "chưa lưu",
+    "searchPlaceholder": "Tìm tên hoặc số tài sản... (Ctrl+F)",
+    "searchNoResults": "Không tìm thấy tài sản phù hợp"
+  },
+  "guidePage": {
+    "title": "Hướng Dẫn Sử Dụng",
+    "subtitle": "Chọn module bạn muốn tìm hiểu cách dùng",
+    "modules": {
+      "stockOpname": {
+        "title": "Stock Opname",
+        "description": "Cách tạo, điền, gửi duyệt, phê duyệt và thực thi stock opname"
+      }
+    }
+  },
+  "guideStockOpname": {
+    "back": "Quay Lại",
+    "title": "Hướng Dẫn Stock Opname",
+    "subtitle": "Mọi thứ bạn cần biết để dùng Stock Opname, từ tạo nháp đến báo cáo",
+    "toc": "Mục Lục",
+    "sections": {
+      "overview": {
+        "title": "Quy Trình Stock Opname",
+        "summary": "Stock opname là kiểm tra thực tế tài sản tại chi nhánh, so với dữ liệu hệ thống. Quy trình gồm:",
+        "steps": [
+          "Nháp — tài sản tự động thêm hết, bạn điền kết quả kiểm tra",
+          "Phê duyệt — chờ duyệt theo quy trình của chi nhánh",
+          "Thực thi — kết quả được áp dụng vào dữ liệu tài sản",
+          "Hoàn tất — dữ liệu tài sản đã cập nhật, không thể sửa nữa"
+        ],
+        "tip": "Stock opname có thể bị từ chối ở bước Phê duyệt hoặc Thực thi nếu có vấn đề."
+      },
+      "createDraft": {
+        "title": "1. Tạo Stock Opname Mới",
+        "summary": "Mở menu Stock Opname, bấm \"Tạo Stock Opname\".",
+        "steps": [
+          "Ngày kiểm tra luôn là hôm nay — không thể sửa thủ công",
+          "Điền ghi chú nếu cần (không bắt buộc), rồi lưu",
+          "Sau khi lưu, TẤT CẢ tài sản ở chi nhánh của bạn tự động thêm vào — không cần thêm từng cái"
+        ],
+        "tip": "Không còn giới hạn \"một tài sản chỉ được ở một stock opname đang hoạt động\" — bạn có thể tạo stock opname mới bất cứ lúc nào, kể cả khi chi nhánh đó đang có stock opname khác chưa xong, hoặc trong cùng ngày."
+      },
+      "fillSingle": {
+        "title": "2. Điền Kết Quả — Từng Cái Một",
+        "summary": "Phù hợp khi chỉ cần cập nhật vài tài sản.",
+        "steps": [
+          "Ở trang chi tiết, tìm tài sản cần kiểm tra",
+          "Bấm \"Điền Kết Quả\" (hoặc \"Sửa Kết Quả\" nếu đã điền rồi)",
+          "Tải lên Ảnh Bằng Chứng Thực Tế — bắt buộc cho mỗi tài sản trước khi stock opname có thể gửi duyệt",
+          "Chọn Trạng Thái Vật Lý: Còn / Mất / Đang mượn",
+          "Nếu chọn \"Đang mượn\", tải lên thêm Tài Liệu Mượn — định dạng chấp nhận (PDF/Word/Ảnh) và có bắt buộc hay không do quản trị viên thiết lập ở trang Cấu Hình",
+          "Chọn Tình Trạng — nếu Trạng Thái Vật Lý là \"Mất\" hoặc \"Đang mượn\", Tình Trạng tự khóa thành \"Không Áp Dụng\"",
+          "Điền Trạng Thái Tài Sản nếu có thay đổi, và Ghi Chú nếu cần",
+          "Bấm \"Lưu Kết Quả\""
+        ]
+      },
+      "fillGrid": {
+        "title": "3. Điền Kết Quả — Hoàn Thiện Dữ Liệu (nhiều tài sản cùng lúc)",
+        "summary": "Phù hợp khi cần kiểm tra nhiều tài sản liên tục mà không mở/đóng popup.",
+        "steps": [
+          "Ở trang chi tiết, bấm \"Hoàn Thiện Dữ Liệu\"",
+          "Mở ra bảng toàn màn hình giống excel — mỗi dòng một tài sản, sửa trực tiếp trong ô",
+          "Bấm biểu tượng máy ảnh ở cột Ảnh để tải Ảnh Bằng Chứng Thực Tế — bắt buộc cho mỗi tài sản",
+          "Nếu Trạng Thái Vật Lý là \"Đang mượn\", cột Tài Liệu Mượn sẽ xuất hiện — bấm biểu tượng để tải lên",
+          "Chỉ cần gõ — không cần bấm lưu mỗi lần, tự động lưu mỗi 8 giây",
+          "Xem chỉ báo nhỏ góc trên phải để biết trạng thái lưu (Đang lưu... / Đã lưu)",
+          "Không muốn chờ? Bấm \"Lưu Ngay\"",
+          "Nhiều tài sản quá? Bấm Ctrl+F (Cmd+F trên Mac) để tìm theo tên hoặc số tài sản"
+        ],
+        "tip": "Dòng nào lưu thất bại (vd. cặp Trạng Thái Vật Lý/Tình Trạng không hợp lệ, hoặc trạng thái Đang mượn nhưng chưa tải tài liệu mượn) sẽ có chấm đỏ nhỏ — di chuột vào để xem lý do."
+      },
+      "fillExcel": {
+        "title": "4. Điền Kết Quả — Qua Excel",
+        "summary": "Phù hợp làm việc offline, hoặc gửi cho người khác kiểm tra tại hiện trường.",
+        "steps": [
+          "Bấm \"Tải Mẫu\" — nhận file excel chứa mọi tài sản trong stock opname này",
+          "Điền cột Trạng Thái Vật Lý, Tình Trạng, Trạng Thái Tài Sản, Ghi Chú",
+          "Lưu file, rồi bấm \"Tải Lên Kết Quả\" và chọn file đã điền",
+          "Hệ thống xử lý từng dòng — dòng đúng lưu ngay, dòng sai được báo dòng nào và lý do"
+        ]
+      },
+      "submitApproval": {
+        "title": "5. Gửi Duyệt & Phê Duyệt",
+        "summary": "Khi mọi tài sản đã có kết quả, đến lúc gửi duyệt.",
+        "steps": [
+          "Bấm \"Gửi Duyệt Stock Opname\" ở trang chi tiết",
+          "Stock opname vào giai đoạn Phê duyệt, theo quy trình của chi nhánh bạn",
+          "Theo dõi tiến độ ở \"Trạng Thái Phê Duyệt\" — xem ai cần duyệt và cái nào xong/chưa"
+        ],
+        "tip": "Gửi duyệt sẽ bị từ chối nếu có tài sản: chưa điền Trạng Thái Vật Lý/Tình Trạng, chưa tải Ảnh Bằng Chứng Thực Tế, hoặc (nếu Đang mượn và Cấu Hình đang yêu cầu bắt buộc) chưa tải Tài Liệu Mượn."
+      },
+      "execute": {
+        "title": "6. Thực Thi",
+        "summary": "Sau khi mọi bước phê duyệt xong, stock opname vào giai đoạn Thực thi.",
+        "steps": [
+          "Vai trò có quyền (vd. PIC Tài Sản) bấm \"Thực Thi Stock Opname\"",
+          "Hệ thống áp dụng mọi kết quả vào dữ liệu tài sản (tình trạng, trạng thái vật lý, trạng thái tài sản)",
+          "Sau bước này stock opname \"Hoàn Tất\" và dữ liệu không thể sửa nữa"
+        ]
+      },
+      "reject": {
+        "title": "7. Từ Chối",
+        "summary": "Nếu có vấn đề khi Phê duyệt hoặc Thực thi, stock opname có thể bị từ chối.",
+        "steps": [
+          "Bấm \"Từ Chối\" ở trang chi tiết",
+          "Nhập lý do từ chối (bắt buộc, tối thiểu 10 ký tự)",
+          "Stock opname đã từ chối không thể tiếp tục — tạo nháp mới nếu vẫn cần"
+        ]
+      },
+      "report": {
+        "title": "8. Báo Cáo",
+        "summary": "Xem tổng hợp kết quả stock opname theo kỳ và chi nhánh.",
+        "steps": [
+          "Mở Stock Opname → Báo Cáo",
+          "Chọn tháng, năm, và chi nhánh (hoặc tất cả)",
+          "Xem tóm tắt trên dashboard, hoặc mở \"Chi Tiết\" để xem bảng tổng hợp đầy đủ",
+          "Bấm \"Xuất\" để tải báo cáo dạng excel"
+        ]
+      },
+      "config": {
+        "title": "9. Cài Đặt Stock Opname",
+        "summary": "Một số quy tắc stock opname có thể chỉnh ở trang Cấu Hình — vào từ nút \"Cấu Hình\" ở trang danh sách Stock Opname.",
+        "steps": [
+          "Khung Thời Gian Gửi Duyệt — đặt ngày bắt đầu & kết thúc mỗi tháng để đánh dấu việc gửi duyệt là \"đúng hạn\" (stock opname vẫn có thể gửi duyệt bất cứ lúc nào, cài đặt này chỉ ảnh hưởng trạng thái hiển thị ở trang chi tiết)",
+          "Định Dạng Tài Liệu Mượn — chọn định dạng file được chấp nhận cho tài sản trạng thái Đang mượn: PDF, Word, và/hoặc Ảnh",
+          "Bắt Buộc — bật/tắt việc Tài Liệu Mượn có bắt buộc cho tài sản trạng thái Đang mượn hay không",
+          "Bấm \"Lưu\" để áp dụng thay đổi"
+        ],
+        "tip": "Sau khi stock opname được gửi duyệt, trang chi tiết sẽ hiển thị \"Đúng Hạn\" hoặc \"Trễ Hạn\" dựa trên Khung Thời Gian Gửi Duyệt đang áp dụng lúc gửi."
+      }
+    }
+  },
+  "stockOpnamePhoto": {
+    "label": "Ảnh Bằng Chứng Thực Tế",
+    "uploadCta": "Tải Ảnh Lên",
+    "hint": "JPEG, tối đa 2MB, ảnh gốc từ máy ảnh (không phải chuyển tiếp qua chat), chụp trong 10 ngày gần đây",
+    "capturedOn": "Chụp lúc",
+    "clickToReplace": "bấm để thay",
+    "uploadTooltip": "Chưa có ảnh — bấm để tải lên"
+  },
+  "stockOpnameBorrowDocument": {
+    "label": "Tài Liệu Mượn",
+    "uploadCta": "Tải Tài Liệu Lên",
+    "hint": "PDF, bắt buộc đối với tài sản có trạng thái Đang mượn",
+    "clickToReplace": "bấm để thay",
+    "uploadTooltip": "Chưa có tài liệu — bấm để tải lên"
   }
 }
