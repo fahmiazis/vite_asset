@@ -1115,7 +1115,9 @@
   },
   "table": {
     "showData": "Show",
-    "showAll": "All"
+    "showAll": "All",
+    "range": "{{from}}–{{to}} of {{total}}",
+    "pageOf": "Page {{page}} / {{pages}}"
   },
   "mutationDocuments": {
     "title": "Documents",
@@ -1751,5 +1753,151 @@
     "hint": "PDF, required for assets with Borrowed status",
     "clickToReplace": "click to replace",
     "uploadTooltip": "No document yet — click to upload"
+  },
+  "assetFilter": {
+    "category": "Category",
+    "allCategories": "All categories",
+    "status": "Status",
+    "allStatuses": "All statuses",
+    "branch": "Branch",
+    "allBranches": "All branches",
+    "reset": "Reset filter"
+  },
+  "handover": {
+    "title": "Asset Handover",
+    "subtitle": "{{count}} requests",
+    "create": "New Handover",
+    "detailTitle": "Asset Handover Detail",
+    "searchPlaceholder": "Search number, notes, asset...",
+    "allTypes": "All types",
+    "loading": "Loading...",
+    "empty": "No handover requests",
+    "notFound": "Handover not found",
+    "cancel": "Cancel",
+    "saving": "Saving...",
+    "optional": "optional",
+    "heldByBranch": "Branch",
+    "branch": "Branch {{code}}",
+    "prev": "Previous",
+    "next": "Next",
+    "pageInfo": "Page {{page}} of {{pages}} · {{total}} requests",
+    "assetsTitle": "Assets ({{count}})",
+    "approvalTitle": "Approval ({{done}}/{{total}})",
+    "historyTitle": "Stage History",
+    "needsRevision": "Needs revision",
+    "revisionBanner": "The approver returned this request. Fix the marked assets, then submit again.",
+    "waitingRecipient": "Waiting for {{name}} to confirm receipt.",
+    "waitingBranch": "Waiting for the branch to confirm the return.",
+    "tabs": {
+      "all": "All",
+      "waiting": "Waiting for Me",
+      "draft": "Draft",
+      "approval": "Approval",
+      "receiving": "Receiving",
+      "finished": "Finished",
+      "closed": "Rejected / Cancelled"
+    },
+    "type": {
+      "HANDOVER": "Handover to user",
+      "RETURN": "Return to branch"
+    },
+    "column": {
+      "number": "Number",
+      "type": "Type",
+      "recipient": "Recipient",
+      "assets": "Assets",
+      "stage": "Stage",
+      "createdBy": "Created by",
+      "date": "Date",
+      "assetNumber": "Asset number",
+      "assetName": "Asset name",
+      "category": "Category",
+      "holder": "Current holder",
+      "previousHolder": "Previous holder",
+      "rowStatus": "Status"
+    },
+    "info": {
+      "number": "Transaction number",
+      "type": "Type",
+      "recipient": "Recipient",
+      "branch": "Branch",
+      "date": "Date",
+      "createdBy": "Created by",
+      "totalAssets": "Total assets",
+      "notes": "Notes"
+    },
+    "form": {
+      "createTitle": "New Asset Handover",
+      "editTitle": "Edit Handover Draft",
+      "homebaseRule": "Only assets in your homebase branch can be handed over, and the recipient must be in the same homebase. To move an asset to another branch, create a mutation first.",
+      "type": "Handover type",
+      "typeHint": {
+        "HANDOVER": "Give branch assets (or reassign) to a user.",
+        "RETURN": "A user returns held assets to the branch."
+      },
+      "recipient": "Recipient",
+      "recipientPlaceholder": "Select recipient...",
+      "recipientHint": "Only users whose homebase is your branch.",
+      "date": "Transaction date",
+      "notes": "Notes",
+      "assets": "Assets",
+      "selected": "{{count}} selected",
+      "searchAssets": "Search asset...",
+      "noAssets": {
+        "HANDOVER": "No available assets in your homebase branch.",
+        "RETURN": "No assets are currently held by a user in your branch."
+      },
+      "createDraft": "Create Draft",
+      "saveDraft": "Save Draft",
+      "notDraft": "This request is no longer a draft and cannot be edited.",
+      "errors": {
+        "recipient": "Select a recipient",
+        "assets": "Select at least one asset"
+      }
+    },
+    "action": {
+      "submit": "Submit",
+      "resubmit": "Revision Done — Submit",
+      "submitInfo": "The request goes to approval (flow ASSET_HANDOVER_APPROVAL).",
+      "notes": "Notes",
+      "reason": "Reason",
+      "approve": "Approve",
+      "reject": "Reject",
+      "revise": "Request Revision",
+      "cancel": "Cancel Request",
+      "edit": "Edit Draft",
+      "stepInfo": "You are approving as {{step}}.",
+      "confirm": "Confirm Receipt",
+      "confirmInfo": {
+        "HANDOVER": "By confirming, the assets are recorded as held by the recipient.",
+        "RETURN": "By confirming, the assets are returned to the branch (holder cleared)."
+      },
+      "rejectReceiving": "Refuse",
+      "rejectReceivingInfo": "The request ends as REJECTED and the assets are released."
+    },
+    "docs": {
+      "title": "Handover Documents",
+      "subtitle": "Documents for stage {{stage}} — configured in Attachment Setting.",
+      "missing": "Not uploaded yet",
+      "optional": "Optional",
+      "upload": "Upload",
+      "reupload": "Re-upload",
+      "uploading": "Uploading...",
+      "uploaded": "Uploaded",
+      "tooLarge": "Maximum file size is 10 MB",
+      "openFailed": "Failed to open the file"
+    },
+    "toast": {
+      "created": "Handover draft created",
+      "updated": "Draft saved",
+      "submitted": "Handover submitted",
+      "approved": "Step approved",
+      "rejected": "Handover rejected",
+      "revised": "Returned for revision",
+      "cancelled": "Handover cancelled",
+      "received": "Receipt confirmed",
+      "uploaded": "Document uploaded",
+      "error": "Action failed"
+    }
   }
 }

@@ -8,6 +8,7 @@ import {
     type SortingState,
     type ColumnFiltersState,
 } from '@tanstack/react-table'
+import { PageSizeSelect, usePageSize } from '../../molecules/table/pageSize'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { attachmentSettingState } from '../../../models/attachmentSetting/list'
@@ -46,6 +47,9 @@ export function AttachmentSettingTable({ data, isLoading }: AttachmentSettingTab
             },
         },
     })
+
+    // pilihan jumlah baris, sama dengan /role
+    const { mode: pageSizeMode, setMode: setPageSizeMode } = usePageSize(table)
 
     if (isLoading) {
         return (
@@ -137,8 +141,9 @@ export function AttachmentSettingTable({ data, isLoading }: AttachmentSettingTab
             </div>
 
             {/* Pagination */}
-            <div className="flex items-center justify-between">
-                <div className="text-xs">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+                <PageSizeSelect value={pageSizeMode} onChange={setPageSizeMode} />
+                <div className="text-xs mr-auto">
                     Show{' '}
                     <span className="font-medium">
                         {table.getState().pagination.pageIndex *

@@ -8,6 +8,7 @@ import {
     type SortingState,
     type ColumnFiltersState,
 } from "@tanstack/react-table"
+import { PageSizeSelect, usePageSize } from "../../../molecules/table/pageSize"
 import { useState } from "react"
 import { depreciationColumns } from "./column"
 import type { depreListState } from "../../../../models/depreciation/list"
@@ -90,6 +91,9 @@ export function DepreciationTable({ data, isLoading }: DepreciationTableProps) {
         state: { sorting, columnFilters, globalFilter },
         initialState: { pagination: { pageSize: 10 } },
     })
+
+    // pilihan jumlah baris, sama dengan /role
+    const { mode: pageSizeMode, setMode: setPageSizeMode } = usePageSize(table)
 
     if (isLoading) {
         return (
@@ -185,8 +189,9 @@ export function DepreciationTable({ data, isLoading }: DepreciationTableProps) {
             </div>
 
             {/* Pagination */}
-            <div className="flex items-center justify-between">
-                <div className="text-xs text-gray-500">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+                <PageSizeSelect value={pageSizeMode} onChange={setPageSizeMode} />
+                <div className="text-xs text-gray-500 mr-auto">
                     Show{" "}
                     <span className="font-medium">
                         {table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1}

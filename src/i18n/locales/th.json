@@ -1115,7 +1115,9 @@
   },
   "table": {
     "showData": "แสดง",
-    "showAll": "ทั้งหมด"
+    "showAll": "ทั้งหมด",
+    "range": "{{from}}–{{to}} จาก {{total}}",
+    "pageOf": "หน้า {{page}} / {{pages}}"
   },
   "mutationDocuments": {
     "title": "เอกสาร",
@@ -1751,5 +1753,151 @@
     "hint": "PDF จำเป็นสำหรับสินทรัพย์ที่มีสถานะถูกยืม",
     "clickToReplace": "คลิกเพื่อเปลี่ยน",
     "uploadTooltip": "ยังไม่มีเอกสาร — คลิกเพื่ออัปโหลด"
+  },
+  "assetFilter": {
+    "category": "หมวดหมู่",
+    "allCategories": "ทุกหมวดหมู่",
+    "status": "สถานะ",
+    "allStatuses": "ทุกสถานะ",
+    "branch": "สาขา",
+    "allBranches": "ทุกสาขา",
+    "reset": "ล้างตัวกรอง"
+  },
+  "handover": {
+    "title": "ส่งมอบสินทรัพย์",
+    "subtitle": "{{count}} คำขอ",
+    "create": "ส่งมอบใหม่",
+    "detailTitle": "รายละเอียดการส่งมอบสินทรัพย์",
+    "searchPlaceholder": "ค้นหาเลขที่ หมายเหตุ สินทรัพย์...",
+    "allTypes": "ทุกประเภท",
+    "loading": "กำลังโหลด...",
+    "empty": "ยังไม่มีคำขอส่งมอบ",
+    "notFound": "ไม่พบการส่งมอบ",
+    "cancel": "ยกเลิก",
+    "saving": "กำลังบันทึก...",
+    "optional": "ไม่บังคับ",
+    "heldByBranch": "สาขา",
+    "branch": "สาขา {{code}}",
+    "prev": "ก่อนหน้า",
+    "next": "ถัดไป",
+    "pageInfo": "หน้า {{page}} จาก {{pages}} · {{total}} คำขอ",
+    "assetsTitle": "สินทรัพย์ ({{count}})",
+    "approvalTitle": "การอนุมัติ ({{done}}/{{total}})",
+    "historyTitle": "ประวัติ Stage",
+    "needsRevision": "ต้องแก้ไข",
+    "revisionBanner": "ผู้อนุมัติส่งคำขอนี้กลับ กรุณาแก้ไขสินทรัพย์ที่ทำเครื่องหมายไว้แล้วส่งใหม่",
+    "waitingRecipient": "รอ {{name}} ยืนยันการรับ",
+    "waitingBranch": "รอสาขายืนยันการคืน",
+    "tabs": {
+      "all": "ทั้งหมด",
+      "waiting": "รอฉัน",
+      "draft": "ร่าง",
+      "approval": "อนุมัติ",
+      "receiving": "รับมอบ",
+      "finished": "เสร็จสิ้น",
+      "closed": "ถูกปฏิเสธ / ยกเลิก"
+    },
+    "type": {
+      "HANDOVER": "ส่งมอบให้ผู้ใช้",
+      "RETURN": "คืนให้สาขา"
+    },
+    "column": {
+      "number": "เลขที่",
+      "type": "ประเภท",
+      "recipient": "ผู้รับ",
+      "assets": "สินทรัพย์",
+      "stage": "Stage",
+      "createdBy": "สร้างโดย",
+      "date": "วันที่",
+      "assetNumber": "เลขที่สินทรัพย์",
+      "assetName": "ชื่อสินทรัพย์",
+      "category": "หมวดหมู่",
+      "holder": "ผู้ถือปัจจุบัน",
+      "previousHolder": "ผู้ถือก่อนหน้า",
+      "rowStatus": "สถานะ"
+    },
+    "info": {
+      "number": "เลขที่ธุรกรรม",
+      "type": "ประเภท",
+      "recipient": "ผู้รับ",
+      "branch": "สาขา",
+      "date": "วันที่",
+      "createdBy": "สร้างโดย",
+      "totalAssets": "จำนวนสินทรัพย์",
+      "notes": "หมายเหตุ"
+    },
+    "form": {
+      "createTitle": "ส่งมอบสินทรัพย์ใหม่",
+      "editTitle": "แก้ไขร่างการส่งมอบ",
+      "homebaseRule": "ส่งมอบได้เฉพาะสินทรัพย์ในสาขา homebase ของคุณ และผู้รับต้องอยู่ homebase เดียวกัน หากต้องการย้ายไปสาขาอื่นให้ทำการโอนย้าย (mutation) ก่อน",
+      "type": "ประเภทการส่งมอบ",
+      "typeHint": {
+        "HANDOVER": "มอบสินทรัพย์ของสาขา (หรือเปลี่ยนผู้ถือ) ให้ผู้ใช้",
+        "RETURN": "ผู้ใช้คืนสินทรัพย์ที่ถืออยู่ให้สาขา"
+      },
+      "recipient": "ผู้รับ",
+      "recipientPlaceholder": "เลือกผู้รับ...",
+      "recipientHint": "เฉพาะผู้ใช้ที่มี homebase เป็นสาขาของคุณ",
+      "date": "วันที่ธุรกรรม",
+      "notes": "หมายเหตุ",
+      "assets": "สินทรัพย์",
+      "selected": "เลือก {{count}} รายการ",
+      "searchAssets": "ค้นหาสินทรัพย์...",
+      "noAssets": {
+        "HANDOVER": "ไม่มีสินทรัพย์ว่างในสาขา homebase ของคุณ",
+        "RETURN": "ไม่มีสินทรัพย์ที่ผู้ใช้ถืออยู่ในสาขาของคุณ"
+      },
+      "createDraft": "สร้างร่าง",
+      "saveDraft": "บันทึกร่าง",
+      "notDraft": "คำขอนี้ไม่ใช่ร่างแล้ว จึงแก้ไขไม่ได้",
+      "errors": {
+        "recipient": "กรุณาเลือกผู้รับ",
+        "assets": "เลือกสินทรัพย์อย่างน้อยหนึ่งรายการ"
+      }
+    },
+    "action": {
+      "submit": "ส่ง",
+      "resubmit": "แก้ไขเสร็จ — ส่ง",
+      "submitInfo": "คำขอจะเข้าสู่การอนุมัติ (flow ASSET_HANDOVER_APPROVAL)",
+      "notes": "หมายเหตุ",
+      "reason": "เหตุผล",
+      "approve": "อนุมัติ",
+      "reject": "ปฏิเสธ",
+      "revise": "ขอให้แก้ไข",
+      "cancel": "ยกเลิกคำขอ",
+      "edit": "แก้ไขร่าง",
+      "stepInfo": "คุณอนุมัติในฐานะ {{step}}",
+      "confirm": "ยืนยันการรับ",
+      "confirmInfo": {
+        "HANDOVER": "เมื่อยืนยันแล้ว สินทรัพย์จะบันทึกว่าผู้รับเป็นผู้ถือ",
+        "RETURN": "เมื่อยืนยันแล้ว สินทรัพย์จะกลับไปเป็นของสาขา (ล้างผู้ถือ)"
+      },
+      "rejectReceiving": "ปฏิเสธการรับ",
+      "rejectReceivingInfo": "คำขอจะสิ้นสุดเป็น REJECTED และปล่อยสินทรัพย์คืน"
+    },
+    "docs": {
+      "title": "เอกสารการส่งมอบ",
+      "subtitle": "เอกสารของ stage {{stage}} — ตั้งค่าใน Attachment Setting",
+      "missing": "ยังไม่อัปโหลด",
+      "optional": "ไม่บังคับ",
+      "upload": "อัปโหลด",
+      "reupload": "อัปโหลดใหม่",
+      "uploading": "กำลังอัปโหลด...",
+      "uploaded": "อัปโหลดแล้ว",
+      "tooLarge": "ขนาดไฟล์สูงสุด 10 MB",
+      "openFailed": "เปิดไฟล์ไม่สำเร็จ"
+    },
+    "toast": {
+      "created": "สร้างร่างการส่งมอบแล้ว",
+      "updated": "บันทึกร่างแล้ว",
+      "submitted": "ส่งคำขอส่งมอบแล้ว",
+      "approved": "อนุมัติขั้นแล้ว",
+      "rejected": "การส่งมอบถูกปฏิเสธ",
+      "revised": "ส่งกลับให้แก้ไขแล้ว",
+      "cancelled": "ยกเลิกการส่งมอบแล้ว",
+      "received": "ยืนยันการรับแล้ว",
+      "uploaded": "อัปโหลดเอกสารแล้ว",
+      "error": "ดำเนินการไม่สำเร็จ"
+    }
   }
 }

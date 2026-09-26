@@ -12,11 +12,19 @@ function formatRupiah(value: number) {
 
 // --- Badge Asset Status ---
 function AssetStatusBadge({ value }: { value: string }) {
+  // Semua nilai di constans/asset.ts. Dulu hanya empat status yang dikenal,
+  // sehingga AVAILABLE (mayoritas aset) jatuh ke gaya "inactive" abu-abu.
   const map: Record<string, { dot: string; bg: string }> = {
-    active:      { dot: "bg-green-500",  bg: "bg-green-50 text-green-700" },
-    inactive:    { dot: "bg-gray-400",   bg: "bg-gray-100 text-gray-600" },
-    maintenance: { dot: "bg-yellow-400", bg: "bg-yellow-50 text-yellow-700" },
-    disposed:    { dot: "bg-red-500",    bg: "bg-red-50 text-red-600" },
+    available:       { dot: "bg-green-500",  bg: "bg-green-50 text-green-700" },
+    active:          { dot: "bg-green-500",  bg: "bg-green-50 text-green-700" },
+    pending_receipt: { dot: "bg-sky-500",    bg: "bg-sky-50 text-sky-700" },
+    in_mutation:     { dot: "bg-blue-500",   bg: "bg-blue-50 text-blue-700" },
+    in_disposal:     { dot: "bg-orange-500", bg: "bg-orange-50 text-orange-700" },
+    in_handover:     { dot: "bg-teal-500",   bg: "bg-teal-50 text-teal-700" },
+    maintenance:     { dot: "bg-yellow-400", bg: "bg-yellow-50 text-yellow-700" },
+    inactive:        { dot: "bg-gray-400",   bg: "bg-gray-100 text-gray-600" },
+    retired:         { dot: "bg-gray-500",   bg: "bg-gray-100 text-gray-700" },
+    disposed:        { dot: "bg-red-500",    bg: "bg-red-50 text-red-600" },
   }
   const s = map[value?.toLowerCase()] ?? map["inactive"]
   return (
@@ -67,6 +75,14 @@ export const assetsColumns: ColumnDef<listAssetsState>[] = [
     header: "CABANG",
     cell: ({ row }) => (
       <span className="text-sm">{row.getValue("branch_code") ?? "-"}</span>
+    ),
+  },
+  {
+    // pemegang hasil serah terima aset; kosong = dipegang cabang
+    accessorKey: "assigned_user_name",
+    header: "PEMEGANG",
+    cell: ({ row }) => (
+      <span className="text-sm">{row.original.assigned_user_name ?? "-"}</span>
     ),
   },
   {

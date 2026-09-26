@@ -49,6 +49,9 @@ import AttachmentSettingPage from '../components/pages/settingAttachment'
 import DetailAttachmentSettingPage from '../components/pages/settingAttachment/detail'
 import CreateAttachmentSettingPage from '../components/pages/settingAttachment/create'
 import EmailSettingPage from '../components/pages/settingEmail'
+import HandoverPage from '../components/pages/handover'
+import HandoverFormPage from '../components/pages/handover/form'
+import HandoverDetailPage from '../components/pages/handover/detail'
 import CreateEmailSettingPage from '../components/pages/settingEmail/create'
 import DetailEmailSettingPage from '../components/pages/settingEmail/detail'
 import MutationPage from '../components/pages/mutation'
@@ -211,6 +214,20 @@ export const router = createBrowserRouter([
           {
             path: 'setting-email',
             element: <EmailSettingPage />,
+          },
+          {
+            path: 'handover',
+            element: <HandoverPage />,
+          },
+          {
+            // buat baru, atau ubah draft lewat ?edit=<nomor>
+            path: 'handover/create',
+            element: <HandoverFormPage />,
+          },
+          {
+            // nomor transaksi mengandung "/" — pakai splat
+            path: 'handover/*',
+            element: <HandoverDetailPage />,
           },
           {
             path: 'setting-email/create',

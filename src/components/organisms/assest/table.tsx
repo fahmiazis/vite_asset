@@ -5,7 +5,7 @@ import {
   useReactTable,
   type SortingState,
 } from "@tanstack/react-table"
-import { useState } from "react"
+import { useState, type ReactNode } from "react"
 import { assetsColumns } from "./column"
 import type { listAssetsState } from "../../../models/asset/list"
 import { Search01Icon } from "hugeicons-react"
@@ -18,6 +18,10 @@ interface AssetsTableProps {
   isLoading?: boolean
   onPageChange: (page: number) => void
   onSearchChange: (value: string) => void
+  /** dropdown filter (kategori, status, cabang) di samping kotak pencarian */
+  filters?: ReactNode
+  /** pilihan jumlah baris per halaman, di baris pagination */
+  pageSizeControl?: ReactNode
 }
 
 export function AssetsTable({
@@ -28,6 +32,8 @@ export function AssetsTable({
   isLoading,
   onPageChange,
   onSearchChange,
+  filters,
+  pageSizeControl,
 }: AssetsTableProps) {
   const [sorting, setSorting] = useState<SortingState>([])
   const [searchValue, setSearchValue] = useState("")
@@ -66,8 +72,9 @@ export function AssetsTable({
   return (
     <div className="space-y-4 bg-white dark:bg-gray-950 p-6 rounded-2xl">
 
-      {/* Search */}
-      <section className="flex items-center justify-between w-full">
+      {/* Search + filter */}
+      <section className="flex flex-wrap items-center justify-between gap-3 w-full">
+        <div className="flex flex-wrap items-center gap-2">
         <div className="relative">
           <Search01Icon size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray1" />
           <input
@@ -77,6 +84,8 @@ export function AssetsTable({
             onChange={(e) => handleSearch(e.target.value)}
             className="pl-9 pr-4 py-2 text-sm border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-72"
           />
+        </div>
+        {filters}
         </div>
 
         {/* Loading indicator saat fetch halaman baru */}
@@ -138,8 +147,9 @@ export function AssetsTable({
       </div>
 
       {/* Pagination */}
-      <div className="flex items-center justify-between">
-        <p className="text-xs text-gray1">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        {pageSizeControl}
+        <p className="text-xs text-gray1 mr-auto">
           Menampilkan{" "}
           <span className="font-semibold text-[var(--text-color)]">{from}</span>
           {" "}–{" "}

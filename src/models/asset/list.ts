@@ -27,6 +27,10 @@ export interface listAssetsState {
   io_number: string
   record_type: any
   asset_status: string
+  /** pemegang hasil serah terima aset; null = dipegang cabang */
+  assigned_user_id?: string | null
+  assigned_user_name?: string | null
+  assigned_at?: string | null
   created_at: string
   updated_at: string
   current_value: CurrentValue

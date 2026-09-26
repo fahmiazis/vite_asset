@@ -51,6 +51,53 @@ body {
     border-radius: 10px; /* Rounded corners */
 }
 
+/* Scrollbar area konten utama — harus kontras dengan latar layout
+   (bg-blue-200 di mode terang, hitam di mode gelap). Abu muda sebelumnya
+   tenggelam di latar biru muda, jadi batangnya dibuat gelap dengan jalur
+   putih transparan. */
+.app-scrollbar {
+    scrollbar-width: auto;
+    scrollbar-color: #475569 rgba(255, 255, 255, 0.55);
+    scrollbar-gutter: stable;
+}
+
+.app-scrollbar::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.app-scrollbar::-webkit-scrollbar-track {
+    background-color: rgba(255, 255, 255, 0.55);
+    border-radius: 9999px;
+}
+
+.app-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #475569;
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+
+.app-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #1e293b;
+}
+
+.dark .app-scrollbar {
+    scrollbar-color: #94a3b8 rgba(255, 255, 255, 0.08);
+}
+
+.dark .app-scrollbar::-webkit-scrollbar-track {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark .app-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #94a3b8;
+}
+
+.dark .app-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #cbd5e1;
+}
+
 .hide-scrollbar {
     overflow-y: scroll;
     scrollbar-width: none; /* For Firefox */

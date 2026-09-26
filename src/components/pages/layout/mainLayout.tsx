@@ -45,7 +45,10 @@ export default function MainLayout() {
       >
         <Navbar title="Assets" />
 
-        <section className="flex-1 overflow-y-auto hide-scrollbar py-2">
+        {/* Scrollbar sengaja ditampilkan (dulu hide-scrollbar) supaya jelas
+            halaman bisa di-scroll — tabel & form panjang tidak terlihat
+            terpotong. */}
+        <section className="flex-1 overflow-y-auto app-scrollbar py-2 pr-1">
           <Suspense fallback={<p className="text-white">Loading...</p>}>
             <Outlet />
           </Suspense>

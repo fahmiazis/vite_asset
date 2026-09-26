@@ -12,6 +12,7 @@ const DETAIL_PATH: Record<waitingNotification["transaction_type"], string> = {
   mutation: "/dashboard/mutation/",
   disposal: "/dashboard/disposal/",
   disposal_agreement: "/dashboard/disposal-agreement/",
+  handover: "/dashboard/handover/",
 }
 
 const TYPE_STYLE: Record<waitingNotification["transaction_type"], string> = {
@@ -19,6 +20,7 @@ const TYPE_STYLE: Record<waitingNotification["transaction_type"], string> = {
   mutation: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300",
   disposal: "bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300",
   disposal_agreement: "bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300",
+  handover: "bg-teal-100 text-teal-700 dark:bg-teal-900/40 dark:text-teal-300",
 }
 
 // Disposal di APPROVAL_AGREEMENT tidak dikerjakan dari detailnya: tugas pic

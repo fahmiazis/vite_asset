@@ -1,4 +1,4 @@
-export type EmailTransactionType = "procurement" | "mutation" | "disposal" | "disposal_agreement"
+export type EmailTransactionType = "procurement" | "mutation" | "disposal" | "disposal_agreement" | "handover"
 export type EmailAction = "proceed" | "reject" | "revise" | "cancel"
 
 export interface emailTemplateRole {

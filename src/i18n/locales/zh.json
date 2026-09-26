@@ -1115,7 +1115,9 @@
   },
   "table": {
     "showData": "显示",
-    "showAll": "全部"
+    "showAll": "全部",
+    "range": "第 {{from}}–{{to}} 条，共 {{total}} 条",
+    "pageOf": "第 {{page}} / {{pages}} 页"
   },
   "mutationDocuments": {
     "title": "文档",
@@ -1751,5 +1753,151 @@
     "hint": "PDF格式，状态为借出的资产必填",
     "clickToReplace": "点击更换",
     "uploadTooltip": "尚无文件 — 点击上传"
+  },
+  "assetFilter": {
+    "category": "类别",
+    "allCategories": "所有类别",
+    "status": "状态",
+    "allStatuses": "所有状态",
+    "branch": "分行",
+    "allBranches": "所有分行",
+    "reset": "重置筛选"
+  },
+  "handover": {
+    "title": "资产交接",
+    "subtitle": "{{count}} 个申请",
+    "create": "新建交接",
+    "detailTitle": "资产交接详情",
+    "searchPlaceholder": "搜索编号、备注、资产...",
+    "allTypes": "所有类型",
+    "loading": "加载中...",
+    "empty": "暂无交接申请",
+    "notFound": "未找到交接",
+    "cancel": "取消",
+    "saving": "保存中...",
+    "optional": "可选",
+    "heldByBranch": "分行",
+    "branch": "分行 {{code}}",
+    "prev": "上一页",
+    "next": "下一页",
+    "pageInfo": "第 {{page}} / {{pages}} 页 · {{total}} 个申请",
+    "assetsTitle": "资产（{{count}}）",
+    "approvalTitle": "审批（{{done}}/{{total}}）",
+    "historyTitle": "Stage 历史",
+    "needsRevision": "需修改",
+    "revisionBanner": "审批人已退回此申请。请修改标记的资产后重新提交。",
+    "waitingRecipient": "等待 {{name}} 确认接收。",
+    "waitingBranch": "等待分行确认归还。",
+    "tabs": {
+      "all": "全部",
+      "waiting": "等待我",
+      "draft": "草稿",
+      "approval": "审批",
+      "receiving": "接收",
+      "finished": "已完成",
+      "closed": "已拒绝 / 已取消"
+    },
+    "type": {
+      "HANDOVER": "交接给用户",
+      "RETURN": "归还给分行"
+    },
+    "column": {
+      "number": "编号",
+      "type": "类型",
+      "recipient": "接收人",
+      "assets": "资产",
+      "stage": "Stage",
+      "createdBy": "创建人",
+      "date": "日期",
+      "assetNumber": "资产编号",
+      "assetName": "资产名称",
+      "category": "类别",
+      "holder": "当前持有人",
+      "previousHolder": "原持有人",
+      "rowStatus": "状态"
+    },
+    "info": {
+      "number": "交易编号",
+      "type": "类型",
+      "recipient": "接收人",
+      "branch": "分行",
+      "date": "日期",
+      "createdBy": "创建人",
+      "totalAssets": "资产数量",
+      "notes": "备注"
+    },
+    "form": {
+      "createTitle": "新建资产交接",
+      "editTitle": "修改交接草稿",
+      "homebaseRule": "只能交接您 homebase 分行内的资产，且接收人必须属于同一 homebase。如需转到其他分行，请先创建调拨（mutation）。",
+      "type": "交接类型",
+      "typeHint": {
+        "HANDOVER": "将分行资产交给某位用户（或更换持有人）。",
+        "RETURN": "用户将持有的资产归还给分行。"
+      },
+      "recipient": "接收人",
+      "recipientPlaceholder": "选择接收人...",
+      "recipientHint": "仅限 homebase 为您分行的用户。",
+      "date": "交易日期",
+      "notes": "备注",
+      "assets": "资产",
+      "selected": "已选 {{count}} 项",
+      "searchAssets": "搜索资产...",
+      "noAssets": {
+        "HANDOVER": "您的 homebase 分行没有可用资产。",
+        "RETURN": "您的分行没有被用户持有的资产。"
+      },
+      "createDraft": "创建草稿",
+      "saveDraft": "保存草稿",
+      "notDraft": "此申请已不是草稿，无法修改。",
+      "errors": {
+        "recipient": "请选择接收人",
+        "assets": "请至少选择一项资产"
+      }
+    },
+    "action": {
+      "submit": "提交",
+      "resubmit": "修改完成 — 提交",
+      "submitInfo": "申请将进入审批（flow ASSET_HANDOVER_APPROVAL）。",
+      "notes": "备注",
+      "reason": "原因",
+      "approve": "批准",
+      "reject": "拒绝",
+      "revise": "要求修改",
+      "cancel": "取消申请",
+      "edit": "修改草稿",
+      "stepInfo": "您以 {{step}} 身份审批。",
+      "confirm": "确认接收",
+      "confirmInfo": {
+        "HANDOVER": "确认后，资产将登记为由接收人持有。",
+        "RETURN": "确认后，资产归还分行（清空持有人）。"
+      },
+      "rejectReceiving": "拒绝接收",
+      "rejectReceivingInfo": "申请将以 REJECTED 结束，资产被释放。"
+    },
+    "docs": {
+      "title": "交接文件",
+      "subtitle": "Stage {{stage}} 的文件 — 在 Attachment Setting 中配置。",
+      "missing": "尚未上传",
+      "optional": "可选",
+      "upload": "上传",
+      "reupload": "重新上传",
+      "uploading": "上传中...",
+      "uploaded": "已上传",
+      "tooLarge": "文件最大 10 MB",
+      "openFailed": "无法打开文件"
+    },
+    "toast": {
+      "created": "已创建交接草稿",
+      "updated": "草稿已保存",
+      "submitted": "交接已提交",
+      "approved": "步骤已批准",
+      "rejected": "交接已拒绝",
+      "revised": "已退回修改",
+      "cancelled": "交接已取消",
+      "received": "已确认接收",
+      "uploaded": "文件已上传",
+      "error": "操作失败"
+    }
   }
 }
