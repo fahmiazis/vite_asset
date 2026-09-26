@@ -998,7 +998,9 @@
       "approved": "Step disetujui",
       "approveError": "Gagal menyetujui",
       "rejected": "Kesepakatan ditolak",
-      "rejectError": "Gagal menolak"
+      "rejectError": "Gagal menolak",
+      "revised": "Disposal dikembalikan untuk revisi",
+      "reviseError": "Gagal mengembalikan disposal untuk revisi"
     },
     "column": {
       "no": "No",
@@ -1028,6 +1030,13 @@
       "startDate": "Dari tanggal",
       "endDate": "Sampai tanggal",
       "reset": "Reset"
+    },
+    "revise": {
+      "button": "Minta Revisi",
+      "info": "Disposal yang dipilih keluar dari agreement ini dan kembali ke DRAFT untuk diperbaiki pembuatnya, lalu melewati approval request lagi. Anggota lain tetap di agreement dan approval-nya berjalan terus.",
+      "pickMembers": "Disposal yang dikembalikan",
+      "keepOne": "Minimal satu disposal harus tetap tinggal — pakai Tolak untuk mengembalikan semuanya.",
+      "assets": "{{count}} aset"
     }
   },
   "assetCategory": {
@@ -1143,5 +1152,159 @@
     "from": "Tanggal dari",
     "to": "Tanggal sampai",
     "reset": "Reset"
+  },
+  "stageEmail": {
+    "title": "Kirim Email Notifikasi",
+    "preparing": "Menyiapkan email...",
+    "invalidEmail": "Format email tidak valid",
+    "remove": "Hapus",
+    "minOne": "Minimal 1 penerima",
+    "addPlaceholder": "Ketik email lalu Enter",
+    "sent": "Email terkirim",
+    "resendLater": "Email bisa dikirim ulang nanti dari Email Setting → Log",
+    "mailerNotConfigured": "SMTP belum dikonfigurasi di server. Aksi tetap berjalan; email akan tercatat gagal dan bisa dikirim ulang dari tab Log.",
+    "failedTitle": "Aksi berhasil, tapi email gagal terkirim",
+    "failedHint": "Kirim ulang sekarang, atau nanti dari Email Setting → Log.",
+    "subject": "Subject",
+    "subjectLocked": "Dikunci sesuai template",
+    "to": "Kepada (To)",
+    "cc": "CC",
+    "noAutoRecipients": "Tidak ada user yang ditemukan otomatis — tambahkan email secara manual.",
+    "body": "Pesan",
+    "additional": "Tambahan Pesan",
+    "optional": "opsional",
+    "additionalPlaceholder": "Ditambahkan di bawah isi email",
+    "close": "Tutup",
+    "cancel": "Batal",
+    "resend": "Kirim Ulang",
+    "running": "Memproses aksi...",
+    "sending": "Mengirim email...",
+    "confirm": "Kirim & Lanjutkan",
+    "showPreview": "Pratinjau email",
+    "hidePreview": "Tutup pratinjau",
+    "autoContent": "Informasi ajuan dan daftar aset otomatis ditambahkan ke email."
+  },
+  "emailSetting": {
+    "title": "Email Setting",
+    "tab": {
+      "template": "Template",
+      "log": "Log"
+    },
+    "action": {
+      "proceed": "Lanjut / Submit",
+      "reject": "Tolak",
+      "revise": "Revisi",
+      "cancel": "Batalkan pengajuan"
+    },
+    "back": "Kembali",
+    "loading": "Memuat...",
+    "notFound": "Template tidak ditemukan",
+    "cancel": "Batal",
+    "saving": "Menyimpan...",
+    "save": "Simpan",
+    "create": "Buat",
+    "edit": "Ubah",
+    "deleting": "Menghapus...",
+    "active": "Aktif",
+    "inactive": "Nonaktif",
+    "empty": "Tidak ada data",
+    "searchTemplate": "Cari subject, stage, role...",
+    "allTransactionTypes": "Semua jenis transaksi",
+    "delete": {
+      "title": "Hapus Template Email",
+      "message": "Hapus template \"{{label}}\"? Tindakan ini tidak bisa dibatalkan.",
+      "confirm": "Hapus",
+      "button": "Hapus"
+    },
+    "toast": {
+      "created": "Template berhasil dibuat",
+      "createFailed": "Gagal membuat template",
+      "updated": "Template berhasil diubah",
+      "updateFailed": "Gagal mengubah template",
+      "deleted": "Template berhasil dihapus",
+      "deleteFailed": "Gagal menghapus template"
+    },
+    "column": {
+      "no": "No",
+      "transactionType": "Jenis Transaksi",
+      "stage": "Stage",
+      "action": "Aksi",
+      "subject": "Subject",
+      "ccRoles": "Role CC",
+      "status": "Status",
+      "actions": "Aksi"
+    },
+    "form": {
+      "createTitle": "Buat Template Email",
+      "editTitle": "Ubah Template Email",
+      "transactionType": "Jenis Transaksi",
+      "transactionTypePlaceholder": "Pilih jenis transaksi...",
+      "stage": "Stage",
+      "stagePlaceholder": "Pilih stage...",
+      "stageHelper": "Stage transaksi saat aksi dilakukan.",
+      "action": "Aksi",
+      "toInfoTitle": "Penerima To tidak diatur di sini",
+      "toInfo": {
+        "proceed": "Diisi otomatis dengan user yang punya hak akses di stage berikutnya (atau step approval berikutnya) dan satu cabang dengan pengajuan.",
+        "reject": "Diisi otomatis dengan pembuat pengajuan.",
+        "revise": "Diisi otomatis dengan pembuat pengajuan.",
+        "cancel": "Diisi otomatis dengan user yang sedang memegang pengajuan di stage ini."
+      },
+      "subject": "Subject",
+      "subjectPlaceholder": "mis. [0001/IX/2026-DPSL] Menunggu persetujuan Anda",
+      "subjectHelper": "Dikunci di dialog email — user tidak bisa mengubahnya.",
+      "body": "Pesan",
+      "bodyPlaceholder": "Tulis pesan untuk penerima...",
+      "bodyHelper": "Cukup isi pesannya. Header, informasi ajuan, daftar aset, dan tombol \"Buka Transaksi\" ditambahkan otomatis. User bisa menambahkan pesan saat mengirim.",
+      "placeholders": "Placeholder (disisipkan ke {{field}}):",
+      "ccRoles": "CC per Role",
+      "ccRolesHelper": "User dengan role ini di cabang yang sama dengan pengajuan otomatis masuk CC.",
+      "active": "Aktif",
+      "errors": {
+        "transactionType": "Jenis transaksi wajib dipilih",
+        "stage": "Stage wajib dipilih",
+        "subject": "Subject wajib diisi",
+        "body": "Body wajib diisi",
+        "ccRoles": "Pilih minimal 1 role CC"
+      },
+      "toInfoAgreement": {
+        "proceed": "Diisi otomatis: saat dibuat → approver step pertama; saat step di-approve → approver step berikutnya; setelah step terakhir → pembuat agreement dan pembuat tiap disposal anggota. Approver wajib punya akses ke SEMUA cabang anggota.",
+        "reject": "Diisi otomatis dengan pembuat agreement.",
+        "revise": "Diisi otomatis dengan pembuat disposal yang dikembalikan dan pembuat agreement."
+      },
+      "ccRolesHelperAgreement": "User dengan role ini yang punya akses ke SALAH SATU cabang anggota agreement otomatis masuk CC. Untuk revisi, yang dihitung hanya cabang disposal yang dikembalikan."
+    },
+    "placeholder": {
+      "transaction_number": "Nomor transaksi",
+      "transaction_type": "Jenis transaksi",
+      "stage": "Stage saat aksi dilakukan",
+      "next_stage": "Stage tujuan",
+      "action": "Aksi",
+      "creator_name": "Pembuat pengajuan",
+      "sender_name": "User yang mengirim email",
+      "branch_code": "Kode cabang pengajuan",
+      "link": "Tautan ke detail transaksi",
+      "date": "Tanggal & jam kirim"
+    },
+    "log": {
+      "search": "Cari nomor transaksi...",
+      "empty": "Belum ada log email",
+      "resendFailed": "Gagal mengirim ulang email",
+      "attempts": "Percobaan: {{count}}",
+      "status": {
+        "FAILED": "Gagal",
+        "SENT": "Terkirim",
+        "all": "Semua"
+      },
+      "column": {
+        "time": "Waktu",
+        "transaction": "Transaksi",
+        "stageAction": "Stage / Aksi",
+        "subject": "Subject",
+        "recipients": "Penerima",
+        "sender": "Pengirim",
+        "status": "Status"
+      }
+    }
   }
 }

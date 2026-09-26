@@ -13,6 +13,7 @@ import { MutationAttachmentPanel } from "../../../organisms/mutation/attachmentP
 import AddMutationAttachmentModal from "../../../organisms/mutation/addAttachmentModal"
 import { RevisionDecisionModal } from "../../../organisms/common/revisionDecisionModal"
 import { useMyProfile } from "../../../../hooks/query/auth/myProfile"
+import { withStageEmail } from "../../../../stores/stageEmailStore"
 import {
   useCancelMutation,
   useReturnMutationForRevision,
@@ -133,9 +134,17 @@ export default function MutationDetailPage() {
             }))}
           isPending={returnForRevision.isPending || cancelMutation.isPending}
           onConfirm={({ notes, rowIds }) =>
-            revisionMode === "revise"
-              ? returnForRevision.mutate({ revision_notes: notes, row_ids: rowIds })
-              : cancelMutation.mutate({ reason: notes })
+            withStageEmail(
+              {
+                transactionType: "mutation",
+                transactionNumber: transaction.transaction_number,
+                action: revisionMode === "revise" ? "revise" : "cancel",
+              },
+              () =>
+                revisionMode === "revise"
+                  ? returnForRevision.mutateAsync({ revision_notes: notes, row_ids: rowIds })
+                  : cancelMutation.mutateAsync({ reason: notes })
+            )
           }
           onClose={closeRevision}
         />

@@ -29,6 +29,8 @@ import {
   useCancelDisposal,
 } from "../../../hooks/mutation/disposal/approvalAction"
 import type { DisposalAsset, Transaction } from "../../../models/disposal/detail"
+import type { EmailAction } from "../../../models/emailSetting/template"
+import { withStageEmail } from "../../../stores/stageEmailStore"
 
 type ActiveModal =
   | "submit"
@@ -82,6 +84,10 @@ export function DisposalStageActionBar({
   const reject = useRejectDisposal(params)
 
   const blockedHint = canProceed ? undefined : blockReason
+
+  // Setiap aksi lewat dialog email dulu (kalau template stage + aksinya ada)
+  const emailGate = (action: EmailAction, run: () => Promise<unknown>) =>
+    withStageEmail({ transactionType: "disposal", transactionNumber, action }, run)
 
   // Sejak submit draft otomatis memanggil initiate (backend SubmitDisposal),
   // tombol "ajukan" manual hanya relevan untuk transaksi lama yang terlanjur
@@ -263,7 +269,7 @@ export function DisposalStageActionBar({
           tone={canProceed ? "indigo" : "red"}
           isPending={execute.isPending}
           confirmDisabled={!canProceed}
-          onConfirm={(notes) => execute.mutate({ notes: notes || undefined })}
+          onConfirm={(notes) => emailGate("proceed", () => execute.mutateAsync({ notes: notes || undefined }))}
           onClose={close}
         />
       )}
@@ -280,7 +286,7 @@ export function DisposalStageActionBar({
           tone={canProceed ? "emerald" : "red"}
           isPending={finance.isPending}
           confirmDisabled={!canProceed}
-          onConfirm={(notes) => finance.mutate({ notes: notes || undefined })}
+          onConfirm={(notes) => emailGate("proceed", () => finance.mutateAsync({ notes: notes || undefined }))}
           onClose={close}
         />
       )}
@@ -295,7 +301,7 @@ export function DisposalStageActionBar({
           tone={canProceed ? "emerald" : "red"}
           isPending={tax.isPending}
           confirmDisabled={!canProceed}
-          onConfirm={(notes) => tax.mutate({ notes: notes || undefined })}
+          onConfirm={(notes) => emailGate("proceed", () => tax.mutateAsync({ notes: notes || undefined }))}
           onClose={close}
         />
       )}
@@ -309,7 +315,7 @@ export function DisposalStageActionBar({
           confirmLabel={t("disposalAction.assetDeletion.confirm")}
           tone="emerald"
           isPending={assetDeletion.isPending}
-          onConfirm={(notes) => assetDeletion.mutate({ notes: notes || undefined })}
+          onConfirm={(notes) => emailGate("proceed", () => assetDeletion.mutateAsync({ notes: notes || undefined }))}
           onClose={close}
         />
       )}
@@ -326,7 +332,7 @@ export function DisposalStageActionBar({
           confirmLabel={t("disposalAction.reject.title")}
           tone="red"
           isPending={reject.isPending}
-          onConfirm={(notes) => reject.mutate({ reason: notes.trim() })}
+          onConfirm={(notes) => emailGate("reject", () => reject.mutateAsync({ reason: notes.trim() }))}
           onClose={close}
         />
       )}
@@ -349,15 +355,15 @@ export function DisposalStageActionBar({
             const done = { onSuccess: closeAction }
 
             if (modal === "cancel") {
-              cancelDisposal.mutate(notes.trim(), done)
-              return
+              return emailGate("cancel", () => cancelDisposal.mutateAsync(notes.trim(), done))
             }
             if (modal === "step-revise") {
-              stepRevise.mutate(
-                { revisionNotes: notes.trim(), disposalAssetIds: reviseAssetIds },
-                done
+              return emailGate("revise", () =>
+                stepRevise.mutateAsync(
+                  { revisionNotes: notes.trim(), disposalAssetIds: reviseAssetIds },
+                  done
+                )
               )
-              return
             }
             if (!currentApproval) return
 
@@ -367,10 +373,9 @@ export function DisposalStageActionBar({
             }
 
             if (modal === "step-approve") {
-              stepApprove.mutate(payload, done)
-            } else {
-              stepReject.mutate(payload, done)
+              return emailGate("proceed", () => stepApprove.mutateAsync(payload, done))
             }
+            return emailGate("reject", () => stepReject.mutateAsync(payload, done))
           }}
         />
       )}

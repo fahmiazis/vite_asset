@@ -20,12 +20,24 @@ export function useSingleSubmit(isPending: boolean) {
     firedRef.current = isPending
   }, [isPending])
 
-  /** bungkus handler submit: panggilan kedua diabaikan selama masih berjalan */
-  return function guard(action: () => void) {
+  /**
+   * bungkus handler submit: panggilan kedua diabaikan selama masih berjalan.
+   *
+   * Kalau handler mengembalikan promise (mis. lewat withStageEmail), penjaga
+   * dilepas begitu promise-nya selesai — termasuk saat dialog email
+   * dibatalkan, di mana isPending tidak pernah berubah sehingga effect di atas
+   * tidak akan melepasnya.
+   */
+  return function guard(action: () => void | Promise<unknown>) {
     return () => {
       if (firedRef.current || isPending) return
       firedRef.current = true
-      action()
+      const result = action()
+      if (result instanceof Promise) {
+        result.catch(() => {}).finally(() => {
+          firedRef.current = false
+        })
+      }
     }
   }
 }

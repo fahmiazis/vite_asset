@@ -42,7 +42,8 @@ interface StageActionModalProps {
   children?: ReactNode
   /** blokir tombol konfirmasi dari luar (mis. dokumen belum lengkap) */
   confirmDisabled?: boolean
-  onConfirm: (notes: string) => void
+  /** boleh mengembalikan promise (withStageEmail) supaya penjaga klik ganda dilepas saat selesai */
+  onConfirm: (notes: string) => void | Promise<unknown>
   onClose: () => void
 }
 

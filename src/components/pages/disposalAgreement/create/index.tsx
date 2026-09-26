@@ -5,6 +5,8 @@ import toast from "react-hot-toast"
 import Head from "../../../molecules/head"
 import { useEligibleDisposals } from "../../../../hooks/query/disposalAgreement"
 import { useCreateDisposalAgreement } from "../../../../hooks/mutation/disposalAgreement"
+import { withStageEmail } from "../../../../stores/stageEmailStore"
+import type { DisposalAgreementDetailProps } from "../../../../models/disposalAgreement"
 import { disposalTypeLabel, formatRupiah } from "../../../../utils/disposalStage"
 
 /**
@@ -53,10 +55,23 @@ export default function CreateDisposalAgreementPage() {
       return
     }
 
-    createAgreement.mutate({
-      transaction_numbers: selected,
-      notes: notes.trim() || undefined,
-    })
+    // nomor agreement baru ada setelah dibuat — penerima email dihitung dari
+    // transaksi anggotanya, nomornya diambil dari response create
+    return withStageEmail(
+      {
+        transactionType: "disposal_agreement",
+        transactionNumber: "",
+        action: "proceed",
+        memberNumbers: selected,
+        resolveNumber: (result) =>
+          (result as DisposalAgreementDetailProps | undefined)?.data?.agreement_number,
+      },
+      () =>
+        createAgreement.mutateAsync({
+          transaction_numbers: selected,
+          notes: notes.trim() || undefined,
+        })
+    )
   }
 
   return (

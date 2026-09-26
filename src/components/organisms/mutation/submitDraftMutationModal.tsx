@@ -5,6 +5,7 @@ import { useQueryClient } from "@tanstack/react-query"
 import { useSubmitDraftMutation } from "../../../hooks/mutation/mutation/submitDraftMutation"
 import { useInitiateApprovalMutation } from "../../../hooks/mutation/mutation/initiateApprovalMutation"
 import { useSingleSubmit } from "../../../hooks/useSingleSubmit"
+import { withStageEmail } from "../../../stores/stageEmailStore"
 
 type SubmitMutationModalProps = {
   transactionNumber: string
@@ -21,15 +22,15 @@ export function SubmitMutationModal({
   const { t } = useTranslation()
   const queryClient = useQueryClient()
 
-  const { mutate: submitMutation, isPending: isSubmitting }   = useSubmitDraftMutation(transactionNumber)
+  const { mutateAsync: submitMutation, isPending: isSubmitting } = useSubmitDraftMutation(transactionNumber)
   const { mutate: initiateApproval, isPending: isInitiating } = useInitiateApprovalMutation(transactionNumber)
 
   const isPending = isSubmitting || isInitiating
 
   const guard = useSingleSubmit(isPending)
 
-  const handleSubmit = () => {
-    submitMutation(
+  const handleSubmit = () =>
+    withStageEmail({ transactionType: "mutation", transactionNumber, action: "proceed" }, () => submitMutation(
       { notes: notes.trim() },
       {
         onSuccess: () => {
@@ -53,8 +54,7 @@ export function SubmitMutationModal({
           toast.error(t("submitMutationModal.toast.errorSubmit"))
         },
       }
-    )
-  }
+    ))
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-in fade-in duration-200">

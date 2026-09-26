@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next"
 import { StageActionModal } from "./stageActionModal"
 import { useSetDisposalSaleValues } from "../../../hooks/mutation/disposal/stageActions"
 import { formatRupiah } from "../../../utils/disposalStage"
+import { withStageEmail } from "../../../stores/stageEmailStore"
 import type { DisposalAsset } from "../../../models/disposal/detail"
 
 interface SetSaleValuesModalProps {
@@ -29,7 +30,7 @@ export function SetSaleValuesModal({
     )
   )
 
-  const { mutate: setSaleValues, isPending } = useSetDisposalSaleValues({
+  const { mutateAsync: setSaleValues, isPending } = useSetDisposalSaleValues({
     transactionNumber,
     onSuccess: onClose,
   })
@@ -45,15 +46,19 @@ export function SetSaleValuesModal({
     0
   )
 
-  const handleConfirm = (notes: string) => {
-    setSaleValues({
-      assets: parsed.map(({ asset, value }) => ({
-        disposal_asset_id: asset.id,
-        sale_value: value,
-      })),
-      notes: notes || undefined,
-    })
-  }
+  // menyimpan nilai jual sekaligus meneruskan transaksi dari PURCHASING
+  const handleConfirm = (notes: string) =>
+    withStageEmail(
+      { transactionType: "disposal", transactionNumber, action: "proceed" },
+      () =>
+        setSaleValues({
+          assets: parsed.map(({ asset, value }) => ({
+            disposal_asset_id: asset.id,
+            sale_value: value,
+          })),
+          notes: notes || undefined,
+        })
+    )
 
   return (
     <StageActionModal

@@ -15,7 +15,14 @@ interface RevisionDecisionModalProps {
   /** hanya dipakai mode revisi */
   rows?: RevisableRow[]
   isPending?: boolean
-  onConfirm: (payload: { notes: string; rowIds: number[] }) => void
+  /** menimpa teks info bawaan — mis. revisi agreement yang maknanya berbeda */
+  info?: string
+  /** menimpa label daftar pilihan */
+  pickLabel?: string
+  /** batas jumlah baris yang boleh dipilih, beserta pesannya kalau terlampaui */
+  maxSelected?: number
+  maxSelectedMessage?: string
+  onConfirm: (payload: { notes: string; rowIds: number[] }) => void | Promise<unknown>
   onClose: () => void
 }
 
@@ -34,6 +41,10 @@ export function RevisionDecisionModal({
   transactionNumber,
   rows = [],
   isPending = false,
+  info,
+  pickLabel,
+  maxSelected,
+  maxSelectedMessage,
   onConfirm,
   onClose,
 }: RevisionDecisionModalProps) {
@@ -45,6 +56,8 @@ export function RevisionDecisionModal({
   const isRevise = mode === "revise"
   const notesTooShort = notes.trim().length < MIN_NOTES
   const noRowSelected = isRevise && selected.length === 0
+  const tooManySelected =
+    isRevise && maxSelected !== undefined && selected.length > maxSelected
 
   const toggle = (id: number) =>
     setSelected((prev) =>
@@ -86,13 +99,13 @@ export function RevisionDecisionModal({
                 : "bg-red-50 dark:bg-red-900/20 border-red-100 dark:border-red-800 text-red-600 dark:text-red-400"
             }`}
           >
-            {t(`revisionDecision.${mode}.info`)}
+            {info ?? t(`revisionDecision.${mode}.info`)}
           </div>
 
           {isRevise && (
             <div className="space-y-1.5">
               <label className="block text-xs font-medium text-gray-700 dark:text-gray-300">
-                {t("revisionDecision.revise.pickRows")}{" "}
+                {pickLabel ?? t("revisionDecision.revise.pickRows")}{" "}
                 <span className="text-red-500">*</span>
               </label>
 
@@ -127,6 +140,9 @@ export function RevisionDecisionModal({
                     </label>
                   ))}
                 </div>
+              )}
+              {tooManySelected && maxSelectedMessage && (
+                <p className="text-xs text-red-500">{maxSelectedMessage}</p>
               )}
             </div>
           )}
@@ -165,7 +181,7 @@ export function RevisionDecisionModal({
             onClick={guard(() =>
               onConfirm({ notes: notes.trim(), rowIds: selected })
             )}
-            disabled={isPending || notesTooShort || noRowSelected}
+            disabled={isPending || notesTooShort || noRowSelected || tooManySelected}
             className={`flex-1 px-4 py-2 text-sm font-medium text-white rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${accent}`}
           >
             {isPending

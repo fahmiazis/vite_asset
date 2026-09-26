@@ -9,12 +9,15 @@ import {
 import {
   useApproveAgreementStep,
   useRejectAgreementStep,
+  useReviseAgreement,
 } from "../../../../hooks/mutation/disposalAgreement"
 import { useMyProfile } from "../../../../hooks/query/auth/myProfile"
 import { AgreementStageBadge } from "../../../organisms/disposalAgreement/stageBadge"
 import { StepDecisionModal } from "../../../organisms/disposal/stepDecisionModal"
 import { formatRupiah } from "../../../../utils/disposalStage"
 import { approvalRoleWithActor } from "../../../../utils/approval"
+import { withStageEmail } from "../../../../stores/stageEmailStore"
+import { RevisionDecisionModal } from "../../../organisms/common/revisionDecisionModal"
 
 function formatDateTime(value: string) {
   return new Date(value).toLocaleString("id-ID", {
@@ -34,8 +37,10 @@ export default function DisposalAgreementDetailPage() {
 
   const approve = useApproveAgreementStep(number)
   const reject = useRejectAgreementStep(number)
+  const revise = useReviseAgreement(number)
 
   const [modal, setModal] = useState<"step-approve" | "step-reject" | null>(null)
+  const [showRevise, setShowRevise] = useState(false)
   const [notes, setNotes] = useState("")
 
   const agreement = data?.data
@@ -55,7 +60,7 @@ export default function DisposalAgreementDetailPage() {
       (!!currentApproval.approver_user_id &&
         currentApproval.approver_user_id === myUserId))
 
-  const isPending = approve.isPending || reject.isPending
+  const isPending = approve.isPending || reject.isPending || revise.isPending
 
   const closeModal = () => {
     setModal(null)
@@ -72,8 +77,48 @@ export default function DisposalAgreementDetailPage() {
 
   if (!agreement) return null
 
+  const members = agreement.items ?? []
+
   return (
     <section className="space-y-4 mt-4">
+      {showRevise && (
+        // Revisi agreement = mengeluarkan anggota bermasalah ke DRAFT miliknya.
+        // Minimal satu anggota tersisa; kalau semua bermasalah, pakai Tolak.
+        <RevisionDecisionModal
+          mode="revise"
+          transactionNumber={agreement.agreement_number}
+          info={t("disposalAgreement.revise.info")}
+          pickLabel={t("disposalAgreement.revise.pickMembers")}
+          maxSelected={Math.max(members.length - 1, 0)}
+          maxSelectedMessage={t("disposalAgreement.revise.keepOne")}
+          rows={members.map((item) => ({
+            id: item.transaction_id,
+            label: item.transaction_number,
+            sublabel: `${item.branch_code} · ${item.created_by_name ?? item.created_by} · ${t("disposalAgreement.revise.assets", { count: item.total_assets })}`,
+          }))}
+          isPending={revise.isPending}
+          onClose={() => setShowRevise(false)}
+          onConfirm={({ notes, rowIds }) => {
+            const picked = members
+              .filter((item) => rowIds.includes(item.transaction_id))
+              .map((item) => item.transaction_number)
+            return withStageEmail(
+              {
+                transactionType: "disposal_agreement",
+                transactionNumber: number,
+                action: "revise",
+                memberNumbers: picked,
+              },
+              () =>
+                revise.mutateAsync(
+                  { revision_notes: notes, transaction_numbers: picked },
+                  { onSuccess: () => setShowRevise(false) }
+                )
+            )
+          }}
+        />
+      )}
+
       {modal && currentApproval && (
         <StepDecisionModal
           mode={modal}
@@ -89,8 +134,14 @@ export default function DisposalAgreementDetailPage() {
             }
             const done = { onSuccess: closeModal }
 
-            if (modal === "step-approve") approve.mutate(payload, done)
-            else reject.mutate(payload, done)
+            const context = {
+              transactionType: "disposal_agreement" as const,
+              transactionNumber: number,
+            }
+            if (modal === "step-approve") {
+              return withStageEmail({ ...context, action: "proceed" }, () => approve.mutateAsync(payload, done))
+            }
+            return withStageEmail({ ...context, action: "reject" }, () => reject.mutateAsync(payload, done))
           }}
         />
       )}
@@ -315,6 +366,16 @@ export default function DisposalAgreementDetailPage() {
       {/* Aksi approver */}
       {isCurrentApprover && (
         <div className="flex flex-wrap items-center justify-end gap-3">
+          {/* butuh minimal 2 anggota — satu harus tetap tinggal */}
+          {members.length > 1 && (
+            <button
+              onClick={() => setShowRevise(true)}
+              disabled={isPending}
+              className="px-5 py-2.5 text-sm font-medium border border-amber-300 dark:border-amber-700 text-amber-700 dark:text-amber-400 rounded-xl hover:bg-amber-50 dark:hover:bg-amber-900/30 transition-colors disabled:opacity-50"
+            >
+              {t("disposalAgreement.revise.button")}
+            </button>
+          )}
           <button
             onClick={() => setModal("step-reject")}
             disabled={isPending}

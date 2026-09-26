@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { useSubmitDisposal } from "../../../hooks/mutation/disposal/submitDraft"
+import { withStageEmail } from "../../../stores/stageEmailStore"
 
 type SubmitDisposalModalProps = {
   transactionNumber: string
@@ -25,7 +26,7 @@ export function SubmitDisposalModal({
 
   // toast & invalidasi ditangani useSubmitDisposal — di sini cukup menutup
   // dialognya, kalau tidak toast-nya muncul dua kali
-  const { mutate: submitDisposal, isPending } = useSubmitDisposal({
+  const { mutateAsync: submitDisposal, isPending } = useSubmitDisposal({
     transactionNumber,
     onSuccess: () => {
       onSuccess?.()
@@ -33,7 +34,11 @@ export function SubmitDisposalModal({
     },
   })
 
-  const handleSubmit = () => submitDisposal({ notes })
+  const handleSubmit = () =>
+    withStageEmail(
+      { transactionType: "disposal", transactionNumber, action: "proceed" },
+      () => submitDisposal({ notes })
+    )
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-in fade-in duration-200">

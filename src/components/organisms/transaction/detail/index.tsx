@@ -25,6 +25,7 @@ import { GoodsReceiptModal } from "../goodsReceiptModal"
 import { useTranslation } from "react-i18next"
 import { useQueryClient } from "@tanstack/react-query"
 import { AssetNumberCell } from "../assetNumberCellModal"
+import { withStageEmail } from "../../../../stores/stageEmailStore"
 
 function formatRupiah(num: number) {
   return new Intl.NumberFormat("id-ID", {
@@ -249,13 +250,15 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
     name: formatAttachmentName(item.attachment_type),
   })) ?? []
 
-  const { mutate: submitTransaction, isPending: isSubmitting } = useSubmitProcurement({
+  const { mutateAsync: submitTransaction, isPending: isSubmitting } = useSubmitProcurement({
     onSuccess: () => setShowSubmitModal(false),
   })
 
-  const handleConfirmSubmit = (notes: string) => {
-    submitTransaction({ id: transaction.transaction_number, payload: { notes } })
-  }
+  const handleConfirmSubmit = (notes: string) =>
+    withStageEmail(
+      { transactionType: "procurement", transactionNumber: transaction.transaction_number, action: "proceed" },
+      () => submitTransaction({ id: transaction.transaction_number, payload: { notes } })
+    )
 
   const lastStage = data?.data?.stages?.at(-1)?.to_stage
 
@@ -338,9 +341,17 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
           }))}
           isPending={returnForRevision.isPending || cancelProcurement.isPending}
           onConfirm={({ notes, rowIds }) =>
-            revisionMode === "revise"
-              ? returnForRevision.mutate({ revision_notes: notes, row_ids: rowIds })
-              : cancelProcurement.mutate({ reason: notes })
+            withStageEmail(
+              {
+                transactionType: "procurement",
+                transactionNumber: transaction.transaction_number,
+                action: revisionMode === "revise" ? "revise" : "cancel",
+              },
+              () =>
+                revisionMode === "revise"
+                  ? returnForRevision.mutateAsync({ revision_notes: notes, row_ids: rowIds })
+                  : cancelProcurement.mutateAsync({ reason: notes })
+            )
           }
           onClose={closeRevision}
         />

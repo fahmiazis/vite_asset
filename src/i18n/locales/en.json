@@ -998,7 +998,9 @@
       "approved": "Step approved",
       "approveError": "Failed to approve",
       "rejected": "Agreement rejected",
-      "rejectError": "Failed to reject"
+      "rejectError": "Failed to reject",
+      "revised": "Disposal returned for revision",
+      "reviseError": "Failed to return disposal for revision"
     },
     "column": {
       "no": "No",
@@ -1028,6 +1030,13 @@
       "startDate": "From date",
       "endDate": "To date",
       "reset": "Reset"
+    },
+    "revise": {
+      "button": "Request Revision",
+      "info": "The selected disposals leave this agreement and return to DRAFT for their creators to fix, then go through approval request again. The remaining members stay in this agreement and its approval continues.",
+      "pickMembers": "Disposals to return",
+      "keepOne": "At least one disposal must remain — use Reject to return all of them.",
+      "assets": "{{count}} assets"
     }
   },
   "assetCategory": {
@@ -1143,5 +1152,159 @@
     "from": "From date",
     "to": "To date",
     "reset": "Reset"
+  },
+  "stageEmail": {
+    "title": "Send Notification Email",
+    "preparing": "Preparing email...",
+    "invalidEmail": "Invalid email format",
+    "remove": "Remove",
+    "minOne": "At least 1 recipient",
+    "addPlaceholder": "Type an email and press Enter",
+    "sent": "Email sent",
+    "resendLater": "You can resend the email later from Email Setting → Log",
+    "mailerNotConfigured": "SMTP is not configured on the server yet. The action still runs; the email will be logged as failed and can be resent from the Log tab.",
+    "failedTitle": "The action succeeded, but the email failed to send",
+    "failedHint": "Resend now, or later from Email Setting → Log.",
+    "subject": "Subject",
+    "subjectLocked": "Locked by template",
+    "to": "To",
+    "cc": "CC",
+    "noAutoRecipients": "No users were found automatically — add the email manually.",
+    "body": "Message",
+    "additional": "Additional Message",
+    "optional": "optional",
+    "additionalPlaceholder": "Appended below the email body",
+    "close": "Close",
+    "cancel": "Cancel",
+    "resend": "Resend",
+    "running": "Processing action...",
+    "sending": "Sending email...",
+    "confirm": "Send & Continue",
+    "showPreview": "Preview email",
+    "hidePreview": "Hide preview",
+    "autoContent": "Request details and the asset list are added to the email automatically."
+  },
+  "emailSetting": {
+    "title": "Email Setting",
+    "tab": {
+      "template": "Template",
+      "log": "Log"
+    },
+    "action": {
+      "proceed": "Proceed / Submit",
+      "reject": "Reject",
+      "revise": "Revise",
+      "cancel": "Cancel request"
+    },
+    "back": "Back",
+    "loading": "Loading...",
+    "notFound": "Template not found",
+    "cancel": "Cancel",
+    "saving": "Saving...",
+    "save": "Save",
+    "create": "Create",
+    "edit": "Edit",
+    "deleting": "Deleting...",
+    "active": "Active",
+    "inactive": "Inactive",
+    "empty": "No data",
+    "searchTemplate": "Search subject, stage, role...",
+    "allTransactionTypes": "All transaction types",
+    "delete": {
+      "title": "Delete Email Template",
+      "message": "Delete template \"{{label}}\"? This cannot be undone.",
+      "confirm": "Delete",
+      "button": "Delete"
+    },
+    "toast": {
+      "created": "Template created",
+      "createFailed": "Failed to create template",
+      "updated": "Template updated",
+      "updateFailed": "Failed to update template",
+      "deleted": "Template deleted",
+      "deleteFailed": "Failed to delete template"
+    },
+    "column": {
+      "no": "No",
+      "transactionType": "Transaction Type",
+      "stage": "Stage",
+      "action": "Action",
+      "subject": "Subject",
+      "ccRoles": "CC Roles",
+      "status": "Status",
+      "actions": "Action"
+    },
+    "form": {
+      "createTitle": "Create Email Template",
+      "editTitle": "Edit Email Template",
+      "transactionType": "Transaction Type",
+      "transactionTypePlaceholder": "Select transaction type...",
+      "stage": "Stage",
+      "stagePlaceholder": "Select stage...",
+      "stageHelper": "The stage the transaction is in when the action is taken.",
+      "action": "Action",
+      "toInfoTitle": "The To recipients are not configured here",
+      "toInfo": {
+        "proceed": "They are filled automatically with users who have access to the next stage (or the next approval step) in the same branch as the request.",
+        "reject": "They are filled automatically with the creator of the request.",
+        "revise": "They are filled automatically with the creator of the request.",
+        "cancel": "They are filled automatically with users currently handling the request at this stage."
+      },
+      "subject": "Subject",
+      "subjectPlaceholder": "e.g. [0001/IX/2026-DPSL] Waiting for your approval",
+      "subjectHelper": "Locked in the email dialog — users cannot change it.",
+      "body": "Message",
+      "bodyPlaceholder": "Write the message for the recipients...",
+      "bodyHelper": "Only the message. The header, request details, asset list, and the \"Open transaction\" button are added automatically. Users can add an extra message when sending.",
+      "placeholders": "Placeholders (inserted into {{field}}):",
+      "ccRoles": "CC by Role",
+      "ccRolesHelper": "Users with these roles in the same branch as the request are added to CC automatically.",
+      "active": "Active",
+      "errors": {
+        "transactionType": "Transaction type is required",
+        "stage": "Stage is required",
+        "subject": "Subject is required",
+        "body": "Body is required",
+        "ccRoles": "Select at least 1 CC role"
+      },
+      "toInfoAgreement": {
+        "proceed": "Filled automatically: when created → approvers of the first step; when a step is approved → approvers of the next step; after the last step → the agreement creator and the creators of each member disposal. Approvers must have access to ALL member branches.",
+        "reject": "Filled automatically with the agreement creator.",
+        "revise": "Filled automatically with the creators of the returned disposals and the agreement creator."
+      },
+      "ccRolesHelperAgreement": "Users with these roles who have access to ANY of the agreement's member branches are added to CC automatically. For revisions, only the branches of the returned disposals count."
+    },
+    "placeholder": {
+      "transaction_number": "Transaction number",
+      "transaction_type": "Transaction type",
+      "stage": "Stage when the action is taken",
+      "next_stage": "Destination stage",
+      "action": "Action",
+      "creator_name": "Request creator",
+      "sender_name": "User who sends the email",
+      "branch_code": "Request branch code",
+      "link": "Link to the transaction detail",
+      "date": "Sent date & time"
+    },
+    "log": {
+      "search": "Search transaction number...",
+      "empty": "No email log",
+      "resendFailed": "Failed to resend email",
+      "attempts": "Attempts: {{count}}",
+      "status": {
+        "FAILED": "Failed",
+        "SENT": "Sent",
+        "all": "All"
+      },
+      "column": {
+        "time": "Time",
+        "transaction": "Transaction",
+        "stageAction": "Stage / Action",
+        "subject": "Subject",
+        "recipients": "Recipients",
+        "sender": "Sender",
+        "status": "Status"
+      }
+    }
   }
 }

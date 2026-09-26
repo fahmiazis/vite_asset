@@ -53,3 +53,20 @@ export const disposalAgreementApprovalStatus = async (agreementNumber: string) =
   })
   return res.data
 }
+
+export interface ReviseDisposalAgreementRequest {
+  revision_notes: string
+  /** disposal anggota yang dikeluarkan dan kembali ke DRAFT */
+  transaction_numbers: string[]
+}
+
+/** approver step berjalan mengeluarkan anggota bermasalah ke DRAFT */
+export const reviseDisposalAgreement = async (
+  agreementNumber: string,
+  payload: ReviseDisposalAgreementRequest
+): Promise<DisposalAgreementDetailProps> => {
+  const res = await axiosPrivate.post(`${BASE}/revise`, payload, {
+    params: { agreement_number: agreementNumber },
+  })
+  return res.data
+}

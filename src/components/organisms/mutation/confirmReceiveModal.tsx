@@ -1,6 +1,7 @@
 import toast from "react-hot-toast"
 import { useQueryClient } from "@tanstack/react-query"
 import { useConfirmReceivingMutation } from "../../../hooks/mutation/mutation/confirmReceivingMutation"
+import { withStageEmail } from "../../../stores/stageEmailStore"
 
 type ConfirmReceivingModalProps = {
   transactionNumber: string
@@ -15,11 +16,11 @@ export function ConfirmReceivingModal({
 }: ConfirmReceivingModalProps) {
   const queryClient = useQueryClient()
 
-  const { mutate: confirmReceiving, isPending } =
+  const { mutateAsync: confirmReceiving, isPending } =
     useConfirmReceivingMutation(transactionNumber)
 
-  const handleConfirm = () => {
-    confirmReceiving(undefined, {
+  const handleConfirm = () =>
+    withStageEmail({ transactionType: "mutation", transactionNumber, action: "proceed" }, () => confirmReceiving(undefined, {
       onSuccess: () => {
         toast.success("Penerimaan aset berhasil dikonfirmasi")
 
@@ -33,8 +34,7 @@ export function ConfirmReceivingModal({
       onError: () => {
         toast.error("Gagal konfirmasi penerimaan")
       },
-    })
-  }
+    }))
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-in fade-in duration-200">

@@ -5,6 +5,7 @@ import { useQueryClient } from "@tanstack/react-query"
 import { useApproveTransactionApproval } from "../../../hooks/mutation/mutation/approve"
 import { useMutationApprovalStatus } from "../../../hooks/query/mutation/approvalStatus"
 import { useSingleSubmit } from "../../../hooks/useSingleSubmit"
+import { withStageEmail } from "../../../stores/stageEmailStore"
 
 type ApproveModalProps = {
   transactionNumber: string
@@ -21,7 +22,7 @@ export function ApproveModal({
   const { t } = useTranslation()
   const queryClient = useQueryClient()
 
-  const { mutate: approve, isPending } =
+  const { mutateAsync: approve, isPending } =
     useApproveTransactionApproval(transactionNumber)
 
   const { data: approvalData } =
@@ -37,8 +38,8 @@ export function ApproveModal({
 
   const guard = useSingleSubmit(isPending)
 
-  const handleSubmit = () => {
-    approve(
+  const handleSubmit = () =>
+    withStageEmail({ transactionType: "mutation", transactionNumber, action: "proceed" }, () => approve(
       {
         transaction_approval_id: targetApprovalId,
         notes,
@@ -58,8 +59,7 @@ export function ApproveModal({
           toast.error(t("approveModal.toast.error"))
         },
       }
-    )
-  }
+    ))
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-in fade-in duration-200">

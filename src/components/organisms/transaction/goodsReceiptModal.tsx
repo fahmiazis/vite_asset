@@ -6,6 +6,7 @@ import { useGoodsReceiptStatus } from "../../../hooks/query/transaction/goodsRec
 import { useQueryClient } from "@tanstack/react-query"
 import type { Item as GRItem, Asset as GRAsset } from "../../../models/transaction/grStatus"
 import { useSingleSubmit } from "../../../hooks/useSingleSubmit"
+import { withStageEmail } from "../../../stores/stageEmailStore"
 
 type GoodsReceiptModalProps = {
     transactionNumber: string
@@ -64,16 +65,20 @@ export function GoodsReceiptModal({
 
     // ─── Submit Handlers ──────────────────────────────────────────────────────
 
+    // true kalau ada yang berhasil — dipakai gerbang email untuk memutuskan
+    // apakah email perlu dikirim
     const handleSubmitSingle = async () => {
-        if (!selectedItem || !selectedAsset) return
+        if (!selectedItem || !selectedAsset) return false
         try {
             await submitGR({ asset_id: selectedAsset.asset_id, asset_number: selectedAsset.asset_number, gr_date: grDate, notes })
             toast.success(t("goodsReceipt.success", { count: 1 }))
             invalidateQueries()
             onSuccess?.()
             onClose()
+            return true
         } catch {
             toast.error(t("goodsReceipt.error"))
+            return false
         }
     }
 
@@ -105,15 +110,22 @@ export function GoodsReceiptModal({
             onSuccess?.()
             onClose()
         }
+        return successCount > 0
     }
 
     const guard = useSingleSubmit(isPending)
 
-    const handleSubmit = () => {
+    const runGR = async () => {
         if (mode === "single") return handleSubmitSingle()
         if (mode === "bulk-item" && selectedItem) return runBulk(getPendingAssets(selectedItem).map((asset) => ({ asset })))
         if (mode === "bulk-all") return runBulk(allPendingAssets)
+        return false
     }
+
+    const handleSubmit = () =>
+        withStageEmail({ transactionType: "procurement", transactionNumber, action: "proceed" }, async () => {
+            if (!(await runGR())) throw new Error("GR gagal")
+        })
 
     // ─── Derived state ────────────────────────────────────────────────────────
 

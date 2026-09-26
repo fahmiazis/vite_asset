@@ -998,7 +998,9 @@
       "approved": "Đã phê duyệt bước",
       "approveError": "Không thể phê duyệt",
       "rejected": "Đã từ chối thỏa thuận",
-      "rejectError": "Không thể từ chối"
+      "rejectError": "Không thể từ chối",
+      "revised": "Đã trả disposal về để sửa",
+      "reviseError": "Trả disposal về để sửa thất bại"
     },
     "column": {
       "no": "STT",
@@ -1028,6 +1030,13 @@
       "startDate": "Từ ngày",
       "endDate": "Đến ngày",
       "reset": "Đặt lại"
+    },
+    "revise": {
+      "button": "Yêu cầu sửa",
+      "info": "Các disposal được chọn sẽ rời agreement này và trở về DRAFT để người tạo sửa, sau đó đi qua approval request lại. Các thành viên còn lại vẫn ở trong agreement và quá trình phê duyệt tiếp tục.",
+      "pickMembers": "Disposal trả về",
+      "keepOne": "Phải còn lại ít nhất một disposal — dùng Từ chối để trả về tất cả.",
+      "assets": "{{count}} tài sản"
     }
   },
   "assetCategory": {
@@ -1143,5 +1152,159 @@
     "from": "Từ ngày",
     "to": "Đến ngày",
     "reset": "Đặt lại"
+  },
+  "stageEmail": {
+    "title": "Gửi email thông báo",
+    "preparing": "Đang chuẩn bị email...",
+    "invalidEmail": "Định dạng email không hợp lệ",
+    "remove": "Xóa",
+    "minOne": "Tối thiểu 1 người nhận",
+    "addPlaceholder": "Nhập email rồi nhấn Enter",
+    "sent": "Đã gửi email",
+    "resendLater": "Có thể gửi lại email sau tại Email Setting → Log",
+    "mailerNotConfigured": "Máy chủ chưa cấu hình SMTP. Thao tác vẫn được thực hiện; email sẽ được ghi nhận là thất bại và có thể gửi lại từ tab Log.",
+    "failedTitle": "Thao tác thành công nhưng gửi email thất bại",
+    "failedHint": "Gửi lại ngay, hoặc sau từ Email Setting → Log.",
+    "subject": "Tiêu đề",
+    "subjectLocked": "Khóa theo mẫu",
+    "to": "Đến (To)",
+    "cc": "CC",
+    "noAutoRecipients": "Không tìm thấy người dùng tự động — hãy thêm email thủ công.",
+    "body": "Tin nhắn",
+    "additional": "Tin nhắn bổ sung",
+    "optional": "không bắt buộc",
+    "additionalPlaceholder": "Được thêm vào cuối nội dung email",
+    "close": "Đóng",
+    "cancel": "Hủy",
+    "resend": "Gửi lại",
+    "running": "Đang xử lý thao tác...",
+    "sending": "Đang gửi email...",
+    "confirm": "Gửi & Tiếp tục",
+    "showPreview": "Xem trước email",
+    "hidePreview": "Đóng xem trước",
+    "autoContent": "Thông tin yêu cầu và danh sách tài sản được tự động thêm vào email."
+  },
+  "emailSetting": {
+    "title": "Email Setting",
+    "tab": {
+      "template": "Mẫu",
+      "log": "Nhật ký"
+    },
+    "action": {
+      "proceed": "Tiếp tục / Gửi",
+      "reject": "Từ chối",
+      "revise": "Yêu cầu sửa",
+      "cancel": "Hủy yêu cầu"
+    },
+    "back": "Quay lại",
+    "loading": "Đang tải...",
+    "notFound": "Không tìm thấy mẫu",
+    "cancel": "Hủy",
+    "saving": "Đang lưu...",
+    "save": "Lưu",
+    "create": "Tạo",
+    "edit": "Sửa",
+    "deleting": "Đang xóa...",
+    "active": "Hoạt động",
+    "inactive": "Ngừng hoạt động",
+    "empty": "Không có dữ liệu",
+    "searchTemplate": "Tìm tiêu đề, stage, role...",
+    "allTransactionTypes": "Tất cả loại giao dịch",
+    "delete": {
+      "title": "Xóa mẫu email",
+      "message": "Xóa mẫu \"{{label}}\"? Không thể hoàn tác.",
+      "confirm": "Xóa",
+      "button": "Xóa"
+    },
+    "toast": {
+      "created": "Đã tạo mẫu",
+      "createFailed": "Tạo mẫu thất bại",
+      "updated": "Đã cập nhật mẫu",
+      "updateFailed": "Cập nhật mẫu thất bại",
+      "deleted": "Đã xóa mẫu",
+      "deleteFailed": "Xóa mẫu thất bại"
+    },
+    "column": {
+      "no": "STT",
+      "transactionType": "Loại giao dịch",
+      "stage": "Stage",
+      "action": "Thao tác",
+      "subject": "Tiêu đề",
+      "ccRoles": "Role CC",
+      "status": "Trạng thái",
+      "actions": "Thao tác"
+    },
+    "form": {
+      "createTitle": "Tạo mẫu email",
+      "editTitle": "Sửa mẫu email",
+      "transactionType": "Loại giao dịch",
+      "transactionTypePlaceholder": "Chọn loại giao dịch...",
+      "stage": "Stage",
+      "stagePlaceholder": "Chọn stage...",
+      "stageHelper": "Stage của giao dịch khi thực hiện thao tác.",
+      "action": "Thao tác",
+      "toInfoTitle": "Người nhận To không được cấu hình ở đây",
+      "toInfo": {
+        "proceed": "Tự động điền người dùng có quyền ở stage tiếp theo (hoặc bước phê duyệt tiếp theo) và cùng chi nhánh với yêu cầu.",
+        "reject": "Tự động điền người tạo yêu cầu.",
+        "revise": "Tự động điền người tạo yêu cầu.",
+        "cancel": "Tự động điền người dùng đang xử lý yêu cầu ở stage này."
+      },
+      "subject": "Tiêu đề",
+      "subjectPlaceholder": "vd. [0001/IX/2026-DPSL] Đang chờ bạn phê duyệt",
+      "subjectHelper": "Bị khóa trong hộp thoại email — người dùng không thể thay đổi.",
+      "body": "Tin nhắn",
+      "bodyPlaceholder": "Viết tin nhắn cho người nhận...",
+      "bodyHelper": "Chỉ cần nhập tin nhắn. Phần đầu, thông tin yêu cầu, danh sách tài sản và nút \"Mở giao dịch\" được thêm tự động. Người dùng có thể thêm tin nhắn khi gửi.",
+      "placeholders": "Biến thay thế (chèn vào {{field}}):",
+      "ccRoles": "CC theo Role",
+      "ccRolesHelper": "Người dùng có các role này ở cùng chi nhánh với yêu cầu sẽ tự động được CC.",
+      "active": "Hoạt động",
+      "errors": {
+        "transactionType": "Vui lòng chọn loại giao dịch",
+        "stage": "Vui lòng chọn stage",
+        "subject": "Vui lòng nhập tiêu đề",
+        "body": "Vui lòng nhập nội dung",
+        "ccRoles": "Chọn ít nhất 1 role CC"
+      },
+      "toInfoAgreement": {
+        "proceed": "Tự động điền: khi tạo → người phê duyệt bước đầu; khi một bước được duyệt → người phê duyệt bước tiếp theo; sau bước cuối → người tạo agreement và người tạo từng disposal thành viên. Người phê duyệt phải có quyền ở TẤT CẢ chi nhánh thành viên.",
+        "reject": "Tự động điền người tạo agreement.",
+        "revise": "Tự động điền người tạo các disposal bị trả về và người tạo agreement."
+      },
+      "ccRolesHelperAgreement": "Người dùng có các role này và có quyền ở BẤT KỲ chi nhánh thành viên nào của agreement sẽ tự động được CC. Với yêu cầu sửa, chỉ tính chi nhánh của các disposal bị trả về."
+    },
+    "placeholder": {
+      "transaction_number": "Số giao dịch",
+      "transaction_type": "Loại giao dịch",
+      "stage": "Stage khi thực hiện thao tác",
+      "next_stage": "Stage đích",
+      "action": "Thao tác",
+      "creator_name": "Người tạo yêu cầu",
+      "sender_name": "Người gửi email",
+      "branch_code": "Mã chi nhánh của yêu cầu",
+      "link": "Liên kết đến chi tiết giao dịch",
+      "date": "Ngày & giờ gửi"
+    },
+    "log": {
+      "search": "Tìm số giao dịch...",
+      "empty": "Chưa có nhật ký email",
+      "resendFailed": "Gửi lại email thất bại",
+      "attempts": "Số lần thử: {{count}}",
+      "status": {
+        "FAILED": "Thất bại",
+        "SENT": "Đã gửi",
+        "all": "Tất cả"
+      },
+      "column": {
+        "time": "Thời gian",
+        "transaction": "Giao dịch",
+        "stageAction": "Stage / Thao tác",
+        "subject": "Tiêu đề",
+        "recipients": "Người nhận",
+        "sender": "Người gửi",
+        "status": "Trạng thái"
+      }
+    }
   }
 }

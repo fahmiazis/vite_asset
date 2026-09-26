@@ -998,7 +998,9 @@
       "approved": "步骤已批准",
       "approveError": "批准失败",
       "rejected": "协议已拒绝",
-      "rejectError": "拒绝失败"
+      "rejectError": "拒绝失败",
+      "revised": "已退回 disposal 修改",
+      "reviseError": "退回 disposal 修改失败"
     },
     "column": {
       "no": "序号",
@@ -1028,6 +1030,13 @@
       "startDate": "起始日期",
       "endDate": "结束日期",
       "reset": "重置"
+    },
+    "revise": {
+      "button": "要求修改",
+      "info": "所选 disposal 将移出此 agreement 并退回 DRAFT，由创建人修改后重新走审批申请。其余成员仍留在 agreement 中，审批继续进行。",
+      "pickMembers": "退回的 disposal",
+      "keepOne": "至少需保留一个 disposal — 如需全部退回请使用拒绝。",
+      "assets": "{{count}} 项资产"
     }
   },
   "assetCategory": {
@@ -1143,5 +1152,159 @@
     "from": "起始日期",
     "to": "结束日期",
     "reset": "重置"
+  },
+  "stageEmail": {
+    "title": "发送通知邮件",
+    "preparing": "正在准备邮件...",
+    "invalidEmail": "邮箱格式无效",
+    "remove": "移除",
+    "minOne": "至少 1 位收件人",
+    "addPlaceholder": "输入邮箱后按 Enter",
+    "sent": "邮件已发送",
+    "resendLater": "稍后可在 Email Setting → 日志 中重新发送",
+    "mailerNotConfigured": "服务器尚未配置 SMTP。操作仍会执行；邮件将记录为失败，可在日志标签中重新发送。",
+    "failedTitle": "操作成功，但邮件发送失败",
+    "failedHint": "立即重新发送，或稍后在 Email Setting → 日志 中发送。",
+    "subject": "主题",
+    "subjectLocked": "按模板锁定",
+    "to": "收件人 (To)",
+    "cc": "抄送 (CC)",
+    "noAutoRecipients": "未自动找到用户 — 请手动添加邮箱。",
+    "body": "消息",
+    "additional": "附加消息",
+    "optional": "可选",
+    "additionalPlaceholder": "附加在邮件正文下方",
+    "close": "关闭",
+    "cancel": "取消",
+    "resend": "重新发送",
+    "running": "正在处理操作...",
+    "sending": "正在发送邮件...",
+    "confirm": "发送并继续",
+    "showPreview": "预览邮件",
+    "hidePreview": "关闭预览",
+    "autoContent": "申请信息和资产清单会自动添加到邮件中。"
+  },
+  "emailSetting": {
+    "title": "Email Setting",
+    "tab": {
+      "template": "模板",
+      "log": "日志"
+    },
+    "action": {
+      "proceed": "继续 / 提交",
+      "reject": "拒绝",
+      "revise": "退回修改",
+      "cancel": "取消申请"
+    },
+    "back": "返回",
+    "loading": "加载中...",
+    "notFound": "未找到模板",
+    "cancel": "取消",
+    "saving": "保存中...",
+    "save": "保存",
+    "create": "创建",
+    "edit": "编辑",
+    "deleting": "删除中...",
+    "active": "启用",
+    "inactive": "停用",
+    "empty": "暂无数据",
+    "searchTemplate": "搜索主题、stage、角色...",
+    "allTransactionTypes": "所有交易类型",
+    "delete": {
+      "title": "删除邮件模板",
+      "message": "确定删除模板 \"{{label}}\"？此操作无法撤销。",
+      "confirm": "删除",
+      "button": "删除"
+    },
+    "toast": {
+      "created": "模板已创建",
+      "createFailed": "创建模板失败",
+      "updated": "模板已更新",
+      "updateFailed": "更新模板失败",
+      "deleted": "模板已删除",
+      "deleteFailed": "删除模板失败"
+    },
+    "column": {
+      "no": "序号",
+      "transactionType": "交易类型",
+      "stage": "Stage",
+      "action": "操作",
+      "subject": "主题",
+      "ccRoles": "抄送角色",
+      "status": "状态",
+      "actions": "操作"
+    },
+    "form": {
+      "createTitle": "创建邮件模板",
+      "editTitle": "编辑邮件模板",
+      "transactionType": "交易类型",
+      "transactionTypePlaceholder": "选择交易类型...",
+      "stage": "Stage",
+      "stagePlaceholder": "选择 stage...",
+      "stageHelper": "执行操作时交易所处的 stage。",
+      "action": "操作",
+      "toInfoTitle": "收件人 (To) 不在此处配置",
+      "toInfo": {
+        "proceed": "自动填入在下一 stage（或下一审批步骤）有权限、且与申请同一分行的用户。",
+        "reject": "自动填入申请创建人。",
+        "revise": "自动填入申请创建人。",
+        "cancel": "自动填入当前 stage 正在处理该申请的用户。"
+      },
+      "subject": "主题",
+      "subjectPlaceholder": "例如 [0001/IX/2026-DPSL] 等待您审批",
+      "subjectHelper": "在邮件对话框中锁定 — 用户无法修改。",
+      "body": "消息",
+      "bodyPlaceholder": "填写给收件人的消息...",
+      "bodyHelper": "只需填写消息。页眉、申请信息、资产清单和“打开交易”按钮会自动添加。用户发送时可追加消息。",
+      "placeholders": "占位符（插入到 {{field}}）：",
+      "ccRoles": "按角色抄送",
+      "ccRolesHelper": "与申请同一分行、拥有这些角色的用户将自动加入抄送。",
+      "active": "启用",
+      "errors": {
+        "transactionType": "请选择交易类型",
+        "stage": "请选择 stage",
+        "subject": "请填写主题",
+        "body": "请填写正文",
+        "ccRoles": "请至少选择 1 个抄送角色"
+      },
+      "toInfoAgreement": {
+        "proceed": "自动填入：创建时 → 第一步审批人；某步通过时 → 下一步审批人；最后一步之后 → agreement 创建人及各成员 disposal 的创建人。审批人必须拥有所有成员分行的权限。",
+        "reject": "自动填入 agreement 创建人。",
+        "revise": "自动填入被退回 disposal 的创建人及 agreement 创建人。"
+      },
+      "ccRolesHelperAgreement": "拥有这些角色、且有权访问 agreement 任一成员分行的用户将自动加入抄送。修改时仅计算被退回 disposal 的分行。"
+    },
+    "placeholder": {
+      "transaction_number": "交易编号",
+      "transaction_type": "交易类型",
+      "stage": "执行操作时的 stage",
+      "next_stage": "目标 stage",
+      "action": "操作",
+      "creator_name": "申请创建人",
+      "sender_name": "发送邮件的用户",
+      "branch_code": "申请分行代码",
+      "link": "交易详情链接",
+      "date": "发送日期和时间"
+    },
+    "log": {
+      "search": "搜索交易编号...",
+      "empty": "暂无邮件日志",
+      "resendFailed": "重新发送邮件失败",
+      "attempts": "尝试次数：{{count}}",
+      "status": {
+        "FAILED": "失败",
+        "SENT": "已发送",
+        "all": "全部"
+      },
+      "column": {
+        "time": "时间",
+        "transaction": "交易",
+        "stageAction": "Stage / 操作",
+        "subject": "主题",
+        "recipients": "收件人",
+        "sender": "发送人",
+        "status": "状态"
+      }
+    }
   }
 }

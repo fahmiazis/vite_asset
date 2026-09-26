@@ -48,6 +48,9 @@ import UpdateDepreciationPage from '../components/pages/depretiation/update'
 import AttachmentSettingPage from '../components/pages/settingAttachment'
 import DetailAttachmentSettingPage from '../components/pages/settingAttachment/detail'
 import CreateAttachmentSettingPage from '../components/pages/settingAttachment/create'
+import EmailSettingPage from '../components/pages/settingEmail'
+import CreateEmailSettingPage from '../components/pages/settingEmail/create'
+import DetailEmailSettingPage from '../components/pages/settingEmail/detail'
 import MutationPage from '../components/pages/mutation'
 import CreateMutationPage from '../components/pages/mutation/create'
 import MutationDetailPage from '../components/pages/mutation/detail'
@@ -162,6 +165,18 @@ export const router = createBrowserRouter([
           {
             path: 'setting-attachment/:id',
             element: <DetailAttachmentSettingPage />,
+          },
+          {
+            path: 'setting-email',
+            element: <EmailSettingPage />,
+          },
+          {
+            path: 'setting-email/create',
+            element: <CreateEmailSettingPage />,
+          },
+          {
+            path: 'setting-email/:id',
+            element: <DetailEmailSettingPage />,
           },
           {
             path: 'procurement',

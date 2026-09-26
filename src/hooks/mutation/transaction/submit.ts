@@ -10,7 +10,7 @@ interface UseSubmitProcurementOptions {
 export const useSubmitProcurement = (options?: UseSubmitProcurementOptions) => {
     const queryClient = useQueryClient()
 
-    const { mutate, isPending, error } = useMutation({
+    const { mutate, mutateAsync, isPending, error } = useMutation({
         mutationFn: ({ id, payload }: { id: string; payload: SubmitProcurementPayload }) =>
             submitProcurement(id, payload),
 
@@ -29,5 +29,5 @@ export const useSubmitProcurement = (options?: UseSubmitProcurementOptions) => {
         },
     })
 
-    return { mutate, isPending, error }
+    return { mutate, mutateAsync, isPending, error }
 }
