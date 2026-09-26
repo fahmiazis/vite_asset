@@ -4,6 +4,7 @@ import toast from "react-hot-toast"
 import { useEmailLogList } from "../../../hooks/query/emailSetting/logs"
 import { useResendTransactionEmail } from "../../../hooks/mutation/emailSetting/resend"
 import type { EmailLogStatus, emailLogState } from "../../../models/emailSetting/transactionEmail"
+import { ClientPagination, useClientPagination } from "../../molecules/table/pageSize"
 
 function formatDateTime(value: string | null) {
   if (!value) return "-"
@@ -51,6 +52,7 @@ export function EmailLogTable() {
 
   const { data, isLoading } = useEmailLogList({ status, transactionNumber: search.trim() })
   const rows = data?.data ?? []
+  const pagination = useClientPagination(rows)
 
   const statusOptions: { value: EmailLogStatus | ""; label: string }[] = [
     { value: "FAILED", label: t("emailSetting.log.status.FAILED") },
@@ -109,7 +111,7 @@ export function EmailLogTable() {
                 <td colSpan={8} className="px-4 py-6 text-center text-gray-400">{t("emailSetting.log.empty")}</td>
               </tr>
             ) : (
-              rows.map((row) => (
+              pagination.pageRows.map((row) => (
                 <tr key={row.id} className="hover:bg-gray-50 dark:hover:bg-gray-800">
                   <td className="px-4 py-3 text-xs text-gray-500 whitespace-nowrap">{formatDateTime(row.created_at)}</td>
                   <td className="px-4 py-3">
@@ -150,6 +152,8 @@ export function EmailLogTable() {
           </tbody>
         </table>
       </div>
+
+      {rows.length > 0 && <ClientPagination pagination={pagination} />}
     </div>
   )
 }

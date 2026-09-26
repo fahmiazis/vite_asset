@@ -1,6 +1,7 @@
 // components/organisms/depreciation/create/index.tsx
 
 import { useForm, Controller } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { Selects } from "../../../molecules/input/selects"
@@ -12,8 +13,9 @@ import { AssetPicker } from "../../../molecules/input/assetPicker"
 
 const createDepreciationSchema = z.object({
     setting_type: z.string().min(1, "Setting type is required"),
-    // id kategori aset (setting_type CATEGORY) atau id aset (ASSET)
-    reference_id: z.number({ error: "Reference is required" }).min(1, "Reference is required"),
+    // id kategori aset (setting_type CATEGORY) atau id aset (ASSET);
+    // kosong untuk DEFAULT — diperiksa di superRefine di bawah
+    reference_id: z.number().optional(),
     calculation_method: z.string().min(1, "Calculation method is required"),
     depreciation_period: z.string().min(1, "Depreciation period is required"),
     useful_life_months: z.number().min(1, "Minimum 1 month"),
@@ -21,6 +23,10 @@ const createDepreciationSchema = z.object({
     start_date: z.string().min(1, "Start date is required"),
     end_date: z.string().nullable().optional(),
     is_active: z.boolean(),
+}).superRefine((values, ctx) => {
+    if (values.setting_type !== "DEFAULT" && !(values.reference_id && values.reference_id >= 1)) {
+        ctx.addIssue({ code: "custom", path: ["reference_id"], message: "Reference is required" })
+    }
 })
 
 export type CreateDepreciationFormValues = z.infer<typeof createDepreciationSchema>
@@ -35,6 +41,8 @@ export type CreateDepreciationFormValues = z.infer<typeof createDepreciationSche
 const SETTING_TYPE_OPTIONS = [
     { id: "CATEGORY", value: "CATEGORY", label: "Category" },
     { id: "ASSET", value: "ASSET", label: "Asset" },
+    // cadangan untuk aset yang tidak punya setting ASSET maupun CATEGORY
+    { id: "DEFAULT", value: "DEFAULT", label: "Default" },
 ]
 
 const CALCULATION_METHOD_OPTIONS = [
@@ -73,6 +81,7 @@ function TextInput({
 // ─── Main Form ────────────────────────────────────────────────────────────────
 
 export default function CreateDepreciationPage() {
+    const { t } = useTranslation()
     const {
         register, control, handleSubmit, watch, setValue,
         formState: { errors, isSubmitting },
@@ -115,7 +124,8 @@ export default function CreateDepreciationPage() {
     })
 
     const onSubmit = (data: CreateDepreciationFormValues) => {
-        mutate(data)
+        // DEFAULT tidak menunjuk kategori/aset mana pun
+        mutate(data.setting_type === "DEFAULT" ? { ...data, reference_id: undefined } : data)
     }
 
     return (
@@ -151,7 +161,11 @@ export default function CreateDepreciationPage() {
                         )}
                     />
 
-                    {settingType === "ASSET" ? (
+                    {settingType === "DEFAULT" ? (
+                        <div className="rounded-lg border border-indigo-200 dark:border-indigo-800 bg-indigo-50 dark:bg-indigo-900/20 px-3 py-2.5 text-xs text-indigo-700 dark:text-indigo-300 self-end">
+                            {t("depreciationSetting.defaultInfo")}
+                        </div>
+                    ) : settingType === "ASSET" ? (
                         <Controller
                             control={control}
                             name="reference_id"

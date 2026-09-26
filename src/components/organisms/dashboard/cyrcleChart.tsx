@@ -18,6 +18,9 @@ interface BudgetChartProps {
   showArrow?: boolean;
   onArrowClick?: () => void;
   className?: string;
+  title?: string;
+  /** teks kecil di tengah donut */
+  centerLabel?: string;
 }
 
 const BudgetChart = ({
@@ -27,6 +30,8 @@ const BudgetChart = ({
   showArrow = true,
   onArrowClick,
   className = '',
+  title = 'Total Transaction',
+  centerLabel = 'Total for month',
 }: BudgetChartProps) => {
   const formatCurrency = (value: number) => {
     const formatted = value.toFixed(2);
@@ -46,8 +51,8 @@ const BudgetChart = ({
       `}
     >
       {/* Header */}
-      <div className="flex items-start justify-between mb-6">
-        <h3 className="text-2xl font-bold text-gray-900 dark:text-zinc-50">Total Transaction</h3>
+      <div className="flex items-start justify-between mb-4">
+        <h3 className="text-2xl font-bold text-gray-900 dark:text-zinc-50">{title}</h3>
 
         {showArrow && (
           <button
@@ -65,35 +70,36 @@ const BudgetChart = ({
         )}
       </div>
 
-      <div className="flex items-center justify-between gap-6 flex-wrap">
-        {/* Legend */}
-        <div className="flex flex-col gap-3">
-          {categories.map((category, index) => (
-            <div key={index} className="flex items-center gap-3">
-              <div
-                className="w-3 h-3 rounded-full flex-shrink-0"
-                style={{ backgroundColor: category.color }}
-              />
-              <span className="text-xs text-gray-700 dark:text-zinc-400">{category.name}</span>
-            </div>
-          ))}
-        </div>
+      {/* Legend — 2 kolom supaya donut bisa naik */}
+      <div className="grid grid-cols-2 gap-x-6 gap-y-2">
+        {categories.map((category, index) => (
+          <div key={index} className="flex items-center gap-2 min-w-0">
+            <div
+              className="w-3 h-3 rounded-full flex-shrink-0"
+              style={{ backgroundColor: category.color }}
+            />
+            <span className="text-xs text-gray-700 dark:text-zinc-400 truncate">{category.name}</span>
+            <span className="text-xs font-semibold text-gray-900 dark:text-zinc-50 ml-auto pl-2">{category.value}</span>
+          </div>
+        ))}
+      </div>
 
-        {/* Donut Chart */}
-        <div className="relative flex-shrink-0 pt-6 pr-4">
-          <ResponsiveContainer width={280} height={280}>
+      {/* Donut Chart — di tengah, lebar mengikuti kartu */}
+      <div className="flex justify-center mt-4">
+        <div className="relative w-full max-w-[340px] aspect-square">
+          <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
-                data={categories}
+                data={total > 0 ? categories : [{ name: '-', value: 1, color: '#e5e7eb' }]}
                 cx="50%"
                 cy="50%"
-                innerRadius={85}
-                outerRadius={110}
+                innerRadius="72%"
+                outerRadius="96%"
                 paddingAngle={3}
                 dataKey="value"
                 strokeWidth={0}
               >
-                {categories.map((entry, index) => (
+                {(total > 0 ? categories : [{ name: '-', value: 1, color: '#e5e7eb' }]).map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={entry.color} />
                 ))}
               </Pie>
@@ -101,10 +107,10 @@ const BudgetChart = ({
           </ResponsiveContainer>
 
           {/* Center Text */}
-          <div className="absolute inset-0 top-6 flex flex-col items-center justify-center">
-            <div className="text-xs text-gray-400 dark:text-zinc-500 mb-1">Total for month</div>
+          <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+            <div className="text-sm text-gray-400 dark:text-zinc-500 mb-1">{centerLabel}</div>
             <div className="flex items-baseline">
-              <span className="text-lg font-bold text-gray-900 dark:text-zinc-50">{whole}</span>
+              <span className="text-4xl font-bold text-gray-900 dark:text-zinc-50">{whole}</span>
             </div>
           </div>
 

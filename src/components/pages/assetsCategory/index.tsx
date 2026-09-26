@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react"
+import { ClientPagination, useClientPagination } from "../../molecules/table/pageSize"
 import { useNavigate } from "react-router-dom"
 import { useTranslation } from "react-i18next"
 import Head from "../../molecules/head"
@@ -35,6 +36,8 @@ export default function AssetsCategoryPage() {
         row.category_name?.toLowerCase().includes(keyword)
     )
   }, [data, search])
+
+  const pagination = useClientPagination(categories)
 
   // header tabel tetap dirender walau data kosong
   const columns = [
@@ -149,13 +152,13 @@ export default function AssetsCategoryPage() {
                 </td>
               </tr>
             ) : (
-              categories.map((category, index) => (
+              pagination.pageRows.map((category, index) => (
                 <tr
                   key={category.id}
                   className="transition-colors hover:bg-gray-50 dark:hover:bg-gray-800"
                 >
                   <td className="px-6 py-4 text-center text-sm text-gray-500 dark:text-gray-400">
-                    {index + 1}
+                    {pagination.offset + index + 1}
                   </td>
                   <td className="px-6 py-4 text-sm font-mono font-medium text-gray-800 dark:text-gray-200 whitespace-nowrap">
                     {category.category_code}
@@ -203,6 +206,12 @@ export default function AssetsCategoryPage() {
           </tbody>
         </table>
       </div>
+
+      {categories.length > 0 && (
+        <div className="mt-4">
+          <ClientPagination pagination={pagination} />
+        </div>
+      )}
     </>
   )
 }

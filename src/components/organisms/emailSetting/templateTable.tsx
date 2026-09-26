@@ -5,6 +5,7 @@ import toast from "react-hot-toast"
 import type { emailTemplateState } from "../../../models/emailSetting/template"
 import { emailTransactionTypes } from "../../../constans/email"
 import { useDeleteEmailTemplate } from "../../../hooks/mutation/emailSetting/template"
+import { ClientPagination, useClientPagination } from "../../molecules/table/pageSize"
 
 function DeleteModal({ row, onClose }: { row: emailTemplateState; onClose: () => void }) {
   const { t } = useTranslation()
@@ -70,6 +71,8 @@ export function EmailTemplateTable({ data }: { data: emailTemplateState[] }) {
     )
   }, [data, search, type])
 
+  const pagination = useClientPagination(rows)
+
   return (
     <div className="space-y-4">
       <section className="flex flex-wrap items-center justify-between gap-3">
@@ -120,9 +123,9 @@ export function EmailTemplateTable({ data }: { data: emailTemplateState[] }) {
                 <td colSpan={8} className="px-4 py-6 text-center text-gray-400">{t("emailSetting.empty")}</td>
               </tr>
             ) : (
-              rows.map((row, i) => (
+              pagination.pageRows.map((row, i) => (
                 <tr key={row.id} className="hover:bg-gray-50 dark:hover:bg-gray-800">
-                  <td className="px-4 py-3 text-center w-12">{i + 1}</td>
+                  <td className="px-4 py-3 text-center w-12">{pagination.offset + i + 1}</td>
                   <td className="px-4 py-3 font-medium capitalize">{row.transaction_type}</td>
                   <td className="px-4 py-3 font-mono text-xs">{row.stage}</td>
                   <td className="px-4 py-3">{t(`emailSetting.action.${row.action}`)}</td>
@@ -169,6 +172,8 @@ export function EmailTemplateTable({ data }: { data: emailTemplateState[] }) {
           </tbody>
         </table>
       </div>
+
+      {rows.length > 0 && <ClientPagination pagination={pagination} />}
 
       {deleting && <DeleteModal row={deleting} onClose={() => setDeleting(null)} />}
     </div>

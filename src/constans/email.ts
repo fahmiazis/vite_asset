@@ -17,6 +17,7 @@ export const emailTransactionTypes: { id: EmailTransactionType; value: EmailTran
   { id: "mutation", value: "mutation", label: "Mutation" },
   { id: "disposal", value: "disposal", label: "Disposal" },
   { id: "disposal_agreement", value: "disposal_agreement", label: "Disposal Agreement" },
+  { id: "handover", value: "handover", label: "Asset Handover" },
 ]
 
 export const emailStagesByType: Record<EmailTransactionType, string[]> = {
@@ -24,6 +25,7 @@ export const emailStagesByType: Record<EmailTransactionType, string[]> = {
   mutation: ["DRAFT", "APPROVAL", "MUTATION_RECEIVING", "EXECUTE_MUTATION"],
   disposal: ["DRAFT", "PURCHASING", "APPROVAL_REQUEST", "EXECUTE", "FINANCE", "TAX", "ASSET_DELETION"],
   disposal_agreement: ["CREATE", "APPROVAL_AGREEMENT"],
+  handover: ["DRAFT", "APPROVAL", "HANDOVER_RECEIVING"],
 }
 
 export const emailActions: EmailAction[] = ["proceed", "reject", "revise", "cancel"]

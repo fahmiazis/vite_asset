@@ -1115,7 +1115,9 @@
   },
   "table": {
     "showData": "Tampilkan",
-    "showAll": "Semua"
+    "showAll": "Semua",
+    "range": "{{from}}–{{to}} dari {{total}}",
+    "pageOf": "Hal {{page}} / {{pages}}"
   },
   "mutationDocuments": {
     "title": "Dokumen",
@@ -1751,5 +1753,272 @@
     "hint": "PDF, wajib untuk aset berstatus Dipinjam",
     "clickToReplace": "klik buat ganti",
     "uploadTooltip": "Belum ada dokumen — klik buat upload"
+  },
+  "assetFilter": {
+    "category": "Kategori",
+    "allCategories": "Semua kategori",
+    "status": "Status",
+    "allStatuses": "Semua status",
+    "branch": "Cabang",
+    "allBranches": "Semua cabang",
+    "reset": "Reset filter"
+  },
+  "handover": {
+    "title": "Serah Terima Aset",
+    "subtitle": "{{count}} ajuan",
+    "create": "Serah Terima Baru",
+    "detailTitle": "Detail Serah Terima Aset",
+    "searchPlaceholder": "Cari nomor, catatan, aset...",
+    "allTypes": "Semua jenis",
+    "loading": "Memuat...",
+    "empty": "Belum ada ajuan serah terima",
+    "notFound": "Serah terima tidak ditemukan",
+    "cancel": "Batal",
+    "saving": "Menyimpan...",
+    "optional": "opsional",
+    "heldByBranch": "Cabang",
+    "branch": "Cabang {{code}}",
+    "prev": "Sebelumnya",
+    "next": "Berikutnya",
+    "pageInfo": "Halaman {{page}} dari {{pages}} · {{total}} ajuan",
+    "assetsTitle": "Aset ({{count}})",
+    "approvalTitle": "Approval ({{done}}/{{total}})",
+    "historyTitle": "Riwayat Stage",
+    "needsRevision": "Perlu revisi",
+    "revisionBanner": "Approver mengembalikan ajuan ini. Perbaiki aset yang ditandai, lalu submit ulang.",
+    "waitingRecipient": "Menunggu {{name}} mengonfirmasi penerimaan.",
+    "waitingBranch": "Menunggu cabang mengonfirmasi pengembalian.",
+    "tabs": {
+      "all": "Semua",
+      "waiting": "Menunggu Saya",
+      "draft": "Draft",
+      "approval": "Approval",
+      "receiving": "Penerimaan",
+      "finished": "Selesai",
+      "closed": "Ditolak / Batal"
+    },
+    "type": {
+      "HANDOVER": "Serah terima ke user",
+      "RETURN": "Pengembalian ke cabang"
+    },
+    "column": {
+      "number": "Nomor",
+      "type": "Jenis",
+      "recipient": "Penerima",
+      "assets": "Aset",
+      "stage": "Stage",
+      "createdBy": "Dibuat oleh",
+      "date": "Tanggal",
+      "assetNumber": "Nomor aset",
+      "assetName": "Nama aset",
+      "category": "Kategori",
+      "holder": "Pemegang saat ini",
+      "previousHolder": "Pemegang sebelumnya",
+      "rowStatus": "Status"
+    },
+    "info": {
+      "number": "Nomor transaksi",
+      "type": "Jenis",
+      "recipient": "Penerima",
+      "branch": "Cabang",
+      "date": "Tanggal",
+      "createdBy": "Dibuat oleh",
+      "totalAssets": "Jumlah aset",
+      "notes": "Catatan"
+    },
+    "form": {
+      "createTitle": "Serah Terima Aset Baru",
+      "editTitle": "Ubah Draft Serah Terima",
+      "homebaseRule": "Hanya aset di cabang homebase Anda yang bisa diserahterimakan, dan penerimanya harus ber-homebase di cabang yang sama. Untuk memindahkan aset ke cabang lain, buat mutasi terlebih dulu.",
+      "type": "Jenis serah terima",
+      "typeHint": {
+        "HANDOVER": "Serahkan aset cabang (atau pindahkan pemegang) ke seorang user.",
+        "RETURN": "User mengembalikan aset yang dipegangnya ke cabang."
+      },
+      "recipient": "Penerima",
+      "recipientPlaceholder": "Pilih penerima...",
+      "recipientHint": "Hanya user yang homebase-nya cabang Anda.",
+      "date": "Tanggal transaksi",
+      "notes": "Catatan",
+      "assets": "Aset",
+      "selected": "{{count}} dipilih",
+      "searchAssets": "Cari aset...",
+      "noAssets": {
+        "HANDOVER": "Tidak ada aset tersedia di cabang homebase Anda.",
+        "RETURN": "Tidak ada aset yang sedang dipegang user di cabang Anda."
+      },
+      "createDraft": "Buat Draft",
+      "saveDraft": "Simpan Draft",
+      "notDraft": "Ajuan ini sudah bukan draft dan tidak bisa diubah.",
+      "errors": {
+        "recipient": "Pilih penerima",
+        "assets": "Pilih minimal satu aset"
+      }
+    },
+    "action": {
+      "submit": "Submit",
+      "resubmit": "Revisi Selesai — Submit",
+      "submitInfo": "Ajuan diteruskan ke approval (flow ASSET_HANDOVER_APPROVAL).",
+      "notes": "Catatan",
+      "reason": "Alasan",
+      "approve": "Setujui",
+      "reject": "Tolak",
+      "revise": "Minta Revisi",
+      "cancel": "Batalkan Ajuan",
+      "edit": "Ubah Draft",
+      "stepInfo": "Anda menyetujui sebagai {{step}}.",
+      "confirm": "Konfirmasi Terima",
+      "confirmInfo": {
+        "HANDOVER": "Dengan konfirmasi ini, aset tercatat dipegang penerima.",
+        "RETURN": "Dengan konfirmasi ini, aset kembali ke cabang (pemegang dikosongkan)."
+      },
+      "rejectReceiving": "Tolak Terima",
+      "rejectReceivingInfo": "Ajuan berakhir REJECTED dan aset dilepas kembali."
+    },
+    "docs": {
+      "title": "Dokumen Serah Terima",
+      "subtitle": "Dokumen stage {{stage}} — diatur di Setting Attachment.",
+      "missing": "Belum diunggah",
+      "optional": "Opsional",
+      "upload": "Unggah",
+      "reupload": "Unggah ulang",
+      "uploading": "Mengunggah...",
+      "uploaded": "Terunggah",
+      "tooLarge": "Ukuran file maksimal 10 MB",
+      "openFailed": "Gagal membuka file"
+    },
+    "toast": {
+      "created": "Draft serah terima dibuat",
+      "updated": "Draft tersimpan",
+      "submitted": "Serah terima diajukan",
+      "approved": "Step disetujui",
+      "rejected": "Serah terima ditolak",
+      "revised": "Dikembalikan untuk revisi",
+      "cancelled": "Serah terima dibatalkan",
+      "received": "Penerimaan dikonfirmasi",
+      "uploaded": "Dokumen terunggah",
+      "error": "Aksi gagal"
+    }
+  },
+  "transactionReport": {
+    "procurement": {
+      "title": "Report Procurement",
+      "subtitle": "Barang pengadaan per transaksi, sesuai cabang yang di-assign ke kamu"
+    },
+    "mutation": {
+      "title": "Report Mutasi",
+      "subtitle": "Aset yang dimutasi, dari cabang kamu sebagai pengaju maupun tujuan"
+    },
+    "disposal": {
+      "title": "Report Disposal",
+      "subtitle": "Aset yang di-disposal per transaksi, sesuai cabang yang di-assign ke kamu"
+    },
+    "downloadExcel": "Unduh Excel",
+    "downloading": "Mengunduh...",
+    "downloadSuccess": "Report berhasil diunduh",
+    "downloadFailed": "Gagal mengunduh report",
+    "searchPlaceholder": "Cari nomor transaksi, catatan, barang atau aset...",
+    "allBranches": "Semua cabang",
+    "myBranches": "Semua cabang saya",
+    "branchScopeNote": "Menampilkan transaksi dari {{count}} cabang yang di-assign ke kamu.",
+    "noBranchNote": "Kamu belum punya cabang — minta administrator meng-assign cabang.",
+    "reset": "Reset",
+    "allStages": "Semua",
+    "loading": "Memuat...",
+    "empty": "Tidak ada data untuk filter ini",
+    "forbidden": "Kamu tidak punya akses ke report ini",
+    "loadFailed": "Gagal memuat report",
+    "stat": {
+      "transactions": "Transaksi",
+      "items": "Barang",
+      "quantity": "Total qty",
+      "totalValue": "Total nilai",
+      "assets": "Aset",
+      "assetsPending": "Aset belum dieksekusi",
+      "assetsExecuted": "Aset sudah dieksekusi",
+      "saleValue": "Total nilai jual",
+      "incomeValue": "Total pemasukan"
+    },
+    "column": {
+      "no": "No",
+      "transactionNumber": "No. Transaksi",
+      "date": "Tanggal",
+      "branch": "Cabang",
+      "stage": "Stage",
+      "itemName": "Barang",
+      "category": "Kategori",
+      "quantity": "Qty",
+      "unitPrice": "Harga satuan",
+      "totalPrice": "Total harga",
+      "distribution": "Distribusi cabang",
+      "createdBy": "Dibuat oleh",
+      "assetNumber": "No. Aset",
+      "assetName": "Nama aset",
+      "fromBranch": "Dari cabang",
+      "toBranch": "Ke cabang",
+      "toLocation": "Lokasi tujuan",
+      "documentNumber": "No. Dokumen",
+      "assetStatus": "Status aset",
+      "disposalType": "Tipe",
+      "reason": "Alasan",
+      "saleValue": "Nilai jual",
+      "incomeValue": "Pemasukan",
+      "invoiceNumber": "No. Faktur",
+      "agreementNumber": "No. Agreement"
+    }
+  },
+  "dashboardPage": {
+    "allTransactions": "Semua transaksi",
+    "loading": "Memuat...",
+    "cards": {
+      "period": "Periode {{period}}",
+      "notCalculated": "Belum ada nilai untuk {{period}} — jalankan hitung penyusutan bulan ini"
+    },
+    "monthTotal": {
+      "title": "Transaksi bulan ini",
+      "center": "Total bulan ini"
+    },
+    "assets": {
+      "title": "Aset ({{count}})"
+    },
+    "flow": {
+      "title": "Alur transaksi",
+      "lastSixMonths": "6 bulan terakhir",
+      "finished": "Selesai",
+      "in_progress": "Berjalan",
+      "rejected": "Ditolak",
+      "cancelled": "Dibatalkan"
+    },
+    "recent": {
+      "title": "Transaksi terbaru",
+      "allStatus": "Semua status",
+      "empty": "Belum ada transaksi",
+      "open": "Buka",
+      "column": {
+        "date": "Tanggal",
+        "transactionNumber": "Nomor transaksi",
+        "transaction": "Transaksi",
+        "user": "User",
+        "stage": "Stage"
+      }
+    }
+  },
+  "runDepreciation": {
+    "button": "Run Depreciation",
+    "title": "Jalankan penyusutan bulanan",
+    "description": "Menghitung penyusutan semua aset yang punya setting penyusutan dan mencatat nilai aset baru untuk periode yang dipilih.",
+    "period": "Periode",
+    "note": "Aset yang sudah dihitung di periode ini dilewati, jadi aman dijalankan ulang. Scheduler juga berjalan otomatis tiap tanggal 1 untuk bulan sebelumnya.",
+    "cancel": "Batal",
+    "confirm": "Jalankan",
+    "running": "Menjalankan...",
+    "success": "Penyusutan {{period}} selesai — {{count}} aset dihitung",
+    "failed": "Gagal menjalankan penyusutan"
+  },
+  "depreciationSetting": {
+    "defaultInfo": "Dipakai semua aset yang tidak punya setting ASSET maupun CATEGORY. Hanya boleh satu setting DEFAULT yang aktif."
+  },
+  "app": {
+    "name": "Asset Management System"
   }
 }

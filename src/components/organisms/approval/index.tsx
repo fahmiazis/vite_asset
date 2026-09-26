@@ -8,6 +8,7 @@ import {
   type SortingState,
   type ColumnFiltersState,
 } from '@tanstack/react-table'
+import { PageSizeSelect, usePageSize } from '../../molecules/table/pageSize'
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -54,6 +55,9 @@ export function ApprovalFlowTable({ data, isLoading, handlers }: ApprovalTablePr
       },
     },
   })
+
+  // pilihan jumlah baris, sama dengan /role
+  const { mode: pageSizeMode, setMode: setPageSizeMode } = usePageSize(table)
 
   if (isLoading) {
     return (
@@ -141,8 +145,9 @@ export function ApprovalFlowTable({ data, isLoading, handlers }: ApprovalTablePr
       </div>
 
       {/* Pagination */}
-      <div className="flex items-center justify-between">
-        <div className="text-xs text-gray-700 dark:text-gray-300">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <PageSizeSelect value={pageSizeMode} onChange={setPageSizeMode} />
+        <div className="text-xs text-gray-700 dark:text-gray-300 mr-auto">
           {t('approvalList.pagination.showing')}{' '}
           <span className="font-medium">
             {table.getState().pagination.pageIndex *

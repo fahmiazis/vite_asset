@@ -9,10 +9,12 @@ export interface AssetListParams {
   assetStatus?: string
   /** batasi ke satu cabang — dto.AssetListFilter.branch_code */
   branchCode?: string
+  /** dto.AssetListFilter.category_id */
+  categoryId?: number
 }
 
 export const assetList = async (params: AssetListParams): Promise<listAssestProps> => {
-  const { page, limit, search, assetStatus, branchCode } = params
+  const { page, limit, search, assetStatus, branchCode, categoryId } = params
 
   const query = new URLSearchParams({
     page: String(page),
@@ -20,6 +22,7 @@ export const assetList = async (params: AssetListParams): Promise<listAssestProp
     ...(search ? { search } : {}),
     ...(assetStatus ? { asset_status: assetStatus } : {}),
     ...(branchCode ? { branch_code: branchCode } : {}),
+    ...(categoryId ? { category_id: String(categoryId) } : {}),
   })
 
   const res = await axiosPrivate.get(`/assets?${query.toString()}`)
@@ -29,4 +32,14 @@ export const assetList = async (params: AssetListParams): Promise<listAssestProp
   }
 
   return res.data
+}
+export interface AssetBranchOption {
+  branch_code: string
+  branch_name: string
+}
+
+/** cabang yang boleh dilihat user di halaman aset (admin: semua) */
+export const assetViewableBranches = async (): Promise<AssetBranchOption[]> => {
+  const res = await axiosPrivate.get(`/assets/my-branches`)
+  return res.data.data
 }

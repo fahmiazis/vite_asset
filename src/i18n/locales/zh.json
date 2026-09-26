@@ -1115,7 +1115,9 @@
   },
   "table": {
     "showData": "显示",
-    "showAll": "全部"
+    "showAll": "全部",
+    "range": "第 {{from}}–{{to}} 条，共 {{total}} 条",
+    "pageOf": "第 {{page}} / {{pages}} 页"
   },
   "mutationDocuments": {
     "title": "文档",
@@ -1751,5 +1753,272 @@
     "hint": "PDF格式，状态为借出的资产必填",
     "clickToReplace": "点击更换",
     "uploadTooltip": "尚无文件 — 点击上传"
+  },
+  "assetFilter": {
+    "category": "类别",
+    "allCategories": "所有类别",
+    "status": "状态",
+    "allStatuses": "所有状态",
+    "branch": "分行",
+    "allBranches": "所有分行",
+    "reset": "重置筛选"
+  },
+  "handover": {
+    "title": "资产交接",
+    "subtitle": "{{count}} 个申请",
+    "create": "新建交接",
+    "detailTitle": "资产交接详情",
+    "searchPlaceholder": "搜索编号、备注、资产...",
+    "allTypes": "所有类型",
+    "loading": "加载中...",
+    "empty": "暂无交接申请",
+    "notFound": "未找到交接",
+    "cancel": "取消",
+    "saving": "保存中...",
+    "optional": "可选",
+    "heldByBranch": "分行",
+    "branch": "分行 {{code}}",
+    "prev": "上一页",
+    "next": "下一页",
+    "pageInfo": "第 {{page}} / {{pages}} 页 · {{total}} 个申请",
+    "assetsTitle": "资产（{{count}}）",
+    "approvalTitle": "审批（{{done}}/{{total}}）",
+    "historyTitle": "Stage 历史",
+    "needsRevision": "需修改",
+    "revisionBanner": "审批人已退回此申请。请修改标记的资产后重新提交。",
+    "waitingRecipient": "等待 {{name}} 确认接收。",
+    "waitingBranch": "等待分行确认归还。",
+    "tabs": {
+      "all": "全部",
+      "waiting": "等待我",
+      "draft": "草稿",
+      "approval": "审批",
+      "receiving": "接收",
+      "finished": "已完成",
+      "closed": "已拒绝 / 已取消"
+    },
+    "type": {
+      "HANDOVER": "交接给用户",
+      "RETURN": "归还给分行"
+    },
+    "column": {
+      "number": "编号",
+      "type": "类型",
+      "recipient": "接收人",
+      "assets": "资产",
+      "stage": "Stage",
+      "createdBy": "创建人",
+      "date": "日期",
+      "assetNumber": "资产编号",
+      "assetName": "资产名称",
+      "category": "类别",
+      "holder": "当前持有人",
+      "previousHolder": "原持有人",
+      "rowStatus": "状态"
+    },
+    "info": {
+      "number": "交易编号",
+      "type": "类型",
+      "recipient": "接收人",
+      "branch": "分行",
+      "date": "日期",
+      "createdBy": "创建人",
+      "totalAssets": "资产数量",
+      "notes": "备注"
+    },
+    "form": {
+      "createTitle": "新建资产交接",
+      "editTitle": "修改交接草稿",
+      "homebaseRule": "只能交接您 homebase 分行内的资产，且接收人必须属于同一 homebase。如需转到其他分行，请先创建调拨（mutation）。",
+      "type": "交接类型",
+      "typeHint": {
+        "HANDOVER": "将分行资产交给某位用户（或更换持有人）。",
+        "RETURN": "用户将持有的资产归还给分行。"
+      },
+      "recipient": "接收人",
+      "recipientPlaceholder": "选择接收人...",
+      "recipientHint": "仅限 homebase 为您分行的用户。",
+      "date": "交易日期",
+      "notes": "备注",
+      "assets": "资产",
+      "selected": "已选 {{count}} 项",
+      "searchAssets": "搜索资产...",
+      "noAssets": {
+        "HANDOVER": "您的 homebase 分行没有可用资产。",
+        "RETURN": "您的分行没有被用户持有的资产。"
+      },
+      "createDraft": "创建草稿",
+      "saveDraft": "保存草稿",
+      "notDraft": "此申请已不是草稿，无法修改。",
+      "errors": {
+        "recipient": "请选择接收人",
+        "assets": "请至少选择一项资产"
+      }
+    },
+    "action": {
+      "submit": "提交",
+      "resubmit": "修改完成 — 提交",
+      "submitInfo": "申请将进入审批（flow ASSET_HANDOVER_APPROVAL）。",
+      "notes": "备注",
+      "reason": "原因",
+      "approve": "批准",
+      "reject": "拒绝",
+      "revise": "要求修改",
+      "cancel": "取消申请",
+      "edit": "修改草稿",
+      "stepInfo": "您以 {{step}} 身份审批。",
+      "confirm": "确认接收",
+      "confirmInfo": {
+        "HANDOVER": "确认后，资产将登记为由接收人持有。",
+        "RETURN": "确认后，资产归还分行（清空持有人）。"
+      },
+      "rejectReceiving": "拒绝接收",
+      "rejectReceivingInfo": "申请将以 REJECTED 结束，资产被释放。"
+    },
+    "docs": {
+      "title": "交接文件",
+      "subtitle": "Stage {{stage}} 的文件 — 在 Attachment Setting 中配置。",
+      "missing": "尚未上传",
+      "optional": "可选",
+      "upload": "上传",
+      "reupload": "重新上传",
+      "uploading": "上传中...",
+      "uploaded": "已上传",
+      "tooLarge": "文件最大 10 MB",
+      "openFailed": "无法打开文件"
+    },
+    "toast": {
+      "created": "已创建交接草稿",
+      "updated": "草稿已保存",
+      "submitted": "交接已提交",
+      "approved": "步骤已批准",
+      "rejected": "交接已拒绝",
+      "revised": "已退回修改",
+      "cancelled": "交接已取消",
+      "received": "已确认接收",
+      "uploaded": "文件已上传",
+      "error": "操作失败"
+    }
+  },
+  "transactionReport": {
+    "procurement": {
+      "title": "采购报表",
+      "subtitle": "按交易列出采购物品，仅限分配给您的分支"
+    },
+    "mutation": {
+      "title": "调拨报表",
+      "subtitle": "调拨的资产，包含您作为申请方或接收方的分支"
+    },
+    "disposal": {
+      "title": "处置报表",
+      "subtitle": "按交易列出处置的资产，仅限分配给您的分支"
+    },
+    "downloadExcel": "下载 Excel",
+    "downloading": "下载中...",
+    "downloadSuccess": "报表已下载",
+    "downloadFailed": "报表下载失败",
+    "searchPlaceholder": "搜索交易编号、备注、物品或资产...",
+    "allBranches": "所有分支",
+    "myBranches": "我的所有分支",
+    "branchScopeNote": "显示分配给您的 {{count}} 个分支的交易。",
+    "noBranchNote": "您尚未分配分支 — 请联系管理员。",
+    "reset": "重置",
+    "allStages": "全部",
+    "loading": "加载中...",
+    "empty": "此筛选条件下没有数据",
+    "forbidden": "您无权访问此报表",
+    "loadFailed": "报表加载失败",
+    "stat": {
+      "transactions": "交易",
+      "items": "物品",
+      "quantity": "总数量",
+      "totalValue": "总金额",
+      "assets": "资产",
+      "assetsPending": "待执行资产",
+      "assetsExecuted": "已执行资产",
+      "saleValue": "总售价",
+      "incomeValue": "总收入"
+    },
+    "column": {
+      "no": "序号",
+      "transactionNumber": "交易编号",
+      "date": "日期",
+      "branch": "分支",
+      "stage": "Stage",
+      "itemName": "物品",
+      "category": "类别",
+      "quantity": "数量",
+      "unitPrice": "单价",
+      "totalPrice": "总价",
+      "distribution": "分支分配",
+      "createdBy": "创建人",
+      "assetNumber": "资产编号",
+      "assetName": "资产名称",
+      "fromBranch": "来源分支",
+      "toBranch": "目标分支",
+      "toLocation": "目标位置",
+      "documentNumber": "单据编号",
+      "assetStatus": "资产状态",
+      "disposalType": "类型",
+      "reason": "原因",
+      "saleValue": "售价",
+      "incomeValue": "收入",
+      "invoiceNumber": "发票编号",
+      "agreementNumber": "协议编号"
+    }
+  },
+  "dashboardPage": {
+    "allTransactions": "所有交易",
+    "loading": "加载中...",
+    "cards": {
+      "period": "期间 {{period}}",
+      "notCalculated": "{{period}} 尚无数值 — 请先计算本月折旧"
+    },
+    "monthTotal": {
+      "title": "本月交易",
+      "center": "本月合计"
+    },
+    "assets": {
+      "title": "资产 ({{count}})"
+    },
+    "flow": {
+      "title": "交易流程",
+      "lastSixMonths": "最近 6 个月",
+      "finished": "已完成",
+      "in_progress": "进行中",
+      "rejected": "已拒绝",
+      "cancelled": "已取消"
+    },
+    "recent": {
+      "title": "最近交易",
+      "allStatus": "所有状态",
+      "empty": "暂无交易",
+      "open": "打开",
+      "column": {
+        "date": "日期",
+        "transactionNumber": "交易编号",
+        "transaction": "交易",
+        "user": "用户",
+        "stage": "Stage"
+      }
+    }
+  },
+  "runDepreciation": {
+    "button": "Run Depreciation",
+    "title": "运行月度折旧",
+    "description": "为所有已配置折旧设置的资产计算折旧，并记录所选期间的新资产价值。",
+    "period": "期间",
+    "note": "本期间已计算的资产会被跳过，可安全重复运行。调度器也会在每月1日自动计算上个月。",
+    "cancel": "取消",
+    "confirm": "运行",
+    "running": "运行中...",
+    "success": "{{period}} 折旧已完成 — 共计算 {{count}} 项资产",
+    "failed": "运行折旧失败"
+  },
+  "depreciationSetting": {
+    "defaultInfo": "适用于所有没有 ASSET 或 CATEGORY 设置的资产。只能启用一个 DEFAULT 设置。"
+  },
+  "app": {
+    "name": "Asset Management System"
   }
 }

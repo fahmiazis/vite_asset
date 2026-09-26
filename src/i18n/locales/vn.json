@@ -1115,7 +1115,9 @@
   },
   "table": {
     "showData": "Hiển thị",
-    "showAll": "Tất cả"
+    "showAll": "Tất cả",
+    "range": "{{from}}–{{to}} / {{total}}",
+    "pageOf": "Trang {{page}} / {{pages}}"
   },
   "mutationDocuments": {
     "title": "Tài liệu",
@@ -1751,5 +1753,272 @@
     "hint": "PDF, bắt buộc đối với tài sản có trạng thái Đang mượn",
     "clickToReplace": "bấm để thay",
     "uploadTooltip": "Chưa có tài liệu — bấm để tải lên"
+  },
+  "assetFilter": {
+    "category": "Danh mục",
+    "allCategories": "Tất cả danh mục",
+    "status": "Trạng thái",
+    "allStatuses": "Tất cả trạng thái",
+    "branch": "Chi nhánh",
+    "allBranches": "Tất cả chi nhánh",
+    "reset": "Xóa bộ lọc"
+  },
+  "handover": {
+    "title": "Bàn giao tài sản",
+    "subtitle": "{{count}} yêu cầu",
+    "create": "Bàn giao mới",
+    "detailTitle": "Chi tiết bàn giao tài sản",
+    "searchPlaceholder": "Tìm số, ghi chú, tài sản...",
+    "allTypes": "Tất cả loại",
+    "loading": "Đang tải...",
+    "empty": "Chưa có yêu cầu bàn giao",
+    "notFound": "Không tìm thấy bàn giao",
+    "cancel": "Hủy",
+    "saving": "Đang lưu...",
+    "optional": "không bắt buộc",
+    "heldByBranch": "Chi nhánh",
+    "branch": "Chi nhánh {{code}}",
+    "prev": "Trước",
+    "next": "Tiếp",
+    "pageInfo": "Trang {{page}} / {{pages}} · {{total}} yêu cầu",
+    "assetsTitle": "Tài sản ({{count}})",
+    "approvalTitle": "Phê duyệt ({{done}}/{{total}})",
+    "historyTitle": "Lịch sử Stage",
+    "needsRevision": "Cần sửa",
+    "revisionBanner": "Người phê duyệt đã trả lại yêu cầu này. Hãy sửa các tài sản được đánh dấu rồi gửi lại.",
+    "waitingRecipient": "Đang chờ {{name}} xác nhận nhận hàng.",
+    "waitingBranch": "Đang chờ chi nhánh xác nhận trả lại.",
+    "tabs": {
+      "all": "Tất cả",
+      "waiting": "Chờ tôi",
+      "draft": "Nháp",
+      "approval": "Phê duyệt",
+      "receiving": "Tiếp nhận",
+      "finished": "Hoàn tất",
+      "closed": "Từ chối / Hủy"
+    },
+    "type": {
+      "HANDOVER": "Bàn giao cho người dùng",
+      "RETURN": "Trả lại chi nhánh"
+    },
+    "column": {
+      "number": "Số",
+      "type": "Loại",
+      "recipient": "Người nhận",
+      "assets": "Tài sản",
+      "stage": "Stage",
+      "createdBy": "Người tạo",
+      "date": "Ngày",
+      "assetNumber": "Mã tài sản",
+      "assetName": "Tên tài sản",
+      "category": "Danh mục",
+      "holder": "Người giữ hiện tại",
+      "previousHolder": "Người giữ trước",
+      "rowStatus": "Trạng thái"
+    },
+    "info": {
+      "number": "Số giao dịch",
+      "type": "Loại",
+      "recipient": "Người nhận",
+      "branch": "Chi nhánh",
+      "date": "Ngày",
+      "createdBy": "Người tạo",
+      "totalAssets": "Số tài sản",
+      "notes": "Ghi chú"
+    },
+    "form": {
+      "createTitle": "Bàn giao tài sản mới",
+      "editTitle": "Sửa nháp bàn giao",
+      "homebaseRule": "Chỉ bàn giao được tài sản thuộc chi nhánh homebase của bạn, và người nhận phải cùng homebase. Để chuyển tài sản sang chi nhánh khác, hãy tạo điều chuyển (mutation) trước.",
+      "type": "Loại bàn giao",
+      "typeHint": {
+        "HANDOVER": "Giao tài sản của chi nhánh (hoặc đổi người giữ) cho một người dùng.",
+        "RETURN": "Người dùng trả lại tài sản đang giữ cho chi nhánh."
+      },
+      "recipient": "Người nhận",
+      "recipientPlaceholder": "Chọn người nhận...",
+      "recipientHint": "Chỉ người dùng có homebase là chi nhánh của bạn.",
+      "date": "Ngày giao dịch",
+      "notes": "Ghi chú",
+      "assets": "Tài sản",
+      "selected": "Đã chọn {{count}}",
+      "searchAssets": "Tìm tài sản...",
+      "noAssets": {
+        "HANDOVER": "Không có tài sản khả dụng trong chi nhánh homebase của bạn.",
+        "RETURN": "Không có tài sản nào đang được người dùng giữ trong chi nhánh của bạn."
+      },
+      "createDraft": "Tạo nháp",
+      "saveDraft": "Lưu nháp",
+      "notDraft": "Yêu cầu này không còn là nháp nên không thể sửa.",
+      "errors": {
+        "recipient": "Chọn người nhận",
+        "assets": "Chọn ít nhất một tài sản"
+      }
+    },
+    "action": {
+      "submit": "Gửi",
+      "resubmit": "Đã sửa xong — Gửi",
+      "submitInfo": "Yêu cầu sẽ chuyển sang phê duyệt (flow ASSET_HANDOVER_APPROVAL).",
+      "notes": "Ghi chú",
+      "reason": "Lý do",
+      "approve": "Phê duyệt",
+      "reject": "Từ chối",
+      "revise": "Yêu cầu sửa",
+      "cancel": "Hủy yêu cầu",
+      "edit": "Sửa nháp",
+      "stepInfo": "Bạn phê duyệt với vai trò {{step}}.",
+      "confirm": "Xác nhận đã nhận",
+      "confirmInfo": {
+        "HANDOVER": "Khi xác nhận, tài sản được ghi nhận do người nhận giữ.",
+        "RETURN": "Khi xác nhận, tài sản trở về chi nhánh (xóa người giữ)."
+      },
+      "rejectReceiving": "Từ chối nhận",
+      "rejectReceivingInfo": "Yêu cầu kết thúc với trạng thái REJECTED và tài sản được giải phóng."
+    },
+    "docs": {
+      "title": "Tài liệu bàn giao",
+      "subtitle": "Tài liệu của stage {{stage}} — cấu hình trong Attachment Setting.",
+      "missing": "Chưa tải lên",
+      "optional": "Không bắt buộc",
+      "upload": "Tải lên",
+      "reupload": "Tải lên lại",
+      "uploading": "Đang tải lên...",
+      "uploaded": "Đã tải lên",
+      "tooLarge": "Kích thước tối đa 10 MB",
+      "openFailed": "Không mở được tệp"
+    },
+    "toast": {
+      "created": "Đã tạo nháp bàn giao",
+      "updated": "Đã lưu nháp",
+      "submitted": "Đã gửi bàn giao",
+      "approved": "Đã duyệt bước",
+      "rejected": "Bàn giao bị từ chối",
+      "revised": "Đã trả lại để sửa",
+      "cancelled": "Đã hủy bàn giao",
+      "received": "Đã xác nhận nhận",
+      "uploaded": "Đã tải tài liệu",
+      "error": "Thao tác thất bại"
+    }
+  },
+  "transactionReport": {
+    "procurement": {
+      "title": "Báo cáo mua sắm",
+      "subtitle": "Hàng mua sắm theo giao dịch, giới hạn theo chi nhánh được gán cho bạn"
+    },
+    "mutation": {
+      "title": "Báo cáo điều chuyển",
+      "subtitle": "Tài sản điều chuyển, từ chi nhánh của bạn là bên yêu cầu hoặc bên nhận"
+    },
+    "disposal": {
+      "title": "Báo cáo thanh lý",
+      "subtitle": "Tài sản thanh lý theo giao dịch, giới hạn theo chi nhánh được gán cho bạn"
+    },
+    "downloadExcel": "Tải Excel",
+    "downloading": "Đang tải...",
+    "downloadSuccess": "Đã tải báo cáo",
+    "downloadFailed": "Tải báo cáo thất bại",
+    "searchPlaceholder": "Tìm số giao dịch, ghi chú, hàng hoặc tài sản...",
+    "allBranches": "Tất cả chi nhánh",
+    "myBranches": "Tất cả chi nhánh của tôi",
+    "branchScopeNote": "Hiển thị giao dịch từ {{count}} chi nhánh được gán cho bạn.",
+    "noBranchNote": "Bạn chưa được gán chi nhánh — hãy liên hệ quản trị viên.",
+    "reset": "Đặt lại",
+    "allStages": "Tất cả",
+    "loading": "Đang tải...",
+    "empty": "Không có dữ liệu cho bộ lọc này",
+    "forbidden": "Bạn không có quyền xem báo cáo này",
+    "loadFailed": "Tải báo cáo thất bại",
+    "stat": {
+      "transactions": "Giao dịch",
+      "items": "Mặt hàng",
+      "quantity": "Tổng số lượng",
+      "totalValue": "Tổng giá trị",
+      "assets": "Tài sản",
+      "assetsPending": "Tài sản chờ xử lý",
+      "assetsExecuted": "Tài sản đã thực hiện",
+      "saleValue": "Tổng giá bán",
+      "incomeValue": "Tổng thu"
+    },
+    "column": {
+      "no": "STT",
+      "transactionNumber": "Số giao dịch",
+      "date": "Ngày",
+      "branch": "Chi nhánh",
+      "stage": "Stage",
+      "itemName": "Mặt hàng",
+      "category": "Danh mục",
+      "quantity": "SL",
+      "unitPrice": "Đơn giá",
+      "totalPrice": "Thành tiền",
+      "distribution": "Phân bổ chi nhánh",
+      "createdBy": "Người tạo",
+      "assetNumber": "Số tài sản",
+      "assetName": "Tên tài sản",
+      "fromBranch": "Từ chi nhánh",
+      "toBranch": "Đến chi nhánh",
+      "toLocation": "Vị trí đến",
+      "documentNumber": "Số chứng từ",
+      "assetStatus": "Trạng thái tài sản",
+      "disposalType": "Loại",
+      "reason": "Lý do",
+      "saleValue": "Giá bán",
+      "incomeValue": "Thu",
+      "invoiceNumber": "Số hóa đơn",
+      "agreementNumber": "Số thỏa thuận"
+    }
+  },
+  "dashboardPage": {
+    "allTransactions": "Tất cả giao dịch",
+    "loading": "Đang tải...",
+    "cards": {
+      "period": "Kỳ {{period}}",
+      "notCalculated": "Chưa có giá trị cho {{period}} — hãy chạy tính khấu hao tháng này"
+    },
+    "monthTotal": {
+      "title": "Giao dịch tháng này",
+      "center": "Tổng tháng này"
+    },
+    "assets": {
+      "title": "Tài sản ({{count}})"
+    },
+    "flow": {
+      "title": "Luồng giao dịch",
+      "lastSixMonths": "6 tháng gần nhất",
+      "finished": "Hoàn thành",
+      "in_progress": "Đang xử lý",
+      "rejected": "Bị từ chối",
+      "cancelled": "Đã hủy"
+    },
+    "recent": {
+      "title": "Giao dịch gần đây",
+      "allStatus": "Tất cả trạng thái",
+      "empty": "Chưa có giao dịch",
+      "open": "Mở",
+      "column": {
+        "date": "Ngày",
+        "transactionNumber": "Số giao dịch",
+        "transaction": "Giao dịch",
+        "user": "Người dùng",
+        "stage": "Stage"
+      }
+    }
+  },
+  "runDepreciation": {
+    "button": "Run Depreciation",
+    "title": "Chạy khấu hao hàng tháng",
+    "description": "Tính khấu hao cho mọi tài sản có cấu hình khấu hao và ghi giá trị tài sản mới cho kỳ đã chọn.",
+    "period": "Kỳ",
+    "note": "Tài sản đã được tính trong kỳ này sẽ bị bỏ qua, nên có thể chạy lại an toàn. Bộ lập lịch cũng tự chạy vào ngày 1 hàng tháng cho tháng trước.",
+    "cancel": "Hủy",
+    "confirm": "Chạy",
+    "running": "Đang chạy...",
+    "success": "Đã tính khấu hao {{period}} — {{count}} tài sản",
+    "failed": "Chạy khấu hao thất bại"
+  },
+  "depreciationSetting": {
+    "defaultInfo": "Áp dụng cho mọi tài sản không có cấu hình ASSET hoặc CATEGORY. Chỉ được kích hoạt một cấu hình DEFAULT."
+  },
+  "app": {
+    "name": "Asset Management System"
   }
 }

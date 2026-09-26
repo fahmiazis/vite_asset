@@ -20,6 +20,7 @@ export const flowCode = [
     { id: 'DISPOSAL_APPROVAL_REQUEST', value: 'DISPOSAL_APPROVAL_REQUEST', label: 'DISPOSAL_APPROVAL_REQUEST' },
     { id: 'DISPOSAL_APPROVAL_AGREEMENT', value: 'DISPOSAL_APPROVAL_AGREEMENT', label: 'DISPOSAL_APPROVAL_AGREEMENT' },
     { id: 'STOCK_OPNAME_APPROVAL', value: 'STOCK_OPNAME_APPROVAL', label: 'STOCK_OPNAME_APPROVAL' },
+    { id: 'ASSET_HANDOVER_APPROVAL', value: 'ASSET_HANDOVER_APPROVAL', label: 'ASSET_HANDOVER_APPROVAL' },
 ];
 
 // enum('sequential','parallel','conditional') — approval_flows.approval_way

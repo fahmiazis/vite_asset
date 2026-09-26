@@ -1115,7 +1115,9 @@
   },
   "table": {
     "showData": "แสดง",
-    "showAll": "ทั้งหมด"
+    "showAll": "ทั้งหมด",
+    "range": "{{from}}–{{to}} จาก {{total}}",
+    "pageOf": "หน้า {{page}} / {{pages}}"
   },
   "mutationDocuments": {
     "title": "เอกสาร",
@@ -1751,5 +1753,272 @@
     "hint": "PDF จำเป็นสำหรับสินทรัพย์ที่มีสถานะถูกยืม",
     "clickToReplace": "คลิกเพื่อเปลี่ยน",
     "uploadTooltip": "ยังไม่มีเอกสาร — คลิกเพื่ออัปโหลด"
+  },
+  "assetFilter": {
+    "category": "หมวดหมู่",
+    "allCategories": "ทุกหมวดหมู่",
+    "status": "สถานะ",
+    "allStatuses": "ทุกสถานะ",
+    "branch": "สาขา",
+    "allBranches": "ทุกสาขา",
+    "reset": "ล้างตัวกรอง"
+  },
+  "handover": {
+    "title": "ส่งมอบสินทรัพย์",
+    "subtitle": "{{count}} คำขอ",
+    "create": "ส่งมอบใหม่",
+    "detailTitle": "รายละเอียดการส่งมอบสินทรัพย์",
+    "searchPlaceholder": "ค้นหาเลขที่ หมายเหตุ สินทรัพย์...",
+    "allTypes": "ทุกประเภท",
+    "loading": "กำลังโหลด...",
+    "empty": "ยังไม่มีคำขอส่งมอบ",
+    "notFound": "ไม่พบการส่งมอบ",
+    "cancel": "ยกเลิก",
+    "saving": "กำลังบันทึก...",
+    "optional": "ไม่บังคับ",
+    "heldByBranch": "สาขา",
+    "branch": "สาขา {{code}}",
+    "prev": "ก่อนหน้า",
+    "next": "ถัดไป",
+    "pageInfo": "หน้า {{page}} จาก {{pages}} · {{total}} คำขอ",
+    "assetsTitle": "สินทรัพย์ ({{count}})",
+    "approvalTitle": "การอนุมัติ ({{done}}/{{total}})",
+    "historyTitle": "ประวัติ Stage",
+    "needsRevision": "ต้องแก้ไข",
+    "revisionBanner": "ผู้อนุมัติส่งคำขอนี้กลับ กรุณาแก้ไขสินทรัพย์ที่ทำเครื่องหมายไว้แล้วส่งใหม่",
+    "waitingRecipient": "รอ {{name}} ยืนยันการรับ",
+    "waitingBranch": "รอสาขายืนยันการคืน",
+    "tabs": {
+      "all": "ทั้งหมด",
+      "waiting": "รอฉัน",
+      "draft": "ร่าง",
+      "approval": "อนุมัติ",
+      "receiving": "รับมอบ",
+      "finished": "เสร็จสิ้น",
+      "closed": "ถูกปฏิเสธ / ยกเลิก"
+    },
+    "type": {
+      "HANDOVER": "ส่งมอบให้ผู้ใช้",
+      "RETURN": "คืนให้สาขา"
+    },
+    "column": {
+      "number": "เลขที่",
+      "type": "ประเภท",
+      "recipient": "ผู้รับ",
+      "assets": "สินทรัพย์",
+      "stage": "Stage",
+      "createdBy": "สร้างโดย",
+      "date": "วันที่",
+      "assetNumber": "เลขที่สินทรัพย์",
+      "assetName": "ชื่อสินทรัพย์",
+      "category": "หมวดหมู่",
+      "holder": "ผู้ถือปัจจุบัน",
+      "previousHolder": "ผู้ถือก่อนหน้า",
+      "rowStatus": "สถานะ"
+    },
+    "info": {
+      "number": "เลขที่ธุรกรรม",
+      "type": "ประเภท",
+      "recipient": "ผู้รับ",
+      "branch": "สาขา",
+      "date": "วันที่",
+      "createdBy": "สร้างโดย",
+      "totalAssets": "จำนวนสินทรัพย์",
+      "notes": "หมายเหตุ"
+    },
+    "form": {
+      "createTitle": "ส่งมอบสินทรัพย์ใหม่",
+      "editTitle": "แก้ไขร่างการส่งมอบ",
+      "homebaseRule": "ส่งมอบได้เฉพาะสินทรัพย์ในสาขา homebase ของคุณ และผู้รับต้องอยู่ homebase เดียวกัน หากต้องการย้ายไปสาขาอื่นให้ทำการโอนย้าย (mutation) ก่อน",
+      "type": "ประเภทการส่งมอบ",
+      "typeHint": {
+        "HANDOVER": "มอบสินทรัพย์ของสาขา (หรือเปลี่ยนผู้ถือ) ให้ผู้ใช้",
+        "RETURN": "ผู้ใช้คืนสินทรัพย์ที่ถืออยู่ให้สาขา"
+      },
+      "recipient": "ผู้รับ",
+      "recipientPlaceholder": "เลือกผู้รับ...",
+      "recipientHint": "เฉพาะผู้ใช้ที่มี homebase เป็นสาขาของคุณ",
+      "date": "วันที่ธุรกรรม",
+      "notes": "หมายเหตุ",
+      "assets": "สินทรัพย์",
+      "selected": "เลือก {{count}} รายการ",
+      "searchAssets": "ค้นหาสินทรัพย์...",
+      "noAssets": {
+        "HANDOVER": "ไม่มีสินทรัพย์ว่างในสาขา homebase ของคุณ",
+        "RETURN": "ไม่มีสินทรัพย์ที่ผู้ใช้ถืออยู่ในสาขาของคุณ"
+      },
+      "createDraft": "สร้างร่าง",
+      "saveDraft": "บันทึกร่าง",
+      "notDraft": "คำขอนี้ไม่ใช่ร่างแล้ว จึงแก้ไขไม่ได้",
+      "errors": {
+        "recipient": "กรุณาเลือกผู้รับ",
+        "assets": "เลือกสินทรัพย์อย่างน้อยหนึ่งรายการ"
+      }
+    },
+    "action": {
+      "submit": "ส่ง",
+      "resubmit": "แก้ไขเสร็จ — ส่ง",
+      "submitInfo": "คำขอจะเข้าสู่การอนุมัติ (flow ASSET_HANDOVER_APPROVAL)",
+      "notes": "หมายเหตุ",
+      "reason": "เหตุผล",
+      "approve": "อนุมัติ",
+      "reject": "ปฏิเสธ",
+      "revise": "ขอให้แก้ไข",
+      "cancel": "ยกเลิกคำขอ",
+      "edit": "แก้ไขร่าง",
+      "stepInfo": "คุณอนุมัติในฐานะ {{step}}",
+      "confirm": "ยืนยันการรับ",
+      "confirmInfo": {
+        "HANDOVER": "เมื่อยืนยันแล้ว สินทรัพย์จะบันทึกว่าผู้รับเป็นผู้ถือ",
+        "RETURN": "เมื่อยืนยันแล้ว สินทรัพย์จะกลับไปเป็นของสาขา (ล้างผู้ถือ)"
+      },
+      "rejectReceiving": "ปฏิเสธการรับ",
+      "rejectReceivingInfo": "คำขอจะสิ้นสุดเป็น REJECTED และปล่อยสินทรัพย์คืน"
+    },
+    "docs": {
+      "title": "เอกสารการส่งมอบ",
+      "subtitle": "เอกสารของ stage {{stage}} — ตั้งค่าใน Attachment Setting",
+      "missing": "ยังไม่อัปโหลด",
+      "optional": "ไม่บังคับ",
+      "upload": "อัปโหลด",
+      "reupload": "อัปโหลดใหม่",
+      "uploading": "กำลังอัปโหลด...",
+      "uploaded": "อัปโหลดแล้ว",
+      "tooLarge": "ขนาดไฟล์สูงสุด 10 MB",
+      "openFailed": "เปิดไฟล์ไม่สำเร็จ"
+    },
+    "toast": {
+      "created": "สร้างร่างการส่งมอบแล้ว",
+      "updated": "บันทึกร่างแล้ว",
+      "submitted": "ส่งคำขอส่งมอบแล้ว",
+      "approved": "อนุมัติขั้นแล้ว",
+      "rejected": "การส่งมอบถูกปฏิเสธ",
+      "revised": "ส่งกลับให้แก้ไขแล้ว",
+      "cancelled": "ยกเลิกการส่งมอบแล้ว",
+      "received": "ยืนยันการรับแล้ว",
+      "uploaded": "อัปโหลดเอกสารแล้ว",
+      "error": "ดำเนินการไม่สำเร็จ"
+    }
+  },
+  "transactionReport": {
+    "procurement": {
+      "title": "รายงานการจัดซื้อ",
+      "subtitle": "รายการจัดซื้อต่อธุรกรรม เฉพาะสาขาที่คุณได้รับมอบหมาย"
+    },
+    "mutation": {
+      "title": "รายงานการโอนย้าย",
+      "subtitle": "สินทรัพย์ที่โอนย้าย จากสาขาของคุณในฐานะผู้ขอหรือปลายทาง"
+    },
+    "disposal": {
+      "title": "รายงานการจำหน่าย",
+      "subtitle": "สินทรัพย์ที่จำหน่ายต่อธุรกรรม เฉพาะสาขาที่คุณได้รับมอบหมาย"
+    },
+    "downloadExcel": "ดาวน์โหลด Excel",
+    "downloading": "กำลังดาวน์โหลด...",
+    "downloadSuccess": "ดาวน์โหลดรายงานแล้ว",
+    "downloadFailed": "ดาวน์โหลดรายงานไม่สำเร็จ",
+    "searchPlaceholder": "ค้นหาเลขที่ธุรกรรม หมายเหตุ รายการ หรือสินทรัพย์...",
+    "allBranches": "ทุกสาขา",
+    "myBranches": "ทุกสาขาของฉัน",
+    "branchScopeNote": "แสดงธุรกรรมจาก {{count}} สาขาที่คุณได้รับมอบหมาย",
+    "noBranchNote": "คุณยังไม่ได้รับมอบหมายสาขา — โปรดติดต่อผู้ดูแลระบบ",
+    "reset": "รีเซ็ต",
+    "allStages": "ทั้งหมด",
+    "loading": "กำลังโหลด...",
+    "empty": "ไม่มีข้อมูลสำหรับตัวกรองนี้",
+    "forbidden": "คุณไม่มีสิทธิ์เข้าถึงรายงานนี้",
+    "loadFailed": "โหลดรายงานไม่สำเร็จ",
+    "stat": {
+      "transactions": "ธุรกรรม",
+      "items": "รายการ",
+      "quantity": "จำนวนรวม",
+      "totalValue": "มูลค่ารวม",
+      "assets": "สินทรัพย์",
+      "assetsPending": "สินทรัพย์รอดำเนินการ",
+      "assetsExecuted": "สินทรัพย์ดำเนินการแล้ว",
+      "saleValue": "มูลค่าขายรวม",
+      "incomeValue": "รายรับรวม"
+    },
+    "column": {
+      "no": "ลำดับ",
+      "transactionNumber": "เลขที่ธุรกรรม",
+      "date": "วันที่",
+      "branch": "สาขา",
+      "stage": "Stage",
+      "itemName": "รายการ",
+      "category": "หมวดหมู่",
+      "quantity": "จำนวน",
+      "unitPrice": "ราคาต่อหน่วย",
+      "totalPrice": "ราคารวม",
+      "distribution": "การกระจายสาขา",
+      "createdBy": "สร้างโดย",
+      "assetNumber": "เลขที่สินทรัพย์",
+      "assetName": "ชื่อสินทรัพย์",
+      "fromBranch": "จากสาขา",
+      "toBranch": "ไปยังสาขา",
+      "toLocation": "สถานที่ปลายทาง",
+      "documentNumber": "เลขที่เอกสาร",
+      "assetStatus": "สถานะสินทรัพย์",
+      "disposalType": "ประเภท",
+      "reason": "เหตุผล",
+      "saleValue": "มูลค่าขาย",
+      "incomeValue": "รายรับ",
+      "invoiceNumber": "เลขที่ใบกำกับ",
+      "agreementNumber": "เลขที่ข้อตกลง"
+    }
+  },
+  "dashboardPage": {
+    "allTransactions": "ธุรกรรมทั้งหมด",
+    "loading": "กำลังโหลด...",
+    "cards": {
+      "period": "งวด {{period}}",
+      "notCalculated": "ยังไม่มีมูลค่าสำหรับ {{period}} — โปรดคำนวณค่าเสื่อมราคาของเดือนนี้"
+    },
+    "monthTotal": {
+      "title": "ธุรกรรมเดือนนี้",
+      "center": "รวมเดือนนี้"
+    },
+    "assets": {
+      "title": "สินทรัพย์ ({{count}})"
+    },
+    "flow": {
+      "title": "การไหลของธุรกรรม",
+      "lastSixMonths": "6 เดือนล่าสุด",
+      "finished": "เสร็จสิ้น",
+      "in_progress": "กำลังดำเนินการ",
+      "rejected": "ถูกปฏิเสธ",
+      "cancelled": "ยกเลิก"
+    },
+    "recent": {
+      "title": "ธุรกรรมล่าสุด",
+      "allStatus": "ทุกสถานะ",
+      "empty": "ยังไม่มีธุรกรรม",
+      "open": "เปิด",
+      "column": {
+        "date": "วันที่",
+        "transactionNumber": "เลขที่ธุรกรรม",
+        "transaction": "ธุรกรรม",
+        "user": "ผู้ใช้",
+        "stage": "Stage"
+      }
+    }
+  },
+  "runDepreciation": {
+    "button": "Run Depreciation",
+    "title": "คำนวณค่าเสื่อมราคารายเดือน",
+    "description": "คำนวณค่าเสื่อมราคาของสินทรัพย์ทุกชิ้นที่มีการตั้งค่า และบันทึกมูลค่าสินทรัพย์ใหม่สำหรับงวดที่เลือก",
+    "period": "งวด",
+    "note": "สินทรัพย์ที่คำนวณแล้วในงวดนี้จะถูกข้าม จึงรันซ้ำได้อย่างปลอดภัย ตัวตั้งเวลาจะรันอัตโนมัติทุกวันที่ 1 สำหรับเดือนก่อนหน้า",
+    "cancel": "ยกเลิก",
+    "confirm": "เริ่ม",
+    "running": "กำลังคำนวณ...",
+    "success": "คำนวณค่าเสื่อมราคา {{period}} เสร็จแล้ว — {{count}} สินทรัพย์",
+    "failed": "คำนวณค่าเสื่อมราคาไม่สำเร็จ"
+  },
+  "depreciationSetting": {
+    "defaultInfo": "ใช้กับสินทรัพย์ทุกชิ้นที่ไม่มีการตั้งค่า ASSET หรือ CATEGORY เปิดใช้งานการตั้งค่า DEFAULT ได้เพียงรายการเดียว"
+  },
+  "app": {
+    "name": "Asset Management System"
   }
 }

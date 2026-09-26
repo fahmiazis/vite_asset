@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import type { listAssestProps } from "../../../models/asset/list"
-import { assetList } from "../../../services/asset/list"
+import { assetList, assetViewableBranches } from "../../../services/asset/list"
  
 export interface UseAssetListParams {
   page: number
@@ -8,6 +8,7 @@ export interface UseAssetListParams {
   search?: string
   assetStatus?: string
   branchCode?: string
+  categoryId?: number
   /** tunda fetch sampai filter wajibnya siap (mis. menunggu branch homebase) */
   enabled?: boolean
 }
@@ -21,6 +22,7 @@ export const useAssetList = (params: UseAssetListParams) => {
       params.search ?? "",
       params.assetStatus ?? "",
       params.branchCode ?? "",
+      params.categoryId ?? "",
     ],
     queryFn: () => assetList(params),
     enabled: params.enabled ?? true,
@@ -29,3 +31,8 @@ export const useAssetList = (params: UseAssetListParams) => {
  
   return { data, isLoading, error, refetch }
 }
+export const useAssetViewableBranches = () =>
+  useQuery({
+    queryKey: ["asset-viewable-branches"],
+    queryFn: assetViewableBranches,
+  })

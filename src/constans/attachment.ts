@@ -16,6 +16,7 @@ export const attachmentTransactionTypes = [
   { id: "mutation", value: "mutation", label: "Mutation" },
   { id: "disposal", value: "disposal", label: "Disposal" },
   { id: "stock_opname", value: "stock_opname", label: "Stock Opname" },
+  { id: "handover", value: "handover", label: "Asset Handover" },
 ]
 
 /**
@@ -58,6 +59,7 @@ export const attachmentStagesByType: Record<string, string[]> = {
     "CANCELLED",
   ],
   stock_opname: ["DRAFT", "APPROVAL", "FINISHED", "REJECTED"],
+  handover: ["DRAFT", "APPROVAL", "HANDOVER_RECEIVING", "FINISHED"],
 }
 
 /** stage yang bisa dipilih untuk sebuah jenis transaksi, selalu diawali ALL */

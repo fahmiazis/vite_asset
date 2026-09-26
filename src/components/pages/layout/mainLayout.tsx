@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Suspense, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Cookies from "js-cookie";
 
 import sidebarStore from "../../../stores/useSidebarLayout";
@@ -9,6 +10,7 @@ import Navbar from "../../organisms/layout/navbar";
 import { StageEmailHost } from "../../organisms/common/stageEmailDialog";
 
 export default function MainLayout() {
+  const { t } = useTranslation();
   const { isActive } = sidebarStore();
   // const navigate = useNavigate();
 
@@ -43,9 +45,12 @@ export default function MainLayout() {
           duration-500 bg-blue-200 dark:bg-black p-1 md:p-2
           flex flex-col flex-1 max-w-screen`}
       >
-        <Navbar title="Assets" />
+        <Navbar title={t("app.name")} />
 
-        <section className="flex-1 overflow-y-auto hide-scrollbar py-2">
+        {/* Scrollbar sengaja ditampilkan (dulu hide-scrollbar) supaya jelas
+            halaman bisa di-scroll — tabel & form panjang tidak terlihat
+            terpotong. */}
+        <section className="flex-1 overflow-y-auto app-scrollbar py-2 pr-1">
           <Suspense fallback={<p className="text-white">Loading...</p>}>
             <Outlet />
           </Suspense>
