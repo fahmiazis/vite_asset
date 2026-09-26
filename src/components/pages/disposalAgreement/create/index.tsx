@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useEffect, useMemo, useRef, useState } from "react"
+import { useNavigate, useSearchParams } from "react-router-dom"
 import { useTranslation } from "react-i18next"
 import toast from "react-hot-toast"
 import Head from "../../../molecules/head"
@@ -27,6 +27,21 @@ export default function CreateDisposalAgreementPage() {
   const [notes, setNotes] = useState("")
 
   const items = data?.data ?? []
+
+  // ?select=<nomor> — datang dari lonceng notifikasi. Dicentang begitu daftar
+  // termuat, dan hanya yang memang masih layak. Diterapkan per nilai query:
+  // klik item lonceng lain saat sudah di halaman ini ikut menambah centang,
+  // tanpa menimpa pilihan yang dibuat manual.
+  const [searchParams] = useSearchParams()
+  const selectQuery = searchParams.getAll("select").join("|")
+  const appliedQuery = useRef("")
+  useEffect(() => {
+    if (!selectQuery || items.length === 0 || appliedQuery.current === selectQuery) return
+    appliedQuery.current = selectQuery
+    const eligible = new Set(items.map((item) => item.transaction_number))
+    const wanted = selectQuery.split("|").filter((number) => eligible.has(number))
+    setSelected((prev) => Array.from(new Set([...prev, ...wanted])))
+  }, [items, selectQuery])
 
   const toggle = (transactionNumber: string) =>
     setSelected((prev) =>

@@ -1306,5 +1306,21 @@
         "status": "状态"
       }
     }
+  },
+  "notification": {
+    "title": "等待您处理",
+    "count": "{{count}} 个申请",
+    "loading": "加载中...",
+    "error": "加载通知失败",
+    "emptyTitle": "全部处理完毕",
+    "emptyHint": "没有等待您处理的申请。",
+    "more": "显示 {{shown}} / {{total}} — 其余请查看各菜单的“等待我”标签。",
+    "type": {
+      "procurement": "Procurement",
+      "mutation": "Mutation",
+      "disposal": "Disposal",
+      "disposal_agreement": "Disposal Agreement"
+    },
+    "createAgreement": "创建 agreement"
   }
 }

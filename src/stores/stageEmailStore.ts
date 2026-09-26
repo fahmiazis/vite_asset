@@ -2,6 +2,12 @@ import { create } from "zustand"
 import type { EmailAction, EmailTransactionType } from "../models/emailSetting/template"
 import type { emailPreviewState } from "../models/emailSetting/transactionEmail"
 import { getEmailPreview } from "../services/emailSetting/transactionEmail"
+import { queryClient } from "../libs/queryClient"
+
+// Lonceng navbar dihitung dari "Menunggu Saya" — begitu aksi berhasil, isinya
+// langsung berubah, tidak perlu menunggu polling berikutnya.
+const refreshWaitingNotifications = () =>
+  queryClient.invalidateQueries({ queryKey: ["waiting-notifications"] })
 
 /**
  * Gerbang email sebelum aksi stage.
@@ -78,6 +84,7 @@ export async function withStageEmail(
   const runDirect = async () => {
     try {
       await run()
+      refreshWaitingNotifications()
       return true
     } catch {
       return false
@@ -114,6 +121,7 @@ export async function withStageEmail(
       run,
       settle: (done) => {
         busy = false
+        if (done) refreshWaitingNotifications()
         resolve(done)
       },
     })

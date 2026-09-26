@@ -1306,5 +1306,21 @@
         "status": "Status"
       }
     }
+  },
+  "notification": {
+    "title": "Menunggu Tindakan Anda",
+    "count": "{{count}} ajuan",
+    "loading": "Memuat...",
+    "error": "Gagal memuat notifikasi",
+    "emptyTitle": "Semua beres",
+    "emptyHint": "Tidak ada ajuan yang menunggu tindakan Anda.",
+    "more": "Menampilkan {{shown}} dari {{total}} — sisanya ada di tab \"Menunggu Saya\" tiap menu.",
+    "type": {
+      "procurement": "Procurement",
+      "mutation": "Mutasi",
+      "disposal": "Disposal",
+      "disposal_agreement": "Disposal Agreement"
+    },
+    "createAgreement": "Buat agreement"
   }
 }

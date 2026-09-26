@@ -1306,5 +1306,21 @@
         "status": "Status"
       }
     }
+  },
+  "notification": {
+    "title": "Awaiting Your Action",
+    "count": "{{count}} requests",
+    "loading": "Loading...",
+    "error": "Failed to load notifications",
+    "emptyTitle": "You're all caught up",
+    "emptyHint": "No requests are waiting for your action.",
+    "more": "Showing {{shown}} of {{total}} — open each module's \"Waiting for Me\" tab for the rest.",
+    "type": {
+      "procurement": "Procurement",
+      "mutation": "Mutation",
+      "disposal": "Disposal",
+      "disposal_agreement": "Disposal Agreement"
+    },
+    "createAgreement": "Create agreement"
   }
 }

@@ -1306,5 +1306,21 @@
         "status": "สถานะ"
       }
     }
+  },
+  "notification": {
+    "title": "รอการดำเนินการของคุณ",
+    "count": "{{count}} คำขอ",
+    "loading": "กำลังโหลด...",
+    "error": "โหลดการแจ้งเตือนไม่สำเร็จ",
+    "emptyTitle": "เรียบร้อยทั้งหมด",
+    "emptyHint": "ไม่มีคำขอที่รอการดำเนินการของคุณ",
+    "more": "แสดง {{shown}} จาก {{total}} — ดูรายการที่เหลือได้ที่แท็บ \"รอฉัน\" ของแต่ละเมนู",
+    "type": {
+      "procurement": "Procurement",
+      "mutation": "Mutation",
+      "disposal": "Disposal",
+      "disposal_agreement": "Disposal Agreement"
+    },
+    "createAgreement": "สร้าง agreement"
   }
 }

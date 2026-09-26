@@ -1306,5 +1306,21 @@
         "status": "Trạng thái"
       }
     }
+  },
+  "notification": {
+    "title": "Đang chờ bạn xử lý",
+    "count": "{{count}} yêu cầu",
+    "loading": "Đang tải...",
+    "error": "Tải thông báo thất bại",
+    "emptyTitle": "Đã xử lý hết",
+    "emptyHint": "Không có yêu cầu nào đang chờ bạn xử lý.",
+    "more": "Hiển thị {{shown}} / {{total}} — phần còn lại ở tab \"Chờ tôi\" của từng mục.",
+    "type": {
+      "procurement": "Procurement",
+      "mutation": "Mutation",
+      "disposal": "Disposal",
+      "disposal_agreement": "Disposal Agreement"
+    },
+    "createAgreement": "Tạo agreement"
   }
 }

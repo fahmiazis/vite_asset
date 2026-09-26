@@ -7,6 +7,7 @@ import sidebarStore from '../../../../stores/useSidebarLayout'
 import { useDarkMode } from '../../../../hooks/useDarkMode'
 import ProfileCardnavbar from '../../../molecules/card/profileCardNavbar'
 import { useMyProfile } from '../../../../hooks/query/auth/myProfile'
+import NotificationBell from './notificationBell'
 
 interface NavbarProps {
     title?: string
@@ -54,6 +55,7 @@ export default function Navbar({
                 </div>
             </div>
             <div className='flex gap-4 items-center'>
+                <NotificationBell />
                 <button
                     onClick={toggleDarkMode}
                     className="p-2 text-lg rounded-xl border border-zinc-300 dark:border-zinc-700"
