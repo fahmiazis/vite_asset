@@ -1966,5 +1966,56 @@
       "invoiceNumber": "Invoice No.",
       "agreementNumber": "Agreement No."
     }
+  },
+  "dashboardPage": {
+    "allTransactions": "All transactions",
+    "loading": "Loading...",
+    "cards": {
+      "period": "Period {{period}}",
+      "notCalculated": "No values for {{period}} yet — run this month's depreciation calculation"
+    },
+    "monthTotal": {
+      "title": "Transactions this month",
+      "center": "Total this month"
+    },
+    "assets": {
+      "title": "Assets ({{count}})"
+    },
+    "flow": {
+      "title": "Transaction flow",
+      "lastSixMonths": "Last 6 months",
+      "finished": "Finished",
+      "in_progress": "In progress",
+      "rejected": "Rejected",
+      "cancelled": "Cancelled"
+    },
+    "recent": {
+      "title": "Recent transactions",
+      "allStatus": "All status",
+      "empty": "No transactions yet",
+      "open": "Open",
+      "column": {
+        "date": "Date",
+        "transactionNumber": "Transaction number",
+        "transaction": "Transaction",
+        "user": "User",
+        "stage": "Stage"
+      }
+    }
+  },
+  "runDepreciation": {
+    "button": "Run Depreciation",
+    "title": "Run monthly depreciation",
+    "description": "Calculates depreciation for every asset that has a depreciation setting and writes the new asset value for the selected period.",
+    "period": "Period",
+    "note": "Assets already calculated for this period are skipped, so it is safe to run again. The scheduler also runs automatically on the 1st of each month for the previous month.",
+    "cancel": "Cancel",
+    "confirm": "Run",
+    "running": "Running...",
+    "success": "Depreciation {{period}} done — {{count}} asset(s) calculated",
+    "failed": "Failed to run depreciation"
+  },
+  "depreciationSetting": {
+    "defaultInfo": "Used by every asset that has no ASSET or CATEGORY setting. Only one DEFAULT setting can be active."
   }
 }

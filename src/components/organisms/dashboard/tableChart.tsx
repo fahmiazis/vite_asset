@@ -1,25 +1,27 @@
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import type { DashboardFlowRow } from '../../../models/dashboard';
+import { TRANSACTION_TYPES } from '../../../utils/transactionType';
 
 interface TableChartProps {
   className?: string;
+  /** 6 bulan terakhir per jenis transaksi; kosong = grafik nol */
+  flow?: DashboardFlowRow[];
 }
 
-const data = [
-  { month: 'Jan', finished: 95, in_progress: 82, rejected: 40, revisi: 25 },
-  { month: 'Feb', finished: 102, in_progress: 125, rejected: 45, revisi: 25 },
-  { month: 'Mar', finished: 87, in_progress: 98, rejected: 55, revisi: 25 },
-  { month: 'Apr', finished: 130, in_progress: 115, rejected: 30, revisi: 25 },
-  { month: 'May', finished: 125, in_progress: 112, rejected: 25, revisi: 25 },
-  { month: 'Jun', finished: 75, in_progress: 62, rejected: 37, revisi: 25 },
-  { month: 'Jul', finished: 90, in_progress: 75, rejected: 59, revisi: 25 },
-];
-
 const LEGEND = [
-  { key: 'finished',   label: 'Finished',    color: '#10b981' },
-  { key: 'in_progress',label: 'In Progress', color: '#3b82f6' },
-  { key: 'rejected',   label: 'Rejected',    color: '#ef4444' },
-  { key: 'revisi',     label: 'Revisi',      color: '#f59e0b' },
-];
+  { key: 'finished',    color: '#10b981' },
+  { key: 'in_progress', color: '#3b82f6' },
+  { key: 'rejected',    color: '#ef4444' },
+  { key: 'cancelled',   color: '#9ca3af' },
+] as const;
+
+/** YYYY-MM → "Sep" sesuai bahasa aktif */
+function monthLabel(month: string, locale: string) {
+  const [y, m] = month.split('-').map(Number);
+  return new Date(y, m - 1, 1).toLocaleDateString(locale, { month: 'short' });
+}
 
 // Custom tooltip biar dark mode konsisten
 const CustomTooltip = ({ active, payload, label }: any) => {
@@ -38,7 +40,26 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   );
 };
 
-const TableChart = ({ className }: TableChartProps) => {
+const TableChart = ({ className, flow = [] }: TableChartProps) => {
+  const { t, i18n } = useTranslation();
+  const [type, setType] = useState('');
+
+  // jumlahkan per bulan untuk jenis yang dipilih (kosong = semua jenis)
+  const byMonth = new Map<string, { month: string; finished: number; in_progress: number; rejected: number; cancelled: number }>();
+  for (const row of flow) {
+    const entry = byMonth.get(row.month) ?? { month: row.month, finished: 0, in_progress: 0, rejected: 0, cancelled: 0 };
+    if (!type || row.transaction_type === type) {
+      entry.finished += row.finished;
+      entry.in_progress += row.in_progress;
+      entry.rejected += row.rejected;
+      entry.cancelled += row.cancelled;
+    }
+    byMonth.set(row.month, entry);
+  }
+  const data = [...byMonth.values()]
+    .sort((a, b) => a.month.localeCompare(b.month))
+    .map((d) => ({ ...d, month: monthLabel(d.month, i18n.language) }));
+
   return (
     <div className={`
       ${className}
@@ -49,7 +70,7 @@ const TableChart = ({ className }: TableChartProps) => {
       {/* Header */}
       <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
         <h2 className="text-lg font-semibold text-gray-900 dark:text-zinc-50">
-          Transaction flow
+          {t('dashboardPage.flow.title')}
         </h2>
 
         <div className="flex items-center gap-4 flex-wrap">
@@ -58,37 +79,31 @@ const TableChart = ({ className }: TableChartProps) => {
             {LEGEND.map((l) => (
               <div key={l.key} className="flex items-center gap-1.5">
                 <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: l.color }} />
-                <span className="text-xs text-gray-500 dark:text-zinc-500">{l.label}</span>
+                <span className="text-xs text-gray-500 dark:text-zinc-500">{t(`dashboardPage.flow.${l.key}`)}</span>
               </div>
             ))}
           </div>
 
           {/* Filters */}
-          <select className="
+          <select
+            value={type}
+            onChange={(e) => setType(e.target.value)}
+            className="
             px-3 py-1.5 rounded-lg text-xs outline-none cursor-pointer
             border border-gray-200 dark:border-gray-700
             bg-white dark:bg-gray-800
             text-gray-600 dark:text-zinc-400
             focus:border-gray-400 dark:focus:border-zinc-500
           ">
-            <option>All Transaction</option>
-            <option>Procurement</option>
-            <option>Disposal</option>
-            <option>Mutation</option>
-            <option>Stock Opname</option>
+            <option value="">{t('dashboardPage.allTransactions')}</option>
+            {Object.entries(TRANSACTION_TYPES).map(([key, meta]) => (
+              <option key={key} value={key}>{meta.label}</option>
+            ))}
           </select>
 
-          <select className="
-            px-3 py-1.5 rounded-lg text-xs outline-none cursor-pointer
-            border border-gray-200 dark:border-gray-700
-            bg-white dark:bg-gray-800
-            text-gray-600 dark:text-zinc-400
-            focus:border-gray-400 dark:focus:border-zinc-500
-          ">
-            <option>This year</option>
-            <option>This month</option>
-            <option>Last 6 months</option>
-          </select>
+          <span className="text-xs text-gray-500 dark:text-zinc-500">
+            {t('dashboardPage.flow.lastSixMonths')}
+          </span>
         </div>
       </div>
 
@@ -117,7 +132,7 @@ const TableChart = ({ className }: TableChartProps) => {
             tickLine={false}
             tick={{ fill: '#71717a', fontSize: 12 }}
             tickFormatter={(v) => `${Number(v).toLocaleString()}`}
-            ticks={[0, 25, 50, 75, 100, 125, 150]}
+            allowDecimals={false}
             width={36}
           />
           <Tooltip
@@ -128,7 +143,7 @@ const TableChart = ({ className }: TableChartProps) => {
             <Bar
               key={l.key}
               dataKey={l.key}
-              name={l.label}
+              name={t(`dashboardPage.flow.${l.key}`)}
               fill={l.color}
               radius={[6, 6, 0, 0]}
               maxBarSize={36}

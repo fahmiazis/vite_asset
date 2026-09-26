@@ -1966,5 +1966,56 @@
       "invoiceNumber": "Số hóa đơn",
       "agreementNumber": "Số thỏa thuận"
     }
+  },
+  "dashboardPage": {
+    "allTransactions": "Tất cả giao dịch",
+    "loading": "Đang tải...",
+    "cards": {
+      "period": "Kỳ {{period}}",
+      "notCalculated": "Chưa có giá trị cho {{period}} — hãy chạy tính khấu hao tháng này"
+    },
+    "monthTotal": {
+      "title": "Giao dịch tháng này",
+      "center": "Tổng tháng này"
+    },
+    "assets": {
+      "title": "Tài sản ({{count}})"
+    },
+    "flow": {
+      "title": "Luồng giao dịch",
+      "lastSixMonths": "6 tháng gần nhất",
+      "finished": "Hoàn thành",
+      "in_progress": "Đang xử lý",
+      "rejected": "Bị từ chối",
+      "cancelled": "Đã hủy"
+    },
+    "recent": {
+      "title": "Giao dịch gần đây",
+      "allStatus": "Tất cả trạng thái",
+      "empty": "Chưa có giao dịch",
+      "open": "Mở",
+      "column": {
+        "date": "Ngày",
+        "transactionNumber": "Số giao dịch",
+        "transaction": "Giao dịch",
+        "user": "Người dùng",
+        "stage": "Stage"
+      }
+    }
+  },
+  "runDepreciation": {
+    "button": "Run Depreciation",
+    "title": "Chạy khấu hao hàng tháng",
+    "description": "Tính khấu hao cho mọi tài sản có cấu hình khấu hao và ghi giá trị tài sản mới cho kỳ đã chọn.",
+    "period": "Kỳ",
+    "note": "Tài sản đã được tính trong kỳ này sẽ bị bỏ qua, nên có thể chạy lại an toàn. Bộ lập lịch cũng tự chạy vào ngày 1 hàng tháng cho tháng trước.",
+    "cancel": "Hủy",
+    "confirm": "Chạy",
+    "running": "Đang chạy...",
+    "success": "Đã tính khấu hao {{period}} — {{count}} tài sản",
+    "failed": "Chạy khấu hao thất bại"
+  },
+  "depreciationSetting": {
+    "defaultInfo": "Áp dụng cho mọi tài sản không có cấu hình ASSET hoặc CATEGORY. Chỉ được kích hoạt một cấu hình DEFAULT."
   }
 }

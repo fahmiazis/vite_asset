@@ -13,6 +13,8 @@ interface BalanceCardProps {
   onArrowClick?: () => void;
   className?: string;
   showCurrency: boolean;
+  /** keterangan kecil di bawah angka, mis. periode data */
+  hint?: string;
 }
 
 const BalanceCard = ({
@@ -23,7 +25,8 @@ const BalanceCard = ({
   showArrow = true,
   onArrowClick,
   className = '',
-  showCurrency = true
+  showCurrency = true,
+  hint,
 }: BalanceCardProps) => {
   const formatBalance = (value: number) => {
     const formatted = value.toFixed(2);
@@ -78,6 +81,10 @@ const BalanceCard = ({
           </span>
         )}
       </div>
+
+      {hint && (
+        <p className="text-xs text-gray-400 dark:text-zinc-500">{hint}</p>
+      )}
 
       {/* Trend */}
       {trend && (

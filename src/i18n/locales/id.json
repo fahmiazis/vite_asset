@@ -1966,5 +1966,56 @@
       "invoiceNumber": "No. Faktur",
       "agreementNumber": "No. Agreement"
     }
+  },
+  "dashboardPage": {
+    "allTransactions": "Semua transaksi",
+    "loading": "Memuat...",
+    "cards": {
+      "period": "Periode {{period}}",
+      "notCalculated": "Belum ada nilai untuk {{period}} — jalankan hitung penyusutan bulan ini"
+    },
+    "monthTotal": {
+      "title": "Transaksi bulan ini",
+      "center": "Total bulan ini"
+    },
+    "assets": {
+      "title": "Aset ({{count}})"
+    },
+    "flow": {
+      "title": "Alur transaksi",
+      "lastSixMonths": "6 bulan terakhir",
+      "finished": "Selesai",
+      "in_progress": "Berjalan",
+      "rejected": "Ditolak",
+      "cancelled": "Dibatalkan"
+    },
+    "recent": {
+      "title": "Transaksi terbaru",
+      "allStatus": "Semua status",
+      "empty": "Belum ada transaksi",
+      "open": "Buka",
+      "column": {
+        "date": "Tanggal",
+        "transactionNumber": "Nomor transaksi",
+        "transaction": "Transaksi",
+        "user": "User",
+        "stage": "Stage"
+      }
+    }
+  },
+  "runDepreciation": {
+    "button": "Run Depreciation",
+    "title": "Jalankan penyusutan bulanan",
+    "description": "Menghitung penyusutan semua aset yang punya setting penyusutan dan mencatat nilai aset baru untuk periode yang dipilih.",
+    "period": "Periode",
+    "note": "Aset yang sudah dihitung di periode ini dilewati, jadi aman dijalankan ulang. Scheduler juga berjalan otomatis tiap tanggal 1 untuk bulan sebelumnya.",
+    "cancel": "Batal",
+    "confirm": "Jalankan",
+    "running": "Menjalankan...",
+    "success": "Penyusutan {{period}} selesai — {{count}} aset dihitung",
+    "failed": "Gagal menjalankan penyusutan"
+  },
+  "depreciationSetting": {
+    "defaultInfo": "Dipakai semua aset yang tidak punya setting ASSET maupun CATEGORY. Hanya boleh satu setting DEFAULT yang aktif."
   }
 }

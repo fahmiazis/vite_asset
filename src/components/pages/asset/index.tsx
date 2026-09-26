@@ -5,6 +5,7 @@ import { useAssetsCategoryList } from "../../../hooks/query/assetsCategory/list"
 import { assetStatuses } from "../../../constans/asset"
 import { AssetsTable } from "../../organisms/assest/table"
 import { PageSizeSelect } from "../../molecules/table/pageSize"
+import { RunDepreciationButton } from "../../organisms/assest/runDepreciationButton"
 
 // Dipaging server; backend membatasi limit maksimal 100 (dto.AssetListFilter),
 // jadi tidak ada opsi "Semua" di sini.
@@ -108,7 +109,11 @@ export default function AssetPage() {
 
   return (
     <div>
-      <h6 className="text-3xl font-bold mb-4">Assets</h6>
+      <div className="flex items-center justify-between gap-3 mb-4">
+        <h6 className="text-3xl font-bold">Assets</h6>
+        {/* hanya tampil untuk yang punya hak akses run_depreciation di menu Asset */}
+        <RunDepreciationButton />
+      </div>
       <AssetsTable
         data={data?.data.data ?? []}
         total={data?.data.total ?? 0}
