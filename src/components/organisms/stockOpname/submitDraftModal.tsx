@@ -4,6 +4,8 @@ import { useTranslation } from "react-i18next"
 import { useQueryClient } from "@tanstack/react-query"
 import { useSubmitStockOpname } from "../../../hooks/mutation/stockOpname/submitDraft"
 import { useInitiateApprovalStockOpname } from "../../../hooks/mutation/stockOpname/initiateApproval"
+import { useSingleSubmit } from "../../../hooks/useSingleSubmit"
+import { withStageEmail } from "../../../stores/stageEmailStore"
 
 type SubmitStockOpnameModalProps = {
   transactionNumber: string
@@ -20,36 +22,36 @@ export function SubmitStockOpnameModal({
   const [notes, setNotes] = useState("")
   const queryClient = useQueryClient()
 
-  const { mutate: submitStockOpname, isPending: isSubmitting } = useSubmitStockOpname({ transactionNumber })
-  const { mutate: initiateApproval, isPending: isInitiating } = useInitiateApprovalStockOpname(transactionNumber)
+  const { mutateAsync: submitStockOpname, isPending: isSubmitting } = useSubmitStockOpname({ transactionNumber })
+  const { mutateAsync: initiateApproval, isPending: isInitiating } = useInitiateApprovalStockOpname(transactionNumber)
 
   const isPending = isSubmitting || isInitiating
 
-  const handleSubmit = () => {
-    submitStockOpname(
-      { notes: notes.trim() || undefined },
-      {
-        onSuccess: () => {
-          initiateApproval(undefined, {
-            onSuccess: () => {
-              toast.success(t("submitStockOpnameModal.toast.success"))
+  const guard = useSingleSubmit(isPending)
 
-              queryClient.invalidateQueries({ queryKey: ["stock-opname-detail", transactionNumber] })
-
-              onSuccess?.()
-              onClose()
-            },
-            onError: () => {
-              toast.error(t("submitStockOpnameModal.toast.errorInitiate"))
-            },
-          })
-        },
-        onError: () => {
-          toast.error(t("submitStockOpnameModal.toast.errorSubmit"))
-        },
+  // Dialog email (kalau ada template DRAFT → proceed) tampil sebelum submit;
+  // callback wajib reject kalau gagal supaya email tidak ikut terkirim.
+  const handleSubmit = () =>
+    withStageEmail({ transactionType: "stock_opname", transactionNumber, action: "proceed" }, async () => {
+      try {
+        await submitStockOpname({ notes: notes.trim() || undefined })
+      } catch (error) {
+        toast.error(t("submitStockOpnameModal.toast.errorSubmit"))
+        throw error
       }
-    )
-  }
+
+      try {
+        await initiateApproval(undefined)
+      } catch {
+        // stage sudah pindah — approval bisa diajukan ulang dari detail
+        toast.error(t("submitStockOpnameModal.toast.errorInitiate"))
+      }
+
+      toast.success(t("submitStockOpnameModal.toast.success"))
+      queryClient.invalidateQueries({ queryKey: ["stock-opname-detail", transactionNumber] })
+      onSuccess?.()
+      onClose()
+    })
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-in fade-in duration-200">
@@ -115,7 +117,7 @@ export function SubmitStockOpnameModal({
           </button>
 
           <button
-            onClick={handleSubmit}
+            onClick={guard(handleSubmit)}
             disabled={isPending}
             className="flex-1 px-4 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >

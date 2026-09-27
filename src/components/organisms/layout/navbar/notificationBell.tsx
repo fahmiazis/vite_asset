@@ -13,6 +13,7 @@ const DETAIL_PATH: Record<waitingNotification["transaction_type"], string> = {
   disposal: "/dashboard/disposal/",
   disposal_agreement: "/dashboard/disposal-agreement/",
   handover: "/dashboard/handover/",
+  stock_opname: "/dashboard/stock-opname/",
 }
 
 const TYPE_STYLE: Record<waitingNotification["transaction_type"], string> = {
@@ -21,6 +22,7 @@ const TYPE_STYLE: Record<waitingNotification["transaction_type"], string> = {
   disposal: "bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300",
   disposal_agreement: "bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300",
   handover: "bg-teal-100 text-teal-700 dark:bg-teal-900/40 dark:text-teal-300",
+  stock_opname: "bg-sky-100 text-sky-700 dark:bg-sky-900/40 dark:text-sky-300",
 }
 
 // Disposal di APPROVAL_AGREEMENT tidak dikerjakan dari detailnya: tugas pic

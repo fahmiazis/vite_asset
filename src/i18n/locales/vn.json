@@ -1321,7 +1321,9 @@
       "procurement": "Procurement",
       "mutation": "Mutation",
       "disposal": "Disposal",
-      "disposal_agreement": "Disposal Agreement"
+      "disposal_agreement": "Disposal Agreement",
+      "handover": "Asset Handover",
+      "stock_opname": "Stock Opname"
     },
     "createAgreement": "Tạo agreement"
   },

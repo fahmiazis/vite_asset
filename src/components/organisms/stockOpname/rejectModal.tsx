@@ -1,6 +1,8 @@
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { useRejectStockOpname } from "../../../hooks/mutation/stockOpname/reject"
+import { useSingleSubmit } from "../../../hooks/useSingleSubmit"
+import { withStageEmail } from "../../../stores/stageEmailStore"
 
 type RejectStockOpnameModalProps = {
   transactionNumber: string
@@ -18,14 +20,16 @@ export function RejectStockOpnameModal({
   const { t } = useTranslation()
   const [reason, setReason] = useState("")
 
-  const { mutate: rejectStockOpname, isPending } = useRejectStockOpname({ transactionNumber })
+  const { mutateAsync: rejectStockOpname, isPending } = useRejectStockOpname({ transactionNumber })
+
+  const guard = useSingleSubmit(isPending)
 
   const isReasonValid = reason.trim().length >= MIN_REASON_LENGTH
 
   const handleSubmit = () => {
     if (!isReasonValid) return
 
-    rejectStockOpname(
+    return withStageEmail({ transactionType: "stock_opname", transactionNumber, action: "reject" }, () => rejectStockOpname(
       { reason: reason.trim() },
       {
         onSuccess: () => {
@@ -33,7 +37,7 @@ export function RejectStockOpnameModal({
           onClose()
         },
       }
-    )
+    ))
   }
 
   return (
@@ -109,7 +113,7 @@ export function RejectStockOpnameModal({
           </button>
 
           <button
-            onClick={handleSubmit}
+            onClick={guard(handleSubmit)}
             disabled={isPending || !isReasonValid}
             className="flex-1 px-4 py-2 text-sm font-medium bg-red-600 hover:bg-red-700 text-white rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
