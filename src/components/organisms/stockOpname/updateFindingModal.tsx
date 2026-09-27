@@ -4,8 +4,17 @@ import { useTranslation } from "react-i18next"
 import { useUpdateStockOpnameFinding } from "../../../hooks/mutation/stockOpname/updateFinding"
 import { useUploadStockOpnameBorrowDocument } from "../../../hooks/mutation/stockOpname/uploadBorrowDocument"
 import { useStockOpnameConfig } from "../../../hooks/query/stockOpname/config"
+import { useStockOpnamePhysicalStatusMasters } from "../../../hooks/query/stockOpname/physicalStatusMasterList"
 import type { StockOpnameItem } from "../../../models/stockOpname/detail"
-import { getPhysicalStatusOptions, getConditionOptions, getAssetStatusOptions, isPhysicalStatusAbsent, borrowDocumentAcceptAttr } from "./findingOptions"
+import {
+  getPhysicalStatusOptions,
+  getConditionOptions,
+  getAssetStatusOptions,
+  isConditionLocked,
+  reconcileCondition,
+  requiresBorrowDocument,
+  borrowDocumentAcceptAttr,
+} from "./findingOptions"
 import { PhotoUploadField } from "./photoUploadField"
 
 type UpdateStockOpnameFindingModalProps = {
@@ -38,25 +47,23 @@ export function UpdateStockOpnameFindingModal({
   const { mutate: uploadBorrowDocument, isPending: isUploadingBorrowDocument } =
     useUploadStockOpnameBorrowDocument({ transactionNumber })
   const { data: configData } = useStockOpnameConfig()
+  const { data: physicalStatusMastersData } = useStockOpnamePhysicalStatusMasters()
+  const physicalStatusMasters = physicalStatusMastersData?.data ?? []
 
-  const isAbsent = isPhysicalStatusAbsent(physicalStatus)
-  const isBorrowed = physicalStatus === "BORROWED"
+  const conditionLocked = isConditionLocked(physicalStatusMasters, physicalStatus)
+  const isBorrowed = requiresBorrowDocument(physicalStatusMasters, physicalStatus)
   // Default wajib=true selama config masih loading, biar gak sempat keliatan
   // opsional lalu tiba-tiba jadi wajib begitu config kebaca.
   const isBorrowDocumentRequired = configData?.data.borrow_doc_is_required ?? true
   const borrowDocumentMissing = isBorrowed && isBorrowDocumentRequired && !borrowDocumentName
 
-  // Fisik "Tidak Ada"/"Dipinjam" -> Kondisi otomatis "Tidak Ada" dan terkunci,
-  // karena kondisi gak relevan buat dinilai kalau barangnya gak ada di lokasi.
-  // Balik ke "Ada" -> kondisi direset supaya user pilih ulang yang sesuai.
+  // Opsi kondisi ngikutin relasi status fisik -> kondisi di master data.
+  // Ganti status fisik -> kondisi yang gak diizinkan lagi direset, dan kalau
+  // cuma ada 1 opsi langsung dipilih + dikunci.
   useEffect(() => {
-    if (isAbsent) {
-      setCondition("NOT_APPLICABLE")
-    } else {
-      setCondition((prev) => (prev === "NOT_APPLICABLE" ? "" : prev))
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAbsent])
+    if (!physicalStatusMastersData) return // tunggu master data kebaca dulu, jangan timpa nilai awal
+    setCondition((prev) => reconcileCondition(physicalStatusMastersData.data, physicalStatus, prev))
+  }, [physicalStatus, physicalStatusMastersData])
 
   const handleBorrowDocumentChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -68,10 +75,8 @@ export function UpdateStockOpnameFindingModal({
     e.target.value = ""
   }
 
-  const physicalStatusOptions = getPhysicalStatusOptions(t)
-  const conditionOptions = getConditionOptions(t).filter(
-    (opt) => isAbsent || opt.value !== "NOT_APPLICABLE"
-  )
+  const physicalStatusOptions = getPhysicalStatusOptions(physicalStatusMasters)
+  const conditionOptions = getConditionOptions(physicalStatusMasters, physicalStatus)
   const assetStatusOptions = getAssetStatusOptions(t)
 
   const handleSubmit = () => {
@@ -181,10 +186,14 @@ export function UpdateStockOpnameFindingModal({
             <select
               value={condition}
               onChange={(e) => setCondition(e.target.value)}
-              disabled={isPending || isAbsent}
+              disabled={isPending || !physicalStatus || conditionLocked}
               className="w-full px-3 py-2.5 text-sm border border-gray-300 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
             >
-              <option value="">{t("stockOpnameFindingModal.conditionPlaceholder")}</option>
+              <option value="">
+                {physicalStatus
+                  ? t("stockOpnameFindingModal.conditionPlaceholder")
+                  : t("stockOpnameFindingModal.conditionSelectPhysicalFirst")}
+              </option>
               {conditionOptions.map((opt) => (
                 <option key={opt.value} value={opt.value}>{opt.label}</option>
               ))}

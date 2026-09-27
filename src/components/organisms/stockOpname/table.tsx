@@ -6,7 +6,8 @@ import {
   type SortingState,
 } from "@tanstack/react-table"
 import { useState } from "react"
-import { stockOpnameColumns } from "./column"
+import { useTranslation } from "react-i18next"
+import { getStockOpnameColumns } from "./column"
 import type { StockOpnameDetailState } from "../../../models/stockOpname/detail"
 
 interface StockOpnameTableProps {
@@ -26,15 +27,17 @@ export function StockOpnameTable({
   isLoading,
   onPageChange,
 }: StockOpnameTableProps) {
+  const { t } = useTranslation()
   const [sorting, setSorting] = useState<SortingState>([])
 
   const totalPages = Math.max(1, Math.ceil(total / pageSize))
   const from = total === 0 ? 0 : (page - 1) * pageSize + 1
   const to = Math.min(page * pageSize, total)
+  const columns = getStockOpnameColumns(t)
 
   const table = useReactTable({
     data,
-    columns: stockOpnameColumns,
+    columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     onSortingChange: setSorting,
@@ -48,7 +51,7 @@ export function StockOpnameTable({
       <div className="flex items-center justify-center h-64">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 dark:border-white mx-auto" />
-          <p className="mt-4 text-sm text-gray1">Loading data...</p>
+          <p className="mt-4 text-sm text-gray1">{t("stockOpnamePage.table.loading")}</p>
         </div>
       </div>
     )
@@ -60,7 +63,7 @@ export function StockOpnameTable({
       {isLoading && (
         <div className="flex items-center gap-2 text-xs text-gray1">
           <div className="animate-spin rounded-full h-3.5 w-3.5 border-b-2 border-gray-500" />
-          Memuat...
+          {t("stockOpnamePage.table.loadingInline")}
         </div>
       )}
 
@@ -105,10 +108,10 @@ export function StockOpnameTable({
               ) : (
                 <tr>
                   <td
-                    colSpan={stockOpnameColumns.length}
+                    colSpan={columns.length}
                     className="px-5 py-10 text-center text-sm text-gray1"
                   >
-                    Tidak ada data stock opname
+                    {t("stockOpnamePage.table.noData")}
                   </td>
                 </tr>
               )}
@@ -120,13 +123,7 @@ export function StockOpnameTable({
       {/* Pagination */}
       <div className="flex items-center justify-between">
         <p className="text-xs text-gray1">
-          Menampilkan{" "}
-          <span className="font-semibold text-[var(--text-color)]">{from}</span>
-          {" "}–{" "}
-          <span className="font-semibold text-[var(--text-color)]">{to}</span>
-          {" "}dari{" "}
-          <span className="font-semibold text-[var(--text-color)]">{total}</span>
-          {" "}data
+          {t("stockOpnamePage.table.pagination.showing", { from, to, total })}
         </p>
 
         <div className="flex items-center gap-1">
@@ -146,7 +143,7 @@ export function StockOpnameTable({
             </button>
           ))}
           <span className="text-xs text-gray1 ml-2 whitespace-nowrap">
-            Hal <strong>{page}</strong> / {totalPages}
+            {t("stockOpnamePage.table.pagination.page", { current: page, total: totalPages })}
           </span>
         </div>
       </div>

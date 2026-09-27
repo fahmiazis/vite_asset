@@ -1331,7 +1331,18 @@
     "title": "库存盘点",
     "createButton": "+ 新建库存盘点",
     "reportButton": "报表",
-    "configButton": "配置"
+    "configButton": "配置",
+    "statusMasterButton": "主状态",
+    "table": {
+      "loading": "正在加载数据...",
+      "loadingInline": "加载中...",
+      "noData": "暂无库存盘点数据",
+      "detailButton": "详情",
+      "pagination": {
+        "showing": "显示第 {{from}} – {{to}} 条，共 {{total}} 条",
+        "page": "第 {{current}} / {{total}} 页"
+      }
+    }
   },
   "stockOpnameConfigPage": {
     "title": "库存盘点配置",
@@ -1413,7 +1424,14 @@
     "tableShowing": "显示",
     "tableOf": "共",
     "tablePageSize": "每页行数:",
-    "fillDataButton": "完善数据"
+    "fillDataButton": "完善数据",
+    "revise": "修订",
+    "downloadDocumentation": "下载盘点文档",
+    "toastDownloadDocumentationError": "下载文档失败",
+    "needsRevision": "需修订",
+    "lockedForRevision": "已锁定",
+    "revisionBannerTitle": "修订：{{count}} / {{total}} 项资产需修正",
+    "revisionBannerDescription": "只能修改高亮的资产。其他资产在重新提交前保持锁定。"
   },
   "stockOpnameFindingModal": {
     "title": "填写盘点结果",
@@ -1455,7 +1473,8 @@
     "toast": {
       "required": "实物状态和状态为必填项",
       "borrowDocumentRequired": "状态为借出时必须上传借用文件(PDF)"
-    }
+    },
+    "conditionSelectPhysicalFirst": "请先选择实物状态"
   },
   "submitStockOpnameModal": {
     "title": "提交库存盘点",
@@ -1612,7 +1631,8 @@
     "notesPlaceholder": "备注...",
     "unsavedBadge": "未保存",
     "searchPlaceholder": "搜索资产名称或编号...(Ctrl+F)",
-    "searchNoResults": "没有匹配的资产"
+    "searchNoResults": "没有匹配的资产",
+    "revisionModeNotice": "修订模式 — 仅显示需要修订的 {{count}} 项资产"
   },
   "guidePage": {
     "title": "使用指南",
@@ -1639,7 +1659,7 @@
           "执行 — 盘点结果被应用到资产数据",
           "完成 — 资产数据已更新，无法再修改"
         ],
-        "tip": "在审批或执行阶段如有问题，可以驳回该盘点。"
+        "tip": "在审批或执行阶段，库存盘点可以退回修正（修订）或被拒绝（拒绝）。修订会退回草稿，拒绝则是最终结果。"
       },
       "createDraft": {
         "title": "1. 创建新的 Stock Opname",
@@ -1696,7 +1716,8 @@
         "steps": [
           "在详情页面点击\"提交盘点\"",
           "盘点进入审批阶段，按分支机构的审批流程进行",
-          "在\"审批状态\"中查看进度 — 了解谁需要审批以及哪些已完成/待处理"
+          "在\"审批状态\"中查看进度 — 了解谁需要审批以及哪些已完成/待处理",
+          "轮到的审批人可以批准、要求修订或拒绝"
         ],
         "tip": "如果有资产满足以下情况，提交会被拒绝：实物状态/状态未填写、尚未上传实物证明照片，或（状态为借出且配置要求必填时）尚未上传借用文件。"
       },
@@ -1710,16 +1731,18 @@
         ]
       },
       "reject": {
-        "title": "7. 驳回",
-        "summary": "如果审批或执行阶段出现问题，可以驳回该盘点。",
+        "title": "8. 拒绝",
+        "summary": "当库存盘点申请已无法使用时使用拒绝。与修订不同，拒绝是最终结果。",
         "steps": [
-          "在详情页面点击\"驳回\"",
-          "填写驳回原因（必填，至少10个字符）",
-          "已驳回的盘点无法继续 — 如仍需要，请创建新草稿"
-        ]
+          "在审批或执行阶段，在详情页点击\"拒绝\"",
+          "填写拒绝原因（必填，至少10个字符）",
+          "库存盘点状态变为已拒绝，申请终止。无法再修订、重新提交或执行",
+          "如果仍需要盘点，请新建草稿"
+        ],
+        "tip": "结果还能修正吗？请使用修订，而不是拒绝。"
       },
       "report": {
-        "title": "8. 报表",
+        "title": "9. 报表",
         "summary": "查看按周期和分支机构划分的盘点结果汇总。",
         "steps": [
           "打开 Stock Opname → 报表",
@@ -1729,7 +1752,7 @@
         ]
       },
       "config": {
-        "title": "9. 库存盘点设置",
+        "title": "10. 库存盘点设置",
         "summary": "部分盘点规则可在配置页面设置 — 通过库存盘点列表页面的\"配置\"按钮进入。",
         "steps": [
           "提交窗口 — 设置每月开始和结束日期，用于标记提交是否\"按时\"（盘点仍可随时提交，此设置仅影响详情页面显示的状态）",
@@ -1738,6 +1761,20 @@
           "点击\"保存\"以应用更改"
         ],
         "tip": "盘点提交后，详情页面会根据提交时生效的提交窗口显示\"按时提交\"或\"逾期提交\"状态。"
+      },
+      "revise": {
+        "title": "7. 修订（退回修正）",
+        "summary": "如果部分盘点结果有误但申请仍可继续，审批人（审批阶段）或执行人（执行阶段）可以要求修订，而不是拒绝。",
+        "steps": [
+          "审批人/执行人在详情页点击\"修订\"",
+          "勾选需要修正的资产。可按资产编号/名称搜索，或点击\"勾选全部显示项\"",
+          "填写修订说明（必填，至少5个字符），说明哪里有误",
+          "点击\"修订所选\"只修订勾选的资产，或点击\"全部修订\"重新检查所有资产",
+          "库存盘点退回草稿。创建人会看到修订横幅，勾选的资产标记为\"需修订\"，其他资产\"已锁定\"（无法修改）",
+          "创建人通过填写结果、完善数据或 Excel（只包含需修订的资产）修正标记的资产，然后重新提交",
+          "重新提交后，审批从第一位审批人重新开始"
+        ],
+        "tip": "重新提交时，照片时效检查（最多10天）只适用于需修订的资产。如果该资产照片已过期，请上传新照片。"
       }
     }
   },
@@ -1747,14 +1784,18 @@
     "hint": "JPEG格式，最大2MB，相机原图（非聊天转发压缩图），10天内拍摄",
     "capturedOn": "拍摄于",
     "clickToReplace": "点击更换",
-    "uploadTooltip": "尚无照片 — 点击上传"
+    "uploadTooltip": "尚无照片 — 点击上传",
+    "clickToView": "点击查看",
+    "replace": "更换照片"
   },
   "stockOpnameBorrowDocument": {
     "label": "借用文件",
     "uploadCta": "上传文件",
     "hint": "PDF格式，状态为借出的资产必填",
     "clickToReplace": "点击更换",
-    "uploadTooltip": "尚无文件 — 点击上传"
+    "uploadTooltip": "尚无文件 — 点击上传",
+    "clickToView": "点击查看",
+    "replace": "更换文件"
   },
   "assetFilter": {
     "category": "类别",
@@ -2113,5 +2154,38 @@
       "submit": "保存密码",
       "changed": "密码已修改"
     }
+  },
+  "stockOpnameColumn": {
+    "transactionNumber": "交易编号",
+    "transactionDate": "交易日期",
+    "status": "状态",
+    "stage": "阶段",
+    "itemCount": "资产数量",
+    "createdBy": "创建人",
+    "createdAt": "创建时间",
+    "action": "操作"
+  },
+  "reviseStockOpnameModal": {
+    "title": "修订库存盘点",
+    "warningMessage": "库存盘点将退回草稿。创建人只能修改勾选的资产，其他资产保持锁定。重新提交后，审批将从第一步重新开始。",
+    "assetsLabel": "需要修订的资产",
+    "selectedCount": "已选 {{count}} / {{total}}",
+    "searchPlaceholder": "搜索资产编号或名称...",
+    "checkAllShown": "勾选全部显示项",
+    "noAssetsFound": "未找到资产",
+    "notesLabel": "修订说明",
+    "notesPlaceholder": "请说明需要修正的内容（至少5个字符）",
+    "notesTooShort": "说明至少需要 {{min}} 个字符（{{current}}/{{min}}）",
+    "cancel": "取消",
+    "reviseAll": "全部修订",
+    "reviseSelected": "修订所选 ({{count}})",
+    "revising": "处理中..."
+  },
+  "stockOpnameFilePreview": {
+    "close": "关闭",
+    "replace": "更换",
+    "loadError": "文件加载失败。",
+    "noPreview": "浏览器无法预览此文件格式。",
+    "download": "下载"
   }
 }

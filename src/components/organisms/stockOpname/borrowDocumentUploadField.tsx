@@ -2,12 +2,15 @@ import { useRef, useState, type ChangeEvent } from "react"
 import { useTranslation } from "react-i18next"
 import { useUploadStockOpnameBorrowDocument } from "../../../hooks/mutation/stockOpname/uploadBorrowDocument"
 import { useStockOpnameConfig } from "../../../hooks/query/stockOpname/config"
+import { useAuthedBlobUrl } from "../../../hooks/custom/useAuthedBlobUrl"
 import { borrowDocumentAcceptAttr } from "./findingOptions"
+import { FilePreviewModal } from "./filePreviewModal"
 
 interface BorrowDocumentUploadFieldProps {
   transactionNumber: string
   assetId: number
   fileName?: string | null
+  documentUrl?: string | null
   onUploaded?: (fileName: string) => void
 }
 
@@ -17,6 +20,7 @@ export function BorrowDocumentUploadField({
   transactionNumber,
   assetId,
   fileName,
+  documentUrl,
   onUploaded,
 }: BorrowDocumentUploadFieldProps) {
   const { t } = useTranslation()
@@ -29,6 +33,17 @@ export function BorrowDocumentUploadField({
   // gak nunggu round-trip refetch detail (sama alasan kayak PhotoUploadField).
   const [localFileName, setLocalFileName] = useState<string | null>(null)
   const effectiveFileName = localFileName ?? fileName ?? null
+
+  // Dokumen di-fetch (pakai token) cuma pas modal preview dibuka — bukan
+  // di-load per-baris pas grid render. Komponen modalnya sendiri unmount pas
+  // ditutup, jadi tiap dibuka selalu ambil versi terbaru (upload ulang
+  // nimpa dokumen yang sama, URL-nya gak berubah).
+  const [previewOpen, setPreviewOpen] = useState(false)
+  const docBlob = useAuthedBlobUrl(
+    documentUrl ? `${import.meta.env.VITE_IMAGE_ACCESS}${documentUrl}` : null,
+    previewOpen
+  )
+  const canPreview = !!(effectiveFileName && documentUrl)
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -49,11 +64,11 @@ export function BorrowDocumentUploadField({
     <div className="flex justify-center">
       <button
         type="button"
-        onClick={() => inputRef.current?.click()}
+        onClick={() => (canPreview ? setPreviewOpen(true) : inputRef.current?.click())}
         disabled={isPending}
         title={
           effectiveFileName
-            ? `${effectiveFileName} — ${t("stockOpnameBorrowDocument.clickToReplace")}`
+            ? `${effectiveFileName} — ${canPreview ? t("stockOpnameBorrowDocument.clickToView") : t("stockOpnameBorrowDocument.clickToReplace")}`
             : t("stockOpnameBorrowDocument.uploadTooltip")
         }
         className={`w-9 h-9 rounded-md border flex items-center justify-center overflow-hidden transition-colors flex-shrink-0 disabled:opacity-50 ${
@@ -79,6 +94,19 @@ export function BorrowDocumentUploadField({
         className="hidden"
         onChange={handleFileChange}
       />
+      {previewOpen && (
+        <FilePreviewModal
+          title={t("stockOpnameBorrowDocument.label")}
+          fileName={effectiveFileName}
+          src={docBlob.objectUrl}
+          mimeType={docBlob.mimeType}
+          isLoading={docBlob.isLoading}
+          isError={docBlob.isError}
+          onClose={() => setPreviewOpen(false)}
+          onReplace={() => inputRef.current?.click()}
+          replaceLabel={t("stockOpnameBorrowDocument.replace")}
+        />
+      )}
     </div>
   )
 }

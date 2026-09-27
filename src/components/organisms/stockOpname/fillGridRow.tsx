@@ -1,9 +1,16 @@
 import { memo } from "react"
 import type { TFunction } from "i18next"
-import { getPhysicalStatusOptions, getConditionOptions, getAssetStatusOptions, isPhysicalStatusAbsent } from "./findingOptions"
+import {
+  getPhysicalStatusOptions,
+  getConditionOptions,
+  getAssetStatusOptions,
+  isConditionLocked,
+  requiresBorrowDocument,
+} from "./findingOptions"
 import { PhotoUploadField } from "./photoUploadField"
 import { BorrowDocumentUploadField } from "./borrowDocumentUploadField"
 import type { StockOpnameItem } from "../../../models/stockOpname/detail"
+import type { StockOpnamePhysicalStatusMaster } from "../../../models/stockOpname/statusMaster"
 
 export interface FillRowState {
   physical_status: string
@@ -21,6 +28,7 @@ interface StockOpnameFillGridRowProps {
   state: FillRowState
   error?: string
   t: TFunction
+  physicalStatusMasters: StockOpnamePhysicalStatusMaster[]
   onFieldChange: (assetId: number, field: FillFieldName, value: string) => void
   onBorrowDocumentUploaded: (assetId: number) => void
 }
@@ -36,12 +44,13 @@ function StockOpnameFillGridRowInner({
   state,
   error,
   t,
+  physicalStatusMasters,
   onFieldChange,
   onBorrowDocumentUploaded,
 }: StockOpnameFillGridRowProps) {
-  const isAbsent = isPhysicalStatusAbsent(state.physical_status)
-  const isBorrowed = state.physical_status === "BORROWED"
-  const conditionOptions = getConditionOptions(t).filter((opt) => isAbsent || opt.value !== "NOT_APPLICABLE")
+  const isBorrowed = requiresBorrowDocument(physicalStatusMasters, state.physical_status)
+  const conditionOptions = getConditionOptions(physicalStatusMasters, state.physical_status)
+  const conditionLocked = isConditionLocked(physicalStatusMasters, state.physical_status)
 
   return (
     <tr
@@ -77,7 +86,7 @@ function StockOpnameFillGridRowInner({
           className={inputClass}
         >
           <option value="">{t("stockOpnameFillPage.selectPlaceholder")}</option>
-          {getPhysicalStatusOptions(t).map((opt) => (
+          {getPhysicalStatusOptions(physicalStatusMasters).map((opt) => (
             <option key={opt.value} value={opt.value}>{opt.label}</option>
           ))}
         </select>
@@ -88,6 +97,7 @@ function StockOpnameFillGridRowInner({
             transactionNumber={transactionNumber}
             assetId={item.asset_id}
             fileName={item.borrow_document_file_name}
+            documentUrl={item.borrow_document_url}
             onUploaded={() => onBorrowDocumentUploaded(item.asset_id)}
           />
         ) : (
@@ -98,7 +108,7 @@ function StockOpnameFillGridRowInner({
         <select
           value={state.condition}
           onChange={(e) => onFieldChange(item.asset_id, "condition", e.target.value)}
-          disabled={isAbsent}
+          disabled={!state.physical_status || conditionLocked}
           className={`${inputClass} disabled:opacity-50`}
         >
           <option value="">{t("stockOpnameFillPage.selectPlaceholder")}</option>
