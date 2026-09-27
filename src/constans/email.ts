@@ -35,9 +35,8 @@ export const emailActions: EmailAction[] = ["proceed", "reject", "revise", "canc
 /**
  * aksi yang benar-benar ada per jenis transaksi — agreement tidak punya batal;
  * stock opname tidak punya batal, dan DRAFT hanya bisa disubmit. Revisi
- * (approver di APPROVAL, executor di EXECUTE_STOCK_OPNAME) dan tolak final
- * ada di branch module/stock-opname — backend email sudah menanganinya
- * secara generik (revise/reject → pembuat)
+ * (approver di APPROVAL, executor di EXECUTE_STOCK_OPNAME) mengembalikan ke
+ * DRAFT, tolak bersifat final — keduanya dikirim ke pembuat
  */
 export function emailActionsFor(transactionType: EmailTransactionType | "", stage: string): EmailAction[] {
   if (transactionType === "disposal_agreement") {

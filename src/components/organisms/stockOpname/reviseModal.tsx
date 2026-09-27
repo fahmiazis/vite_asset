@@ -4,6 +4,8 @@ import { useReviseStockOpname } from "../../../hooks/mutation/stockOpname/revise
 import { useStockOpnameApprovalStatus } from "../../../hooks/query/stockOpname/approvalStatus"
 import type { StockOpnameItem } from "../../../models/stockOpname/detail"
 import type { ReviseStockOpnameMode } from "../../../models/stockOpname/revise"
+import { useSingleSubmit } from "../../../hooks/useSingleSubmit"
+import { withStageEmail } from "../../../stores/stageEmailStore"
 
 type ReviseStockOpnameModalProps = {
   transactionNumber: string
@@ -27,7 +29,9 @@ export function ReviseStockOpnameModal({
   const [search, setSearch] = useState("")
   const [selected, setSelected] = useState<Set<number>>(new Set())
 
-  const { mutate: reviseStockOpname, isPending } = useReviseStockOpname({ transactionNumber, mode })
+  const { mutateAsync: reviseStockOpname, isPending } = useReviseStockOpname({ transactionNumber, mode })
+
+  const guard = useSingleSubmit(isPending)
 
   // Revisi dari approver harus nyebut step approval yang lagi pending —
   // sama kayak approveModal
@@ -73,19 +77,22 @@ export function ReviseStockOpnameModal({
     if (!isNotesValid || !approvalReady) return
     if (!reviseAll && selected.size === 0) return
 
-    reviseStockOpname(
-      {
-        asset_ids: reviseAll ? [] : Array.from(selected),
-        revise_all: reviseAll,
-        revision_notes: notes.trim(),
-        transaction_approval_id: pendingApprovalId,
-      },
-      {
-        onSuccess: () => {
-          onSuccess?.()
-          onClose()
+    // dialog email (template stage berjalan → revise) tampil sebelum revisi
+    return withStageEmail({ transactionType: "stock_opname", transactionNumber, action: "revise" }, () =>
+      reviseStockOpname(
+        {
+          asset_ids: reviseAll ? [] : Array.from(selected),
+          revise_all: reviseAll,
+          revision_notes: notes.trim(),
+          transaction_approval_id: pendingApprovalId,
         },
-      }
+        {
+          onSuccess: () => {
+            onSuccess?.()
+            onClose()
+          },
+        }
+      )
     )
   }
 
@@ -232,7 +239,7 @@ export function ReviseStockOpnameModal({
 
           <div className="flex flex-1 gap-2 justify-end min-w-0">
             <button
-              onClick={() => submit(true)}
+              onClick={guard(() => submit(true))}
               disabled={isPending || !isNotesValid || !approvalReady}
               className="px-4 py-2 text-sm font-medium border border-amber-500 text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/20 rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -240,7 +247,7 @@ export function ReviseStockOpnameModal({
             </button>
 
             <button
-              onClick={() => submit(false)}
+              onClick={guard(() => submit(false))}
               disabled={isPending || !isNotesValid || !approvalReady || selected.size === 0}
               className="px-4 py-2 text-sm font-medium bg-amber-600 hover:bg-amber-700 text-white rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
