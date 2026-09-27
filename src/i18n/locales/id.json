@@ -128,7 +128,9 @@
       "cancel": "Batal",
       "submit": "Kirim",
       "uploading": "Mengunggah...",
-      "uploadError": "Gagal mengunggah lampiran"
+      "uploadError": "Gagal mengunggah lampiran",
+      "alreadyUploaded": "Sudah diunggah",
+      "rejectedReupload": "Dokumen ini ditolak — unggah yang baru"
     },
     "header": {
       "submitForVerification": "Kirim untuk Verifikasi",
@@ -216,7 +218,9 @@
       "optional": "opsional",
       "addRecipient": "+ Tambah penerima",
       "qtyAllocated": "{{total}} / {{max}} unit teralokasi",
-      "qtyExceededWarning": "Total kuantitas detail ({{total}}) melebihi kuantitas item ({{max}}). Harap sesuaikan."
+      "qtyExceededWarning": "Total kuantitas detail ({{total}}) melebihi kuantitas item ({{max}}). Harap sesuaikan.",
+      "branchLocked": "Terkunci ke homebase aktif kamu — hanya Head Office yang bisa memilih cabang lain",
+      "recipientHoOnly": "Penerima hanya bisa ditambahkan oleh Head Office"
     },
     "detail": {
       "recipient": "Penerima",
@@ -2187,5 +2191,37 @@
     "loadError": "Gagal memuat file.",
     "noPreview": "Format file ini tidak bisa di-preview di browser.",
     "download": "Download"
+  },
+  "procurementStage": {
+    "stage": {
+      "DRAFT": "Draft",
+      "ASSET_VERIFICATION": "Asset Verification",
+      "APPROVAL": "Approval",
+      "PROCESS_BUDGET": "Process Budget",
+      "EXECUTE_ASET": "Execute Asset",
+      "GR": "Goods Receipt",
+      "FINISHED": "Finished",
+      "REJECTED": "Rejected",
+      "CANCELLED": "Cancelled"
+    }
+  },
+  "procurementDocuments": {
+    "missing": "Wajib — belum diunggah",
+    "optional": "Opsional — belum diunggah",
+    "uploading": "Mengunggah...",
+    "reupload": "Unggah ulang",
+    "tooLarge": "Ukuran file lebih dari 10 MB",
+    "noneForStage": "Tidak ada dokumen untuk stage ini"
+  },
+  "mutationStage": {
+    "stage": {
+      "DRAFT": "Draft",
+      "APPROVAL": "Approval",
+      "MUTATION_RECEIVING": "Mutation Receiving",
+      "EXECUTE_MUTATION": "Execute Mutation",
+      "FINISHED": "Finished",
+      "REJECTED": "Rejected",
+      "CANCELLED": "Cancelled"
+    }
   }
 }

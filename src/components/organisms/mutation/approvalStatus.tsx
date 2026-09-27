@@ -5,9 +5,11 @@ import { approvalRoleWithActor } from "../../../utils/approval"
 
 type MutationApprovalStatusProps = {
   transactionNumber: string
+  /** true = ditanam di dalam kartu lain (stepper) — tanpa chrome kartu */
+  embedded?: boolean
 }
 
-export function MutationApprovalStatus({ transactionNumber }: MutationApprovalStatusProps) {
+export function MutationApprovalStatus({ transactionNumber, embedded = false }: MutationApprovalStatusProps) {
   const { t } = useTranslation()
   const { data, isLoading } = useMutationApprovalStatus(transactionNumber)
 
@@ -17,7 +19,7 @@ export function MutationApprovalStatus({ transactionNumber }: MutationApprovalSt
   const completedSteps = approvalData?.completed_steps ?? 0
 
   return (
-    <div className="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-xl p-5">
+    <div className={embedded ? "" : "bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-xl p-5"}>
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200">
           {t("approvalStatus.title")}

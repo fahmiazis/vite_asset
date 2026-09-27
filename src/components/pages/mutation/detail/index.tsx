@@ -14,6 +14,12 @@ import AddMutationAttachmentModal from "../../../organisms/mutation/addAttachmen
 import { RevisionDecisionModal } from "../../../organisms/common/revisionDecisionModal"
 import { useMyProfile } from "../../../../hooks/query/auth/myProfile"
 import { withStageEmail } from "../../../../stores/stageEmailStore"
+import { StageStepper } from "../../../organisms/common/stageStepper"
+import {
+  MUTATION_STAGES,
+  MUTATION_TERMINAL_STAGES,
+  mutationStageLabel,
+} from "../../../../utils/mutationStage"
 import {
   useCancelMutation,
   useReturnMutationForRevision,
@@ -74,6 +80,28 @@ export default function MutationDetailPage() {
   // aset yang sedang diunggahkan dokumennya
   const [attachTarget, setAttachTarget] = useState<{ id: number; assetNumber: string } | null>(null)
   const [revisionMode, setRevisionMode] = useState<"revise" | "cancel" | null>(null)
+  // undefined = belum pernah diklik → stage berjalan terbuka otomatis
+  const [pickedStage, setPickedStage] = useState<string | null | undefined>(undefined)
+
+  // Semua hook WAJIB dipanggil sebelum return awal di bawah. Dulu tiga hook ini
+  // ada setelah `if (isLoading) return`, jadi render pertama (loading) memanggil
+  // lebih sedikit hook daripada render berikutnya → React melempar "Rendered
+  // more hooks than during the previous render".
+  const { data: profile } = useMyProfile()
+
+  const closeRevision = () => setRevisionMode(null)
+  const revisionKeys = ["mutation-detail", "mutation-list"]
+
+  const returnForRevision = useReturnMutationForRevision({
+    transactionNumber: id || "",
+    invalidateKeys: revisionKeys,
+    onSuccess: closeRevision,
+  })
+  const cancelMutation = useCancelMutation({
+    transactionNumber: id || "",
+    invalidateKeys: revisionKeys,
+    onSuccess: closeRevision,
+  })
 
   if (isLoading) {
     return (
@@ -99,25 +127,18 @@ export default function MutationDetailPage() {
   const canConfirmReceiving = waitingForMe && stage === "MUTATION_RECEIVING"
   const canExecute = waitingForMe && stage === "EXECUTE_MUTATION"
 
+  // ── Stage progress (pola sama dengan detail disposal) ──
+  const isTerminalStage = MUTATION_TERMINAL_STAGES.includes(stage)
+  const selectedStage =
+    pickedStage === undefined ? (isTerminalStage ? null : stage) : pickedStage
+  const stageHistory = selectedStage
+    ? stages.filter((s) => s.to_stage?.toUpperCase() === selectedStage)
+    : []
+
   // Revisi diminta approver step berjalan; pembatalan hanya oleh pengaju.
-  const { data: profile } = useMyProfile()
   const isCreator =
     !!profile?.data?.id && profile.data.id === transaction.created_by
   const canCancel = isCreator && ["DRAFT", "APPROVAL"].includes(stage)
-
-  const closeRevision = () => setRevisionMode(null)
-  const revisionKeys = ["mutation-detail", "mutation-list"]
-
-  const returnForRevision = useReturnMutationForRevision({
-    transactionNumber: id || "",
-    invalidateKeys: revisionKeys,
-    onSuccess: closeRevision,
-  })
-  const cancelMutation = useCancelMutation({
-    transactionNumber: id || "",
-    invalidateKeys: revisionKeys,
-    onSuccess: closeRevision,
-  })
 
   return (
     <section className="space-y-4 mt-4">
@@ -233,6 +254,69 @@ export default function MutationDetailPage() {
         )}
       </div>
 
+      {/* Progres stage — status tiap stage dibuka dari sini */}
+      <StageStepper
+        stages={MUTATION_STAGES}
+        currentStage={stage}
+        labelOf={mutationStageLabel}
+        terminalLabel={isTerminalStage ? mutationStageLabel(stage) : null}
+        selectedStage={selectedStage}
+        onSelectStage={(next) => setPickedStage(next === selectedStage ? null : next)}
+      >
+        {selectedStage && (
+          <div className="space-y-5">
+            <div className="flex items-center justify-between gap-2">
+              <p className="text-xs text-gray-400">
+                {t("disposalStagePanel.showing", { stage: mutationStageLabel(selectedStage) })}
+              </p>
+              {selectedStage === stage && (
+                <span className="text-xs px-2 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400">
+                  {t("disposalStagePanel.currentStage")}
+                </span>
+              )}
+            </div>
+
+            {/* status approval — dulu kartu terpisah di bawah dokumen */}
+            {selectedStage === "APPROVAL" && (
+              <MutationApprovalStatus embedded transactionNumber={id ?? ""} />
+            )}
+
+            {stageHistory.length > 0 ? (
+              <div>
+                <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2">
+                  {t("disposalStagePanel.historyTitle")}
+                </h4>
+                <div className="space-y-1.5">
+                  {stageHistory.map((item, index) => (
+                    <div
+                      key={item.id ?? index}
+                      className="flex items-start justify-between gap-3 px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-800/50"
+                    >
+                      <div className="min-w-0">
+                        <p className="text-xs text-gray-700 dark:text-gray-300">
+                          {item.action}
+                          {item.actor_name && <span className="text-gray-400"> · {item.actor_name}</span>}
+                        </p>
+                        {item.notes && (
+                          <p className="text-xs text-gray-500 dark:text-gray-400 italic mt-0.5">"{item.notes}"</p>
+                        )}
+                      </div>
+                      <span className="text-xs text-gray-400 whitespace-nowrap flex-shrink-0">
+                        {formatDateTime(item.created_at)}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              selectedStage !== "APPROVAL" && (
+                <p className="text-sm text-gray-400 text-center py-6">{t("disposalStagePanel.nothingToShow")}</p>
+              )
+            )}
+          </div>
+        )}
+      </StageStepper>
+
       {/* Assets */}
       <div className="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-xl p-5">
         <div className="flex items-center justify-between mb-4">
@@ -321,65 +405,6 @@ export default function MutationDetailPage() {
         </div>
       </div>
 
-      {/* Stage History */}
-      <div className="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-xl p-5">
-        <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-4">
-          {t("mutationDetail.stageHistory")}
-        </h3>
-
-        <div className="space-y-0">
-          {stages.map((stage, index) => {
-            const isLast = index === stages.length - 1
-            return (
-              <div key={stage.id} className="flex gap-3">
-                <div className="flex flex-col items-center">
-                  <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold border-2 flex-shrink-0
-                    ${isLast
-                      ? "bg-indigo-600 border-indigo-600 text-white"
-                      : "bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-600 text-gray-500"
-                    }`}
-                  >
-                    {index + 1}
-                  </div>
-                  {!isLast && (
-                    <div className="w-0.5 flex-1 mt-1 min-h-4 bg-gray-200 dark:bg-gray-700" />
-                  )}
-                </div>
-
-                <div className="pb-4 flex-1">
-                  <div className="flex items-start justify-between gap-2">
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <p className="text-xs font-semibold text-gray-800 dark:text-gray-100">{stage.from_stage}</p>
-                        <svg className="w-3 h-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                        </svg>
-                        <p className="text-xs font-semibold text-indigo-600 dark:text-indigo-400">{stage.to_stage}</p>
-                      </div>
-                      <p className="text-xs text-gray-400 mt-0.5">
-                        {stage.action}
-                        {stage.actor_name && (
-                          <span className="ml-1">· {t("mutationDetail.by")} {stage.actor_name}</span>
-                        )}
-                      </p>
-                    </div>
-                    <span className="text-xs text-gray-400 whitespace-nowrap flex-shrink-0">
-                      {formatDateTime(stage.created_at)}
-                    </span>
-                  </div>
-
-                  {stage.notes && (
-                    <p className="mt-1.5 text-xs text-gray-500 dark:text-gray-400 italic bg-gray-50 dark:bg-gray-800 px-2 py-1 rounded">
-                      "{stage.notes}"
-                    </p>
-                  )}
-                </div>
-              </div>
-            )
-          })}
-        </div>
-      </div>
-
       {/* Dokumen per aset */}
       {assets.length > 0 && (
         <MutationAttachmentPanel
@@ -392,9 +417,6 @@ export default function MutationDetailPage() {
           }}
         />
       )}
-
-      {/* Approval Status */}
-      <MutationApprovalStatus transactionNumber={id ?? ""} />
 
       {/* Actions */}
       {waitingForMe && stage === "DRAFT" && (
@@ -474,6 +496,65 @@ export default function MutationDetailPage() {
         </button>
       </div>
       )}
+
+      {/* Stage History */}
+      <div className="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-xl p-5">
+        <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-4">
+          {t("mutationDetail.stageHistory")}
+        </h3>
+
+        <div className="space-y-0">
+          {stages.map((stage, index) => {
+            const isLast = index === stages.length - 1
+            return (
+              <div key={stage.id} className="flex gap-3">
+                <div className="flex flex-col items-center">
+                  <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold border-2 flex-shrink-0
+                    ${isLast
+                      ? "bg-indigo-600 border-indigo-600 text-white"
+                      : "bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-600 text-gray-500"
+                    }`}
+                  >
+                    {index + 1}
+                  </div>
+                  {!isLast && (
+                    <div className="w-0.5 flex-1 mt-1 min-h-4 bg-gray-200 dark:bg-gray-700" />
+                  )}
+                </div>
+
+                <div className="pb-4 flex-1">
+                  <div className="flex items-start justify-between gap-2">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <p className="text-xs font-semibold text-gray-800 dark:text-gray-100">{stage.from_stage}</p>
+                        <svg className="w-3 h-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                        <p className="text-xs font-semibold text-indigo-600 dark:text-indigo-400">{stage.to_stage}</p>
+                      </div>
+                      <p className="text-xs text-gray-400 mt-0.5">
+                        {stage.action}
+                        {stage.actor_name && (
+                          <span className="ml-1">· {t("mutationDetail.by")} {stage.actor_name}</span>
+                        )}
+                      </p>
+                    </div>
+                    <span className="text-xs text-gray-400 whitespace-nowrap flex-shrink-0">
+                      {formatDateTime(stage.created_at)}
+                    </span>
+                  </div>
+
+                  {stage.notes && (
+                    <p className="mt-1.5 text-xs text-gray-500 dark:text-gray-400 italic bg-gray-50 dark:bg-gray-800 px-2 py-1 rounded">
+                      "{stage.notes}"
+                    </p>
+                  )}
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </div>
     </section>
   )
 }

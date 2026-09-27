@@ -128,7 +128,9 @@
       "cancel": "Cancel",
       "submit": "Submit",
       "uploading": "Uploading...",
-      "uploadError": "Failed to upload attachment"
+      "uploadError": "Failed to upload attachment",
+      "alreadyUploaded": "Uploaded",
+      "rejectedReupload": "This document was rejected — upload a new one"
     },
     "header": {
       "submitForVerification": "Submit for Verification",
@@ -216,7 +218,9 @@
       "optional": "optional",
       "addRecipient": "+ Add recipient",
       "qtyAllocated": "{{total}} / {{max}} units allocated",
-      "qtyExceededWarning": "Total detail quantity ({{total}}) exceeds item quantity ({{max}}). Please adjust."
+      "qtyExceededWarning": "Total detail quantity ({{total}}) exceeds item quantity ({{max}}). Please adjust.",
+      "branchLocked": "Locked to your active homebase — only Head Office can choose another branch",
+      "recipientHoOnly": "Recipients can only be added by Head Office"
     },
     "detail": {
       "recipient": "Recipient",
@@ -2187,5 +2191,37 @@
     "loadError": "Failed to load file.",
     "noPreview": "This file format can't be previewed in the browser.",
     "download": "Download"
+  },
+  "procurementStage": {
+    "stage": {
+      "DRAFT": "Draft",
+      "ASSET_VERIFICATION": "Asset Verification",
+      "APPROVAL": "Approval",
+      "PROCESS_BUDGET": "Process Budget",
+      "EXECUTE_ASET": "Execute Asset",
+      "GR": "Goods Receipt",
+      "FINISHED": "Finished",
+      "REJECTED": "Rejected",
+      "CANCELLED": "Cancelled"
+    }
+  },
+  "procurementDocuments": {
+    "missing": "Required — not uploaded yet",
+    "optional": "Optional — not uploaded",
+    "uploading": "Uploading...",
+    "reupload": "Re-upload",
+    "tooLarge": "File is larger than 10 MB",
+    "noneForStage": "No documents for this stage"
+  },
+  "mutationStage": {
+    "stage": {
+      "DRAFT": "Draft",
+      "APPROVAL": "Approval",
+      "MUTATION_RECEIVING": "Mutation Receiving",
+      "EXECUTE_MUTATION": "Execute Mutation",
+      "FINISHED": "Finished",
+      "REJECTED": "Rejected",
+      "CANCELLED": "Cancelled"
+    }
   }
 }

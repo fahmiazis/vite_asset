@@ -8,8 +8,7 @@ import { useAssetsCategoryList } from "../../../../hooks/query/assetsCategory/li
 import { useBranchList } from "../../../../hooks/query/branch/list"
 import { activeCategoryListToSelectOptions } from "../../../../utils/assetCategory"
 import { activeBranchListToSelectOptions } from "../../../../utils/branch"
-import { useHomebaseList } from "../../../../hooks/query/homebase/list"
-import { activeHomeBaseToSelectOptions } from "../../../../utils/homebase"
+import { useActiveHomebase } from "../../../../hooks/query/homebase/active"
 import { useTranslation } from "react-i18next"
 
 function toRupiah(num: number): string {
@@ -72,27 +71,18 @@ function TextInput({ label, error, required, ...props }: React.InputHTMLAttribut
   )
 }
 
-function DetailFields({ itemIndex, detailIndex, control, register, errors, onRemove, setValue }: {
+function DetailFields({ itemIndex, detailIndex, control, register, errors, onRemove }: {
   itemIndex: number
   detailIndex: number
   control: any
   register: any
   errors: any
   onRemove: () => void
-  setValue: any
 }) {
   const { t } = useTranslation()
   const { data: branchList } = useBranchList()
-  const { data: homebase } = useHomebaseList()
-
-  const isHo = homebase?.data[0]?.branch.branch_type === "HO"
-  const defaultBranch = homebase?.data[0]?.branch
-
-  useEffect(() => {
-    if (!isHo && defaultBranch?.branch_code) {
-      setValue(`items.${itemIndex}.details.${detailIndex}.branch_code`, defaultBranch.branch_code)
-    }
-  }, [defaultBranch?.branch_code])
+  // penerima hanya bisa ditambahkan HO (lihat ItemCard), jadi di sini
+  // pilihan cabangnya selalu seluruh cabang aktif
 
   return (
     <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-3 bg-white dark:bg-gray-900">
@@ -119,17 +109,12 @@ function DetailFields({ itemIndex, detailIndex, control, register, errors, onRem
         <Controller
           control={control}
           name={`items.${itemIndex}.details.${detailIndex}.branch_code`}
-          defaultValue={!isHo ? defaultBranch?.branch_code ?? "" : ""}
           render={({ field, fieldState }) => (
             <Selects
               label={t("createTransaction.detail.branchCode")}
               value={field.value ?? ""}
               onChange={field.onChange}
-              options={
-                isHo
-                  ? activeBranchListToSelectOptions(branchList?.data ?? [])
-                  : [{ id: defaultBranch?.id ?? "", value: defaultBranch?.branch_code ?? "", label: `${defaultBranch?.branch_code} - ${defaultBranch?.branch_name}` }]
-              }
+              options={activeBranchListToSelectOptions(branchList?.data ?? [])}
               placeholder={t("createTransaction.detail.branchCodePlaceholder")}
               error={fieldState.error?.message}
               labelClassName="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
@@ -176,6 +161,19 @@ function ItemCard({ itemIndex, control, register, errors, onRemove, watch, setVa
   const { data: listCategory } = useAssetsCategoryList()
   const { data: branchList } = useBranchList()
   const [showDetails, setShowDetails] = useState(false)
+
+  // Hanya homebase aktif HO yang bebas memilih kode cabang & menambah
+  // penerima. Cabang lain terkunci ke homebase aktifnya sendiri — backend
+  // (CreateProcurement) menolak selain itu.
+  const homebase = useActiveHomebase()
+  const isHo = homebase.isHo
+
+  useEffect(() => {
+    if (!homebase.isLoading && !isHo && homebase.branchCode) {
+      setValue(`items.${itemIndex}.branch_code`, homebase.branchCode, { shouldValidate: true })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [homebase.isLoading, isHo, homebase.branchCode])
 
   const itemQty = useWatch({ control, name: `items.${itemIndex}.quantity` }) || 0
   const details = useWatch({ control, name: `items.${itemIndex}.details` }) || []
@@ -265,7 +263,17 @@ function ItemCard({ itemIndex, control, register, errors, onRemove, watch, setVa
                   label={t("createTransaction.item.branchCode")}
                   value={field.value ?? ""}
                   onChange={field.onChange}
-                  options={activeBranchListToSelectOptions(branchList?.data)}
+                  options={
+                    isHo
+                      ? activeBranchListToSelectOptions(branchList?.data)
+                      : [{
+                          id: homebase.branchId ?? "",
+                          value: homebase.branchCode ?? "",
+                          label: `${homebase.branchCode ?? ""} - ${homebase.branchName ?? ""}`,
+                        }]
+                  }
+                  disabled={!isHo}
+                  helperText={!isHo ? t("createTransaction.item.branchLocked") : undefined}
                   placeholder={t("createTransaction.item.branchCodePlaceholder")}
                   error={fieldState.error?.message}
                   labelClassName="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
@@ -318,16 +326,20 @@ function ItemCard({ itemIndex, control, register, errors, onRemove, watch, setVa
                   {t("createTransaction.item.qtyAllocated", { total: totalDetailQty, max: itemQty })}
                 </div>
               )}
-              <button
-                type="button"
-                onClick={() => {
-                  appendDetail({ branch_code: "", quantity: 1, requester_name: "", notes: "" })
-                  setShowDetails(true)
-                }}
-                className="text-xs border border-gray-300 dark:border-gray-600 rounded-md px-2.5 py-1 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-              >
-                {t("createTransaction.item.addRecipient")}
-              </button>
+              {isHo ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    appendDetail({ branch_code: "", quantity: 1, requester_name: "", notes: "" })
+                    setShowDetails(true)
+                  }}
+                  className="text-xs border border-gray-300 dark:border-gray-600 rounded-md px-2.5 py-1 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                >
+                  {t("createTransaction.item.addRecipient")}
+                </button>
+              ) : (
+                <span className="text-xs text-gray-400">{t("createTransaction.item.recipientHoOnly")}</span>
+              )}
             </div>
           </div>
 
@@ -348,7 +360,6 @@ function ItemCard({ itemIndex, control, register, errors, onRemove, watch, setVa
                   register={register}
                   errors={errors}
                   onRemove={() => removeDetail(detailIndex)}
-                  setValue={setValue}
                 />
               ))}
             </div>

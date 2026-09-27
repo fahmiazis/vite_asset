@@ -128,7 +128,9 @@
       "cancel": "ยกเลิก",
       "submit": "ส่ง",
       "uploading": "กำลังอัปโหลด...",
-      "uploadError": "อัปโหลดไฟล์แนบล้มเหลว"
+      "uploadError": "อัปโหลดไฟล์แนบล้มเหลว",
+      "alreadyUploaded": "อัปโหลดแล้ว",
+      "rejectedReupload": "เอกสารนี้ถูกปฏิเสธ — กรุณาอัปโหลดใหม่"
     },
     "header": {
       "submitForVerification": "ส่งเพื่อตรวจสอบ",
@@ -216,7 +218,9 @@
       "optional": "ไม่บังคับ",
       "addRecipient": "+ เพิ่มผู้รับ",
       "qtyAllocated": "จัดสรรแล้ว {{total}} / {{max}} หน่วย",
-      "qtyExceededWarning": "จำนวนรายละเอียดรวม ({{total}}) เกินจำนวนรายการ ({{max}}) โปรดปรับแก้"
+      "qtyExceededWarning": "จำนวนรายละเอียดรวม ({{total}}) เกินจำนวนรายการ ({{max}}) โปรดปรับแก้",
+      "branchLocked": "ล็อกไว้ที่โฮมเบสที่ใช้งานของคุณ — เฉพาะสำนักงานใหญ่เท่านั้นที่เลือกสาขาอื่นได้",
+      "recipientHoOnly": "เฉพาะสำนักงานใหญ่เท่านั้นที่เพิ่มผู้รับได้"
     },
     "detail": {
       "recipient": "ผู้รับ",
@@ -2187,5 +2191,37 @@
     "loadError": "โหลดไฟล์ไม่สำเร็จ",
     "noPreview": "เบราว์เซอร์ไม่สามารถแสดงตัวอย่างไฟล์รูปแบบนี้ได้",
     "download": "ดาวน์โหลด"
+  },
+  "procurementStage": {
+    "stage": {
+      "DRAFT": "Draft",
+      "ASSET_VERIFICATION": "Asset Verification",
+      "APPROVAL": "Approval",
+      "PROCESS_BUDGET": "Process Budget",
+      "EXECUTE_ASET": "Execute Asset",
+      "GR": "Goods Receipt",
+      "FINISHED": "Finished",
+      "REJECTED": "Rejected",
+      "CANCELLED": "Cancelled"
+    }
+  },
+  "procurementDocuments": {
+    "missing": "จำเป็น — ยังไม่ได้อัปโหลด",
+    "optional": "ไม่บังคับ — ยังไม่ได้อัปโหลด",
+    "uploading": "กำลังอัปโหลด...",
+    "reupload": "อัปโหลดใหม่",
+    "tooLarge": "ไฟล์มีขนาดเกิน 10 MB",
+    "noneForStage": "ไม่มีเอกสารสำหรับขั้นตอนนี้"
+  },
+  "mutationStage": {
+    "stage": {
+      "DRAFT": "Draft",
+      "APPROVAL": "Approval",
+      "MUTATION_RECEIVING": "Mutation Receiving",
+      "EXECUTE_MUTATION": "Execute Mutation",
+      "FINISHED": "Finished",
+      "REJECTED": "Rejected",
+      "CANCELLED": "Cancelled"
+    }
   }
 }

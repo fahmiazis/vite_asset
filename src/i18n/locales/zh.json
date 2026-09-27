@@ -128,7 +128,9 @@
       "cancel": "取消",
       "submit": "提交",
       "uploading": "上传中...",
-      "uploadError": "附件上传失败"
+      "uploadError": "附件上传失败",
+      "alreadyUploaded": "已上传",
+      "rejectedReupload": "该文件已被拒绝 — 请重新上传"
     },
     "header": {
       "submitForVerification": "提交审核",
@@ -216,7 +218,9 @@
       "optional": "可选",
       "addRecipient": "+ 添加收件人",
       "qtyAllocated": "已分配 {{total}} / {{max}} 件",
-      "qtyExceededWarning": "明细总数量 ({{total}}) 超过项目数量 ({{max}})，请调整。"
+      "qtyExceededWarning": "明细总数量 ({{total}}) 超过项目数量 ({{max}})，请调整。",
+      "branchLocked": "已锁定为您当前的归属分行 — 只有总部可以选择其他分行",
+      "recipientHoOnly": "只有总部可以添加接收人"
     },
     "detail": {
       "recipient": "收件人",
@@ -2187,5 +2191,37 @@
     "loadError": "文件加载失败。",
     "noPreview": "浏览器无法预览此文件格式。",
     "download": "下载"
+  },
+  "procurementStage": {
+    "stage": {
+      "DRAFT": "Draft",
+      "ASSET_VERIFICATION": "Asset Verification",
+      "APPROVAL": "Approval",
+      "PROCESS_BUDGET": "Process Budget",
+      "EXECUTE_ASET": "Execute Asset",
+      "GR": "Goods Receipt",
+      "FINISHED": "Finished",
+      "REJECTED": "Rejected",
+      "CANCELLED": "Cancelled"
+    }
+  },
+  "procurementDocuments": {
+    "missing": "必填 — 尚未上传",
+    "optional": "可选 — 尚未上传",
+    "uploading": "上传中...",
+    "reupload": "重新上传",
+    "tooLarge": "文件超过 10 MB",
+    "noneForStage": "该阶段没有文件"
+  },
+  "mutationStage": {
+    "stage": {
+      "DRAFT": "Draft",
+      "APPROVAL": "Approval",
+      "MUTATION_RECEIVING": "Mutation Receiving",
+      "EXECUTE_MUTATION": "Execute Mutation",
+      "FINISHED": "Finished",
+      "REJECTED": "Rejected",
+      "CANCELLED": "Cancelled"
+    }
   }
 }

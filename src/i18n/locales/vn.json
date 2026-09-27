@@ -128,7 +128,9 @@
       "cancel": "Hủy",
       "submit": "Gửi",
       "uploading": "Đang tải lên...",
-      "uploadError": "Tải tệp đính kèm thất bại"
+      "uploadError": "Tải tệp đính kèm thất bại",
+      "alreadyUploaded": "Đã tải lên",
+      "rejectedReupload": "Tài liệu này bị từ chối — hãy tải lên tài liệu mới"
     },
     "header": {
       "submitForVerification": "Gửi để Xác minh",
@@ -216,7 +218,9 @@
       "optional": "tùy chọn",
       "addRecipient": "+ Thêm người nhận",
       "qtyAllocated": "Đã phân bổ {{total}} / {{max}} đơn vị",
-      "qtyExceededWarning": "Tổng số lượng chi tiết ({{total}}) vượt quá số lượng mặt hàng ({{max}}). Vui lòng điều chỉnh."
+      "qtyExceededWarning": "Tổng số lượng chi tiết ({{total}}) vượt quá số lượng mặt hàng ({{max}}). Vui lòng điều chỉnh.",
+      "branchLocked": "Đã khóa theo homebase đang hoạt động — chỉ Trụ sở chính mới chọn được chi nhánh khác",
+      "recipientHoOnly": "Chỉ Trụ sở chính mới thêm được người nhận"
     },
     "detail": {
       "recipient": "Người nhận",
@@ -2187,5 +2191,37 @@
     "loadError": "Không thể tải tệp.",
     "noPreview": "Trình duyệt không thể xem trước định dạng tệp này.",
     "download": "Tải xuống"
+  },
+  "procurementStage": {
+    "stage": {
+      "DRAFT": "Draft",
+      "ASSET_VERIFICATION": "Asset Verification",
+      "APPROVAL": "Approval",
+      "PROCESS_BUDGET": "Process Budget",
+      "EXECUTE_ASET": "Execute Asset",
+      "GR": "Goods Receipt",
+      "FINISHED": "Finished",
+      "REJECTED": "Rejected",
+      "CANCELLED": "Cancelled"
+    }
+  },
+  "procurementDocuments": {
+    "missing": "Bắt buộc — chưa tải lên",
+    "optional": "Không bắt buộc — chưa tải lên",
+    "uploading": "Đang tải lên...",
+    "reupload": "Tải lên lại",
+    "tooLarge": "Tệp lớn hơn 10 MB",
+    "noneForStage": "Không có tài liệu cho giai đoạn này"
+  },
+  "mutationStage": {
+    "stage": {
+      "DRAFT": "Draft",
+      "APPROVAL": "Approval",
+      "MUTATION_RECEIVING": "Mutation Receiving",
+      "EXECUTE_MUTATION": "Execute Mutation",
+      "FINISHED": "Finished",
+      "REJECTED": "Rejected",
+      "CANCELLED": "Cancelled"
+    }
   }
 }

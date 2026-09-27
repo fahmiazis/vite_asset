@@ -14,9 +14,15 @@ export const useActiveHomebase = () => {
     (item) => item.is_active && item.branch_type === "homebase"
   )
 
+  const branchType = active?.branch?.branch_type ?? ""
+
   return {
+    branchId: active?.branch?.id,
     branchCode: active?.branch?.branch_code,
     branchName: active?.branch?.branch_name,
+    branchType,
+    /** homebase aktif di kantor pusat — cerminan isHO di CreateProcurement */
+    isHo: ["HO", "HEAD OFFICE"].includes(branchType.toUpperCase()),
     isLoading,
     error,
   }
