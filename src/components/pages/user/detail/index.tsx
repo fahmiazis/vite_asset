@@ -21,10 +21,16 @@ export default function DetailUser() {
   return (
     <div className='space-y-4'>
       <div className='flex flex-wrap justify-between gap-4'>
-        <BaseUserInformation data={data?.data} className='w-full lg:w-2/4' />
-        <div className='w-full lg:flex-1 min-w-0 space-y-4'>
-          <RoleAssignmentSection user={data?.data} />
+        {/* kolom kiri: info + password, supaya tidak ada ruang kosong di
+            samping daftar role yang panjang */}
+        <div className='w-full lg:w-2/4 space-y-4'>
+          <BaseUserInformation data={data?.data} />
           <ChangePasswordSection userId={id || ''} />
+        </div>
+        {/* lg: kartu role diposisikan absolute supaya tingginya persis kolom
+            kiri dan tidak ikut memanjangkan baris — daftarnya yang scroll */}
+        <div className='w-full lg:flex-1 min-w-0 relative'>
+          <RoleAssignmentSection user={data?.data} className='lg:absolute lg:inset-0' />
         </div>
       </div>
 
