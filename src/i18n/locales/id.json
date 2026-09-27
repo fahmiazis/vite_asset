@@ -2020,5 +2020,96 @@
   },
   "app": {
     "name": "Asset Management System"
+  },
+  "userAsset": {
+    "title": "Aset yang Dipegang",
+    "subtitle": "Aset hasil serah terima ke user ini. Aset tetap tercatat di cabangnya.",
+    "homebase": "Homebase aktif",
+    "noHomebase": "Belum ada homebase aktif — user ini tidak bisa membuat transaksi",
+    "changeHomebase": "Ganti homebase",
+    "setHomebase": "Atur homebase",
+    "empty": "User ini tidak sedang memegang aset",
+    "count": "{{count}} aset",
+    "countPartial": "Menampilkan {{shown}} dari {{total}} aset",
+    "heldSince": "Dipegang sejak {{date}}",
+    "branch": "Cabang {{code}}",
+    "otherBranchHint": "Aset ini milik cabang yang berbeda dengan homebase aktif user"
+  },
+  "userBranch": {
+    "title": "Cabang",
+    "subtitle": "Homebase menentukan kode cabang pada nomor transaksi user. Akses cabang hanya memberi akses ke transaksi dan aset cabang tersebut.",
+    "addAccess": "Tambah Akses",
+    "empty": "User ini belum punya cabang",
+    "count": "{{count}} cabang",
+    "makeHomebase": "Jadikan homebase",
+    "detail": "Detail",
+    "cancel": "Batal",
+    "saving": "Menyimpan...",
+    "searchBranch": "Cari kode atau nama cabang...",
+    "noBranchCandidate": "Tidak ada cabang yang bisa dipilih",
+    "membership": {
+      "homebaseActive": "Homebase aktif",
+      "homebaseInactive": "Homebase nonaktif",
+      "assignment": "Akses",
+      "temporary": "Sementara"
+    },
+    "homebaseModal": {
+      "title": "Ganti Homebase",
+      "current": "Saat ini: {{code}} — {{name}}",
+      "notice": "Cabang terpilih jadi homebase aktif user. Homebase lama tidak dihapus, hanya dinonaktifkan. Nomor transaksi berikutnya memakai kode cabang baru.",
+      "heldAssets": "User ini masih memegang {{count}} aset. Ganti homebase tidak memindahkan aset — aset tetap di cabangnya.",
+      "submit": "Set Homebase"
+    },
+    "accessModal": {
+      "title": "Tambah Akses Cabang",
+      "notice": "Akses tidak mengubah homebase user. Cabang yang sudah dimiliki user tidak ditampilkan.",
+      "submit": "Beri Akses ({{count}})"
+    },
+    "removeModal": {
+      "title": "Lepas cabang",
+      "description": "User tidak lagi punya cabang {{code}} — {{name}}.",
+      "activeHomebase": "Ini homebase aktifnya — setelah dilepas, user tidak punya homebase aktif sampai diatur ulang.",
+      "confirm": "Lepas"
+    },
+    "toast": {
+      "homebaseSet": "Homebase diperbarui",
+      "accessAdded": "Akses ditambahkan ke {{count}} cabang",
+      "removed": "Cabang dilepas dari user",
+      "failed": "Gagal menyimpan"
+    }
+  },
+  "userProfile": {
+    "myProfile": "Profil Saya",
+    "edit": "Ubah",
+    "failed": "Gagal menyimpan",
+    "info": {
+      "username": "Username",
+      "status": "Status",
+      "nik": "NIK",
+      "mpn": "Nomor MPN",
+      "createdAt": "Bergabung",
+      "updatedAt": "Terakhir diubah"
+    },
+    "avatar": {
+      "upload": "Unggah foto",
+      "change": "Ganti foto",
+      "remove": "Hapus foto",
+      "hint": "JPG, PNG, atau WEBP, maks 2 MB",
+      "tooLarge": "Ukuran foto lebih dari 2 MB",
+      "uploaded": "Foto profil diperbarui",
+      "removed": "Foto profil dihapus"
+    },
+    "password": {
+      "title": "Ganti Password",
+      "subtitleSelf": "Masukkan password saat ini untuk mengatur password baru.",
+      "subtitleAdmin": "Atur password baru untuk user ini. Password lama tidak diperlukan.",
+      "current": "Password saat ini",
+      "new": "Password baru",
+      "confirm": "Ulangi password baru",
+      "tooShort": "Minimal {{min}} karakter",
+      "mismatch": "Password tidak sama",
+      "submit": "Simpan Password",
+      "changed": "Password berhasil diganti"
+    }
   }
 }

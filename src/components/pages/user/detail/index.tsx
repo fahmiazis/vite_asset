@@ -2,8 +2,9 @@ import { useParams } from 'react-router-dom'
 import { useUserDetail } from '../../../../hooks/query/user/detail'
 import BaseUserInformation from '../../../organisms/user/detail/userInformationSection'
 import RoleAssignmentSection from '../../../organisms/user/detail/roleAssignmentSection'
-import DisposalList from '../../../organisms/dashboard/disposalTable'
-import { contactsData } from '../../dashboard'
+import UserAssetsSection from '../../../organisms/user/detail/userAssetsSection'
+import UserBranchesSection from '../../../organisms/user/detail/userBranchesSection'
+import ChangePasswordSection from '../../../organisms/user/detail/changePasswordSection'
 
 export default function DetailUser() {
   const { id } = useParams()
@@ -21,12 +22,15 @@ export default function DetailUser() {
     <div className='space-y-4'>
       <div className='flex flex-wrap justify-between gap-4'>
         <BaseUserInformation data={data?.data} className='w-full lg:w-2/4' />
-        <RoleAssignmentSection user={data?.data} className='w-full lg:flex-1' />
+        <div className='w-full lg:flex-1 min-w-0 space-y-4'>
+          <RoleAssignmentSection user={data?.data} />
+          <ChangePasswordSection userId={id || ''} />
+        </div>
       </div>
 
       <div className='flex flex-wrap gap-4'>
-        <DisposalList items={contactsData} title='Assets History' className='w-full md:flex-1' />
-        <DisposalList items={contactsData} title='Assets History' className='w-full md:flex-1' />
+        <UserAssetsSection userId={id || ''} className='w-full md:flex-1 min-w-0' />
+        <UserBranchesSection userId={id || ''} className='w-full md:flex-1 min-w-0' />
       </div>
     </div>
   )

@@ -19,6 +19,7 @@ import CreateMenu from '../components/pages/menu/create'
 import DetailMenu from '../components/pages/menu/detail'
 import AssignMenuPage from '../components/pages/menu/assign'
 import UpdateUser from '../components/pages/user/update'
+import ProfilePage from '../components/pages/profile'
 import CreateApproval from '../components/pages/approval/create'
 import ApprovalPage from '../components/pages/approval'
 import ApprovalFlowDetail from '../components/pages/approval/detail'
@@ -335,6 +336,10 @@ export const router = createBrowserRouter([
           {
             path: 'user/:id/update',
             element: <UpdateUser />,
+          },
+          {
+            path: 'profile',
+            element: <ProfilePage />,
           },
           {
             path: 'approval',

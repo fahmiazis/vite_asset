@@ -2020,5 +2020,96 @@
   },
   "app": {
     "name": "Asset Management System"
+  },
+  "userAsset": {
+    "title": "Held Assets",
+    "subtitle": "Assets handed over to this user. They stay recorded under their branch.",
+    "homebase": "Active homebase",
+    "noHomebase": "No active homebase — this user cannot create transactions",
+    "changeHomebase": "Change homebase",
+    "setHomebase": "Set homebase",
+    "empty": "This user is not holding any assets",
+    "count": "{{count}} asset(s)",
+    "countPartial": "Showing {{shown}} of {{total}} assets",
+    "heldSince": "Held since {{date}}",
+    "branch": "Branch {{code}}",
+    "otherBranchHint": "This asset belongs to a branch other than the user's active homebase"
+  },
+  "userBranch": {
+    "title": "Branches",
+    "subtitle": "Homebase decides the branch code on the user's transaction numbers. Branch access only grants access to that branch's transactions and assets.",
+    "addAccess": "Add Access",
+    "empty": "This user has no branch yet",
+    "count": "{{count}} branch(es)",
+    "makeHomebase": "Make homebase",
+    "detail": "Detail",
+    "cancel": "Cancel",
+    "saving": "Saving...",
+    "searchBranch": "Search branch code or name...",
+    "noBranchCandidate": "No branch available",
+    "membership": {
+      "homebaseActive": "Active homebase",
+      "homebaseInactive": "Inactive homebase",
+      "assignment": "Access",
+      "temporary": "Temporary"
+    },
+    "homebaseModal": {
+      "title": "Change Homebase",
+      "current": "Current: {{code}} — {{name}}",
+      "notice": "The selected branch becomes the user's active homebase. The old homebase is not deleted, only deactivated. New transaction numbers will use the new branch code.",
+      "heldAssets": "This user is holding {{count}} asset(s). Changing homebase does not move them — they stay in their branch.",
+      "submit": "Set Homebase"
+    },
+    "accessModal": {
+      "title": "Add Branch Access",
+      "notice": "Access does not change the user's homebase. Branches the user already has are not listed.",
+      "submit": "Add Access ({{count}})"
+    },
+    "removeModal": {
+      "title": "Remove branch",
+      "description": "The user will no longer have {{code}} — {{name}}.",
+      "activeHomebase": "This is the active homebase — the user will have no active homebase until a new one is set.",
+      "confirm": "Remove"
+    },
+    "toast": {
+      "homebaseSet": "Homebase updated",
+      "accessAdded": "Access added to {{count}} branch(es)",
+      "removed": "Branch removed from user",
+      "failed": "Failed to save"
+    }
+  },
+  "userProfile": {
+    "myProfile": "My Profile",
+    "edit": "Update",
+    "failed": "Failed to save",
+    "info": {
+      "username": "Username",
+      "status": "Status",
+      "nik": "NIK",
+      "mpn": "MPN Number",
+      "createdAt": "Joined",
+      "updatedAt": "Last updated"
+    },
+    "avatar": {
+      "upload": "Upload photo",
+      "change": "Change photo",
+      "remove": "Remove photo",
+      "hint": "JPG, PNG, or WEBP, max 2 MB",
+      "tooLarge": "Photo is larger than 2 MB",
+      "uploaded": "Profile photo updated",
+      "removed": "Profile photo removed"
+    },
+    "password": {
+      "title": "Change Password",
+      "subtitleSelf": "Enter your current password to set a new one.",
+      "subtitleAdmin": "Set a new password for this user. The current password is not required.",
+      "current": "Current password",
+      "new": "New password",
+      "confirm": "Confirm new password",
+      "tooShort": "At least {{min}} characters",
+      "mismatch": "Passwords do not match",
+      "submit": "Save Password",
+      "changed": "Password changed"
+    }
   }
 }

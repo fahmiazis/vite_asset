@@ -2020,5 +2020,96 @@
   },
   "app": {
     "name": "Asset Management System"
+  },
+  "userAsset": {
+    "title": "持有的资产",
+    "subtitle": "已移交给该用户的资产，仍登记在其所属分行。",
+    "homebase": "当前归属分行",
+    "noHomebase": "没有启用的归属分行 — 该用户无法创建交易",
+    "changeHomebase": "更换归属分行",
+    "setHomebase": "设置归属分行",
+    "empty": "该用户未持有任何资产",
+    "count": "{{count}} 项资产",
+    "countPartial": "显示 {{shown}} / {{total}} 项资产",
+    "heldSince": "持有自 {{date}}",
+    "branch": "分行 {{code}}",
+    "otherBranchHint": "该资产属于与用户当前归属分行不同的分行"
+  },
+  "userBranch": {
+    "title": "分行",
+    "subtitle": "归属分行决定用户交易编号中的分行代码。分行权限仅授予访问该分行交易和资产的权限。",
+    "addAccess": "添加权限",
+    "empty": "该用户还没有分行",
+    "count": "{{count}} 个分行",
+    "makeHomebase": "设为归属分行",
+    "detail": "详情",
+    "cancel": "取消",
+    "saving": "保存中...",
+    "searchBranch": "搜索分行代码或名称...",
+    "noBranchCandidate": "没有可选的分行",
+    "membership": {
+      "homebaseActive": "当前归属分行",
+      "homebaseInactive": "未启用的归属分行",
+      "assignment": "权限",
+      "temporary": "临时"
+    },
+    "homebaseModal": {
+      "title": "更换归属分行",
+      "current": "当前：{{code}} — {{name}}",
+      "notice": "所选分行将成为用户当前的归属分行。旧归属分行不会删除，只会停用。之后的交易编号将使用新分行代码。",
+      "heldAssets": "该用户持有 {{count}} 项资产。更换归属分行不会移动资产 — 资产仍在其所属分行。",
+      "submit": "设置归属分行"
+    },
+    "accessModal": {
+      "title": "添加分行权限",
+      "notice": "权限不会改变用户的归属分行。用户已拥有的分行不会显示。",
+      "submit": "添加权限（{{count}}）"
+    },
+    "removeModal": {
+      "title": "移除分行",
+      "description": "用户将不再拥有分行 {{code}} — {{name}}。",
+      "activeHomebase": "这是当前归属分行 — 移除后，用户在重新设置前将没有启用的归属分行。",
+      "confirm": "移除"
+    },
+    "toast": {
+      "homebaseSet": "归属分行已更新",
+      "accessAdded": "已为 {{count}} 个分行添加权限",
+      "removed": "已从用户移除分行",
+      "failed": "保存失败"
+    }
+  },
+  "userProfile": {
+    "myProfile": "我的资料",
+    "edit": "编辑",
+    "failed": "保存失败",
+    "info": {
+      "username": "用户名",
+      "status": "状态",
+      "nik": "NIK",
+      "mpn": "MPN 编号",
+      "createdAt": "加入时间",
+      "updatedAt": "最后更新"
+    },
+    "avatar": {
+      "upload": "上传照片",
+      "change": "更换照片",
+      "remove": "删除照片",
+      "hint": "JPG、PNG 或 WEBP，最大 2 MB",
+      "tooLarge": "照片超过 2 MB",
+      "uploaded": "头像已更新",
+      "removed": "头像已删除"
+    },
+    "password": {
+      "title": "修改密码",
+      "subtitleSelf": "输入当前密码以设置新密码。",
+      "subtitleAdmin": "为该用户设置新密码，无需旧密码。",
+      "current": "当前密码",
+      "new": "新密码",
+      "confirm": "确认新密码",
+      "tooShort": "至少 {{min}} 个字符",
+      "mismatch": "两次密码不一致",
+      "submit": "保存密码",
+      "changed": "密码已修改"
+    }
   }
 }

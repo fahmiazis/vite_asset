@@ -12,6 +12,8 @@ export interface DetailuserState {
   nik: any
   mpn_number: any
   status: string
+  /** ada foto profil — GET /users/:id/avatar */
+  has_avatar?: boolean
   roles: Role[]
   created_at: string
   updated_at: string

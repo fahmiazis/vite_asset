@@ -2020,5 +2020,96 @@
   },
   "app": {
     "name": "Asset Management System"
+  },
+  "userAsset": {
+    "title": "Tài sản đang giữ",
+    "subtitle": "Tài sản đã bàn giao cho người dùng này. Tài sản vẫn được ghi nhận tại chi nhánh của nó.",
+    "homebase": "Homebase đang hoạt động",
+    "noHomebase": "Chưa có homebase hoạt động — người dùng này không thể tạo giao dịch",
+    "changeHomebase": "Đổi homebase",
+    "setHomebase": "Đặt homebase",
+    "empty": "Người dùng này không giữ tài sản nào",
+    "count": "{{count}} tài sản",
+    "countPartial": "Hiển thị {{shown}} / {{total}} tài sản",
+    "heldSince": "Giữ từ {{date}}",
+    "branch": "Chi nhánh {{code}}",
+    "otherBranchHint": "Tài sản này thuộc chi nhánh khác với homebase đang hoạt động của người dùng"
+  },
+  "userBranch": {
+    "title": "Chi nhánh",
+    "subtitle": "Homebase quyết định mã chi nhánh trên số giao dịch của người dùng. Quyền chi nhánh chỉ cho phép truy cập giao dịch và tài sản của chi nhánh đó.",
+    "addAccess": "Thêm quyền",
+    "empty": "Người dùng này chưa có chi nhánh",
+    "count": "{{count}} chi nhánh",
+    "makeHomebase": "Đặt làm homebase",
+    "detail": "Chi tiết",
+    "cancel": "Hủy",
+    "saving": "Đang lưu...",
+    "searchBranch": "Tìm mã hoặc tên chi nhánh...",
+    "noBranchCandidate": "Không có chi nhánh để chọn",
+    "membership": {
+      "homebaseActive": "Homebase hoạt động",
+      "homebaseInactive": "Homebase không hoạt động",
+      "assignment": "Quyền",
+      "temporary": "Tạm thời"
+    },
+    "homebaseModal": {
+      "title": "Đổi Homebase",
+      "current": "Hiện tại: {{code}} — {{name}}",
+      "notice": "Chi nhánh được chọn sẽ thành homebase hoạt động của người dùng. Homebase cũ không bị xóa, chỉ bị vô hiệu. Số giao dịch mới sẽ dùng mã chi nhánh mới.",
+      "heldAssets": "Người dùng này đang giữ {{count}} tài sản. Đổi homebase không di chuyển tài sản — tài sản vẫn ở chi nhánh của nó.",
+      "submit": "Đặt Homebase"
+    },
+    "accessModal": {
+      "title": "Thêm quyền chi nhánh",
+      "notice": "Quyền không thay đổi homebase của người dùng. Chi nhánh người dùng đã có sẽ không được hiển thị.",
+      "submit": "Thêm quyền ({{count}})"
+    },
+    "removeModal": {
+      "title": "Gỡ chi nhánh",
+      "description": "Người dùng sẽ không còn chi nhánh {{code}} — {{name}}.",
+      "activeHomebase": "Đây là homebase đang hoạt động — sau khi gỡ, người dùng sẽ không có homebase hoạt động cho đến khi được đặt lại.",
+      "confirm": "Gỡ"
+    },
+    "toast": {
+      "homebaseSet": "Đã cập nhật homebase",
+      "accessAdded": "Đã thêm quyền cho {{count}} chi nhánh",
+      "removed": "Đã gỡ chi nhánh khỏi người dùng",
+      "failed": "Lưu thất bại"
+    }
+  },
+  "userProfile": {
+    "myProfile": "Hồ sơ của tôi",
+    "edit": "Cập nhật",
+    "failed": "Lưu thất bại",
+    "info": {
+      "username": "Tên đăng nhập",
+      "status": "Trạng thái",
+      "nik": "NIK",
+      "mpn": "Số MPN",
+      "createdAt": "Tham gia",
+      "updatedAt": "Cập nhật lần cuối"
+    },
+    "avatar": {
+      "upload": "Tải ảnh lên",
+      "change": "Đổi ảnh",
+      "remove": "Xóa ảnh",
+      "hint": "JPG, PNG hoặc WEBP, tối đa 2 MB",
+      "tooLarge": "Ảnh lớn hơn 2 MB",
+      "uploaded": "Đã cập nhật ảnh đại diện",
+      "removed": "Đã xóa ảnh đại diện"
+    },
+    "password": {
+      "title": "Đổi mật khẩu",
+      "subtitleSelf": "Nhập mật khẩu hiện tại để đặt mật khẩu mới.",
+      "subtitleAdmin": "Đặt mật khẩu mới cho người dùng này. Không cần mật khẩu cũ.",
+      "current": "Mật khẩu hiện tại",
+      "new": "Mật khẩu mới",
+      "confirm": "Nhập lại mật khẩu mới",
+      "tooShort": "Tối thiểu {{min}} ký tự",
+      "mismatch": "Mật khẩu không khớp",
+      "submit": "Lưu mật khẩu",
+      "changed": "Đã đổi mật khẩu"
+    }
   }
 }

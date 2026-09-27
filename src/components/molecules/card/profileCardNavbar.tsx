@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import Images from "../../atoms/images";
-import { ArrowDown01Icon } from "hugeicons-react";
+import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { ArrowDown01Icon, UserIcon } from "hugeicons-react";
 import { useLanguageStore } from "../../../stores/languageStore";
 
 type Language = "en" | "id" | "zh" | "th" | "vn";
@@ -22,7 +23,8 @@ const LANGUAGES: LanguageOption[] = [
 interface ProfileCardnavbarProps {
   name: string;
   email: string;
-  avatarUrl: string;
+  /** object URL foto profil; kosong → inisial nama */
+  avatarUrl?: string | null;
   onActionClick?: () => void;
 }
 
@@ -32,6 +34,7 @@ const ProfileCardnavbar: React.FC<ProfileCardnavbarProps> = ({
   avatarUrl,
   onActionClick,
 }) => {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -56,17 +59,19 @@ const ProfileCardnavbar: React.FC<ProfileCardnavbarProps> = ({
 
   return (
     <div ref={ref} className="flex relative items-center justify-between rounded-xl bg-[#F4F7FB] dark:bg-gray-800 px-4 py-3">
-      <div className="flex items-center gap-3">
-        <Images
-          src={avatarUrl}
-          alt={name}
-          className="h-10 w-10 rounded-full object-cover"
-        />
+      <Link to="/dashboard/profile" className="flex items-center gap-3" title={t("userProfile.myProfile")}>
+        {avatarUrl ? (
+          <img src={avatarUrl} alt={name} className="h-10 w-10 rounded-full object-cover" />
+        ) : (
+          <span className="h-10 w-10 rounded-full bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-300 flex items-center justify-center text-sm font-bold">
+            {(name || "?").charAt(0).toUpperCase()}
+          </span>
+        )}
         <div className="leading-tight">
           <p className="text-xs font-semibold text-gray-900 dark:text-white">{name}</p>
           <p className="text-xs text-gray-500 dark:text-white">{email}</p>
         </div>
-      </div>
+      </Link>
 
       <button
         onClick={() => setOpen((v) => !v)}
@@ -80,6 +85,14 @@ const ProfileCardnavbar: React.FC<ProfileCardnavbarProps> = ({
 
       {open && (
         <div className="absolute right-2 top-full z-50 mt-2 w-48 rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-900 overflow-hidden">
+          <Link
+            to="/dashboard/profile"
+            onClick={() => setOpen(false)}
+            className="flex w-full items-center gap-2 px-3 py-2 text-xs font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800 border-b border-gray-100 dark:border-gray-800"
+          >
+            <UserIcon size={14} />
+            {t("userProfile.myProfile")}
+          </Link>
           {LANGUAGES.map((lang) => {
             const isActive = lang.code === activeLang.code;
             return (
