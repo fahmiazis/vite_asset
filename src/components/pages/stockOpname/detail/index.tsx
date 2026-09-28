@@ -67,10 +67,13 @@ export default function StockOpnameDetailPage() {
   const isDraft = transaction.current_stage === "DRAFT"
   const isApprovalStage = transaction.current_stage === "APPROVAL"
   const isExecuteStage = transaction.current_stage === "EXECUTE_STOCK_OPNAME"
-  const canReject = isApprovalStage || isExecuteStage
+  // Tombol approval cuma buat role di step yang sedang berjalan — approver
+  // yang sudah approve (atau belum gilirannya) tidak melihatnya lagi.
+  const canActOnApproval = isApprovalStage && !!approvalData?.data && !!data.data.waiting_for_me
+  const canReject = canActOnApproval || isExecuteStage
   // Revisi = aksi approver (sejajar Approve) atau eksekutor (sejajar Execute) —
   // balikin ke DRAFT dengan asset yang dichecklist. Otorisasi dicek di BE.
-  const canRevise = (isApprovalStage && !!approvalData?.data) || isExecuteStage
+  const canRevise = canActOnApproval || isExecuteStage
   const revisionMode = isDraft && !!data.data.revision_mode
   const revisionItemCount = items.filter((item) => item.needs_revision).length
   const latestRevisionNotes = revisionMode
@@ -152,7 +155,7 @@ export default function StockOpnameDetailPage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-3">
           {[
             { label: t("stockOpnameDetail.opnameDate"), value: formatDate(transaction.transaction_date) },
-            { label: t("stockOpnameDetail.createdBy"), value: transaction.created_by },
+            { label: t("stockOpnameDetail.createdBy"), value: transaction.created_by_name ?? "-" },
             { label: t("stockOpnameDetail.createdAt"), value: formatDateTime(transaction.created_at) },
             { label: t("stockOpnameDetail.updatedAt"), value: formatDateTime(transaction.updated_at) },
           ].map((item) => (
@@ -332,7 +335,7 @@ export default function StockOpnameDetailPage() {
           </button>
         )}
 
-        {isApprovalStage && approvalData?.data && (
+        {canActOnApproval && (
           <button
             onClick={() => setShowApprove(true)}
             className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl transition-colors"

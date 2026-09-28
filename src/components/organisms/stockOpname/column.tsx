@@ -91,11 +91,11 @@ export function getStockOpnameColumns(t: TFunction): ColumnDef<StockOpnameDetail
       ),
     },
     {
-      accessorFn: (row) => row.transaction.created_by,
+      accessorFn: (row) => row.transaction.created_by_name,
       id: "created_by",
       header: t("stockOpnameColumn.createdBy"),
       cell: ({ row }) => (
-        <span className="text-sm">{row.original.transaction.created_by ?? "-"}</span>
+        <span className="text-sm">{row.original.transaction.created_by_name ?? "-"}</span>
       ),
     },
     {
