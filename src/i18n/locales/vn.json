@@ -56,8 +56,6 @@
     "title": "Giao Dịch Mua Sắm Tài Sản",
     "period": "Kỳ: {{period}}",
     "totalTransactions": "{{count}} giao dịch đã đăng ký",
-    "export": "Xuất",
-    "report": "Báo cáo",
     "newRequest": "Yêu Cầu Mới",
     "new": "Mới"
   },

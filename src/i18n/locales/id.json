@@ -56,8 +56,6 @@
     "title": "Transaksi Pengadaan Aset",
     "period": "Periode: {{period}}",
     "totalTransactions": "{{count}} transaksi terdaftar",
-    "export": "Ekspor",
-    "report": "Laporan",
     "newRequest": "Permintaan Baru",
     "new": "Baru"
   },

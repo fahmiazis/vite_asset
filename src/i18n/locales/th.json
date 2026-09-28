@@ -56,8 +56,6 @@
     "title": "รายการจัดซื้อสินทรัพย์",
     "period": "ช่วงเวลา: {{period}}",
     "totalTransactions": "ลงทะเบียนแล้ว {{count}} รายการ",
-    "export": "ส่งออก",
-    "report": "รายงาน",
     "newRequest": "คำขอใหม่",
     "new": "ใหม่"
   },

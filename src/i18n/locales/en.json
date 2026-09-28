@@ -56,8 +56,6 @@
     "title": "Asset Procurement Transactions",
     "period": "Period: {{period}}",
     "totalTransactions": "{{count}} transactions registered",
-    "export": "Export",
-    "report": "Report",
     "newRequest": "New Request",
     "new": "New"
   },

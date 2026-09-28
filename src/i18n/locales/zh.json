@@ -56,8 +56,6 @@
     "title": "资产采购交易",
     "period": "周期：{{period}}",
     "totalTransactions": "已登记 {{count}} 笔交易",
-    "export": "导出",
-    "report": "报告",
     "newRequest": "新建申请",
     "new": "新建"
   },
