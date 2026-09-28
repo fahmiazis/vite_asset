@@ -23,6 +23,8 @@ export default function StockOpnameConfigPage() {
   const [allowWord, setAllowWord] = useState(false)
   const [allowPhoto, setAllowPhoto] = useState(false)
   const [borrowDocRequired, setBorrowDocRequired] = useState(true)
+  const [photoUploadMaxAge, setPhotoUploadMaxAge] = useState(10)
+  const [photoSubmitMaxAge, setPhotoSubmitMaxAge] = useState(10)
 
   useEffect(() => {
     if (data?.data) {
@@ -32,6 +34,8 @@ export default function StockOpnameConfigPage() {
       setAllowWord(data.data.borrow_doc_allow_word)
       setAllowPhoto(data.data.borrow_doc_allow_photo)
       setBorrowDocRequired(data.data.borrow_doc_is_required)
+      setPhotoUploadMaxAge(data.data.photo_upload_max_age_days)
+      setPhotoSubmitMaxAge(data.data.photo_submit_max_age_days)
     }
   }, [data])
 
@@ -47,6 +51,8 @@ export default function StockOpnameConfigPage() {
       borrow_doc_allow_word: allowWord,
       borrow_doc_allow_photo: allowPhoto,
       borrow_doc_is_required: borrowDocRequired,
+      photo_upload_max_age_days: photoUploadMaxAge,
+      photo_submit_max_age_days: photoSubmitMaxAge,
     })
   }
 
@@ -59,7 +65,7 @@ export default function StockOpnameConfigPage() {
   }
 
   return (
-    <section className="space-y-4 mt-4 max-w-xl">
+    <section className="space-y-4 mt-4">
       <div className="flex items-center gap-3">
         <button
           onClick={() => navigate("/dashboard/stock-opname")}
@@ -175,6 +181,46 @@ export default function StockOpnameConfigPage() {
           {t("stockOpnameConfigPage.borrowDocRequiredLabel")}
         </label>
         <p className="text-xs text-gray-400">{t("stockOpnameConfigPage.borrowDocRequiredHint")}</p>
+      </div>
+
+      <div className="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-xl p-5 space-y-4">
+        <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200">
+          {t("stockOpnameConfigPage.photoSectionTitle")}
+        </h3>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-1.5">
+            <label className="block text-xs font-medium text-gray-700 dark:text-gray-300">
+              {t("stockOpnameConfigPage.photoUploadMaxAgeLabel")}
+            </label>
+            <input
+              type="number"
+              min={1}
+              max={365}
+              value={photoUploadMaxAge}
+              onChange={(e) => setPhotoUploadMaxAge(Math.min(365, Math.max(1, Number(e.target.value) || 1)))}
+              disabled={isPending}
+              className="w-full px-3 py-2.5 text-sm border border-gray-300 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
+            />
+            <p className="text-xs text-gray-400">{t("stockOpnameConfigPage.photoUploadMaxAgeHint")}</p>
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="block text-xs font-medium text-gray-700 dark:text-gray-300">
+              {t("stockOpnameConfigPage.photoSubmitMaxAgeLabel")}
+            </label>
+            <input
+              type="number"
+              min={1}
+              max={365}
+              value={photoSubmitMaxAge}
+              onChange={(e) => setPhotoSubmitMaxAge(Math.min(365, Math.max(1, Number(e.target.value) || 1)))}
+              disabled={isPending}
+              className="w-full px-3 py-2.5 text-sm border border-gray-300 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
+            />
+            <p className="text-xs text-gray-400">{t("stockOpnameConfigPage.photoSubmitMaxAgeHint")}</p>
+          </div>
+        </div>
       </div>
 
       <div className="flex items-center justify-between">

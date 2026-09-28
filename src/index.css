@@ -141,6 +141,18 @@ input::placeholder {
 .dark input::placeholder {
   color: #6b7280;
 }
+
+/* Sembunyiin tombol spinner (panah atas/bawah) di input type="number" */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
 /* -----------------------------------------input styling----------------------------------------- */
 
 /* -----------------------------------------toggle styling (molecules/input/inputTogle.tsx)----------------------------------------- */

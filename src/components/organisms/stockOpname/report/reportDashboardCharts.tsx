@@ -15,7 +15,6 @@ import {
 import type {
   StockOpnameConditionSummary,
   StockOpnameGroupingStatus,
-  StockOpnamePhysicalVsSystem,
   StockOpnameStatusBreakdown,
 } from "../../../../models/stockOpname/report"
 
@@ -78,32 +77,6 @@ function StatusPerGroupingChart({ data }: { data: StockOpnameGroupingStatus[] })
           <Bar dataKey="belum_submit" stackId="a" fill={STATUS_COLORS.belum_submit} name={labels.belum_submit} />
           <Bar dataKey="rejected" stackId="a" fill={STATUS_COLORS.rejected} name={labels.rejected} />
           <Bar dataKey="disposal" stackId="a" fill={STATUS_COLORS.disposal} name={labels.disposal} />
-        </BarChart>
-      </ResponsiveContainer>
-    </ChartCard>
-  )
-}
-
-// ---------- Status fisik vs SAP ----------
-
-function PhysicalVsSystemChart({ data }: { data: StockOpnamePhysicalVsSystem }) {
-  const { t } = useTranslation()
-  const chartData = [
-    { name: t("stockOpnameReportPage.charts.statusFisik", "Status Fisik"), ada: data.physical_ada, tidak_ada: data.physical_tidak_ada },
-    { name: t("stockOpnameReportPage.charts.statusSap", "Status SAP"), ada: data.system_ada, tidak_ada: data.system_tidak_ada },
-  ]
-
-  return (
-    <ChartCard title={t("stockOpnameReportPage.charts.physicalVsSystem", "Status fisik vs SAP")}>
-      <ResponsiveContainer width="100%" height={280}>
-        <BarChart data={chartData} margin={{ top: 5, right: 10, left: -10, bottom: 5 }}>
-          <CartesianGrid strokeDasharray="3 3" vertical={false} opacity={0.3} />
-          <XAxis dataKey="name" tick={{ fontSize: 11 }} />
-          <YAxis tick={{ fontSize: 11 }} />
-          <Tooltip />
-          <Legend wrapperStyle={{ fontSize: 11 }} />
-          <Bar dataKey="ada" fill="#10b981" name={t("stockOpnameReportPage.charts.ada", "Ada")} />
-          <Bar dataKey="tidak_ada" fill="#ef4444" name={t("stockOpnameReportPage.charts.tidakAda", "Tidak Ada")} />
         </BarChart>
       </ResponsiveContainer>
     </ChartCard>
@@ -174,21 +147,20 @@ function StatusSubmitChart({ data }: { data: StockOpnameStatusBreakdown }) {
 
 interface ReportDashboardChartsProps {
   statusPerGrouping: StockOpnameGroupingStatus[]
-  physicalVsSystem: StockOpnamePhysicalVsSystem
   conditionSummary: StockOpnameConditionSummary
   statusSubmit: StockOpnameStatusBreakdown
 }
 
 export function ReportDashboardCharts({
   statusPerGrouping,
-  physicalVsSystem,
   conditionSummary,
   statusSubmit,
 }: ReportDashboardChartsProps) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-      <StatusPerGroupingChart data={statusPerGrouping} />
-      <PhysicalVsSystemChart data={physicalVsSystem} />
+      <div className="lg:col-span-2">
+        <StatusPerGroupingChart data={statusPerGrouping} />
+      </div>
       <ConditionSummaryChart data={conditionSummary} />
       <StatusSubmitChart data={statusSubmit} />
     </div>

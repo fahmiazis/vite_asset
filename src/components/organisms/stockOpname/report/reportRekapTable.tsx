@@ -94,7 +94,7 @@ export function ReportRekapTable({ rekap, areaSummary, note }: ReportRekapTableP
         </div>
       </div>
 
-      <p className="text-[11px] text-gray1 mt-4 leading-relaxed">{note}</p>
+      {note && <p className="text-[11px] text-gray1 mt-4 leading-relaxed">{note}</p>}
     </div>
   )
 }

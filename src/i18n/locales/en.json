@@ -1368,7 +1368,13 @@
     "formatPhoto": "Photo (JPEG/PNG/WEBP)",
     "noFormatSelected": "Select at least 1 file format",
     "borrowDocRequiredLabel": "Required",
-    "borrowDocRequiredHint": "When turned off, assets marked Borrowed can still be saved/submitted without a document — the field becomes optional in the form."
+    "borrowDocRequiredHint": "When turned off, assets marked Borrowed can still be saved/submitted without a document — the field becomes optional in the form.",
+    "photoSectionTitle": "Evidence Photo Date Validation",
+    "photoUploadMaxAgeLabel": "Max Photo Age on Upload (days)",
+    "photoUploadMaxAgeHint": "The photo file's created/modified date may be at most this many days before the upload date.",
+    "photoSubmitMaxAgeLabel": "Max Upload-to-Submit Gap (days)",
+    "photoSubmitMaxAgeHint": "On submit, photos uploaded more than this many days earlier are rejected and must be re-uploaded.",
+    "days": "days"
   },
   "createStockOpnamePage": {
     "title": "Create Stock Opname",
@@ -1568,9 +1574,6 @@
     },
     "charts": {
       "statusPerGrouping": "Status per grouping",
-      "physicalVsSystem": "Physical vs SAP status",
-      "statusFisik": "Physical Status",
-      "statusSap": "SAP Status",
       "ada": "Present",
       "tidakAda": "Not Present",
       "conditionSummary": "Asset condition",
@@ -1588,7 +1591,6 @@
       "areaClear": "Area Clear",
       "areaNotClear": "Area Not Clear",
       "totalArea": "Total National Area",
-      "costCenterTitle": "Asset value per cost center (top 10)",
       "noData": "No data"
     }
   },
@@ -1778,14 +1780,14 @@
           "The creator fixes the marked assets via Fill Finding, Complete Data, or Excel (which only contain the assets to revise), then submits again",
           "After resubmission, approval restarts from the first approver"
         ],
-        "tip": "On resubmission, the photo age check (max 10 days) only applies to the assets requested for revision. If an asset's photo is old, upload a new one."
+        "tip": "On resubmission, the photo age check (limit set in Stock Opname Config) only applies to the assets requested for revision. If an asset's photo is old, upload a new one."
       }
     }
   },
   "stockOpnamePhoto": {
     "label": "Physical Proof Photo",
     "uploadCta": "Upload Photo",
-    "hint": "JPEG, max 2MB, original camera photo (not forwarded via chat), taken within the last 10 days",
+    "hint": "JPEG, max 2MB, original camera photo (not forwarded via chat), taken within the last {{days}} days",
     "capturedOn": "Captured",
     "clickToReplace": "click to replace",
     "uploadTooltip": "No photo yet — click to upload",

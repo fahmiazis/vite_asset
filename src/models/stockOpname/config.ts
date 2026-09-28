@@ -5,6 +5,8 @@ export interface StockOpnameConfig {
   borrow_doc_allow_word: boolean
   borrow_doc_allow_photo: boolean
   borrow_doc_is_required: boolean
+  photo_upload_max_age_days: number
+  photo_submit_max_age_days: number
   updated_by: string | null
   updated_at: string
 }
@@ -22,4 +24,6 @@ export interface UpdateStockOpnameConfigPayload {
   borrow_doc_allow_word: boolean
   borrow_doc_allow_photo: boolean
   borrow_doc_is_required: boolean
+  photo_upload_max_age_days: number
+  photo_submit_max_age_days: number
 }

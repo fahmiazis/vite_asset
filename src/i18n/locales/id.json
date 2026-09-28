@@ -1368,7 +1368,13 @@
     "formatPhoto": "Foto (JPEG/PNG/WEBP)",
     "noFormatSelected": "Pilih minimal 1 format file",
     "borrowDocRequiredLabel": "Wajib diisi",
-    "borrowDocRequiredHint": "Kalau dimatikan, aset berstatus Dipinjam tetap bisa disimpan/disubmit tanpa dokumen — field-nya jadi opsional di form."
+    "borrowDocRequiredHint": "Kalau dimatikan, aset berstatus Dipinjam tetap bisa disimpan/disubmit tanpa dokumen — field-nya jadi opsional di form.",
+    "photoSectionTitle": "Validasi Tanggal Foto Bukti Fisik",
+    "photoUploadMaxAgeLabel": "Maks Umur Foto saat Upload (hari)",
+    "photoUploadMaxAgeHint": "Tanggal created/modified file foto maksimal sekian hari sebelum tanggal upload.",
+    "photoSubmitMaxAgeLabel": "Maks Jarak Upload ke Submit (hari)",
+    "photoSubmitMaxAgeHint": "Saat submit, foto yang diupload lebih dari sekian hari sebelumnya ditolak dan harus diupload ulang.",
+    "days": "hari"
   },
   "createStockOpnamePage": {
     "title": "Buat Stock Opname",
@@ -1568,9 +1574,6 @@
     },
     "charts": {
       "statusPerGrouping": "Status per grouping",
-      "physicalVsSystem": "Status fisik vs SAP",
-      "statusFisik": "Status Fisik",
-      "statusSap": "Status SAP",
       "ada": "Ada",
       "tidakAda": "Tidak Ada",
       "conditionSummary": "Kondisi aset",
@@ -1588,7 +1591,6 @@
       "areaClear": "Area Clear",
       "areaNotClear": "Area Tidak Clear",
       "totalArea": "Total Area Nasional",
-      "costCenterTitle": "Nilai aset per cost center (top 10)",
       "noData": "Tidak ada data"
     }
   },
@@ -1778,14 +1780,14 @@
           "Creator benerin asset yang ditandai lewat Isi Temuan, Lengkapi Data, atau Excel (isinya cuma asset yang diminta revisi), lalu Submit ulang",
           "Setelah submit ulang, approval mulai lagi dari approver pertama"
         ],
-        "tip": "Pas submit ulang, cek umur foto (maks 10 hari) cuma berlaku buat asset yang diminta revisi. Kalau foto asset itu udah lama, upload ulang foto yang baru."
+        "tip": "Pas submit ulang, cek umur foto (maks sesuai Config Stock Opname) cuma berlaku buat asset yang diminta revisi. Kalau foto asset itu udah lama, upload ulang foto yang baru."
       }
     }
   },
   "stockOpnamePhoto": {
     "label": "Foto Bukti Fisik",
     "uploadCta": "Upload Foto",
-    "hint": "JPEG, maks 2MB, foto asli kamera (bukan hasil forward chat), diambil maks 10 hari lalu",
+    "hint": "JPEG, maks 2MB, foto asli kamera (bukan hasil forward chat), diambil maks {{days}} hari lalu",
     "capturedOn": "Diambil",
     "clickToReplace": "klik buat ganti",
     "uploadTooltip": "Belum ada foto — klik buat upload",

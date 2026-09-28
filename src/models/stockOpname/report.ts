@@ -47,13 +47,6 @@ export interface StockOpnameGroupingStatus {
   total: number
 }
 
-export interface StockOpnamePhysicalVsSystem {
-  physical_ada: number
-  physical_tidak_ada: number
-  system_ada: number
-  system_tidak_ada: number
-}
-
 export interface StockOpnameConditionSummary {
   baik: number
   rusak: number
@@ -63,7 +56,6 @@ export interface StockOpnameConditionSummary {
 
 export interface StockOpnameDashboardCharts {
   status_per_grouping: StockOpnameGroupingStatus[]
-  physical_vs_system: StockOpnamePhysicalVsSystem
   condition_summary: StockOpnameConditionSummary
   status_submit: StockOpnameStatusBreakdown
 }
@@ -103,20 +95,11 @@ export interface StockOpnameAreaSummary {
   total_area: number
 }
 
-export interface StockOpnameCostCenterRow {
-  branch_code: string
-  branch_name: string
-  acquisition_value: number
-  book_value: number
-  unit_count: number
-}
-
 export interface StockOpnameDetailReportData {
   period: StockOpnameReportPeriod
   branch_code: string
   rekap: StockOpnameRekapRow[]
   area_summary: StockOpnameAreaSummary
-  cost_centers_top10: StockOpnameCostCenterRow[]
   note: string
 }
 

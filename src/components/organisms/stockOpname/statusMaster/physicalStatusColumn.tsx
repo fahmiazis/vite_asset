@@ -82,7 +82,7 @@ export function CreatePhysicalStatusModal({ onClose }: { onClose: () => void }) 
           />
           <ToggleRow
             label="Dihitung Sebagai Hilang"
-            hint="Masuk bucket 'Hilang' / 'SAP Ada Fisik Tidak' di laporan stock opname"
+            hint="Masuk bucket 'Hilang' / 'Fisik Tidak Ada' di laporan stock opname"
             value={countsAsMissing}
             onChange={setCountsAsMissing}
             disabled={isPending}

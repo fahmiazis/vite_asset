@@ -8,7 +8,6 @@ import { ReportFilterBar, type ReportView } from "../../../../components/organis
 import { ReportStatCards } from "../../../../components/organisms/stockOpname/report/reportStatCards"
 import { ReportDashboardCharts } from "../../../../components/organisms/stockOpname/report/reportDashboardCharts"
 import { ReportRekapTable } from "../../../../components/organisms/stockOpname/report/reportRekapTable"
-import { ReportCostCenterChart } from "../../../../components/organisms/stockOpname/report/reportCostCenterChart"
 
 function formatDateShort(value: string) {
   return new Date(value).toLocaleDateString("id-ID", { day: "2-digit", month: "short", year: "2-digit" })
@@ -91,7 +90,6 @@ export default function StockOpnameReportPage() {
             <ReportStatCards stats={dashboardData.data.stats} />
             <ReportDashboardCharts
               statusPerGrouping={dashboardData.data.charts.status_per_grouping}
-              physicalVsSystem={dashboardData.data.charts.physical_vs_system}
               conditionSummary={dashboardData.data.charts.condition_summary}
               statusSubmit={dashboardData.data.charts.status_submit}
             />
@@ -100,14 +98,11 @@ export default function StockOpnameReportPage() {
       ) : isDetailLoading && !detailData ? (
         <LoadingState />
       ) : detailData ? (
-        <>
-          <ReportRekapTable
-            rekap={detailData.data.rekap}
-            areaSummary={detailData.data.area_summary}
-            note={detailData.data.note}
-          />
-          <ReportCostCenterChart data={detailData.data.cost_centers_top10} />
-        </>
+        <ReportRekapTable
+          rekap={detailData.data.rekap}
+          areaSummary={detailData.data.area_summary}
+          note={detailData.data.note}
+        />
       ) : null}
     </div>
   )

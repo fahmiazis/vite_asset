@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type ChangeEvent } from "react"
 import { useTranslation } from "react-i18next"
 import { Camera01Icon } from "hugeicons-react"
+import { useStockOpnameConfig } from "../../../hooks/query/stockOpname/config"
 import { useUploadStockOpnamePhoto } from "../../../hooks/mutation/stockOpname/uploadPhoto"
 import { useAuthedBlobUrl } from "../../../hooks/custom/useAuthedBlobUrl"
 import { FilePreviewModal } from "./filePreviewModal"
@@ -28,6 +29,8 @@ export function PhotoUploadField({
   const { t } = useTranslation()
   const inputRef = useRef<HTMLInputElement>(null)
   const { mutate: uploadPhoto, isPending } = useUploadStockOpnamePhoto({ transactionNumber })
+  const { data: configData } = useStockOpnameConfig()
+  const uploadMaxAgeDays = configData?.data.photo_upload_max_age_days ?? 10
 
   // Preview langsung dari file yang dipilih (bukan nunggu round-trip upload
   // + refetch), soalnya prop `photoUrl`/`capturedAt` sering datang dari
@@ -141,7 +144,7 @@ export function PhotoUploadField({
       <p className="text-[11px] text-gray-400">
         {formattedDate
           ? `${t("stockOpnamePhoto.capturedOn")} ${formattedDate}`
-          : t("stockOpnamePhoto.hint")}
+          : t("stockOpnamePhoto.hint", { days: uploadMaxAgeDays })}
       </p>
       {hiddenInput}
     </div>
