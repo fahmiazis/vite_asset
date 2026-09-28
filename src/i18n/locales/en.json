@@ -128,7 +128,9 @@
       "cancel": "Cancel",
       "submit": "Submit",
       "uploading": "Uploading...",
-      "uploadError": "Failed to upload attachment"
+      "uploadError": "Failed to upload attachment",
+      "alreadyUploaded": "Uploaded",
+      "rejectedReupload": "This document was rejected — upload a new one"
     },
     "header": {
       "submitForVerification": "Submit for Verification",
@@ -216,7 +218,9 @@
       "optional": "optional",
       "addRecipient": "+ Add recipient",
       "qtyAllocated": "{{total}} / {{max}} units allocated",
-      "qtyExceededWarning": "Total detail quantity ({{total}}) exceeds item quantity ({{max}}). Please adjust."
+      "qtyExceededWarning": "Total detail quantity ({{total}}) exceeds item quantity ({{max}}). Please adjust.",
+      "branchLocked": "Locked to your active homebase — only Head Office can choose another branch",
+      "recipientHoOnly": "Recipients can only be added by Head Office"
     },
     "detail": {
       "recipient": "Recipient",
@@ -1321,7 +1325,9 @@
       "procurement": "Procurement",
       "mutation": "Mutation",
       "disposal": "Disposal",
-      "disposal_agreement": "Disposal Agreement"
+      "disposal_agreement": "Disposal Agreement",
+      "handover": "Asset Handover",
+      "stock_opname": "Stock Opname"
     },
     "createAgreement": "Create agreement"
   },
@@ -1329,7 +1335,18 @@
     "title": "Stock Opname",
     "createButton": "+ Create Stock Opname",
     "reportButton": "Report",
-    "configButton": "Config"
+    "configButton": "Config",
+    "statusMasterButton": "Master Status",
+    "table": {
+      "loading": "Loading data...",
+      "loadingInline": "Loading...",
+      "noData": "No stock opname data",
+      "detailButton": "Detail",
+      "pagination": {
+        "showing": "Showing {{from}} – {{to}} of {{total}} data",
+        "page": "Page {{current}} / {{total}}"
+      }
+    }
   },
   "stockOpnameConfigPage": {
     "title": "Stock Opname Config",
@@ -1411,7 +1428,14 @@
     "tableShowing": "Showing",
     "tableOf": "of",
     "tablePageSize": "Rows/page:",
-    "fillDataButton": "Complete Data"
+    "fillDataButton": "Complete Data",
+    "revise": "Revise",
+    "downloadDocumentation": "Download Opname",
+    "toastDownloadDocumentationError": "Failed to download documentation",
+    "needsRevision": "Needs revision",
+    "lockedForRevision": "Locked",
+    "revisionBannerTitle": "Revision: {{count}} of {{total}} assets need fixing",
+    "revisionBannerDescription": "Only the highlighted assets can be changed. Other assets are locked until this revision is resubmitted."
   },
   "stockOpnameFindingModal": {
     "title": "Fill Physical Finding",
@@ -1453,7 +1477,8 @@
     "toast": {
       "required": "Physical status and condition are required",
       "borrowDocumentRequired": "A loan document (PDF) is required for Borrowed status"
-    }
+    },
+    "conditionSelectPhysicalFirst": "Select physical status first"
   },
   "submitStockOpnameModal": {
     "title": "Submit Stock Opname",
@@ -1610,7 +1635,8 @@
     "notesPlaceholder": "Notes...",
     "unsavedBadge": "unsaved",
     "searchPlaceholder": "Search asset name or number... (Ctrl+F)",
-    "searchNoResults": "No matching assets"
+    "searchNoResults": "No matching assets",
+    "revisionModeNotice": "Revision mode — only the {{count}} assets requested for revision are shown"
   },
   "guidePage": {
     "title": "User Guide",
@@ -1637,7 +1663,7 @@
           "Execute — findings are applied to the asset data",
           "Finished — asset data is updated and can no longer be changed"
         ],
-        "tip": "A stock opname can be rejected during the Approval or Execute stage if something's wrong."
+        "tip": "During Approval or Execution, a stock opname can be sent back for fixing (Revise) or rejected (Reject). Revise returns it to Draft, while Reject is final."
       },
       "createDraft": {
         "title": "1. Create a New Stock Opname",
@@ -1694,7 +1720,8 @@
         "steps": [
           "Click \"Submit Stock Opname\" on the detail page",
           "The stock opname enters the Approval stage, following your branch's approval flow",
-          "Track progress under \"Approval Status\" — see who needs to approve and what's pending"
+          "Track progress under \"Approval Status\" — see who needs to approve and what's pending",
+          "The approver whose turn it is can Approve, request a Revision, or Reject"
         ],
         "tip": "Submit is rejected if any asset: has an empty Physical Status/Condition, has no Physical Proof Photo uploaded, or (if Borrowed and a document is currently required in Config) has no Loan Document uploaded."
       },
@@ -1708,16 +1735,18 @@
         ]
       },
       "reject": {
-        "title": "7. Reject",
-        "summary": "If something's wrong during Approval or Execute, the stock opname can be rejected.",
+        "title": "8. Reject",
+        "summary": "Use Reject when the stock opname submission can't be used anymore. Unlike Revise, a rejection is final.",
         "steps": [
-          "Click \"Reject\" on the detail page",
-          "Enter a reason (required, at least 10 characters)",
-          "A rejected stock opname can't be resumed — create a new draft if it's still needed"
-        ]
+          "During Approval or Execution, click \"Reject\" on the detail page",
+          "Fill in the rejection reason (required, at least 10 characters)",
+          "The stock opname becomes Rejected and the submission stops. It can't be revised, resubmitted, or executed anymore",
+          "If the stock opname is still needed, create a new draft"
+        ],
+        "tip": "Can the findings still be fixed? Use Revise, not Reject."
       },
       "report": {
-        "title": "8. Reports",
+        "title": "9. Reports",
         "summary": "See a recap of stock opname results per period and branch.",
         "steps": [
           "Open Stock Opname → Report",
@@ -1727,7 +1756,7 @@
         ]
       },
       "config": {
-        "title": "9. Stock Opname Settings",
+        "title": "10. Stock Opname Settings",
         "summary": "Some stock opname rules can be set on the Config page — accessed via the \"Config\" button on the Stock Opname list page.",
         "steps": [
           "Submission Window — set the monthly start and end day used to flag a submission as \"on schedule\" (stock opnames can still be submitted anytime, this only affects the status shown on the detail page)",
@@ -1736,6 +1765,20 @@
           "Click \"Save\" to apply the changes"
         ],
         "tip": "After a stock opname is submitted, the detail page shows \"On Schedule\" or \"Off Schedule\" based on the Submission Window active at the time of submit."
+      },
+      "revise": {
+        "title": "7. Revise (Send Back for Fixing)",
+        "summary": "If some findings are wrong but the submission can still continue, the approver (during Approval) or the executor (during Execution) can request a revision instead of rejecting it.",
+        "steps": [
+          "The approver/executor clicks \"Revise\" on the detail page",
+          "Check the assets that need fixing. Search by asset number/name, or click \"Check all shown\"",
+          "Fill in the Revision Notes (required, at least 5 characters) explaining what's wrong",
+          "Click \"Revise Selected\" for the checked assets only, or \"Revise All\" if every asset needs rechecking",
+          "The stock opname returns to Draft. The creator sees a revision banner, checked assets are marked \"Needs revision\", and other assets are \"Locked\" (can't be changed)",
+          "The creator fixes the marked assets via Fill Finding, Complete Data, or Excel (which only contain the assets to revise), then submits again",
+          "After resubmission, approval restarts from the first approver"
+        ],
+        "tip": "On resubmission, the photo age check (max 10 days) only applies to the assets requested for revision. If an asset's photo is old, upload a new one."
       }
     }
   },
@@ -1745,14 +1788,18 @@
     "hint": "JPEG, max 2MB, original camera photo (not forwarded via chat), taken within the last 10 days",
     "capturedOn": "Captured",
     "clickToReplace": "click to replace",
-    "uploadTooltip": "No photo yet — click to upload"
+    "uploadTooltip": "No photo yet — click to upload",
+    "clickToView": "click to view",
+    "replace": "Replace Photo"
   },
   "stockOpnameBorrowDocument": {
     "label": "Loan Document",
     "uploadCta": "Upload Document",
     "hint": "PDF, required for assets with Borrowed status",
     "clickToReplace": "click to replace",
-    "uploadTooltip": "No document yet — click to upload"
+    "uploadTooltip": "No document yet — click to upload",
+    "clickToView": "click to view",
+    "replace": "Replace Document"
   },
   "assetFilter": {
     "category": "Category",
@@ -2020,5 +2067,161 @@
   },
   "app": {
     "name": "Asset Management System"
+  },
+  "userAsset": {
+    "title": "Held Assets",
+    "subtitle": "Assets handed over to this user. They stay recorded under their branch.",
+    "homebase": "Active homebase",
+    "noHomebase": "No active homebase — this user cannot create transactions",
+    "changeHomebase": "Change homebase",
+    "setHomebase": "Set homebase",
+    "empty": "This user is not holding any assets",
+    "count": "{{count}} asset(s)",
+    "countPartial": "Showing {{shown}} of {{total}} assets",
+    "heldSince": "Held since {{date}}",
+    "branch": "Branch {{code}}",
+    "otherBranchHint": "This asset belongs to a branch other than the user's active homebase"
+  },
+  "userBranch": {
+    "title": "Branches",
+    "subtitle": "Homebase decides the branch code on the user's transaction numbers. Branch access only grants access to that branch's transactions and assets.",
+    "addAccess": "Add Access",
+    "empty": "This user has no branch yet",
+    "count": "{{count}} branch(es)",
+    "makeHomebase": "Make homebase",
+    "detail": "Detail",
+    "cancel": "Cancel",
+    "saving": "Saving...",
+    "searchBranch": "Search branch code or name...",
+    "noBranchCandidate": "No branch available",
+    "membership": {
+      "homebaseActive": "Active homebase",
+      "homebaseInactive": "Inactive homebase",
+      "assignment": "Access",
+      "temporary": "Temporary"
+    },
+    "homebaseModal": {
+      "title": "Change Homebase",
+      "current": "Current: {{code}} — {{name}}",
+      "notice": "The selected branch becomes the user's active homebase. The old homebase is not deleted, only deactivated. New transaction numbers will use the new branch code.",
+      "heldAssets": "This user is holding {{count}} asset(s). Changing homebase does not move them — they stay in their branch.",
+      "submit": "Set Homebase"
+    },
+    "accessModal": {
+      "title": "Add Branch Access",
+      "notice": "Access does not change the user's homebase. Branches the user already has are not listed.",
+      "submit": "Add Access ({{count}})"
+    },
+    "removeModal": {
+      "title": "Remove branch",
+      "description": "The user will no longer have {{code}} — {{name}}.",
+      "activeHomebase": "This is the active homebase — the user will have no active homebase until a new one is set.",
+      "confirm": "Remove"
+    },
+    "toast": {
+      "homebaseSet": "Homebase updated",
+      "accessAdded": "Access added to {{count}} branch(es)",
+      "removed": "Branch removed from user",
+      "failed": "Failed to save"
+    }
+  },
+  "userProfile": {
+    "myProfile": "My Profile",
+    "edit": "Update",
+    "failed": "Failed to save",
+    "info": {
+      "username": "Username",
+      "status": "Status",
+      "nik": "NIK",
+      "mpn": "MPN Number",
+      "createdAt": "Joined",
+      "updatedAt": "Last updated"
+    },
+    "avatar": {
+      "upload": "Upload photo",
+      "change": "Change photo",
+      "remove": "Remove photo",
+      "hint": "JPG, PNG, or WEBP, max 2 MB",
+      "tooLarge": "Photo is larger than 2 MB",
+      "uploaded": "Profile photo updated",
+      "removed": "Profile photo removed"
+    },
+    "password": {
+      "title": "Change Password",
+      "subtitleSelf": "Enter your current password to set a new one.",
+      "subtitleAdmin": "Set a new password for this user. The current password is not required.",
+      "current": "Current password",
+      "new": "New password",
+      "confirm": "Confirm new password",
+      "tooShort": "At least {{min}} characters",
+      "mismatch": "Passwords do not match",
+      "submit": "Save Password",
+      "changed": "Password changed"
+    }
+  },
+  "stockOpnameColumn": {
+    "transactionNumber": "Transaction No.",
+    "transactionDate": "Transaction Date",
+    "status": "Status",
+    "stage": "Stage",
+    "itemCount": "Asset Count",
+    "createdBy": "Created By",
+    "createdAt": "Created At",
+    "action": "Action"
+  },
+  "reviseStockOpnameModal": {
+    "title": "Revise Stock Opname",
+    "warningMessage": "The stock opname returns to Draft. The creator can only change the checked assets — other assets stay locked. Approval restarts from the first step after resubmission.",
+    "assetsLabel": "Assets to revise",
+    "selectedCount": "{{count}} of {{total}} selected",
+    "searchPlaceholder": "Search asset number or name...",
+    "checkAllShown": "Check all shown",
+    "noAssetsFound": "No assets found",
+    "notesLabel": "Revision Notes",
+    "notesPlaceholder": "Explain what needs to be fixed (minimum 5 characters)",
+    "notesTooShort": "Notes must be at least {{min}} characters ({{current}}/{{min}})",
+    "cancel": "Cancel",
+    "reviseAll": "Revise All",
+    "reviseSelected": "Revise Selected ({{count}})",
+    "revising": "Processing..."
+  },
+  "stockOpnameFilePreview": {
+    "close": "Close",
+    "replace": "Replace",
+    "loadError": "Failed to load file.",
+    "noPreview": "This file format can't be previewed in the browser.",
+    "download": "Download"
+  },
+  "procurementStage": {
+    "stage": {
+      "DRAFT": "Draft",
+      "ASSET_VERIFICATION": "Asset Verification",
+      "APPROVAL": "Approval",
+      "PROCESS_BUDGET": "Process Budget",
+      "EXECUTE_ASET": "Execute Asset",
+      "GR": "Goods Receipt",
+      "FINISHED": "Finished",
+      "REJECTED": "Rejected",
+      "CANCELLED": "Cancelled"
+    }
+  },
+  "procurementDocuments": {
+    "missing": "Required — not uploaded yet",
+    "optional": "Optional — not uploaded",
+    "uploading": "Uploading...",
+    "reupload": "Re-upload",
+    "tooLarge": "File is larger than 10 MB",
+    "noneForStage": "No documents for this stage"
+  },
+  "mutationStage": {
+    "stage": {
+      "DRAFT": "Draft",
+      "APPROVAL": "Approval",
+      "MUTATION_RECEIVING": "Mutation Receiving",
+      "EXECUTE_MUTATION": "Execute Mutation",
+      "FINISHED": "Finished",
+      "REJECTED": "Rejected",
+      "CANCELLED": "Cancelled"
+    }
   }
 }

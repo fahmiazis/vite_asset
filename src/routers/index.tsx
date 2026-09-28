@@ -19,6 +19,7 @@ import CreateMenu from '../components/pages/menu/create'
 import DetailMenu from '../components/pages/menu/detail'
 import AssignMenuPage from '../components/pages/menu/assign'
 import UpdateUser from '../components/pages/user/update'
+import ProfilePage from '../components/pages/profile'
 import CreateApproval from '../components/pages/approval/create'
 import ApprovalPage from '../components/pages/approval'
 import ApprovalFlowDetail from '../components/pages/approval/detail'
@@ -68,6 +69,7 @@ import ProcurementReportPage from '../components/pages/procurementReport'
 import MutationReportPage from '../components/pages/mutationReport'
 import DisposalReportPage from '../components/pages/disposalReport'
 import StockOpnameConfigPage from '../components/pages/stockOpname/config'
+import StockOpnameStatusMasterPage from '../components/pages/stockOpname/statusMaster'
 import StockOpnameFillPage from '../components/pages/stockOpname/fill'
 import GuidePage from '../components/pages/guide'
 import StockOpnameGuidePage from '../components/pages/guide/stockOpname'
@@ -211,6 +213,10 @@ export const router = createBrowserRouter([
             element: <StockOpnameConfigPage />,
           },
           {
+            path: 'stock-opname/status-master',
+            element: <StockOpnameStatusMasterPage />,
+          },
+          {
             path: 'stock-opname/*',
             element: <StockOpnameDetailPage />,
           },
@@ -335,6 +341,10 @@ export const router = createBrowserRouter([
           {
             path: 'user/:id/update',
             element: <UpdateUser />,
+          },
+          {
+            path: 'profile',
+            element: <ProfilePage />,
           },
           {
             path: 'approval',

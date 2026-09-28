@@ -126,10 +126,12 @@ export default function SidebarContent({ className }: SidebarContenProps) {
   const handleLogout = useLogout()
 
   return (
-    <div className={`${className} flex flex-col h-[90%] text-black dark:text-white`}>
+    // flex-1 + min-h-0: mengisi sisa tinggi di bawah logo, jadi hanya daftar
+    // menu yang scroll dan tombol logout selalu kelihatan di bawah
+    <div className={`${className} flex flex-col flex-1 min-h-0 text-black dark:text-white`}>
 
       {/* MENU (scrollable) */}
-      <div className="flex-1 overflow-y-auto mt-12 space-y-2 pr-1">
+      <div className="flex-1 min-h-0 overflow-y-auto hide-scrollbar mt-12 space-y-2 pr-1">
         <Links
           href="/dashboard"
           className={`${ITEM_BASE} ${

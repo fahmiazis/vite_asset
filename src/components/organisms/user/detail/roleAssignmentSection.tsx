@@ -60,7 +60,7 @@ export default function RoleAssignmentSection({
 
   return (
     <div
-      className={`bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-xl p-5 ${className}`}
+      className={`flex flex-col bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-xl p-5 ${className}`}
     >
       <div className="flex items-start justify-between gap-3 mb-4">
         <div>
@@ -107,7 +107,10 @@ export default function RoleAssignmentSection({
       ) : roles.length === 0 ? (
         <p className="text-center text-sm text-gray-400 py-6">Belum ada role</p>
       ) : (
-        <div className="space-y-2">
+        // mengisi sisa tinggi kartu lalu scroll — di layar lebar tinggi kartu
+        // mengikuti kolom info user + ganti password (lihat pages/user/detail);
+        // di layar kecil dibatasi max-h-96
+        <div className="flex-1 min-h-0 space-y-2 max-h-96 lg:max-h-none overflow-y-auto pr-1 app-scrollbar">
           {roles.map((role) => (
             <label
               key={role.id}

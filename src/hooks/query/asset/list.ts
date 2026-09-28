@@ -9,6 +9,7 @@ export interface UseAssetListParams {
   assetStatus?: string
   branchCode?: string
   categoryId?: number
+  assignedUserId?: string
   /** tunda fetch sampai filter wajibnya siap (mis. menunggu branch homebase) */
   enabled?: boolean
 }
@@ -23,6 +24,7 @@ export const useAssetList = (params: UseAssetListParams) => {
       params.assetStatus ?? "",
       params.branchCode ?? "",
       params.categoryId ?? "",
+      params.assignedUserId ?? "",
     ],
     queryFn: () => assetList(params),
     enabled: params.enabled ?? true,

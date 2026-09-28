@@ -18,6 +18,7 @@ export const emailTransactionTypes: { id: EmailTransactionType; value: EmailTran
   { id: "disposal", value: "disposal", label: "Disposal" },
   { id: "disposal_agreement", value: "disposal_agreement", label: "Disposal Agreement" },
   { id: "handover", value: "handover", label: "Asset Handover" },
+  { id: "stock_opname", value: "stock_opname", label: "Stock Opname" },
 ]
 
 export const emailStagesByType: Record<EmailTransactionType, string[]> = {
@@ -26,14 +27,23 @@ export const emailStagesByType: Record<EmailTransactionType, string[]> = {
   disposal: ["DRAFT", "PURCHASING", "APPROVAL_REQUEST", "EXECUTE", "FINANCE", "TAX", "ASSET_DELETION"],
   disposal_agreement: ["CREATE", "APPROVAL_AGREEMENT"],
   handover: ["DRAFT", "APPROVAL", "HANDOVER_RECEIVING"],
+  stock_opname: ["DRAFT", "APPROVAL", "EXECUTE_STOCK_OPNAME"],
 }
 
 export const emailActions: EmailAction[] = ["proceed", "reject", "revise", "cancel"]
 
-/** aksi yang benar-benar ada per jenis transaksi — agreement tidak punya batal */
+/**
+ * aksi yang benar-benar ada per jenis transaksi — agreement tidak punya batal;
+ * stock opname tidak punya batal, dan DRAFT hanya bisa disubmit. Revisi
+ * (approver di APPROVAL, executor di EXECUTE_STOCK_OPNAME) mengembalikan ke
+ * DRAFT, tolak bersifat final — keduanya dikirim ke pembuat
+ */
 export function emailActionsFor(transactionType: EmailTransactionType | "", stage: string): EmailAction[] {
   if (transactionType === "disposal_agreement") {
     return stage === "CREATE" ? ["proceed"] : ["proceed", "reject", "revise"]
+  }
+  if (transactionType === "stock_opname") {
+    return stage === "DRAFT" ? ["proceed"] : ["proceed", "reject", "revise"]
   }
   return emailActions
 }

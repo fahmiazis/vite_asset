@@ -3,7 +3,9 @@ import { useNavigate, useParams } from "react-router-dom"
 import { useTranslation } from "react-i18next"
 import { useStockOpnameDetail } from "../../../../hooks/query/stockOpname/detail"
 import { useBulkUpdateStockOpnameFinding } from "../../../../hooks/mutation/stockOpname/bulkUpdateFinding"
+import { useStockOpnamePhysicalStatusMasters } from "../../../../hooks/query/stockOpname/physicalStatusMasterList"
 import { StockOpnameFillGridRow, type FillFieldName, type FillRowState } from "../../../organisms/stockOpname/fillGridRow"
+import { reconcileCondition } from "../../../organisms/stockOpname/findingOptions"
 import type { BulkUpdateStockOpnameFindingItem } from "../../../../models/stockOpname/bulkUpdateFinding"
 
 const AUTOSAVE_INTERVAL_MS = 8000
@@ -22,6 +24,8 @@ export default function StockOpnameFillPage() {
 
   const { data, isLoading } = useStockOpnameDetail(transactionNumber)
   const { mutateAsync: bulkUpdate } = useBulkUpdateStockOpnameFinding({ transactionNumber })
+  const { data: physicalStatusMastersData } = useStockOpnamePhysicalStatusMasters()
+  const physicalStatusMasters = useMemo(() => physicalStatusMastersData?.data ?? [], [physicalStatusMastersData])
 
   const [rows, setRows] = useState<Record<number, FillRowState>>({})
   const [rowErrors, setRowErrors] = useState<Record<number, string>>({})
@@ -34,9 +38,15 @@ export default function StockOpnameFillPage() {
   const flushingRef = useRef(false)
   const searchInputRef = useRef<HTMLInputElement>(null)
 
-  const items = useMemo(() => data?.data?.items ?? [], [data])
   const transaction = data?.data?.transaction
   const isDraft = transaction?.current_stage === "DRAFT"
+  const revisionMode = isDraft && !!data?.data?.revision_mode
+  // Selama DRAFT revisi cuma asset yang dichecklist yang boleh diubah —
+  // asset lain gak ditampilin di grid sama sekali (dikunci juga di BE).
+  const items = useMemo(() => {
+    const all = data?.data?.items ?? []
+    return data?.data?.revision_mode ? all.filter((item) => item.needs_revision) : all
+  }, [data])
 
   // Ctrl/Cmd+F fokus ke search box di halaman ini alih-alih native
   // find-in-page browser — lebih kepake karena beneran filter baris grid,
@@ -94,15 +104,13 @@ export default function StockOpnameFillPage() {
       const next: FillRowState = { ...current, [field]: rawValue }
       const patch: Partial<BulkUpdateStockOpnameFindingItem> = { [field]: rawValue }
 
-      // Fisik "Tidak Ada" -> Kondisi otomatis "Tidak Ada" & terkunci.
-      // Balik ke "Ada" -> Kondisi direset kosong biar dipilih ulang.
+      // Kondisi ngikutin relasi status fisik -> kondisi di master data: yang
+      // gak diizinkan lagi direset, kalau cuma 1 opsi langsung dipilih.
       if (field === "physical_status") {
-        if (rawValue === "MISSING") {
-          next.condition = "NOT_APPLICABLE"
-          patch.condition = "NOT_APPLICABLE"
-        } else if (current.condition === "NOT_APPLICABLE") {
-          next.condition = ""
-          patch.condition = ""
+        const reconciled = reconcileCondition(physicalStatusMasters, rawValue, current.condition)
+        if (reconciled !== current.condition) {
+          next.condition = reconciled
+          patch.condition = reconciled
         }
       }
 
@@ -111,7 +119,7 @@ export default function StockOpnameFillPage() {
     })
 
     setRowErrors((prev) => (prev[assetId] ? { ...prev, [assetId]: "" } : prev))
-  }, [])
+  }, [physicalStatusMasters])
 
   const flush = useCallback(async () => {
     if (flushingRef.current) return
@@ -154,18 +162,19 @@ export default function StockOpnameFillPage() {
 
   // Dokumen peminjaman kesimpen lewat endpoint upload terpisah (bukan lewat
   // bulk-update-finding), tapi validasi "wajib ada dokumen" terjadi pas
-  // physical_status=BORROWED disimpan. Kalau user pilih "Dipinjam" duluan
-  // sebelum dokumennya keupload, autosave bakal gagal & pending fieldnya
-  // ke-drop (lihat flush) — begitu dokumen kelar diupload, re-queue &
-  // langsung coba simpan ulang biar gak nunggu interval berikutnya.
+  // physical_status yang requires_borrow_document disimpan. Kalau user pilih
+  // status itu duluan sebelum dokumennya keupload, autosave bakal gagal &
+  // pending fieldnya ke-drop (lihat flush) — begitu dokumen kelar diupload,
+  // re-queue pakai physical_status yang lagi dipilih di baris itu & langsung
+  // coba simpan ulang biar gak nunggu interval berikutnya.
   const handleBorrowDocumentUploaded = useCallback((assetId: number) => {
     pendingRef.current[assetId] = {
       ...pendingRef.current[assetId],
-      physical_status: "BORROWED",
-      condition: "NOT_APPLICABLE",
+      physical_status: rows[assetId]?.physical_status || "",
+      condition: rows[assetId]?.condition || "",
     }
     flush()
-  }, [flush])
+  }, [flush, rows])
 
   useEffect(() => {
     const interval = setInterval(flush, AUTOSAVE_INTERVAL_MS)
@@ -260,6 +269,15 @@ export default function StockOpnameFillPage() {
         </div>
       </div>
 
+      {revisionMode && (
+        <div className="flex items-center gap-2 px-4 py-2 border-b border-amber-100 dark:border-amber-900/40 bg-amber-50 dark:bg-amber-900/20 text-xs text-amber-700 dark:text-amber-400">
+          <svg className="w-3.5 h-3.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h10a5 5 0 015 5v2M3 10l4-4m-4 4l4 4" />
+          </svg>
+          {t("stockOpnameFillPage.revisionModeNotice", { count: items.length })}
+        </div>
+      )}
+
       {/* Body */}
       {!isDraft ? (
         <div className="flex-1 flex items-center justify-center px-4">
@@ -309,6 +327,7 @@ export default function StockOpnameFillPage() {
                   state={rows[item.asset_id] ?? emptyRowState()}
                   error={rowErrors[item.asset_id]}
                   t={t}
+                  physicalStatusMasters={physicalStatusMasters}
                   onFieldChange={handleFieldChange}
                   onBorrowDocumentUploaded={handleBorrowDocumentUploaded}
                 />

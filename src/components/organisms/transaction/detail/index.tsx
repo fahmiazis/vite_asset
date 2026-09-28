@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import type { detailtransactionProps } from "../../../../models/transaction/detail"
 import { useSubmitProcurement } from "../../../../hooks/mutation/transaction/submit"
 import toast from "react-hot-toast"
@@ -16,6 +16,14 @@ import { ProcessBudgetModal } from "../processBudgetModal"
 import { ExecuteAssetModal } from "../executeAssetModal"
 import { approvalRoleWithActor } from "../../../../utils/approval"
 import { RevisionDecisionModal } from "../../common/revisionDecisionModal"
+import { StageStepper } from "../../common/stageStepper"
+import { ProcurementDocumentsSection, ProcurementStageDocuments } from "./procurementDocuments"
+import {
+  PROCUREMENT_STAGES,
+  PROCUREMENT_TERMINAL_STAGES,
+  hasReachedProcurementStage,
+  procurementStageLabel,
+} from "../../../../utils/procurementStage"
 import { useMyProfile } from "../../../../hooks/query/auth/myProfile"
 import {
   useCancelProcurement,
@@ -122,6 +130,22 @@ export function FileUploadField({ label, file, onChange, onRemove }: {
 type AttachmentItem = { id: number; name: string; is_required?: boolean }
 type AttachmentState = AttachmentItem & { file: File | null }
 
+/**
+ * Dokumen DRAFT yang sudah tersimpan — dibaca ulang supaya modal tidak
+ * meminta upload lagi. Backend menolak upload kedua untuk config yang sama
+ * selama dokumennya belum ditolak, jadi tanpa ini user buntu kalau submit
+ * sebelumnya gagal setelah dokumennya terlanjur terunggah.
+ */
+function useExistingDraftAttachments(transactionNumber: string) {
+  const { data } = useAttachTransaction(transactionNumber)
+  const byConfig = new Map<number, { file_name: string; status: string }>()
+  for (const att of data?.data ?? []) {
+    if (att.stage !== "DRAFT") continue
+    byConfig.set(att.attachment_config_id, { file_name: att.file_name, status: att.status })
+  }
+  return byConfig
+}
+
 function SubmitModal({ transactionNumber, transactionType, stage, mappedAttachments = [], onConfirm, onCancel }: {
   transactionNumber: string
   transactionType: string
@@ -135,6 +159,13 @@ function SubmitModal({ transactionNumber, transactionType, stage, mappedAttachme
   const [notes, setNotes] = useState("")
   const [attachments, setAttachments] = useState<AttachmentState[]>([])
   const { mutateAsync: uploadAttachment, isPending: isUploading } = useUploadAttachment()
+  const existing = useExistingDraftAttachments(transactionNumber)
+
+  // yang sudah diunggah dan belum ditolak tidak perlu (dan tidak bisa) diunggah ulang
+  const isUploaded = (configId: number) => {
+    const att = existing.get(configId)
+    return !!att && att.status !== "REJECTED"
+  }
 
   useEffect(() => {
     if (mappedAttachments.length > 0) {
@@ -146,11 +177,13 @@ function SubmitModal({ transactionNumber, transactionType, stage, mappedAttachme
     setAttachments((prev) => prev.map((item) => item.id === id ? { ...item, file } : item))
   }
 
-  const hasMissingRequired = attachments.some((item) => item.is_required && !item.file)
+  const hasMissingRequired = attachments.some(
+    (item) => item.is_required && !item.file && !isUploaded(item.id)
+  )
 
   const handleSubmit = async () => {
     try {
-      const filesToUpload = attachments.filter((item) => item.file)
+      const filesToUpload = attachments.filter((item) => item.file && !isUploaded(item.id))
       await Promise.all(
         filesToUpload.map((item) =>
           uploadAttachment({
@@ -162,6 +195,7 @@ function SubmitModal({ transactionNumber, transactionType, stage, mappedAttachme
       await queryClient.resetQueries({
         queryKey: ["transaction-detail-with-stage"],
       })
+      queryClient.invalidateQueries({ queryKey: ["attach-transaction", transactionNumber] })
       onConfirm(notes)
     } catch {
       toast.error(t("detailTransaction.submitModal.uploadError"))
@@ -197,15 +231,40 @@ function SubmitModal({ transactionNumber, transactionType, stage, mappedAttachme
             />
           </div>
           <div className="space-y-4">
-            {attachments.map((item) => (
-              <FileUploadField
-                key={item.id}
-                label={`${item.name}${item.is_required ? " *" : ""}`}
-                file={item.file}
-                onChange={(file) => handleFileChange(item.id, file)}
-                onRemove={() => handleFileChange(item.id, null)}
-              />
-            ))}
+            {attachments.map((item) => {
+              const uploaded = existing.get(item.id)
+              if (uploaded && isUploaded(item.id)) {
+                return (
+                  <div key={item.id}>
+                    <p className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      {`${item.name}${item.is_required ? " *" : ""}`}
+                    </p>
+                    <div className="flex items-center gap-2 px-3 py-2 rounded-lg border border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-900/20">
+                      <svg className="w-4 h-4 text-emerald-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span className="text-xs text-emerald-700 dark:text-emerald-400 truncate flex-1">{uploaded.file_name}</span>
+                      <span className="text-[11px] text-emerald-600 dark:text-emerald-400 flex-shrink-0">
+                        {t("detailTransaction.submitModal.alreadyUploaded")}
+                      </span>
+                    </div>
+                  </div>
+                )
+              }
+              return (
+                <div key={item.id}>
+                  <FileUploadField
+                    label={`${item.name}${item.is_required ? " *" : ""}`}
+                    file={item.file}
+                    onChange={(file) => handleFileChange(item.id, file)}
+                    onRemove={() => handleFileChange(item.id, null)}
+                  />
+                  {uploaded?.status === "REJECTED" && (
+                    <p className="mt-1 text-xs text-red-500">{t("detailTransaction.submitModal.rejectedReupload")}</p>
+                  )}
+                </div>
+              )
+            })}
           </div>
         </div>
         <div className="flex gap-3 mt-5">
@@ -236,19 +295,28 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
   const [showExecuteModal, setShowExecuteModal] = useState(false)
   const [showGRModal, setShowGRModal] = useState(false)
   const [revisionMode, setRevisionMode] = useState<"revise" | "cancel" | null>(null)
+  // undefined = belum pernah diklik → stage berjalan terbuka otomatis
+  const [pickedStage, setPickedStage] = useState<string | null | undefined>(undefined)
 
   const totalUnit = items.reduce((sum, item) => sum + item.quantity, 0)
   const totalNilai = items.reduce((sum, item) => sum + item.total_price, 0)
 
-  const { data: attachSetting } = useAttachmentSettingList("procurement")
+  // hanya dokumen stage DRAFT — dulu semua stage ikut tampil di modal submit
+  const { data: attachSetting } = useAttachmentSettingList("procurement", "DRAFT")
 
   const formatAttachmentName = (value: string) =>
     value.toLowerCase().split("_").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")
 
-  const mappedAttachments = attachSetting?.data?.map(item => ({
-    id: item.id,
-    name: formatAttachmentName(item.attachment_type),
-  })) ?? []
+  const mappedAttachments = useMemo(
+    () =>
+      attachSetting?.data?.map(item => ({
+        id: item.id,
+        name: formatAttachmentName(item.attachment_type),
+        is_required: item.is_required,
+      })) ?? [],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [attachSetting]
+  )
 
   const { mutateAsync: submitTransaction, isPending: isSubmitting } = useSubmitProcurement({
     onSuccess: () => setShowSubmitModal(false),
@@ -311,6 +379,151 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
     userRoles.includes(pendingApproval.approver_role_id)
   )
 
+  // status approval — dirender di dalam stepper saat stage APPROVAL dibuka
+  const approvalContent = (
+    <div>
+      <div className="flex items-center justify-between mb-3">
+        <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400">{t("detailTransaction.approval.title")}</h4>
+        {totalSteps > 0 && (
+          <span className="text-xs text-gray-500 dark:text-gray-400">
+            {t("detailTransaction.approval.stepsCompleted", { completed: completedSteps, total: totalSteps })}
+          </span>
+        )}
+      </div>
+      {totalSteps > 0 && (
+        <div className="w-full h-1.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden mb-5">
+          <div className="h-full bg-emerald-500 rounded-full transition-all duration-500" style={{ width: `${(completedSteps / totalSteps) * 100}%` }} />
+        </div>
+      )}
+
+      {isLoadingApproval ? (
+        <div className="space-y-4">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="flex gap-3 animate-pulse">
+              <div className="w-7 h-7 rounded-full bg-gray-200 dark:bg-gray-700 flex-shrink-0" />
+              <div className="flex-1 space-y-2 pt-1">
+                <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-2/3" />
+                <div className="h-2.5 bg-gray-100 dark:bg-gray-800 rounded w-1/3" />
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : approvals.length === 0 ? (
+        <p className="text-xs text-gray-400 text-center py-4">{t("detailTransaction.approval.noData")}</p>
+      ) : (
+        <div>
+          {approvals.map((approval: approvalStatusState, index: number) => {
+            const status = approval.status?.toLowerCase() ?? "pending"
+            const isLast = index === approvals.length - 1
+            const isApproved = status === "approved"
+            const isRejected = status === "rejected"
+
+            const stepColor = isApproved ? "bg-emerald-500 border-emerald-500 text-white"
+              : isRejected ? "bg-red-500 border-red-500 text-white"
+                : "bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-400"
+
+            const badgeColor = isApproved ? "text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 border-emerald-200 dark:border-emerald-700"
+              : isRejected ? "text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/30 border-red-200 dark:border-red-700"
+                : "text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/30 border-amber-200 dark:border-amber-700"
+
+            const dotColor = isApproved ? "bg-emerald-500" : isRejected ? "bg-red-500" : "bg-amber-400"
+            const badgeLabel = isApproved
+              ? t("detailTransaction.approval.status.approved")
+              : isRejected
+                ? t("detailTransaction.approval.status.rejected")
+                : t("detailTransaction.approval.status.pending")
+
+            return (
+              <div key={approval.id} className="flex gap-3">
+                <div className="flex flex-col items-center">
+                  <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold border-2 flex-shrink-0 ${stepColor}`}>
+                    {isApproved ? (
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
+                    ) : isRejected ? (
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" /></svg>
+                    ) : index + 1}
+                  </div>
+                  {!isLast && <div className={`w-0.5 flex-1 mt-1 min-h-4 ${isApproved ? "bg-emerald-400" : "bg-gray-200 dark:bg-gray-700"}`} />}
+                </div>
+
+                <div className="pb-4 flex-1">
+                  <div className="flex items-start justify-between gap-2">
+                    <div>
+                      <p className="text-xs font-semibold text-gray-800 dark:text-gray-100">
+                        {approval.flow_step?.step_name ?? t("detailTransaction.approval.stepFallback", { index: index + 1 })}
+                      </p>
+                      <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">
+                        {approvalRoleWithActor(approval.approver_role_name, approval)}
+                      </p>
+                    </div>
+                    <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium border flex-shrink-0 ${badgeColor}`}>
+                      <span className={`w-1.5 h-1.5 rounded-full ${dotColor}`} />
+                      {badgeLabel}
+                    </span>
+                  </div>
+
+                  {isApproved && approval.updated_at && (
+                    <div className="mt-1.5 flex items-center gap-1 text-xs text-emerald-600 dark:text-emerald-400">
+                      <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                      {t("detailTransaction.approval.approvedAt", {
+                        date: new Date(approval.updated_at).toLocaleString("id-ID", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" }),
+                      })}
+                      {approval.approved_by && (
+                        <span className="text-gray-400 dark:text-gray-500 ml-1">
+                          · {t("detailTransaction.approval.by")} {approval.approved_by}
+                        </span>
+                      )}
+                    </div>
+                  )}
+
+                  {isRejected && approval.rejected_at && (
+                    <div className="mt-1.5 flex items-center gap-1 text-xs text-red-500 dark:text-red-400">
+                      <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                      {t("detailTransaction.approval.rejectedAt", {
+                        date: new Date(approval.rejected_at).toLocaleString("id-ID", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" }),
+                      })}
+                      {approval.rejected_by && (
+                        <span className="text-gray-400 dark:text-gray-500 ml-1">
+                          · {t("detailTransaction.approval.by")} {approval.rejected_by}
+                        </span>
+                      )}
+                    </div>
+                  )}
+
+                  {approval.notes && (
+                    <p className="mt-1.5 text-xs text-gray-500 dark:text-gray-400 italic bg-gray-50 dark:bg-gray-800 px-2 py-1 rounded">
+                      "{approval.notes}"
+                    </p>
+                  )}
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      )}
+    </div>
+  )
+
+  // ── Stage progress & dokumen (pola sama dengan detail disposal) ──
+  const currentStage = transaction.current_stage?.toUpperCase() ?? ""
+  const isTerminalStage = PROCUREMENT_TERMINAL_STAGES.includes(currentStage)
+  const selectedStage =
+    pickedStage === undefined ? (isTerminalStage ? null : currentStage) : pickedStage
+  const stageHistory = selectedStage
+    ? (data?.data?.stages ?? []).filter((s) => s.to_stage?.toUpperCase() === selectedStage)
+    : []
+  // cabang pengajuan = segmen ke-2 nomor transaksi (homebase pembuat saat nomor
+  // dibuat), sama dengan yang dipakai backend untuk memilih config dokumen
+  const branchCode = transaction.transaction_number.split("/")[1] ?? ""
+  // DRAFT diunggah pembuatnya; stage lain oleh pemegang stage berjalan
+  const canUploadAtStage = (stage: string) =>
+    stage === currentStage &&
+    (stage === "DRAFT" ? isCreator : waitingForMe)
+  // dokumen dinilai pemegang stage setelah DRAFT (mis. verifikator aset)
+  const canReviewDocuments = waitingForMe && currentStage !== "DRAFT"
+  // bar aksi di bawah hanya tampil kalau memang ada tombol
+  const hasStageActions = isVerif || isApprove || isBudget || isExecute || isGR || canCancel
+
   const infoGrid = [
     { label: t("detailTransaction.info.transactionType"), value: transaction.transaction_type },
     { label: t("detailTransaction.info.date"), value: formatDate(transaction.transaction_date) },
@@ -370,7 +583,7 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
         <SubmitModal
           transactionNumber={transaction.transaction_number}
           transactionType={transaction.transaction_type}
-          stage={transaction.status}
+          stage={transaction.current_stage}
           onConfirm={handleConfirmSubmit}
           onCancel={() => setShowSubmitModal(false)}
           mappedAttachments={mappedAttachments}
@@ -436,6 +649,79 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
         </div>
       </div>
 
+      {/* Progres stage — status tiap stage dibuka dari sini */}
+      <StageStepper
+        stages={PROCUREMENT_STAGES}
+        currentStage={currentStage}
+        labelOf={procurementStageLabel}
+        terminalLabel={isTerminalStage ? procurementStageLabel(currentStage) : null}
+        selectedStage={selectedStage}
+        onSelectStage={(next) => setPickedStage(next === selectedStage ? null : next)}
+      >
+        {selectedStage && (
+          <div className="space-y-5">
+            <div className="flex items-center justify-between gap-2">
+              <p className="text-xs text-gray-400">
+                {t("disposalStagePanel.showing", { stage: procurementStageLabel(selectedStage) })}
+              </p>
+              {selectedStage === currentStage && (
+                <span className="text-xs px-2 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400">
+                  {t("disposalStagePanel.currentStage")}
+                </span>
+              )}
+            </div>
+
+            {selectedStage === "APPROVAL" && approvalContent}
+
+            {(isTerminalStage || hasReachedProcurementStage(currentStage, selectedStage)) && (
+              <ProcurementStageDocuments
+                embedded
+                transactionNumber={transaction.transaction_number}
+                stage={selectedStage}
+                branchCode={branchCode}
+                // unggah hanya dari section Dokumen di bawah, supaya tombolnya tidak dobel
+                canUpload={false}
+                canReview={canReviewDocuments}
+                myUserId={profile?.data?.id}
+              />
+            )}
+
+            {stageHistory.length > 0 ? (
+              <div>
+                <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2">
+                  {t("disposalStagePanel.historyTitle")}
+                </h4>
+                <div className="space-y-1.5">
+                  {stageHistory.map((item, index) => (
+                    <div
+                      key={item.id ?? index}
+                      className="flex items-start justify-between gap-3 px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-800/50"
+                    >
+                      <div className="min-w-0">
+                        <p className="text-xs text-gray-700 dark:text-gray-300">
+                          {item.action}
+                          {item.actor_name && <span className="text-gray-400"> · {item.actor_name}</span>}
+                        </p>
+                        {item.notes && (
+                          <p className="text-xs text-gray-500 dark:text-gray-400 italic mt-0.5">"{item.notes}"</p>
+                        )}
+                      </div>
+                      <span className="text-xs text-gray-400 whitespace-nowrap flex-shrink-0">
+                        {new Date(item.created_at).toLocaleString("id-ID", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" })}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              !hasReachedProcurementStage(currentStage, selectedStage) && selectedStage !== "APPROVAL" && (
+                <p className="text-sm text-gray-400 text-center py-6">{t("disposalStagePanel.nothingToShow")}</p>
+              )
+            )}
+          </div>
+        )}
+      </StageStepper>
+
       {/* Items */}
       <div className="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-xl p-5">
         <div className="flex items-center justify-between mb-4">
@@ -443,6 +729,20 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
           <span className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-500 px-2 py-0.5 rounded-full">
             {t("detailTransaction.items.count", { count: items.length })}
           </span>
+        </div>
+
+        {/* Ringkasan total — dulu di bar bawah halaman */}
+        <div className="grid grid-cols-2 gap-3 mb-4">
+          <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
+            <p className="text-xs text-gray-400 mb-1">{t("detailTransaction.summary.totalItems")}</p>
+            <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">
+              {t("detailTransaction.summary.itemsValue", { types: items.length, units: totalUnit })}
+            </p>
+          </div>
+          <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
+            <p className="text-xs text-gray-400 mb-1">{t("detailTransaction.summary.totalValue")}</p>
+            <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">{formatRupiah(totalNilai)}</p>
+          </div>
         </div>
 
         <div className="space-y-3">
@@ -511,145 +811,20 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
         </div>
       </div>
 
-      {/* Approval Flow */}
-      <div className="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-xl p-5">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200">{t("detailTransaction.approval.title")}</h3>
-          {totalSteps > 0 && (
-            <span className="text-xs text-gray-500 dark:text-gray-400">
-              {t("detailTransaction.approval.stepsCompleted", { completed: completedSteps, total: totalSteps })}
-            </span>
-          )}
-        </div>
+      {/* Dokumen semua stage */}
+      <ProcurementDocumentsSection
+        transactionNumber={transaction.transaction_number}
+        branchCode={branchCode}
+        currentStage={currentStage}
+        canUploadAtStage={canUploadAtStage}
+        canReview={canReviewDocuments}
+        myUserId={profile?.data?.id}
+      />
 
-        {totalSteps > 0 && (
-          <div className="w-full h-1.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden mb-5">
-            <div className="h-full bg-emerald-500 rounded-full transition-all duration-500" style={{ width: `${(completedSteps / totalSteps) * 100}%` }} />
-          </div>
-        )}
-
-        {isLoadingApproval ? (
-          <div className="space-y-4">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="flex gap-3 animate-pulse">
-                <div className="w-7 h-7 rounded-full bg-gray-200 dark:bg-gray-700 flex-shrink-0" />
-                <div className="flex-1 space-y-2 pt-1">
-                  <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-2/3" />
-                  <div className="h-2.5 bg-gray-100 dark:bg-gray-800 rounded w-1/3" />
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : approvals.length === 0 ? (
-          <p className="text-xs text-gray-400 text-center py-4">{t("detailTransaction.approval.noData")}</p>
-        ) : (
-          <div>
-            {approvals.map((approval: approvalStatusState, index: number) => {
-              const status = approval.status?.toLowerCase() ?? "pending"
-              const isLast = index === approvals.length - 1
-              const isApproved = status === "approved"
-              const isRejected = status === "rejected"
-
-              const stepColor = isApproved ? "bg-emerald-500 border-emerald-500 text-white"
-                : isRejected ? "bg-red-500 border-red-500 text-white"
-                  : "bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-400"
-
-              const badgeColor = isApproved ? "text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 border-emerald-200 dark:border-emerald-700"
-                : isRejected ? "text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/30 border-red-200 dark:border-red-700"
-                  : "text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/30 border-amber-200 dark:border-amber-700"
-
-              const dotColor = isApproved ? "bg-emerald-500" : isRejected ? "bg-red-500" : "bg-amber-400"
-              const badgeLabel = isApproved
-                ? t("detailTransaction.approval.status.approved")
-                : isRejected
-                  ? t("detailTransaction.approval.status.rejected")
-                  : t("detailTransaction.approval.status.pending")
-
-              return (
-                <div key={approval.id} className="flex gap-3">
-                  <div className="flex flex-col items-center">
-                    <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold border-2 flex-shrink-0 ${stepColor}`}>
-                      {isApproved ? (
-                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
-                      ) : isRejected ? (
-                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" /></svg>
-                      ) : index + 1}
-                    </div>
-                    {!isLast && <div className={`w-0.5 flex-1 mt-1 min-h-4 ${isApproved ? "bg-emerald-400" : "bg-gray-200 dark:bg-gray-700"}`} />}
-                  </div>
-
-                  <div className="pb-4 flex-1">
-                    <div className="flex items-start justify-between gap-2">
-                      <div>
-                        <p className="text-xs font-semibold text-gray-800 dark:text-gray-100">
-                          {approval.flow_step?.step_name ?? t("detailTransaction.approval.stepFallback", { index: index + 1 })}
-                        </p>
-                        <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">
-                          {approvalRoleWithActor(approval.approver_role_name, approval)}
-                        </p>
-                      </div>
-                      <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium border flex-shrink-0 ${badgeColor}`}>
-                        <span className={`w-1.5 h-1.5 rounded-full ${dotColor}`} />
-                        {badgeLabel}
-                      </span>
-                    </div>
-
-                    {isApproved && approval.updated_at && (
-                      <div className="mt-1.5 flex items-center gap-1 text-xs text-emerald-600 dark:text-emerald-400">
-                        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                        {t("detailTransaction.approval.approvedAt", {
-                          date: new Date(approval.updated_at).toLocaleString("id-ID", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" }),
-                        })}
-                        {approval.approved_by && (
-                          <span className="text-gray-400 dark:text-gray-500 ml-1">
-                            · {t("detailTransaction.approval.by")} {approval.approved_by}
-                          </span>
-                        )}
-                      </div>
-                    )}
-
-                    {isRejected && approval.rejected_at && (
-                      <div className="mt-1.5 flex items-center gap-1 text-xs text-red-500 dark:text-red-400">
-                        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                        {t("detailTransaction.approval.rejectedAt", {
-                          date: new Date(approval.rejected_at).toLocaleString("id-ID", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" }),
-                        })}
-                        {approval.rejected_by && (
-                          <span className="text-gray-400 dark:text-gray-500 ml-1">
-                            · {t("detailTransaction.approval.by")} {approval.rejected_by}
-                          </span>
-                        )}
-                      </div>
-                    )}
-
-                    {approval.notes && (
-                      <p className="mt-1.5 text-xs text-gray-500 dark:text-gray-400 italic bg-gray-50 dark:bg-gray-800 px-2 py-1 rounded">
-                        "{approval.notes}"
-                      </p>
-                    )}
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        )}
-      </div>
-
-      {/* Summary */}
-      <div className="flex items-center justify-between bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl px-5 py-4">
-        <div className="flex gap-8">
-          <div>
-            <p className="text-xs text-gray-500 mb-0.5">{t("detailTransaction.summary.totalItems")}</p>
-            <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">
-              {t("detailTransaction.summary.itemsValue", { types: items.length, units: totalUnit })}
-            </p>
-          </div>
-          <div>
-            <p className="text-xs text-gray-500 mb-0.5">{t("detailTransaction.summary.totalValue")}</p>
-            <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">{formatRupiah(totalNilai)}</p>
-          </div>
-        </div>
-        <div>
+      {/* Aksi stage — total item & nilai sekarang di kartu Daftar Item */}
+      {hasStageActions && (
+      <div className="flex items-center justify-end bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl px-5 py-4">
+        <div className="flex flex-wrap items-center justify-end gap-1.5">
           {isVerif && <button onClick={() => setShowVerifyModal(true)} className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors">{t("detailTransaction.actions.verify")}</button>}
           {isApprove && <button onClick={() => setShowApproveModal(true)} className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors">{t("detailTransaction.actions.approve")}</button>}
           {isBudget && <button onClick={() => setShowBudgetModal(true)} className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors">{t("detailTransaction.actions.processBudget")}</button>}
@@ -673,6 +848,7 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
           {isGR && <button onClick={() => setShowGRModal(true)} className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors">{t("detailTransaction.actions.goodsReceipt")}</button>}
         </div>
       </div>
+      )}
     </section>
   )
 }

@@ -1,6 +1,8 @@
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { useExecuteStockOpname } from "../../../hooks/mutation/stockOpname/execute"
+import { useSingleSubmit } from "../../../hooks/useSingleSubmit"
+import { withStageEmail } from "../../../stores/stageEmailStore"
 
 type ExecuteStockOpnameModalProps = {
   transactionNumber: string
@@ -16,10 +18,12 @@ export function ExecuteStockOpnameModal({
   const { t } = useTranslation()
   const [notes, setNotes] = useState("")
 
-  const { mutate: executeStockOpname, isPending } = useExecuteStockOpname({ transactionNumber })
+  const { mutateAsync: executeStockOpname, isPending } = useExecuteStockOpname({ transactionNumber })
 
-  const handleSubmit = () => {
-    executeStockOpname(
+  const guard = useSingleSubmit(isPending)
+
+  const handleSubmit = () =>
+    withStageEmail({ transactionType: "stock_opname", transactionNumber, action: "proceed" }, () => executeStockOpname(
       { notes: notes.trim() || undefined },
       {
         onSuccess: () => {
@@ -27,8 +31,7 @@ export function ExecuteStockOpnameModal({
           onClose()
         },
       }
-    )
-  }
+    ))
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-in fade-in duration-200">
@@ -96,7 +99,7 @@ export function ExecuteStockOpnameModal({
           </button>
 
           <button
-            onClick={handleSubmit}
+            onClick={guard(handleSubmit)}
             disabled={isPending}
             className="flex-1 px-4 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >

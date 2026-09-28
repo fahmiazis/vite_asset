@@ -1,6 +1,8 @@
 import type { ColumnDef } from "@tanstack/react-table"
 import type { TFunction } from "i18next"
 import type { StockOpnameItem } from "../../../models/stockOpname/detail"
+import { StockOpnamePhotoViewCell } from "./photoViewCell"
+import { StockOpnameBorrowDocumentViewCell } from "./borrowDocumentViewCell"
 
 export function AssetStatusBadge({ status }: { status?: string | null }) {
   const map: Record<string, string> = {
@@ -54,12 +56,14 @@ function CompactFindingCell({
 interface GetStockOpnameItemColumnsParams {
   t: TFunction
   isDraft: boolean
+  revisionMode: boolean
   onFillFinding: (item: StockOpnameItem) => void
 }
 
 export function getStockOpnameItemColumns({
   t,
   isDraft,
+  revisionMode,
   onFillFinding,
 }: GetStockOpnameItemColumnsParams): ColumnDef<StockOpnameItem>[] {
   const columns: ColumnDef<StockOpnameItem>[] = [
@@ -72,6 +76,23 @@ export function getStockOpnameItemColumns({
       ),
     },
     {
+      id: "photo",
+      header: t("stockOpnamePhoto.label"),
+      cell: ({ row }) => (
+        <StockOpnamePhotoViewCell photoUrl={row.original.photo_url} capturedAt={row.original.photo_captured_at} />
+      ),
+    },
+    {
+      id: "borrow_document",
+      header: t("stockOpnameFillPage.columnBorrowDocument"),
+      cell: ({ row }) => (
+        <StockOpnameBorrowDocumentViewCell
+          fileName={row.original.borrow_document_file_name}
+          documentUrl={row.original.borrow_document_url}
+        />
+      ),
+    },
+    {
       id: "asset",
       header: t("stockOpnameDetail.tableAsset"),
       cell: ({ row }) => (
@@ -80,6 +101,11 @@ export function getStockOpnameItemColumns({
             {row.original.asset_name ?? "-"}
           </p>
           <p className="text-[11px] text-gray-400 font-mono mt-0.5">{row.original.asset_number}</p>
+          {revisionMode && row.original.needs_revision && (
+            <span className="inline-flex mt-1 px-1.5 py-0.5 rounded-full text-[10px] font-medium border bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-700">
+              {t("stockOpnameDetail.needsRevision")}
+            </span>
+          )}
         </div>
       ),
     },
@@ -136,7 +162,14 @@ export function getStockOpnameItemColumns({
     columns.push({
       id: "aksi",
       header: t("stockOpnameDetail.tableAction"),
-      cell: ({ row }) => (
+      cell: ({ row }) => revisionMode && !row.original.needs_revision ? (
+        <span className="flex items-center gap-1 text-[11px] text-gray-400 whitespace-nowrap">
+          <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+          </svg>
+          {t("stockOpnameDetail.lockedForRevision")}
+        </span>
+      ) : (
         <button
           onClick={() => onFillFinding(row.original)}
           className="flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors whitespace-nowrap"

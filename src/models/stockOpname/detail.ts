@@ -35,6 +35,9 @@ export interface StockOpnameItem {
   borrow_document_id?: number | null
   borrow_document_url?: string | null
   borrow_document_file_name?: string | null
+  // Dichecklist approver/eksekutor buat direvisi — kalau revision_mode aktif,
+  // cuma item ini yang boleh diubah
+  needs_revision?: boolean
   created_at: string
   updated_at: string
 }
@@ -59,6 +62,8 @@ export interface StockOpnameDetailState {
   // null = belum pernah disubmit. Diisi pas submit, bukan pas draft dibuat —
   // nandain apakah submit-nya masuk jendela StockOpnameConfig atau enggak.
   is_submissive: boolean | null
+  // DRAFT hasil revisi — item tanpa needs_revision dikunci
+  revision_mode?: boolean
 }
 
 export interface stockOpnameDetailProps {

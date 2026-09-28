@@ -11,10 +11,12 @@ export interface AssetListParams {
   branchCode?: string
   /** dto.AssetListFilter.category_id */
   categoryId?: number
+  /** aset yang dipegang user ini — dto.AssetListFilter.assigned_user_id */
+  assignedUserId?: string
 }
 
 export const assetList = async (params: AssetListParams): Promise<listAssestProps> => {
-  const { page, limit, search, assetStatus, branchCode, categoryId } = params
+  const { page, limit, search, assetStatus, branchCode, categoryId, assignedUserId } = params
 
   const query = new URLSearchParams({
     page: String(page),
@@ -23,6 +25,7 @@ export const assetList = async (params: AssetListParams): Promise<listAssestProp
     ...(assetStatus ? { asset_status: assetStatus } : {}),
     ...(branchCode ? { branch_code: branchCode } : {}),
     ...(categoryId ? { category_id: String(categoryId) } : {}),
+    ...(assignedUserId ? { assigned_user_id: assignedUserId } : {}),
   })
 
   const res = await axiosPrivate.get(`/assets?${query.toString()}`)

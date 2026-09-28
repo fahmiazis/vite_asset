@@ -4,6 +4,8 @@ import { useTranslation } from "react-i18next"
 import { useQueryClient } from "@tanstack/react-query"
 import { useApproveStockOpname } from "../../../hooks/mutation/stockOpname/approve"
 import { useStockOpnameApprovalStatus } from "../../../hooks/query/stockOpname/approvalStatus"
+import { useSingleSubmit } from "../../../hooks/useSingleSubmit"
+import { withStageEmail } from "../../../stores/stageEmailStore"
 
 type ApproveModalProps = {
   transactionNumber: string
@@ -20,7 +22,7 @@ export function ApproveStockOpnameModal({
   const [notes, setNotes] = useState("")
   const queryClient = useQueryClient()
 
-  const { mutate: approve, isPending } = useApproveStockOpname(transactionNumber)
+  const { mutateAsync: approve, isPending } = useApproveStockOpname(transactionNumber)
   const { data: approvalData } = useStockOpnameApprovalStatus(transactionNumber)
 
   const pendingIndex =
@@ -29,8 +31,10 @@ export function ApproveStockOpnameModal({
   const targetApprovalId = approvalData?.data.approvals[pendingIndex]?.id ?? ""
   const pendingApproval = approvalData?.data.approvals[pendingIndex]
 
-  const handleSubmit = () => {
-    approve(
+  const guard = useSingleSubmit(isPending)
+
+  const handleSubmit = () =>
+    withStageEmail({ transactionType: "stock_opname", transactionNumber, action: "proceed" }, () => approve(
       { transaction_approval_id: targetApprovalId, notes },
       {
         onSuccess: () => {
@@ -45,8 +49,7 @@ export function ApproveStockOpnameModal({
           toast.error(t("approveStockOpnameModal.toast.error"))
         },
       }
-    )
-  }
+    ))
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-in fade-in duration-200">
@@ -132,7 +135,7 @@ export function ApproveStockOpnameModal({
           </button>
 
           <button
-            onClick={handleSubmit}
+            onClick={guard(handleSubmit)}
             disabled={isPending || !targetApprovalId}
             className="flex-1 px-4 py-2.5 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >

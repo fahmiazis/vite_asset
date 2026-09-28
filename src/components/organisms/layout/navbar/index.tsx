@@ -8,6 +8,7 @@ import { useDarkMode } from '../../../../hooks/useDarkMode'
 import ProfileCardnavbar from '../../../molecules/card/profileCardNavbar'
 import { useMyProfile } from '../../../../hooks/query/auth/myProfile'
 import NotificationBell from './notificationBell'
+import { useUserAvatar } from '../../../../hooks/query/user/avatar'
 
 interface NavbarProps {
     title?: string
@@ -21,6 +22,7 @@ export default function Navbar({
 
     const { isActive, setIsActive } = sidebarStore()
     const { data: myProfile } = useMyProfile()
+    const { url: avatarUrl } = useUserAvatar(myProfile?.data.id, myProfile?.data.has_avatar)
 
     const toggleSidebar = () => {
         setIsSidebarOpen(prevState => !prevState)
@@ -63,7 +65,7 @@ export default function Navbar({
                     {isDark ? <MoonIcon /> : <Sun01Icon />}
                 </button>
                 {myProfile && (
-                    <ProfileCardnavbar name={myProfile?.data.fullname} email={myProfile?.data.email} avatarUrl={"https://i.pinimg.com/1200x/c3/0b/53/c30b53f04c0a4b499ebbf9e19f54ab10.jpg"} />
+                    <ProfileCardnavbar name={myProfile?.data.fullname} email={myProfile?.data.email} avatarUrl={avatarUrl} />
                 )}
             </div>
             <MobileSidebar isOpen={isSidebarOpen} setIsOpen={() => setIsSidebarOpen(false)} />

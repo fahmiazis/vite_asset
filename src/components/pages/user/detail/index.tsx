@@ -2,8 +2,9 @@ import { useParams } from 'react-router-dom'
 import { useUserDetail } from '../../../../hooks/query/user/detail'
 import BaseUserInformation from '../../../organisms/user/detail/userInformationSection'
 import RoleAssignmentSection from '../../../organisms/user/detail/roleAssignmentSection'
-import DisposalList from '../../../organisms/dashboard/disposalTable'
-import { contactsData } from '../../dashboard'
+import UserAssetsSection from '../../../organisms/user/detail/userAssetsSection'
+import UserBranchesSection from '../../../organisms/user/detail/userBranchesSection'
+import ChangePasswordSection from '../../../organisms/user/detail/changePasswordSection'
 
 export default function DetailUser() {
   const { id } = useParams()
@@ -20,13 +21,22 @@ export default function DetailUser() {
   return (
     <div className='space-y-4'>
       <div className='flex flex-wrap justify-between gap-4'>
-        <BaseUserInformation data={data?.data} className='w-full lg:w-2/4' />
-        <RoleAssignmentSection user={data?.data} className='w-full lg:flex-1' />
+        {/* kolom kiri: info + password, supaya tidak ada ruang kosong di
+            samping daftar role yang panjang */}
+        <div className='w-full lg:w-2/4 space-y-4'>
+          <BaseUserInformation data={data?.data} />
+          <ChangePasswordSection userId={id || ''} />
+        </div>
+        {/* lg: kartu role diposisikan absolute supaya tingginya persis kolom
+            kiri dan tidak ikut memanjangkan baris — daftarnya yang scroll */}
+        <div className='w-full lg:flex-1 min-w-0 relative'>
+          <RoleAssignmentSection user={data?.data} className='lg:absolute lg:inset-0' />
+        </div>
       </div>
 
       <div className='flex flex-wrap gap-4'>
-        <DisposalList items={contactsData} title='Assets History' className='w-full md:flex-1' />
-        <DisposalList items={contactsData} title='Assets History' className='w-full md:flex-1' />
+        <UserAssetsSection userId={id || ''} className='w-full md:flex-1 min-w-0' />
+        <UserBranchesSection userId={id || ''} className='w-full md:flex-1 min-w-0' />
       </div>
     </div>
   )
