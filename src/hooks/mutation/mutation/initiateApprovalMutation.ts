@@ -11,6 +11,12 @@ export function useInitiateApprovalMutation(transactionNumber: string) {
       queryClient.invalidateQueries({
         queryKey: ["mutation-detail"],
       })
+      queryClient.invalidateQueries({
+        queryKey: ["mutation-approval-status"],
+      })
+      queryClient.invalidateQueries({
+        queryKey: ["mutation-list"],
+      })
     },
   })
 }

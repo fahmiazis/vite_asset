@@ -137,6 +137,7 @@
     },
     "info": {
       "transactionNumber": "交易编号",
+      "ioNumber": "IO 编号",
       "transactionType": "交易类型",
       "date": "日期",
       "createdBy": "创建人",

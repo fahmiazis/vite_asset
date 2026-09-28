@@ -137,6 +137,7 @@
     },
     "info": {
       "transactionNumber": "หมายเลขธุรกรรม",
+      "ioNumber": "หมายเลข IO",
       "transactionType": "ประเภทธุรกรรม",
       "date": "วันที่",
       "createdBy": "สร้างโดย",

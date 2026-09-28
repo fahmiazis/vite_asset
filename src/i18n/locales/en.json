@@ -137,6 +137,7 @@
     },
     "info": {
       "transactionNumber": "Transaction number",
+      "ioNumber": "IO number",
       "transactionType": "Transaction type",
       "date": "Date",
       "createdBy": "Created by",

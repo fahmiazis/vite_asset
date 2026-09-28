@@ -287,6 +287,7 @@ function SubmitModal({ transactionNumber, transactionType, stage, mappedAttachme
 export default function DetailTransactionLayout({ data }: { data: detailTransactionWStageProps }) {
   const { t } = useTranslation()
   const { transaction, items } = data.data
+  const ioNumbers = data.data.io_numbers ?? []
   const [showSubmitModal, setShowSubmitModal] = useState(false)
   const [showReviewModal, setShowReviewModal] = useState(false)
   const [showVerifyModal, setShowVerifyModal] = useState(false)
@@ -623,6 +624,23 @@ export default function DetailTransactionLayout({ data }: { data: detailTransact
             </div>
           ))}
         </div>
+
+        {/* Nomor IO — satu per cabang, terbentuk saat Process Budget */}
+        {ioNumbers.length > 0 && (
+          <div className="mt-3 bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
+            <p className="text-xs text-gray-400 mb-1">{t("detailTransaction.info.ioNumber")}</p>
+            <div className="flex flex-wrap gap-x-6 gap-y-1">
+              {ioNumbers.map((io) => (
+                <p key={io.io_number} className="text-sm">
+                  <span className="font-mono font-medium text-gray-800 dark:text-gray-200">{io.io_number}</span>
+                  {ioNumbers.length > 1 && (
+                    <span className="ml-1.5 text-xs text-gray-400">{io.branch_name || io.branch_code}</span>
+                  )}
+                </p>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="flex justify-between items-center mt-4">
           <div className="flex flex-col items-center">

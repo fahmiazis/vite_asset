@@ -137,6 +137,7 @@
     },
     "info": {
       "transactionNumber": "Nomor transaksi",
+      "ioNumber": "Nomor IO",
       "transactionType": "Tipe transaksi",
       "date": "Tanggal",
       "createdBy": "Dibuat oleh",
