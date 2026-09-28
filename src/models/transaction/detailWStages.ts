@@ -13,6 +13,15 @@ export interface detailTransactionWStageState {
    * Dihitung backend dengan aturan yang sama dengan tab "Menunggu Saya".
    */
   waiting_for_me?: boolean
+  /** nomor IO per cabang, terbentuk saat PROSES_BUDGET */
+  io_numbers?: IONumber[]
+}
+
+export interface IONumber {
+  branch_code: string
+  branch_name: string
+  io_number: string
+  processed_at: string
 }
 
 export interface Transaction {

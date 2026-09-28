@@ -137,6 +137,7 @@
     },
     "info": {
       "transactionNumber": "Số giao dịch",
+      "ioNumber": "Số IO",
       "transactionType": "Loại giao dịch",
       "date": "Ngày",
       "createdBy": "Người tạo",
