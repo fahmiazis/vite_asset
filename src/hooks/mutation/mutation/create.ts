@@ -3,6 +3,7 @@ import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import type { CreateMutationRequest } from '../../../models/mutation/create';
 import { createMutation } from '../../../services/mutation/create';
+import { refreshMutationQueries } from "./refresh"
 
 interface UseCreateMutationParams {
   onSuccess?: () => void;
@@ -24,10 +25,7 @@ export function useCreateMutation({
     mutationFn: (payload: CreateMutationRequest) => createMutation(payload),
 
     onSuccess: (data) => {
-      // Invalidate transaction list query
-      queryClient.invalidateQueries({
-        queryKey: ['transactions'],
-      });
+      refreshMutationQueries(queryClient)
 
       // Show success notification
       toast.success(data.message || 'Mutasi berhasil dibuat');

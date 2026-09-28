@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { submitDraftMutation, type SubmitDraftMutationPayload } from "../../../services/mutation/submitDraftMutation"
+import { refreshMutationQueries } from "./refresh"
 
 export function useSubmitDraftMutation(transactionNumber: string) {
   const queryClient = useQueryClient()
@@ -9,9 +10,7 @@ export function useSubmitDraftMutation(transactionNumber: string) {
       submitDraftMutation(transactionNumber, payload),
 
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["mutation-draft-detail"],
-      })
+      refreshMutationQueries(queryClient)
     },
   })
 }

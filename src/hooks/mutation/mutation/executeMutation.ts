@@ -1,6 +1,7 @@
 // hooks/mutation/transaction/useExecuteMutation.ts
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { executeMutation, type ExecuteMutationPayload } from "../../../services/mutation/executeMutation"
+import { refreshMutationQueries } from "./refresh"
 
 export function useExecuteMutation(transactionNumber: string) {
   const queryClient = useQueryClient()
@@ -10,9 +11,7 @@ export function useExecuteMutation(transactionNumber: string) {
       executeMutation(transactionNumber, payload),
 
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["mutation-draft-detail", transactionNumber],
-      })
+      refreshMutationQueries(queryClient)
     },
   })
 }
