@@ -90,7 +90,7 @@ export default function MutationDetailPage() {
   const { data: profile } = useMyProfile()
 
   const closeRevision = () => setRevisionMode(null)
-  const revisionKeys = ["mutation-detail", "mutation-list"]
+  const revisionKeys = ["mutation-detail", "mutation-approval-status", "mutation-list"]
 
   const returnForRevision = useReturnMutationForRevision({
     transactionNumber: id || "",

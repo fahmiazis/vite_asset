@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { approveTransactionApproval, type ApproveTransactionApprovalPayload } from "../../../services/mutation/approve"
+import { refreshMutationQueries } from "./refresh"
 
-export function useApproveTransactionApproval(transactionNumber: string) {
+export function useApproveTransactionApproval(_transactionNumber: string) {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -9,12 +10,7 @@ export function useApproveTransactionApproval(transactionNumber: string) {
       approveTransactionApproval(payload),
 
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["mutation-approval-status", transactionNumber],
-      })
-      queryClient.invalidateQueries({
-        queryKey: ["mutation-draft-detail", transactionNumber],
-      })
+      refreshMutationQueries(queryClient)
     },
   })
 }

@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { confirmReceivingMutation } from "../../../services/mutation/confirmReceivingMutation"
+import { refreshMutationQueries } from "./refresh"
 
 export function useConfirmReceivingMutation(transactionNumber: string) {
   const queryClient = useQueryClient()
@@ -8,9 +9,7 @@ export function useConfirmReceivingMutation(transactionNumber: string) {
     mutationFn: () => confirmReceivingMutation(transactionNumber),
 
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["mutation-draft-detail", transactionNumber],
-      })
+      refreshMutationQueries(queryClient)
     },
   })
 }
