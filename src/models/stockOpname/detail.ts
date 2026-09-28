@@ -7,6 +7,7 @@ export interface StockOpnameTransaction {
   current_stage: string
   notes: string | null
   created_by: string
+  created_by_name: string | null
   approved_by: string | null
   approved_at: string | null
   created_at: string
@@ -64,6 +65,8 @@ export interface StockOpnameDetailState {
   is_submissive: boolean | null
   // DRAFT hasil revisi — item tanpa needs_revision dikunci
   revision_mode?: boolean
+  // giliran user ini? di APPROVAL = role-nya ada di step yang sedang berjalan
+  waiting_for_me?: boolean
 }
 
 export interface stockOpnameDetailProps {
