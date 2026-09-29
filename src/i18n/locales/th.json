@@ -1345,6 +1345,19 @@
         "showing": "แสดง {{from}} – {{to}} จาก {{total}} รายการ",
         "page": "หน้า {{current}} / {{total}}"
       }
+    },
+    "tabs": {
+      "all": "ทั้งหมด",
+      "waiting": "รอฉัน",
+      "draft": "ฉบับร่าง",
+      "approval": "การอนุมัติ",
+      "execute": "ดำเนินการ",
+      "finished": "เสร็จสิ้น",
+      "rejected": "ถูกปฏิเสธ"
+    },
+    "searchPlaceholder": "ค้นหาเลขที่ธุรกรรมหรือผู้สร้าง...",
+    "stats": {
+      "execute": "รอดำเนินการ"
     }
   },
   "stockOpnameConfigPage": {
