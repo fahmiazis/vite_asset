@@ -6,6 +6,8 @@ import { assetStatuses } from "../../../constans/asset"
 import { AssetsTable } from "../../organisms/assest/table"
 import { PageSizeSelect } from "../../molecules/table/pageSize"
 import { RunDepreciationButton } from "../../organisms/assest/runDepreciationButton"
+import { MasterExportButton, MasterImportButton } from "../../organisms/common/masterImportDialog"
+import { useAssetImportAllowed } from "../../../hooks/query/asset/importAllowed"
 
 // Dipaging server; backend membatasi limit maksimal 100 (dto.AssetListFilter),
 // jadi tidak ada opsi "Semua" di sini.
@@ -16,6 +18,7 @@ const selectClass =
 
 export default function AssetPage() {
   const { t } = useTranslation()
+  const importAllowed = useAssetImportAllowed()
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState<number>(10)
   const [search, setSearch] = useState("")
@@ -110,9 +113,25 @@ export default function AssetPage() {
   return (
     <div>
       <div className="flex items-center justify-between gap-3 mb-4">
-        <h6 className="text-3xl font-bold">Assets</h6>
-        {/* hanya tampil untuk yang punya hak akses run_depreciation di menu Asset */}
-        <RunDepreciationButton />
+        <h6 className="text-3xl font-bold">{t("assetTable.title")}</h6>
+        <div className="flex items-center gap-2">
+          {/* data yang diunduh = yang terlihat di tabel (cabang user + filter) */}
+          <MasterExportButton
+            entity="asset"
+            params={{ search, asset_status: assetStatus, branch_code: branchCode, category_id: categoryId }}
+            className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors whitespace-nowrap disabled:opacity-50"
+          />
+          {/* hak akses import_asset di menu permission "Asset Upload" */}
+          {importAllowed && (
+            <MasterImportButton
+              entity="asset"
+              invalidateKeys={["asset-list"]}
+              className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium border border-gray-900 dark:border-white text-gray-900 dark:text-white rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors whitespace-nowrap"
+            />
+          )}
+          {/* hanya tampil untuk yang punya hak akses run_depreciation di menu Asset */}
+          <RunDepreciationButton />
+        </div>
       </div>
       <AssetsTable
         data={data?.data.data ?? []}

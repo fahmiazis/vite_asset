@@ -9,10 +9,12 @@ import {
   type ColumnFiltersState,
 } from '@tanstack/react-table'
 import { PageSizeSelect, usePageSize } from '../../molecules/table/pageSize'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { branchListState } from '../../../models/branch/list'
 import { branchColumns } from './column'
+import { MasterExportButton, MasterImportButton } from '../common/masterImportDialog'
+import { useTranslation } from 'react-i18next'
 
 interface BranchTableProps {
   data: branchListState[]
@@ -21,6 +23,8 @@ interface BranchTableProps {
 
 export function BranchTable({ data, isLoading }: BranchTableProps) {
   const navigate = useNavigate()
+  const { t } = useTranslation()
+  const columns = useMemo(() => branchColumns(t), [t])
 
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -28,7 +32,7 @@ export function BranchTable({ data, isLoading }: BranchTableProps) {
 
   const table = useReactTable({
     data,
-    columns: branchColumns,
+    columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -75,12 +79,16 @@ export function BranchTable({ data, isLoading }: BranchTableProps) {
             className="px-4 py-2 border border-gray-900 dark:border-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-sm"
           />
         </div>
-        <button
-          onClick={() => navigate('/dashboard/branch/create')}
-          className="px-4 py-2 text-xs font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-        >
-          Create
-        </button>
+        <div className="flex items-center gap-2">
+          <MasterExportButton entity="branch" />
+          <MasterImportButton entity="branch" invalidateKeys={['branch-list']} />
+          <button
+            onClick={() => navigate('/dashboard/branch/create')}
+            className="px-4 py-2 text-xs font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          >
+            Create
+          </button>
+        </div>
       </section>
 
       {/* Table */}
@@ -125,7 +133,7 @@ export function BranchTable({ data, isLoading }: BranchTableProps) {
             ) : (
               <tr>
                 <td
-                  colSpan={branchColumns.length}
+                  colSpan={columns.length}
                   className="px-6 py-4 text-center"
                 >
                   Tidak ada data

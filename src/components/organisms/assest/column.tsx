@@ -1,6 +1,7 @@
 import type { ColumnDef } from "@tanstack/react-table"
 import { useNavigate } from "react-router-dom"
 import type { listAssetsState } from "../../../models/asset/list";
+import { useTranslation } from "react-i18next"
 
 function formatRupiah(value: number) {
   return new Intl.NumberFormat("id-ID", {
@@ -37,6 +38,7 @@ function AssetStatusBadge({ value }: { value: string }) {
 
 // --- Action Buttons ---
 function ActionButtons({ id }: { id: string }) {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   return (
     <div className="flex items-center gap-1.5">
@@ -44,16 +46,20 @@ function ActionButtons({ id }: { id: string }) {
         onClick={() => navigate(`/dashboard/asset/${id}`)}
         className="px-3 py-1 text-xs font-medium border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors whitespace-nowrap"
       >
-        Detail
+        {t("assetTable.detail")}
       </button>
     </div>
   )
 }
 
-export const assetsColumns: ColumnDef<listAssetsState>[] = [
+// ─── Columns Factory ───────────────────────────────────────
+
+export const assetsColumns = (
+  t: (key: string) => string
+): ColumnDef<listAssetsState>[] => [
   {
     accessorKey: "asset_number",
-    header: "NO. ASET",
+    header: t("assetTable.assetNumber"),
     cell: ({ row }) => (
       <div className="text-xs text-gray1 font-mono leading-tight whitespace-nowrap">
         {row.getValue("asset_number")}
@@ -62,7 +68,7 @@ export const assetsColumns: ColumnDef<listAssetsState>[] = [
   },
   {
     accessorKey: "asset_name",
-    header: "NAMA ASET",
+    header: t("assetTable.assetName"),
     cell: ({ row }) => (
       <div>
         <p className="text-sm font-semibold leading-tight">{row.getValue("asset_name")}</p>
@@ -72,7 +78,7 @@ export const assetsColumns: ColumnDef<listAssetsState>[] = [
   },
   {
     accessorKey: "branch_code",
-    header: "CABANG",
+    header: t("assetTable.branch"),
     cell: ({ row }) => (
       <span className="text-sm">{row.getValue("branch_code") ?? "-"}</span>
     ),
@@ -80,21 +86,21 @@ export const assetsColumns: ColumnDef<listAssetsState>[] = [
   {
     // pemegang hasil serah terima aset; kosong = dipegang cabang
     accessorKey: "assigned_user_name",
-    header: "PEMEGANG",
+    header: t("assetTable.holder"),
     cell: ({ row }) => (
       <span className="text-sm">{row.original.assigned_user_name ?? "-"}</span>
     ),
   },
   {
     accessorKey: "io_number",
-    header: "NO. IO",
+    header: t("assetTable.ioNumber"),
     cell: ({ row }) => (
       <span className="text-xs font-mono text-gray1">{row.getValue("io_number") ?? "-"}</span>
     ),
   },
   {
     accessorKey: "current_value",
-    header: "NILAI BUKU",
+    header: t("assetTable.bookValue"),
     cell: ({ row }) => {
       const cv = row.original.current_value
       return (
@@ -104,7 +110,7 @@ export const assetsColumns: ColumnDef<listAssetsState>[] = [
           </p>
           {cv?.acquisition_value != null && (
             <p className="text-xs text-gray1 mt-0.5 tabular-nums whitespace-nowrap">
-              Perolehan: {formatRupiah(cv.acquisition_value)}
+              {t("assetTable.acquisition")}: {formatRupiah(cv.acquisition_value)}
             </p>
           )}
         </div>
@@ -113,12 +119,12 @@ export const assetsColumns: ColumnDef<listAssetsState>[] = [
   },
   {
     accessorKey: "asset_status",
-    header: "STATUS",
+    header: t("assetTable.status"),
     cell: ({ row }) => <AssetStatusBadge value={row.getValue("asset_status")} />,
   },
   {
     accessorKey: "created_at",
-    header: "TGL DIBUAT",
+    header: t("assetTable.createdAt"),
     cell: ({ row }) => {
       const date = new Date(row.getValue("created_at"))
       return (
@@ -130,7 +136,7 @@ export const assetsColumns: ColumnDef<listAssetsState>[] = [
   },
   {
     id: "aksi",
-    header: "AKSI",
+    header: t("assetTable.action"),
     cell: ({ row }) => <ActionButtons id={row.original.asset_number.toString()} />,
   },
 ]

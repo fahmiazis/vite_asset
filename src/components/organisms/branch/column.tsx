@@ -1,9 +1,11 @@
 import type { ColumnDef } from "@tanstack/react-table"
 import { useNavigate } from "react-router-dom"
 import type { branchListState } from "../../../models/branch/list"
+import { useTranslation } from "react-i18next"
 
 
 function ActionButtons({ branchId }: { branchId: string }) {
+  const { t } = useTranslation()
   const navigate = useNavigate()
 
   const handleDetail = () => {
@@ -16,16 +18,20 @@ function ActionButtons({ branchId }: { branchId: string }) {
         onClick={handleDetail}
         className="px-3 py-1.5 text-xs font-medium text-white bg-blue-600 rounded hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
       >
-        Detail
+        {t("branchTable.detail")}
       </button>
     </div>
   )
 }
 
-export const branchColumns: ColumnDef<branchListState>[] = [
+// ─── Columns Factory ───────────────────────────────────────
+
+export const branchColumns = (
+  t: (key: string) => string
+): ColumnDef<branchListState>[] => [
   {
     id: 'no',
-    header: 'No',
+    header: t('branchTable.no'),
     cell: ({ row }) => {
       return <div className="text-center">{row.index + 1}</div>
     },
@@ -33,21 +39,28 @@ export const branchColumns: ColumnDef<branchListState>[] = [
   },
   {
     accessorKey: 'branch_code',
-    header: 'Branch Code',
+    header: t('branchTable.branchCode'),
     cell: ({ row }) => {
       return <div className="font-medium">{row.getValue('branch_code')}</div>
     },
   },
   {
     accessorKey: 'branch_name',
-    header: 'Branch Name',
+    header: t('branchTable.branchName'),
     cell: ({ row }) => {
       return <div className="font-medium">{row.getValue('branch_name')}</div>
     },
   },
   {
+    accessorKey: 'branch_type',
+    header: t('branchTable.branchType'),
+    cell: ({ row }) => {
+      return <div>{row.getValue('branch_type') || '-'}</div>
+    },
+  },
+  {
     accessorKey: 'status',
-    header: 'Status',
+    header: t('branchTable.status'),
     cell: ({ row }) => {
       const status = row.getValue('status') as string
       return (
@@ -59,7 +72,7 @@ export const branchColumns: ColumnDef<branchListState>[] = [
                 : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
             }`}
           >
-            {status === 'active' ? 'Active' : 'NonActive'}
+            {status === 'active' ? t('branchTable.active') : t('branchTable.inactive')}
           </span>
         </div>
       )
@@ -67,7 +80,7 @@ export const branchColumns: ColumnDef<branchListState>[] = [
   },
   {
     id: 'actions',
-    header: 'Action',
+    header: t('branchTable.action'),
     cell: ({ row }) => {
       const branch = row.original
       

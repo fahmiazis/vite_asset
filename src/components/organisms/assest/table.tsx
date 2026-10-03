@@ -5,7 +5,8 @@ import {
   useReactTable,
   type SortingState,
 } from "@tanstack/react-table"
-import { useState, type ReactNode } from "react"
+import { useMemo, useState, type ReactNode } from "react"
+import { useTranslation } from "react-i18next"
 import { assetsColumns } from "./column"
 import type { listAssetsState } from "../../../models/asset/list"
 import { Search01Icon } from "hugeicons-react"
@@ -35,6 +36,8 @@ export function AssetsTable({
   filters,
   pageSizeControl,
 }: AssetsTableProps) {
+  const { t } = useTranslation()
+  const columns = useMemo(() => assetsColumns(t), [t])
   const [sorting, setSorting] = useState<SortingState>([])
   const [searchValue, setSearchValue] = useState("")
 
@@ -44,7 +47,7 @@ export function AssetsTable({
 
   const table = useReactTable({
     data,
-    columns: assetsColumns,
+    columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     onSortingChange: setSorting,
@@ -63,7 +66,7 @@ export function AssetsTable({
       <div className="flex items-center justify-center h-64">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 dark:border-white mx-auto" />
-          <p className="mt-4 text-sm text-gray1">Loading data...</p>
+          <p className="mt-4 text-sm text-gray1">{t("assetTable.loading")}</p>
         </div>
       </div>
     )
@@ -79,7 +82,7 @@ export function AssetsTable({
           <Search01Icon size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray1" />
           <input
             type="text"
-            placeholder="Cari nama aset, nomor aset..."
+            placeholder={t("assetTable.searchPlaceholder")}
             value={searchValue}
             onChange={(e) => handleSearch(e.target.value)}
             className="pl-9 pr-4 py-2 text-sm border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-72"
@@ -92,7 +95,7 @@ export function AssetsTable({
         {isLoading && (
           <div className="flex items-center gap-2 text-xs text-gray1">
             <div className="animate-spin rounded-full h-3.5 w-3.5 border-b-2 border-gray-500" />
-            Memuat...
+            {t("assetTable.fetching")}
           </div>
         )}
       </section>
@@ -134,10 +137,10 @@ export function AssetsTable({
               ) : (
                 <tr>
                   <td
-                    colSpan={assetsColumns.length}
+                    colSpan={columns.length}
                     className="px-5 py-10 text-center text-sm text-gray1"
                   >
-                    Tidak ada data
+                    {t("assetTable.empty")}
                   </td>
                 </tr>
               )}
@@ -150,13 +153,13 @@ export function AssetsTable({
       <div className="flex flex-wrap items-center justify-between gap-3">
         {pageSizeControl}
         <p className="text-xs text-gray1 mr-auto">
-          Menampilkan{" "}
+          {t("assetTable.showing")}{" "}
           <span className="font-semibold text-[var(--text-color)]">{from}</span>
           {" "}–{" "}
           <span className="font-semibold text-[var(--text-color)]">{to}</span>
-          {" "}dari{" "}
+          {" "}{t("assetTable.of")}{" "}
           <span className="font-semibold text-[var(--text-color)]">{total}</span>
-          {" "}data
+          {" "}{t("assetTable.data")}
         </p>
 
         <div className="flex items-center gap-1">
@@ -176,7 +179,7 @@ export function AssetsTable({
             </button>
           ))}
           <span className="text-xs text-gray1 ml-2 whitespace-nowrap">
-            Hal <strong>{page}</strong> / {totalPages}
+            {t("assetTable.page")} <strong>{page}</strong> / {totalPages}
           </span>
         </div>
       </div>
