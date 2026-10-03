@@ -2348,5 +2348,15 @@
     "inactive": "停用",
     "action": "操作",
     "detail": "详情"
+  },
+  "assetQr": {
+    "tabList": "资产列表",
+    "tabQr": "二维码",
+    "hint": "二维码内容为加密的资产编号——只有资产管理应用才能打开。下载或打印标签并贴在实物资产上。筛选和分页与上方列表一致。",
+    "printPage": "打印本页（{{count}}）",
+    "printTitle": "资产二维码标签",
+    "download": "下载 PNG",
+    "unavailable": "二维码不可用",
+    "loadFailed": "生成二维码失败"
   }
 }

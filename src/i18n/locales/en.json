@@ -2350,5 +2350,15 @@
     "inactive": "Inactive",
     "action": "Action",
     "detail": "Detail"
+  },
+  "assetQr": {
+    "tabList": "Asset List",
+    "tabQr": "QR Code",
+    "hint": "QR content is the encrypted asset number — it can only be opened by the Asset Management app. Download or print the labels and stick them on the physical assets. Filters and paging follow the list above.",
+    "printPage": "Print this page ({{count}})",
+    "printTitle": "Asset QR Labels",
+    "download": "Download PNG",
+    "unavailable": "QR not available",
+    "loadFailed": "Failed to generate QR code"
   }
 }
