@@ -8,6 +8,8 @@ import { PageSizeSelect } from "../../molecules/table/pageSize"
 import { RunDepreciationButton } from "../../organisms/assest/runDepreciationButton"
 import { MasterExportButton, MasterImportButton } from "../../organisms/common/masterImportDialog"
 import { useAssetImportAllowed } from "../../../hooks/query/asset/importAllowed"
+import { ListTabs } from "../../organisms/common/listTabs"
+import { AssetQrGrid } from "../../organisms/assest/qrGrid"
 
 // Dipaging server; backend membatasi limit maksimal 100 (dto.AssetListFilter),
 // jadi tidak ada opsi "Semua" di sini.
@@ -25,6 +27,8 @@ export default function AssetPage() {
   const [categoryId, setCategoryId] = useState("")
   const [assetStatus, setAssetStatus] = useState("")
   const [branchCode, setBranchCode] = useState("")
+  // tab "QR Code" memakai data, filter & paging yang sama dengan tab daftar
+  const [tab, setTab] = useState<"list" | "qr">("list")
 
   // Semua filter diterapkan di server (GET /assets) — tabelnya paginasi,
   // jadi menyaring baris yang sedang tampil saja akan menipu.
@@ -133,7 +137,16 @@ export default function AssetPage() {
           <RunDepreciationButton />
         </div>
       </div>
+      <ListTabs
+        tabs={[
+          { label: t("assetQr.tabList"), value: "list" },
+          { label: t("assetQr.tabQr"), value: "qr" },
+        ]}
+        activeTab={tab}
+        onChange={(value) => setTab(value as "list" | "qr")}
+      />
       <AssetsTable
+        content={tab === "qr" ? <AssetQrGrid assets={data?.data.data ?? []} /> : undefined}
         data={data?.data.data ?? []}
         total={data?.data.total ?? 0}
         page={page}

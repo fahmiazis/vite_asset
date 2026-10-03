@@ -2348,5 +2348,15 @@
     "inactive": "Ngừng hoạt động",
     "action": "Thao tác",
     "detail": "Chi tiết"
+  },
+  "assetQr": {
+    "tabList": "Danh sách tài sản",
+    "tabQr": "QR Code",
+    "hint": "Nội dung QR là số tài sản đã được mã hóa — chỉ ứng dụng Asset Management mới mở được. Tải xuống hoặc in nhãn rồi dán lên tài sản thực tế. Bộ lọc và trang theo danh sách ở trên.",
+    "printPage": "In trang này ({{count}})",
+    "printTitle": "Nhãn QR tài sản",
+    "download": "Tải PNG",
+    "unavailable": "Không có QR",
+    "loadFailed": "Không thể tạo mã QR"
   }
 }

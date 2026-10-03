@@ -1,7 +1,8 @@
 export interface ListTab {
   label: string
   value: string
-  count: number
+  /** kosong = tab tanpa angka */
+  count?: number
 }
 
 interface ListTabsProps {
@@ -32,6 +33,7 @@ export function ListTabs({ tabs, activeTab, onChange }: ListTabsProps) {
             }`}
           >
             {tab.label}
+            {tab.count !== undefined && (
             <span
               className={`text-xs px-1.5 py-0.5 rounded-full ${
                 activeTab === tab.value
@@ -41,6 +43,7 @@ export function ListTabs({ tabs, activeTab, onChange }: ListTabsProps) {
             >
               {tab.count}
             </span>
+            )}
           </button>
         ))}
       </div>

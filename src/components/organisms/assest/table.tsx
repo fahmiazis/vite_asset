@@ -23,6 +23,8 @@ interface AssetsTableProps {
   filters?: ReactNode
   /** pilihan jumlah baris per halaman, di baris pagination */
   pageSizeControl?: ReactNode
+  /** pengganti tabel (mis. tab QR Code) — pencarian, filter & paging tetap sama */
+  content?: ReactNode
 }
 
 export function AssetsTable({
@@ -35,6 +37,7 @@ export function AssetsTable({
   onSearchChange,
   filters,
   pageSizeControl,
+  content,
 }: AssetsTableProps) {
   const { t } = useTranslation()
   const columns = useMemo(() => assetsColumns(t), [t])
@@ -101,6 +104,7 @@ export function AssetsTable({
       </section>
 
       {/* Table */}
+      {content ?? (
       <div className={`rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden bg-white dark:bg-gray-900 transition-opacity ${isLoading ? "opacity-60" : "opacity-100"}`}>
         <div className="overflow-x-auto">
           <table className="min-w-[860px] w-full">
@@ -148,6 +152,7 @@ export function AssetsTable({
           </table>
         </div>
       </div>
+      )}
 
       {/* Pagination */}
       <div className="flex flex-wrap items-center justify-between gap-3">

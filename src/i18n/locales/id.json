@@ -2350,5 +2350,15 @@
     "inactive": "Nonaktif",
     "action": "Aksi",
     "detail": "Detail"
+  },
+  "assetQr": {
+    "tabList": "Daftar Aset",
+    "tabQr": "QR Code",
+    "hint": "Isi QR adalah nomor aset yang dienkripsi — hanya bisa dibuka aplikasi Asset Management. Unduh atau cetak label lalu tempel di aset fisiknya. Filter & halaman mengikuti daftar di atas.",
+    "printPage": "Cetak halaman ini ({{count}})",
+    "printTitle": "Label QR Aset",
+    "download": "Unduh PNG",
+    "unavailable": "QR tidak tersedia",
+    "loadFailed": "Gagal membuat QR code"
   }
 }
