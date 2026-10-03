@@ -2,7 +2,7 @@ import type { ColumnDef } from "@tanstack/react-table"
 import { useNavigate } from "react-router-dom"
 import type { TFunction } from "i18next"
 import { useTranslation } from "react-i18next"
-import type { StockOpnameDetailState } from "../../../models/stockOpname/detail"
+import type { StockOpnameListItem } from "../../../models/stockOpname/list"
 
 function formatDate(value: string) {
   if (!value) return "-"
@@ -45,7 +45,7 @@ function ActionButtons({ id }: { id: string }) {
   )
 }
 
-export function getStockOpnameColumns(t: TFunction): ColumnDef<StockOpnameDetailState>[] {
+export function getStockOpnameColumns(t: TFunction): ColumnDef<StockOpnameListItem>[] {
   return [
     {
       accessorFn: (row) => row.transaction.transaction_number,
@@ -84,10 +84,11 @@ export function getStockOpnameColumns(t: TFunction): ColumnDef<StockOpnameDetail
       ),
     },
     {
+      accessorFn: (row) => row.item_count,
       id: "item_count",
       header: t("stockOpnameColumn.itemCount"),
       cell: ({ row }) => (
-        <span className="text-sm">{row.original.items?.length ?? 0}</span>
+        <span className="text-sm">{row.original.item_count ?? 0}</span>
       ),
     },
     {

@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next"
 import { Textareas } from "../../../molecules/input/textAreas"
 import type { CreateStockOpnameDraftRequest } from "../../../../models/stockOpname/create"
 import { useCreateStockOpnameDraft } from "../../../../hooks/mutation/stockOpname/create"
+import Buttons from "../../../atoms/buttons"
 
 export default function CreateStockOpnamePage() {
   const navigate = useNavigate()
@@ -75,14 +76,14 @@ export default function CreateStockOpnamePage() {
 
       {/* Actions */}
       <div className="flex gap-3">
-        <button
-          type="button"
+        <Buttons
+          label={t("createStockOpnamePage.cancel")}
           onClick={() => navigate(-1)}
-          disabled={isPending}
+          style="normal"
+          disable={isPending}
           className="flex-1 border border-gray-300 dark:border-gray-600 px-4 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50"
-        >
-          {t("createStockOpnamePage.cancel")}
-        </button>
+        />
+
         <button
           type="button"
           onClick={handleSubmit(onSubmit)}

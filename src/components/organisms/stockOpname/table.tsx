@@ -7,16 +7,36 @@ import {
 } from "@tanstack/react-table"
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
+import { SearchingIcon } from "hugeicons-react"
 import { getStockOpnameColumns } from "./column"
-import type { StockOpnameDetailState } from "../../../models/stockOpname/detail"
+import type { StockOpnameListItem } from "../../../models/stockOpname/list"
+import { DateRangeFilter, type DateRangeValue } from "../common/dateRangeFilter"
+
+export interface StockOpnameTab {
+  label: string
+  value: string
+  count: number
+}
 
 interface StockOpnameTableProps {
-  data: StockOpnameDetailState[]
+  data: StockOpnameListItem[]
   total: number
   page: number
   pageSize: number
   isLoading?: boolean
   onPageChange: (page: number) => void
+  /**
+   * Tab, pencarian & tanggal dikendalikan halaman karena semuanya disaring
+   * server — sama dengan halaman procurement.
+   */
+  tabs: StockOpnameTab[]
+  activeTab: string
+  onTabChange: (value: string) => void
+  search: string
+  onSearchChange: (value: string) => void
+  dateRange: DateRangeValue
+  onDateRangeChange: (range: DateRangeValue) => void
+  onResetFilters: () => void
 }
 
 export function StockOpnameTable({
@@ -26,6 +46,14 @@ export function StockOpnameTable({
   pageSize,
   isLoading,
   onPageChange,
+  tabs,
+  activeTab,
+  onTabChange,
+  search,
+  onSearchChange,
+  dateRange,
+  onDateRangeChange,
+  onResetFilters,
 }: StockOpnameTableProps) {
   const { t } = useTranslation()
   const [sorting, setSorting] = useState<SortingState>([])
@@ -59,6 +87,53 @@ export function StockOpnameTable({
 
   return (
     <div className="space-y-4 bg-white dark:bg-gray-950 p-6 rounded-2xl">
+
+      {/* Tab Stage */}
+      <div className="flex items-center border-b border-gray-200 dark:border-gray-700 overflow-x-auto">
+        <div className="flex items-center gap-1">
+          {tabs.map((tab) => (
+            <button
+              key={tab.value}
+              onClick={() => onTabChange(tab.value)}
+              className={`flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium whitespace-nowrap transition-colors rounded-t-md ${activeTab === tab.value
+                ? "bg-gray-900 dark:bg-white text-white dark:text-gray-900"
+                : "text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+                }`}
+            >
+              {tab.label}
+              <span className={`text-xs px-1.5 py-0.5 rounded-full ${activeTab === tab.value
+                ? "bg-white/20 dark:bg-black/20 text-white dark:text-gray-900"
+                : "bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
+                }`}>
+                {tab.count}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Search + filter tanggal */}
+      <div className="flex flex-wrap items-center gap-2">
+        <div className="relative max-w-md flex-1 min-w-[220px]">
+          <SearchingIcon size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
+          <input
+            type="text"
+            placeholder={t("stockOpnamePage.searchPlaceholder")}
+            value={search}
+            onChange={(e) => onSearchChange(e.target.value)}
+            className="w-full pl-9 pr-4 py-2 text-sm border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 placeholder:text-gray-400 dark:placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+          />
+        </div>
+
+        <DateRangeFilter {...dateRange} onChange={onDateRangeChange} />
+
+        <button
+          onClick={onResetFilters}
+          className="px-3 py-2 text-sm text-gray-500 hover:text-gray-800 dark:hover:text-gray-200 underline underline-offset-2"
+        >
+          {t("dateRange.reset")}
+        </button>
+      </div>
 
       {isLoading && (
         <div className="flex items-center gap-2 text-xs text-gray1">

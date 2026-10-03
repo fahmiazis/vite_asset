@@ -1345,6 +1345,19 @@
         "showing": "显示第 {{from}} – {{to}} 条，共 {{total}} 条",
         "page": "第 {{current}} / {{total}} 页"
       }
+    },
+    "tabs": {
+      "all": "全部",
+      "waiting": "待我处理",
+      "draft": "草稿",
+      "approval": "审批",
+      "execute": "执行",
+      "finished": "已完成",
+      "rejected": "已拒绝"
+    },
+    "searchPlaceholder": "搜索交易编号或创建人...",
+    "stats": {
+      "execute": "待执行"
     }
   },
   "stockOpnameConfigPage": {

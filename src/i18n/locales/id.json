@@ -1345,6 +1345,19 @@
         "showing": "Menampilkan {{from}} – {{to}} dari {{total}} data",
         "page": "Hal {{current}} / {{total}}"
       }
+    },
+    "tabs": {
+      "all": "Semua",
+      "waiting": "Menunggu Saya",
+      "draft": "Draft",
+      "approval": "Persetujuan",
+      "execute": "Eksekusi",
+      "finished": "Selesai",
+      "rejected": "Ditolak"
+    },
+    "searchPlaceholder": "Cari nomor transaksi atau pembuat...",
+    "stats": {
+      "execute": "Menunggu Eksekusi"
     }
   },
   "stockOpnameConfigPage": {

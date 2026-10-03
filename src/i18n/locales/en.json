@@ -1345,6 +1345,19 @@
         "showing": "Showing {{from}} – {{to}} of {{total}} data",
         "page": "Page {{current}} / {{total}}"
       }
+    },
+    "tabs": {
+      "all": "All",
+      "waiting": "Waiting for Me",
+      "draft": "Draft",
+      "approval": "Approval",
+      "execute": "Execution",
+      "finished": "Finished",
+      "rejected": "Rejected"
+    },
+    "searchPlaceholder": "Search transaction number or creator...",
+    "stats": {
+      "execute": "Awaiting Execution"
     }
   },
   "stockOpnameConfigPage": {

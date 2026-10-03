@@ -1345,6 +1345,19 @@
         "showing": "Hiển thị {{from}} – {{to}} trong {{total}} dữ liệu",
         "page": "Trang {{current}} / {{total}}"
       }
+    },
+    "tabs": {
+      "all": "Tất cả",
+      "waiting": "Chờ tôi",
+      "draft": "Nháp",
+      "approval": "Phê duyệt",
+      "execute": "Thực hiện",
+      "finished": "Hoàn thành",
+      "rejected": "Bị từ chối"
+    },
+    "searchPlaceholder": "Tìm số giao dịch hoặc người tạo...",
+    "stats": {
+      "execute": "Chờ thực hiện"
     }
   },
   "stockOpnameConfigPage": {
