@@ -1804,7 +1804,8 @@
     "clickToReplace": "klik buat ganti",
     "uploadTooltip": "Belum ada foto — klik buat upload",
     "clickToView": "klik buat lihat",
-    "replace": "Ganti Foto"
+    "replace": "Ganti Foto",
+    "stale": "Foto diunggah lebih dari {{days}} hari lalu — ganti sebelum submit"
   },
   "stockOpnameBorrowDocument": {
     "label": "Dokumen Peminjaman",

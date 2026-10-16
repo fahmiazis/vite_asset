@@ -9,7 +9,6 @@ import {
   useConfirmDisposalFinance,
   useConfirmDisposalTax,
   useExecuteDisposal,
-  useInitiateDisposalApprovalAgreement,
   useInitiateDisposalApprovalRequest,
   useRejectDisposal,
 } from "../../../hooks/mutation/disposal/stageActions"
@@ -36,7 +35,6 @@ type ActiveModal =
   | "submit"
   | "sale-values"
   | "approval-request"
-  | "approval-agreement"
   | "execute"
   | "finance"
   | "tax"
@@ -76,7 +74,6 @@ export function DisposalStageActionBar({
   const params = { transactionNumber, onSuccess: close }
 
   const initiateRequest = useInitiateDisposalApprovalRequest(params)
-  const initiateAgreement = useInitiateDisposalApprovalAgreement(params)
   const execute = useExecuteDisposal(params)
   const finance = useConfirmDisposalFinance(params)
   const tax = useConfirmDisposalTax(params)
@@ -187,8 +184,9 @@ export function DisposalStageActionBar({
         if (approvalInitiated || approvalLoading) return null
         return { label: t("disposalAction.approvalRequest.button"), modal: "approval-request" as const, tone: "indigo" as const }
       case DISPOSAL_STAGE.APPROVAL_AGREEMENT:
-        if (approvalInitiated || approvalLoading) return null
-        return { label: t("disposalAction.approvalAgreement.button"), modal: "approval-agreement" as const, tone: "indigo" as const }
+        // persetujuan kesepakatan diajukan lewat menu Disposal Agreement
+        // (digabung lintas transaksi), bukan per transaksi dari sini
+        return null
       case DISPOSAL_STAGE.EXECUTE:
         return { label: t("disposalAction.execute.button"), modal: "execute" as const, tone: "indigo" as const }
       case DISPOSAL_STAGE.FINANCE:
@@ -242,18 +240,6 @@ export function DisposalStageActionBar({
           confirmLabel={t("disposalAction.submitLabel")}
           isPending={initiateRequest.isPending}
           onConfirm={() => initiateRequest.mutate()}
-          onClose={close}
-        />
-      )}
-
-      {modal === "approval-agreement" && (
-        <StageActionModal
-          title={t("disposalAction.approvalAgreement.title")}
-          transactionNumber={transactionNumber}
-          infoMessage={t("disposalAction.approvalAgreement.info")}
-          confirmLabel={t("disposalAction.submitLabel")}
-          isPending={initiateAgreement.isPending}
-          onConfirm={() => initiateAgreement.mutate()}
           onClose={close}
         />
       )}

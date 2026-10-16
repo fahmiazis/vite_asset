@@ -1804,7 +1804,8 @@
     "clickToReplace": "click to replace",
     "uploadTooltip": "No photo yet — click to upload",
     "clickToView": "click to view",
-    "replace": "Replace Photo"
+    "replace": "Replace Photo",
+    "stale": "Photo uploaded more than {{days}} days ago — replace it before submitting"
   },
   "stockOpnameBorrowDocument": {
     "label": "Loan Document",

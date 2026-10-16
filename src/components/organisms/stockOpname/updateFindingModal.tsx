@@ -139,6 +139,7 @@ export function UpdateStockOpnameFindingModal({
             assetId={item.asset_id}
             photoUrl={item.photo_url}
             capturedAt={item.photo_captured_at}
+            uploadedAt={item.photo_uploaded_at}
           />
 
           <div className="space-y-1.5">

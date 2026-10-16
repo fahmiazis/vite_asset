@@ -11,6 +11,7 @@ interface PhotoUploadFieldProps {
   assetId: number
   photoUrl?: string | null
   capturedAt?: string | null
+  uploadedAt?: string | null
   variant?: "modal" | "grid"
 }
 
@@ -24,6 +25,7 @@ export function PhotoUploadField({
   assetId,
   photoUrl,
   capturedAt,
+  uploadedAt,
   variant = "modal",
 }: PhotoUploadFieldProps) {
   const { t } = useTranslation()
@@ -31,6 +33,7 @@ export function PhotoUploadField({
   const { mutate: uploadPhoto, isPending } = useUploadStockOpnamePhoto({ transactionNumber })
   const { data: configData } = useStockOpnameConfig()
   const uploadMaxAgeDays = configData?.data.photo_upload_max_age_days ?? 10
+  const submitMaxAgeDays = configData?.data.photo_submit_max_age_days ?? 10
 
   // Preview langsung dari file yang dipilih (bukan nunggu round-trip upload
   // + refetch), soalnya prop `photoUrl`/`capturedAt` sering datang dari
@@ -49,6 +52,14 @@ export function PhotoUploadField({
   const fullUrl = localPreview ?? photoBlob.objectUrl
   const [previewOpen, setPreviewOpen] = useState(false)
   const formattedDate = localPreview ? null : formatCapturedDate(capturedAt)
+  // Foto yang diupload lebih dari N hari lalu ditolak saat submit (backend
+  // menghitung dari waktu upload) — ditandai supaya user tahu mana yang harus diganti.
+  const isStale =
+    !localPreview &&
+    !!photoUrl &&
+    !!uploadedAt &&
+    Date.now() - new Date(uploadedAt).getTime() > submitMaxAgeDays * 24 * 60 * 60 * 1000
+  const staleMessage = t("stockOpnamePhoto.stale", { days: submitMaxAgeDays })
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -83,12 +94,16 @@ export function PhotoUploadField({
           onClick={() => (fullUrl ? setPreviewOpen(true) : inputRef.current?.click())}
           disabled={isPending || photoBlob.isLoading}
           title={
-            fullUrl
+            isStale
+              ? staleMessage
+              : fullUrl
               ? `${formattedDate ? `${t("stockOpnamePhoto.capturedOn")} ${formattedDate} — ` : ""}${t("stockOpnamePhoto.clickToView")}`
               : t("stockOpnamePhoto.uploadTooltip")
           }
           className={`w-9 h-9 rounded-md border flex items-center justify-center overflow-hidden transition-colors flex-shrink-0 disabled:opacity-50 ${
-            fullUrl
+            isStale
+              ? "border-2 border-red-500 ring-2 ring-red-200 dark:ring-red-900"
+              : fullUrl
               ? "border-gray-200 dark:border-gray-700"
               : "border-dashed border-red-300 dark:border-red-700 text-red-400 hover:border-indigo-400 hover:text-indigo-500"
           }`}
@@ -141,6 +156,7 @@ export function PhotoUploadField({
           </>
         )}
       </button>
+      {isStale && <p className="text-[11px] text-red-600 dark:text-red-400">{staleMessage}</p>}
       <p className="text-[11px] text-gray-400">
         {formattedDate
           ? `${t("stockOpnamePhoto.capturedOn")} ${formattedDate}`

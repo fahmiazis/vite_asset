@@ -1802,7 +1802,8 @@
     "clickToReplace": "点击更换",
     "uploadTooltip": "尚无照片 — 点击上传",
     "clickToView": "点击查看",
-    "replace": "更换照片"
+    "replace": "更换照片",
+    "stale": "照片上传已超过 {{days}} 天 — 提交前请更换"
   },
   "stockOpnameBorrowDocument": {
     "label": "借用文件",
