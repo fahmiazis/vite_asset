@@ -69,6 +69,7 @@ function StockOpnameFillGridRowInner({
           assetId={item.asset_id}
           photoUrl={item.photo_url}
           capturedAt={item.photo_captured_at}
+          uploadedAt={item.photo_uploaded_at}
           variant="grid"
         />
       </td>

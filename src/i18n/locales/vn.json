@@ -1802,7 +1802,8 @@
     "clickToReplace": "bấm để thay",
     "uploadTooltip": "Chưa có ảnh — bấm để tải lên",
     "clickToView": "bấm để xem",
-    "replace": "Thay Ảnh"
+    "replace": "Thay Ảnh",
+    "stale": "Ảnh đã tải lên hơn {{days}} ngày trước — hãy thay ảnh trước khi gửi"
   },
   "stockOpnameBorrowDocument": {
     "label": "Tài Liệu Mượn",
