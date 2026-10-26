@@ -2359,5 +2359,49 @@
     "download": "ดาวน์โหลด PNG",
     "unavailable": "ไม่มี QR",
     "loadFailed": "สร้าง QR code ไม่สำเร็จ"
+  },
+  "appRelease": {
+    "title": "Release APK",
+    "description": "อัปโหลด APK แอปมือถือเวอร์ชันใหม่ ผู้ใช้บิลด์เก่าจะเห็นป๊อปอัปให้อัปเดตเมื่อเปิดแอป (ข้ามได้)",
+    "create": "อัปโหลด APK",
+    "loading": "กำลังโหลด...",
+    "empty": "ยังไม่มีรีลีส",
+    "latest": "ล่าสุด",
+    "download": "ดาวน์โหลด",
+    "cancel": "ยกเลิก",
+    "uploading": "กำลังอัปโหลด...",
+    "deleting": "กำลังลบ...",
+    "column": {
+      "version": "เวอร์ชัน",
+      "buildNumber": "Build Number",
+      "notes": "บันทึกรีลีส",
+      "size": "ขนาด",
+      "uploadedBy": "อัปโหลดโดย",
+      "uploadedAt": "อัปโหลดเมื่อ",
+      "actions": "การดำเนินการ"
+    },
+    "upload": {
+      "title": "อัปโหลด APK ใหม่",
+      "file": "ไฟล์ APK",
+      "versionName": "ชื่อเวอร์ชัน",
+      "buildNumber": "Build Number",
+      "buildHint": "ต้องมากกว่าบิลด์ล่าสุด ({{latest}}) — ใช้ตัวเลขหลัง \"+\" ใน version ของ pubspec",
+      "notes": "บันทึกรีลีส",
+      "notesPlaceholder": "มีอะไรใหม่ในเวอร์ชันนี้",
+      "progress": "กำลังอัปโหลด {{percent}}%",
+      "submit": "อัปโหลด"
+    },
+    "delete": {
+      "button": "ลบ",
+      "title": "ลบรีลีส?",
+      "message": "รีลีส {{label}} และไฟล์ APK จะถูกลบ",
+      "confirm": "ลบ"
+    },
+    "toast": {
+      "uploaded": "อัปโหลด APK แล้ว",
+      "uploadFailed": "อัปโหลด APK ไม่สำเร็จ",
+      "deleted": "ลบรีลีสแล้ว",
+      "deleteFailed": "ลบรีลีสไม่สำเร็จ"
+    }
   }
 }

@@ -50,6 +50,7 @@ import AttachmentSettingPage from '../components/pages/settingAttachment'
 import DetailAttachmentSettingPage from '../components/pages/settingAttachment/detail'
 import CreateAttachmentSettingPage from '../components/pages/settingAttachment/create'
 import EmailSettingPage from '../components/pages/settingEmail'
+import AppReleasePage from '../components/pages/appRelease'
 import HandoverPage from '../components/pages/handover'
 import HandoverFormPage from '../components/pages/handover/form'
 import HandoverDetailPage from '../components/pages/handover/detail'
@@ -235,6 +236,10 @@ export const router = createBrowserRouter([
           {
             path: 'setting-email',
             element: <EmailSettingPage />,
+          },
+          {
+            path: 'app-release',
+            element: <AppReleasePage />,
           },
           {
             path: 'handover',

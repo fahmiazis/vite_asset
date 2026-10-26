@@ -2361,5 +2361,49 @@
     "download": "Unduh PNG",
     "unavailable": "QR tidak tersedia",
     "loadFailed": "Gagal membuat QR code"
+  },
+  "appRelease": {
+    "title": "Release APK",
+    "description": "Upload APK aplikasi mobile versi baru. User dengan build lama akan melihat pop up update saat membuka app (tetap bisa dilewati).",
+    "create": "Upload APK",
+    "loading": "Memuat...",
+    "empty": "Belum ada rilis",
+    "latest": "Terbaru",
+    "download": "Unduh",
+    "cancel": "Batal",
+    "uploading": "Mengunggah...",
+    "deleting": "Menghapus...",
+    "column": {
+      "version": "Versi",
+      "buildNumber": "Build Number",
+      "notes": "Catatan Rilis",
+      "size": "Ukuran",
+      "uploadedBy": "Diunggah Oleh",
+      "uploadedAt": "Diunggah Pada",
+      "actions": "Aksi"
+    },
+    "upload": {
+      "title": "Upload APK Baru",
+      "file": "File APK",
+      "versionName": "Nama Versi",
+      "buildNumber": "Build Number",
+      "buildHint": "Harus lebih besar dari build terakhir ({{latest}}) — pakai angka setelah \"+\" di version pubspec.",
+      "notes": "Catatan Rilis",
+      "notesPlaceholder": "Apa yang baru di versi ini",
+      "progress": "Mengunggah {{percent}}%",
+      "submit": "Upload"
+    },
+    "delete": {
+      "button": "Hapus",
+      "title": "Hapus Rilis?",
+      "message": "Rilis {{label}} beserta file APK-nya akan dihapus.",
+      "confirm": "Hapus"
+    },
+    "toast": {
+      "uploaded": "APK berhasil diunggah",
+      "uploadFailed": "Gagal mengunggah APK",
+      "deleted": "Rilis dihapus",
+      "deleteFailed": "Gagal menghapus rilis"
+    }
   }
 }

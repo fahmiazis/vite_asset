@@ -2359,5 +2359,49 @@
     "download": "下载 PNG",
     "unavailable": "二维码不可用",
     "loadFailed": "生成二维码失败"
+  },
+  "appRelease": {
+    "title": "Release APK",
+    "description": "上传新版移动应用 APK。旧版本用户打开应用时会看到更新提示（可跳过）。",
+    "create": "上传 APK",
+    "loading": "加载中...",
+    "empty": "暂无发布",
+    "latest": "最新",
+    "download": "下载",
+    "cancel": "取消",
+    "uploading": "上传中...",
+    "deleting": "删除中...",
+    "column": {
+      "version": "版本",
+      "buildNumber": "Build Number",
+      "notes": "更新说明",
+      "size": "大小",
+      "uploadedBy": "上传人",
+      "uploadedAt": "上传时间",
+      "actions": "操作"
+    },
+    "upload": {
+      "title": "上传新 APK",
+      "file": "APK 文件",
+      "versionName": "版本名称",
+      "buildNumber": "Build Number",
+      "buildHint": "必须大于最新构建号（{{latest}}）— 使用 pubspec version 中 \"+\" 后的数字。",
+      "notes": "更新说明",
+      "notesPlaceholder": "此版本的新内容",
+      "progress": "上传中 {{percent}}%",
+      "submit": "上传"
+    },
+    "delete": {
+      "button": "删除",
+      "title": "删除发布？",
+      "message": "发布 {{label}} 及其 APK 文件将被删除。",
+      "confirm": "删除"
+    },
+    "toast": {
+      "uploaded": "APK 已上传",
+      "uploadFailed": "APK 上传失败",
+      "deleted": "发布已删除",
+      "deleteFailed": "删除发布失败"
+    }
   }
 }

@@ -2361,5 +2361,49 @@
     "download": "Download PNG",
     "unavailable": "QR not available",
     "loadFailed": "Failed to generate QR code"
+  },
+  "appRelease": {
+    "title": "Release APK",
+    "description": "Upload a new mobile app APK. Users on an older build get an update prompt when they open the app (they can skip it).",
+    "create": "Upload APK",
+    "loading": "Loading...",
+    "empty": "No releases yet",
+    "latest": "Latest",
+    "download": "Download",
+    "cancel": "Cancel",
+    "uploading": "Uploading...",
+    "deleting": "Deleting...",
+    "column": {
+      "version": "Version",
+      "buildNumber": "Build Number",
+      "notes": "Release Notes",
+      "size": "Size",
+      "uploadedBy": "Uploaded By",
+      "uploadedAt": "Uploaded At",
+      "actions": "Actions"
+    },
+    "upload": {
+      "title": "Upload New APK",
+      "file": "APK File",
+      "versionName": "Version Name",
+      "buildNumber": "Build Number",
+      "buildHint": "Must be greater than the latest build ({{latest}}) — use the number after \"+\" in the pubspec version.",
+      "notes": "Release Notes",
+      "notesPlaceholder": "What's new in this version",
+      "progress": "Uploading {{percent}}%",
+      "submit": "Upload"
+    },
+    "delete": {
+      "button": "Delete",
+      "title": "Delete Release?",
+      "message": "Release {{label}} and its APK file will be deleted.",
+      "confirm": "Delete"
+    },
+    "toast": {
+      "uploaded": "APK uploaded",
+      "uploadFailed": "Failed to upload APK",
+      "deleted": "Release deleted",
+      "deleteFailed": "Failed to delete release"
+    }
   }
 }

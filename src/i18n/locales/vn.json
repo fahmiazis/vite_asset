@@ -2359,5 +2359,49 @@
     "download": "Tải PNG",
     "unavailable": "Không có QR",
     "loadFailed": "Không thể tạo mã QR"
+  },
+  "appRelease": {
+    "title": "Release APK",
+    "description": "Tải lên APK ứng dụng di động phiên bản mới. Người dùng bản build cũ sẽ thấy thông báo cập nhật khi mở ứng dụng (có thể bỏ qua).",
+    "create": "Tải lên APK",
+    "loading": "Đang tải...",
+    "empty": "Chưa có bản phát hành",
+    "latest": "Mới nhất",
+    "download": "Tải xuống",
+    "cancel": "Hủy",
+    "uploading": "Đang tải lên...",
+    "deleting": "Đang xóa...",
+    "column": {
+      "version": "Phiên bản",
+      "buildNumber": "Build Number",
+      "notes": "Ghi chú phát hành",
+      "size": "Dung lượng",
+      "uploadedBy": "Người tải lên",
+      "uploadedAt": "Thời gian tải lên",
+      "actions": "Thao tác"
+    },
+    "upload": {
+      "title": "Tải lên APK mới",
+      "file": "Tệp APK",
+      "versionName": "Tên phiên bản",
+      "buildNumber": "Build Number",
+      "buildHint": "Phải lớn hơn build mới nhất ({{latest}}) — dùng số sau \"+\" trong version của pubspec.",
+      "notes": "Ghi chú phát hành",
+      "notesPlaceholder": "Có gì mới trong phiên bản này",
+      "progress": "Đang tải lên {{percent}}%",
+      "submit": "Tải lên"
+    },
+    "delete": {
+      "button": "Xóa",
+      "title": "Xóa bản phát hành?",
+      "message": "Bản phát hành {{label}} và tệp APK sẽ bị xóa.",
+      "confirm": "Xóa"
+    },
+    "toast": {
+      "uploaded": "Đã tải lên APK",
+      "uploadFailed": "Tải lên APK thất bại",
+      "deleted": "Đã xóa bản phát hành",
+      "deleteFailed": "Xóa bản phát hành thất bại"
+    }
   }
 }
